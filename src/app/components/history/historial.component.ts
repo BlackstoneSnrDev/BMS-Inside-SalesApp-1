@@ -2,17 +2,18 @@ import { Component, OnInit  } from '@angular/core';
 import { DataService } from '../../services/services.service';
 
 @Component({
-
-    selector: 'call-information',
-    templateUrl: './call-information.component.html',
-    styleUrls: ['./call-information.component.css']
-
+    selector: 'historial-component',
+    templateUrl: './historial.component.html',
+    styleUrls: ['./historial.component.css',
+    '../../css/neumorphism.component.css',],
 })
 
-export class CallInfoComponent implements OnInit {
+export class HistorialComponent implements OnInit {
 
     public forminput: any;
     public formnotes: any;
+    public isShown: boolean = false;
+    public addNote: boolean = false;
 
     constructor(private DataService: DataService) { }
 
@@ -35,4 +36,12 @@ export class CallInfoComponent implements OnInit {
 
       }
 
+      toggleAddNote(){
+
+        this.isShown = ! this.isShown;
+        this.addNote = this.isShown;
+
+      }
+
   }
+  

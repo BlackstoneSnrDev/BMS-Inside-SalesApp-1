@@ -30,5 +30,32 @@
             "input_type": "number",
             "input_icon": ""
         }
+    ],
+    "notes": [
+        {
+            "patient": "Timmy MacGee",
+            "date": "12/05/2021",
+            "content": "Voicemail left"
+        },
+        {
+            "patient": "Timmy MacGee",
+            "date": "9/03/2021",
+            "content": "SMS text sent"
+        },
+        {
+            "patient": "Timmy MacGee",
+            "date": "6/03/2021",
+            "content": "I spoke with Timmy. She said she'll be able to pay after payday, next Friday (the 12th). I put her in pending status."
+        },
+        {
+            "patient": "Timmy MacGee",
+            "date": "04/01/2022",
+            "content": "PT called. He was worried about the message about the insurance not covering his HST after Dec 31st. Explained him insurance may change the plan and deductible at the end of the year. "
+        },
+        {
+            "patient": "Timmy MacGee",
+            "date": "5/01/2022",
+            "content": "PT called requesting us to send to the doctor the HST results. Results refaxed."
+        }
     ]
 }

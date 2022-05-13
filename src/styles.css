@@ -1,3 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
-html { background-color: #e6e7ee; } 
-.container-fluid { background-color: #e6e7ee; } 
+html{ 
+    background-color: #e6e7ee; 
+    font-size: 0.90rem;
+    height: 100%;
+ } 
+
+body{
+    height: 100%;
+    background-color: #e6e7ee;   
+
+}
+
+.container-fluid { 
+    background-color: #e6e7ee;   
+    height: 100%;
+} 
+
+

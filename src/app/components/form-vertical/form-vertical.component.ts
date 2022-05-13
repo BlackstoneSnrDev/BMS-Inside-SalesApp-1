@@ -2,14 +2,14 @@ import { Component, OnInit  } from '@angular/core';
 import { DataService } from '../../services/services.service';
 
 @Component({
-
-    selector: 'call-information',
-    templateUrl: './call-information.component.html',
-    styleUrls: ['./call-information.component.css']
-
+    selector: 'form-vertical-component',
+    templateUrl: './form-vertical.component.html',
+    styleUrls: ['./form-vertical.component.css',
+    '../../css/neumorphism.component.css',
+],
 })
 
-export class CallInfoComponent implements OnInit {
+export class FormVerticalComponent implements OnInit {
 
     public forminput: any;
     public formnotes: any;
@@ -36,3 +36,4 @@ export class CallInfoComponent implements OnInit {
       }
 
   }
+  

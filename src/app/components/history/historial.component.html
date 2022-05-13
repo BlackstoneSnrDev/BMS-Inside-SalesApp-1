@@ -1,0 +1,34 @@
+<div class="row inherit-row">
+  <div class="col-12 notes-container-col ">
+    <div class="col-12 float-right">
+      <div class="iconbutton-neumorphism" (click)="toggleAddNote()" id="add-note">
+        <i class="bi bi-plus-circle-fill i-neumorphism" *ngIf="!addNote"></i>
+        <i class="bi bi-x-circle-fill i-neumorphism" *ngIf="addNote"></i>
+      </div>
+    </div>
+    <div *ngIf="isShown" class="notes-container">
+      <form>
+        <div class="form-row">
+          <div class="col-10">
+            <textarea class="input-neumorphism" placeholder="Add note" id="input-note"  appTextareaAutoresize></textarea>
+          </div>
+          <div class="col-2">
+            <button class="button-neumorphism">Save</button>
+          </div>
+        </div>
+      </form>
+      <hr>
+    </div>
+    <br>
+    <div *ngFor="let note of formnotes">
+      <div>
+        <h6>{{ note.patient }}</h6>
+        <small>{{ note.date }}</small>
+        <div>
+          {{ note.content }}
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>

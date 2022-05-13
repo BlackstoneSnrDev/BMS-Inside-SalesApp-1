@@ -2,44 +2,11 @@
   <div class="col-sm-8 ">
     <h1>Caller information</h1>
     <hr><br>
+    <form-component></form-component>
+    <historial-component></historial-component>
 
-    <div class="caller-information-col">
-      <form>
-        <div class="caller-information-container">
-          <i class="bi bi-pencil-square i-edit"></i>
-        </div>
-        <div class="form-row" spellcheck="true">
-          <div class="col" *ngFor="let input of forminput">
-            <label>{{ input.input_placeholder }}</label>
-
-            <ng-container [ngTemplateOutlet]="input.element == 'input' ? inputElement : textareaElement"
-              [ngTemplateOutletContext]="{input:input}">
-            </ng-container>
-
-            <ng-template #inputElement>
-              <input type="{{ input.input_type }}" class="input-neumorphism"
-                placeholder="{{ input.input_placeholder }}">
-            </ng-template>
-
-            <ng-template #textareaElement>
-              <textarea class="input-neumorphism" placeholder="{{ input.input_placeholder }}" autocomplete="off" appTextareaAutoresize></textarea>
-            </ng-template>
-
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="row inherit-row">
-
-      <div class="col-12 notes-container-col ">
-
-      </div>
-    </div>
   </div>
-
   <div class="col-sm-4">
-    <div class="phone-col ">
-      <h1>phone</h1>
-    </div>
+    <form-vertical-component></form-vertical-component>
   </div>
 </div>
