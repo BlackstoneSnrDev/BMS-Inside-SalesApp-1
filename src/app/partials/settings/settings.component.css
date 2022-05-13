@@ -1,0 +1,29 @@
+.main-row {
+    margin-left: 9rem;
+    margin-right: 1rem;
+    margin-top: 2.5rem;
+}
+
+.caller-information-col,
+.notes-container-col,
+.phone-col {
+    background: #e6e7ee;
+    overflow: hidden;
+    border-radius: 2rem;
+    border: 0.10rem solid #d1d9e6;
+
+}
+
+.caller-information-col,
+.notes-container-col {
+    padding: 1.5rem;
+}
+
+.phone-col {
+    padding: 24px;
+    height: 100%;
+}
+
+.inherit-row {
+    margin: 1.5rem 0rem 2rem 0rem;
+}

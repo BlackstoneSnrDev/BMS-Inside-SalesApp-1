@@ -1,0 +1,25 @@
+{
+    "sidebar_logo": "bmsGreenLogo.png",
+    "sidebar": [
+        {
+            "tab_name": "Call information",
+            "tab_icon": "bi bi-telephone-fill",
+            "tab_route": "call-information"
+        },
+        {
+            "tab_name": "Queue",
+            "tab_icon": "bi bi-view-list",
+            "tab_route": "queue"
+        },
+        {
+            "tab_name": "Settings",
+            "tab_icon": "bi bi-gear-fill",
+            "tab_route": "settings"
+        },
+        {
+            "tab_name": "Statistics",
+            "tab_icon": "bi bi-bar-chart-line-fill",
+            "tab_route": "statistics"
+        }
+    ]
+}

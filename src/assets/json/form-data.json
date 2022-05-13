@@ -1,0 +1,34 @@
+{
+    "input": [
+        {
+            "element": "input",
+            "input_placeholder": "Full name",
+            "input_type": "text",
+            "input_icon": ""
+        },
+        {
+            "element": "input",
+            "input_placeholder": "Phone number",
+            "input_type": "number",
+            "input_icon": ""
+        },
+        {
+            "element": "input",
+            "input_placeholder": "Email address",
+            "input_type": "email",
+            "input_icon": ""
+        },
+        {
+            "element": "textarea",
+            "input_placeholder": "Address",
+            "input_type": "",
+            "input_icon": ""
+        },
+        {
+            "element": "input",
+            "input_placeholder": "Balance",
+            "input_type": "number",
+            "input_icon": ""
+        }
+    ]
+}
