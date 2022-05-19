@@ -22,7 +22,7 @@ export class FormComponent implements OnInit {
 
             response => {
 
-                this.forminput = response.input
+                this.forminput = response.componentCallInfo
                 this.formnotes = response.notes
 
                 console.log( this.formnotes)

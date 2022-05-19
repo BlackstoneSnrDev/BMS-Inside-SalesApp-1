@@ -1,23 +1,25 @@
-
-import { Directive, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
+import {Directive, HostListener, ElementRef} from '@angular/core';
 
 @Directive({
-    selector: '[clickOutside]'
+  selector: `[onlyMyBacon]`
 })
-export class ClickOutsideDirective {
+export class OnlyMyBacon {
+    public isShown: boolean = false;
 
-    constructor(private elementRef: ElementRef) { }
+    public value1: string = ''
+  constructor(private el: ElementRef) {
+  }
+  
+  @HostListener('click', ['$event'])
+  handleClick(event: Event) {
 
-    @Output() clickOutside = new EventEmitter<MouseEvent>();
+    this.value1 = (event.target as HTMLInputElement).id;
+    this.isShown = ! this.isShown;
 
-    @HostListener('document:click', ['$event', '$event.target'])
-    public onClick(event: MouseEvent, targetElement: HTMLElement): void {
-        if (!targetElement) {
-            return;
-        }
-        const clickedInside = this.elementRef.nativeElement.contains(targetElement);
-        if (!clickedInside) {
-            this.clickOutside.emit(event);
-        }
-    }
+
+        console.log(this.value1);
+    
+  }
+  
+  
 }

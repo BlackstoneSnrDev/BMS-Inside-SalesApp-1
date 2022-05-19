@@ -12,6 +12,8 @@ export class DataService {
 
   public sidebardataURL: string;
   public formURL: string;
+  public callhistoryURL: string;
+  public historialURL: string;
 
   constructor(
 
@@ -21,6 +23,8 @@ export class DataService {
 
     this.sidebardataURL = "../../assets/json/sidebar-data.json";
     this.formURL = "../../assets/json/form-data.json";
+    this.callhistoryURL = "../../assets/json/call-flow.json";
+    this.historialURL = "../../assets/json/historial-data.json";
 
   }
 
@@ -33,6 +37,18 @@ export class DataService {
   getFormData(): Observable<any>{
 
     return this._http.get(this.formURL);
+
+  }
+
+  getHistorialData(): Observable<any>{
+
+    return this._http.get(this.historialURL);
+
+  }
+
+  getCallHistoryData(): Observable<any>{
+
+    return this._http.get(this.callhistoryURL);
 
   }
 }

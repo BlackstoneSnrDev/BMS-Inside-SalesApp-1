@@ -1,37 +1,74 @@
-<div class="phone-col ">
-  <div class="form-row" spellcheck="true">
-    <div class="form-check form-check-inline">
-      <h6>Auto-dialer</h6>
+<div class="phone-col">
+  <div class="history-header">
+
+    <!-- <div class="form-row" spellcheck="true">
+      <div class="form-group col-md-6" *ngFor="let element of componentPhone">
+
+        <ng-container [ngTemplateOutlet]="element.element == 'input' ? inputElement : textareaElement : "
+          [ngTemplateOutletContext]="{input:input}">
+        </ng-container>
+
+        <ng-template #inputElement>
+          <input type="{{ input.input_type }}" class="input-neumorphism" placeholder="{{ input.input_placeholder }}">
+        </ng-template>
+
+        <ng-template #textareaElement>
+          <textarea class="input-neumorphism" placeholder="{{ input.input_placeholder }}" autocomplete="off"
+            appTextareaAutoresize></textarea>
+        </ng-template>
+      </div> -->
+
+    <div class="form-check form-check-inline button-inline width-container ">
+      <h6 class="toggle-neumorphism-label">Auto-dialer</h6>
       <label class="toggle-neumorphism">
-        <input type="checkbox" checked>
+        <input type="checkbox">
         <span class="toggle-slider-neumorphism toggle-round-neumorphism"></span>
       </label>
     </div>
-    <div class="form-check form-check-inline">
-      <input type="number" class="input-neumorphism" placeholder="Phone number">
-      <button class="iconbutton-neumorphism"><i class="bi bi-telephone-forward-fill i-neumorphism"></i>
+    <div class="form-check form-check-inline button-inline">
+      <input type="number" class="input-neumorphism" placeholder="Call...">
+      <button class="iconbutton-neumorphism" id="input-call-at"><i class="bi bi-telephone-forward-fill i-neumorphism"></i>
       </button>
     </div>
-    <div class="form-check form-check-inline">
-      <button class="input-neumorphism">Leave message </button>
-      <button class="input-neumorphism">Send SMS text </button>
-      <button class="input-neumorphism">Send email </button>
-    </div>
-    <div class="form-check form-check-inline">
-      <button class="input-neumorphism">Move PT to pending</button>
-      <button class="input-neumorphism">Go to payment page</button>
-    </div>
-    
-  </div>
-  <hr>
-  <div *ngFor="let note of formnotes">
-    <div>
-      <h6>{{ note.patient }}</h6>
-      <small>{{ note.date }}</small>
-      <div>
-        {{ note.content }}
+    <div class="row">
+      <div class="col-4 button-inline">
+        <button class="button-neumorphism width-container">VM</button>
       </div>
-      <hr>
+      <div class="col-4 button-inline">
+        <button class="button-neumorphism width-container">SMS</button>
+      </div>
+      <div class="col-4 button-inline">
+        <button class="button-neumorphism width-container">Email</button>
+      </div>
     </div>
+    <div class="row ">
+      <div class="col-6 button-inline ">
+        <button class="button-neumorphism width-container">Pending</button>
+      </div>
+      <div class="col-6 button-inline ">
+        <button class="button-neumorphism width-container">Payments</button>
+      </div>
+</div>
+
+  <hr>
+  <div class="history-log" >
+
+    <div *ngFor="let log of historyLog; let i = index"  id="list">
+      <div class="width-container" (click)="getValue($event)" id="{{ i }}" >
+        <div class="form-check form-check-inline width-container" id="{{ i }}">
+          <h6 class="width-container" id="{{ i }}">{{ log.caller_name }}</h6>
+          <small id="{{ i }}">{{ log.caller_in_date }}</small>
+        </div>
+        <div class="form-check form-check-inline width-container" id="{{ i }}">
+          <p class="width-container" id="{{ i }}">{{ log.caller_phone }}</p>
+          <small id="{{ i }}">{{ log.caller_in_time }}</small>
+        </div>
+        <div class="show">
+          <p>{{ log.call_time }}</p>
+        </div>
+        <hr>
+      </div>
   </div>
+  </div>
+  
 </div>

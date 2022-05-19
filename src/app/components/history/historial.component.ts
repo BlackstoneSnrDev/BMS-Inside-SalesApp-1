@@ -10,8 +10,7 @@ import { DataService } from '../../services/services.service';
 
 export class HistorialComponent implements OnInit {
 
-    public forminput: any;
-    public formnotes: any;
+    public historial: any;
     public isShown: boolean = false;
     public addNote: boolean = false;
 
@@ -19,14 +18,13 @@ export class HistorialComponent implements OnInit {
 
     ngOnInit() {
 
-        this.DataService.getFormData().subscribe(
+        this.DataService.getHistorialData().subscribe(
 
             response => {
 
-                this.forminput = response.input
-                this.formnotes = response.notes
+                this.historial = response.historial
 
-                console.log( this.formnotes)
+                console.log( this.historial)
 
             },
             error => {

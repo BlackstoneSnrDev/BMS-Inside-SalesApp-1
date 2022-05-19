@@ -1,5 +1,5 @@
 {
-    "input": [
+    "componentCallInfo": [
         {
             "element": "input",
             "input_placeholder": "Full name",
@@ -19,7 +19,7 @@
             "input_icon": ""
         },
         {
-            "element": "textarea",
+            "element": "input",
             "input_placeholder": "Address",
             "input_type": "",
             "input_icon": ""
@@ -31,31 +31,54 @@
             "input_icon": ""
         }
     ],
-    "notes": [
+    "componentPhone": [
         {
-            "patient": "Timmy MacGee",
-            "date": "12/05/2021",
-            "content": "Voicemail left"
+            "element": "toggle",
+            "input_placeholder": "V",
+            "input_type": "text",
+            "input_icon": ""
         },
         {
-            "patient": "Timmy MacGee",
-            "date": "9/03/2021",
-            "content": "SMS text sent"
+            "element": "input",
+            "input_placeholder": "Call...",
+            "input_type": "number",
+            "input_icon": ""
         },
         {
-            "patient": "Timmy MacGee",
-            "date": "6/03/2021",
-            "content": "I spoke with Timmy. She said she'll be able to pay after payday, next Friday (the 12th). I put her in pending status."
+            "element": "icon",
+            "input_placeholder": "",
+            "input_type": "",
+            "input_icon": "bi bi-telephone-forward-fill"
         },
         {
-            "patient": "Timmy MacGee",
-            "date": "04/01/2022",
-            "content": "PT called. He was worried about the message about the insurance not covering his HST after Dec 31st. Explained him insurance may change the plan and deductible at the end of the year. "
+            "element": "button",
+            "input_placeholder": "VM",
+            "input_type": "",
+            "input_icon": ""
         },
         {
-            "patient": "Timmy MacGee",
-            "date": "5/01/2022",
-            "content": "PT called requesting us to send to the doctor the HST results. Results refaxed."
+            "element": "button",
+            "input_placeholder": "SMS",
+            "input_type": "",
+            "input_icon": ""
+        },
+        {
+            "element": "button",
+            "input_placeholder": "Emails",
+            "input_type": "",
+            "input_icon": ""
+        },
+        {
+            "element": "button",
+            "input_placeholder": "Pending",
+            "input_type": "",
+            "input_icon": ""
+        },
+        {
+            "element": "button",
+            "input_placeholder": "Payments",
+            "input_type": "",
+            "input_icon": ""
         }
     ]
 }

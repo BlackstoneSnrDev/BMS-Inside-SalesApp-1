@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
 
 @Component({
@@ -11,8 +11,9 @@ import { DataService } from '../../services/services.service';
 
 export class FormVerticalComponent implements OnInit {
 
-    public forminput: any;
-    public formnotes: any;
+    public historyLog: any;
+    public componentPhone: any;
+    public elementid: number = 0;
 
     constructor(private DataService: DataService) { }
 
@@ -22,10 +23,9 @@ export class FormVerticalComponent implements OnInit {
 
             response => {
 
-                this.forminput = response.input
-                this.formnotes = response.notes
+                this.componentPhone = response.componentPhone
 
-                console.log( this.formnotes)
+                console.log( this.componentPhone)
 
             },
             error => {
@@ -33,6 +33,26 @@ export class FormVerticalComponent implements OnInit {
             }
         )
 
+        this.DataService.getCallHistoryData().subscribe(
+
+            response => {
+
+                this.historyLog = response.callHistory
+
+                console.log( this.historyLog)
+
+            },
+            error => {
+                console.log(error)
+            }
+        )
+
+      }
+
+
+      getValue(event: Event){
+
+        return (event.target as HTMLInputElement).parentElement?.parentElement?.lastElementChild?.previousElementSibling?.classList.toggle("show");
       }
 
   }

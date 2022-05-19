@@ -1,16 +1,15 @@
 
 .input-neumorphism {
-
-    padding: .6rem .75rem;
-    color: #44476a;
-    background-color: #e6e7ee;
-    border: .0625rem solid #d1d9e6;
-    transition: all .3s ease-in-out;
-    border-radius: .55rem;
-    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
-    overflow-wrap: break-word;
-    -webkit-appearance: none;
-    width: 100%;
+  padding: .6rem .75rem;
+  color: #44476a;
+  background-color: #e6e7ee;
+  border: .0625rem solid #d1d9e6;
+  transition: all .3s ease-in-out;
+  border-radius: .55rem;
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+  overflow-wrap: break-word;
+  -webkit-appearance: none;
+  width: 100%;
 }
 
 .input-neumorphism:hover,
@@ -22,19 +21,22 @@
 }
 
 .iconbutton-neumorphism {
+  background-color: #e6e7ee;
 
-    float: right;
-    padding-top: 0.5rem;
-    text-align: center;
-    margin: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 2rem;
-    border: .0625rem solid #d1d9e6;
-    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+  float: right;
+  padding-top: 0.5rem;
+  text-align: center;
+  margin: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2rem;
+  border: .0625rem solid #d1d9e6;
+    box-shadow: 2px 2px 5px #b8b9be;
+
 }
 
-.iconbutton-neumorphism:hover {
+.iconbutton-neumorphism:hover,
+.iconbutton-neumorphism:focus {
 
     outline: 0;
     animation: pulse 3s infinite;
@@ -60,19 +62,23 @@
 }
 
 .button-neumorphism {
-
-  background-color: #31344b;
-  padding: 0.55rem 1rem 0.55rem 1rem;
+  padding: 0.55rem 0.55rem 0.55rem 0.55rem;
   text-align: center;
   border-radius: .55em;
   border: .0625rem solid #d1d9e6;
-  color: white;
+  color: #44476a;
+  background-color: #e6e7ee;
+  transition: all .3s ease-in-out;
+  overflow-wrap: break-word;
+  box-shadow: 2px 2px 5px #b8b9be;
 }
 
-.button-neumorphism:hover {
+.button-neumorphism:hover,
+.button-neumorphism:focus {
 
-  outline: 0;
-  animation: pulse 2s infinite;
+  box-shadow: inset 2px 2px 5px #b8b9be;
+  animation: pulse 3s infinite;
+  outline: none;
 }
 
 .toggle-neumorphism {
@@ -94,57 +100,55 @@
     left: 0;
     right: 0;
     bottom: 0;
-    -webkit-transition: .4s;
     transition: .4s;
-    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+    box-shadow: 3px 3px 6px #b8b9be;
     border: .0625rem solid #d1d9e6;
-  
+    background-color: #e6e7ee;  
   }
   
-  .toggle-slider-neumorphism:hover{
-      
-    outline: 0;    
-    box-shadow: none;
+
   
-  }
-  
-  .toggle-slider-neumorphism:before {
+  .toggle-slider-neumorphism::before {
     position: absolute;
     content: "";
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1.3rem;
+    width: 1.3rem;
     left: 0.5rem;
     bottom: 0.2rem;
-    background-color: #44476a;
-    
-    -webkit-transition: .4s;
+    background-color: #b1bcce;
+
     transition: .4s;
   }
-  
+
   input:checked + .toggle-slider-neumorphism {
     background-color: #e6e7ee;
-    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+    box-shadow: inset 2px 2px 5px #b8b9be;
   
   
   }
   
-  input:focus + .toggle-slider-neumorphism {
-    box-shadow: 0 0 1px #e6e7ee;
-    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
   
-  }
-  
-  input:checked + .toggle-slider-neumorphism:before {
+  input:checked + .toggle-slider-neumorphism::before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+    background-color: #31344b;
+
   }
   
   /* Rounded toggle-slider-neumorphisms */
   .toggle-slider-neumorphism.toggle-round-neumorphism {
     border-radius: 1rem;
+
+  }
+
+  .toggle-slider-neumorphism.toggle-round-neumorphism:hover{
+    animation: pulse 3s infinite;
+
   }
   
-  .toggle-slider-neumorphism.toggle-round-neumorphism:before {
+  
+  .toggle-slider-neumorphism.toggle-round-neumorphism::before {
     border-radius: 50%;
+
   }

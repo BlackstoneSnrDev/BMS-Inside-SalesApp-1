@@ -15,7 +15,7 @@ import { FormVerticalComponent } from './components/form-vertical/form-vertical.
 import { QueueComponent } from './partials/queue/queue.component';
 import { CallInfoComponent } from './partials/call-information/call-information.component';
 
-import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { OnlyMyBacon } from './directives/click-outside.directive';
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
 
 
@@ -29,7 +29,7 @@ import { TextareaAutoresizeDirective } from './directives/resize.directive';
     QueueComponent,
     CallInfoComponent,
     TextareaAutoresizeDirective,
-    ClickOutsideDirective
+    OnlyMyBacon
 
   ],
   imports: [

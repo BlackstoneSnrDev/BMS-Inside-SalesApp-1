@@ -12,7 +12,7 @@
           <div class="col-10">
             <textarea class="input-neumorphism" placeholder="Add note" id="input-note"  appTextareaAutoresize></textarea>
           </div>
-          <div class="col-2">
+          <div class="col-2 btnsave-container">
             <button class="button-neumorphism">Save</button>
           </div>
         </div>
@@ -20,13 +20,14 @@
       <hr>
     </div>
     <br>
-    <div *ngFor="let note of formnotes">
+    <div *ngFor="let log of historial">
       <div>
-        <h6>{{ note.patient }}</h6>
-        <small>{{ note.date }}</small>
+        <h6>{{ log.patient }}</h6>
+        <small>{{ log.date }}</small>
         <div>
-          {{ note.content }}
+          {{ log.content }}
         </div>
+        <hr>
         <br>
       </div>
     </div>
