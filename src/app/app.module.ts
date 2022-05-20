@@ -15,8 +15,8 @@ import { FormVerticalComponent } from './components/form-vertical/form-vertical.
 import { QueueComponent } from './partials/queue/queue.component';
 import { CallInfoComponent } from './partials/call-information/call-information.component';
 
-import { OnlyMyBacon } from './directives/click-outside.directive';
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -29,12 +29,13 @@ import { TextareaAutoresizeDirective } from './directives/resize.directive';
     QueueComponent,
     CallInfoComponent,
     TextareaAutoresizeDirective,
-    OnlyMyBacon
-
+    
   ],
+
   imports: [
     BrowserModule,
     HttpClientModule,
+    MatTableModule,
     routing
   ],
   providers: [

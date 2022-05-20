@@ -1,34 +1,31 @@
 <div class="phone-col">
   <div class="history-header">
-
-    <!-- <div class="form-row" spellcheck="true">
-      <div class="form-group col-md-6" *ngFor="let element of componentPhone">
-
-        <ng-container [ngTemplateOutlet]="element.element == 'input' ? inputElement : textareaElement : "
-          [ngTemplateOutletContext]="{input:input}">
-        </ng-container>
-
-        <ng-template #inputElement>
-          <input type="{{ input.input_type }}" class="input-neumorphism" placeholder="{{ input.input_placeholder }}">
-        </ng-template>
-
-        <ng-template #textareaElement>
-          <textarea class="input-neumorphism" placeholder="{{ input.input_placeholder }}" autocomplete="off"
-            appTextareaAutoresize></textarea>
-        </ng-template>
-      </div> -->
-
-    <div class="form-check form-check-inline button-inline width-container ">
-      <h6 class="toggle-neumorphism-label">Auto-dialer</h6>
-      <label class="toggle-neumorphism">
-        <input type="checkbox">
-        <span class="toggle-slider-neumorphism toggle-round-neumorphism"></span>
-      </label>
-    </div>
-    <div class="form-check form-check-inline button-inline">
-      <input type="number" class="input-neumorphism" placeholder="Call...">
-      <button class="iconbutton-neumorphism" id="input-call-at"><i class="bi bi-telephone-forward-fill i-neumorphism"></i>
-      </button>
+    <div *ngFor="let element of componentPhone">
+      <div *ngIf="element.element == 'toggle'">
+        <div class="form-check form-check-inline button-inline width-container">
+          <h6 class="toggle-neumorphism-label">{{ element.input_placeholder }}</h6>
+          <label class="toggle-neumorphism">
+            <input type="checkbox" />
+            <span class="toggle-slider-neumorphism toggle-round-neumorphism"></span>
+          </label>
+        </div>
+      </div>
+      <div *ngIf="element.element == 'inputIcon'">
+        <div class="form-check form-check-inline button-inline">
+          <input type="{{ element.input_type }}" class="input-neumorphism"
+            placeholder="{{ element.input_placeholder }}">
+          <button class="iconbutton-neumorphism" id="input-call-at"><i
+              class="{{ element.input_icon }} i-neumorphism"></i>
+          </button>
+        </div>
+      </div>
+      <!-- <div *ngIf="element.element == 'button'">
+            <div class="form-check form-check-inline button-inline">
+              <div class="button-inline" >
+                <button class="button-neumorphism ">{{ element.input_placeholder }}</button>
+              </div>
+            </div>
+        </div> -->
     </div>
     <div class="row">
       <div class="col-4 button-inline">
@@ -48,27 +45,24 @@
       <div class="col-6 button-inline ">
         <button class="button-neumorphism width-container">Payments</button>
       </div>
-</div>
-
-  <hr>
-  <div class="history-log" >
-
-    <div *ngFor="let log of historyLog; let i = index"  id="list">
-      <div class="width-container" (click)="getValue($event)" id="{{ i }}" >
-        <div class="form-check form-check-inline width-container" id="{{ i }}">
-          <h6 class="width-container" id="{{ i }}">{{ log.caller_name }}</h6>
-          <small id="{{ i }}">{{ log.caller_in_date }}</small>
+    </div>
+    <hr>
+    <div class="history-log">
+      <div *ngFor="let log of historyLog; let i = index" id="list">
+        <div class="width-container" (click)="getValue($event)" id="{{ i }}">
+          <div class="form-check form-check-inline width-container" id="{{ i }}">
+            <h6 class="width-container" id="{{ i }}">{{ log.caller_name }}</h6>
+            <small id="{{ i }}">{{ log.caller_in_date }}</small>
+          </div>
+          <div class="form-check form-check-inline width-container" id="{{ i }}">
+            <p class="width-container" id="{{ i }}">{{ log.caller_phone }}</p>
+            <small id="{{ i }}">{{ log.caller_in_time }}</small>
+          </div>
+          <div class="show">
+            <p>{{ log.call_time }}</p>
+          </div>
+          <hr>
         </div>
-        <div class="form-check form-check-inline width-container" id="{{ i }}">
-          <p class="width-container" id="{{ i }}">{{ log.caller_phone }}</p>
-          <small id="{{ i }}">{{ log.caller_in_time }}</small>
-        </div>
-        <div class="show">
-          <p>{{ log.call_time }}</p>
-        </div>
-        <hr>
       </div>
+    </div>
   </div>
-  </div>
-  
-</div>

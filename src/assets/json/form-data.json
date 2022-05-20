@@ -34,15 +34,15 @@
     "componentPhone": [
         {
             "element": "toggle",
-            "input_placeholder": "V",
-            "input_type": "text",
+            "input_placeholder": "Auto-dialer",
+            "input_type": "",
             "input_icon": ""
         },
         {
-            "element": "input",
+            "element": "inputIcon",
             "input_placeholder": "Call...",
             "input_type": "number",
-            "input_icon": ""
+            "input_icon": "bi bi-telephone-forward-fill"
         },
         {
             "element": "icon",
