@@ -42,13 +42,13 @@
             "element": "inputIcon",
             "input_placeholder": "Call...",
             "input_type": "number",
-            "input_icon": "bi bi-telephone-forward-fill"
+            "input_icon": "bi bi-telephone-fill"
         },
         {
             "element": "icon",
             "input_placeholder": "",
             "input_type": "",
-            "input_icon": "bi bi-telephone-forward-fill"
+            "input_icon": "bi bi-telephone-fill"
         },
         {
             "element": "button",

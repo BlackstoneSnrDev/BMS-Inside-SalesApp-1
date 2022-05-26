@@ -3,7 +3,7 @@ import { DataService } from '../../services/services.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-export interface queueTab {
+export interface queueData {
 
   name: string;
   mrn: string;
@@ -13,7 +13,7 @@ export interface queueTab {
   pending: string;
 
 }
-const queueData: queueTab[] = [
+const queueData: queueData[] = [
 
   { name: 'A , E', mrn: 'JUKqmaRb30apP9ma-zCCZg', dob: "19/12/2000", tier: 3, prior_contact: "No", pending: "No" },
   { name: 'B , D', mrn: 'JUKqmaRb30apP9ma-zCCZg', dob: "19/12/2000", tier: 3, prior_contact: "No", pending: "No" },
@@ -85,32 +85,32 @@ export class QueueComponent {
     {
       columnDef: 'name',
       header: 'Name',
-      cell: (element: queueTab) => `${element.name}`,
+      cell: (queueCell: queueData) => `${queueCell.name}`,
     },
     {
       columnDef: 'mrn',
       header: 'MRN',
-      cell: (element: queueTab) => `${element.mrn}`,
+      cell: (queueCell: queueData) => `${queueCell.mrn}`,
     },
     {
       columnDef: 'dob',
       header: 'DOB',
-      cell: (element: queueTab) => `${element.dob}`,
+      cell: (queueCell: queueData) => `${queueCell.dob}`,
     },
     {
       columnDef: 'tier',
       header: 'Tier',
-      cell: (element: queueTab) => `${element.tier}`,
+      cell: (queueCell: queueData) => `${queueCell.tier}`,
     },
     {
       columnDef: 'prior_contact',
       header: 'Prior_contact',
-      cell: (element: queueTab) => `${element.prior_contact}`,
+      cell: (queueCell: queueData) => `${queueCell.prior_contact}`,
     },
     {
       columnDef: 'pending',
       header: 'Pending',
-      cell: (element: queueTab) => `${element.pending}`,
+      cell: (queueCell: queueData) => `${queueCell.pending}`,
     },
   ];
   

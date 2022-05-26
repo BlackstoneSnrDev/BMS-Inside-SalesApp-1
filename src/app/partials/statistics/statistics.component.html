@@ -1,7 +1,27 @@
-<div class="row main-row ">
-  <h1>Statistics</h1>
-  <hr><br>
-  <div class="col-12 phone-col">
-    <h1>Statis</h1>
+<div class="row main-row">
+  <div class="col-sm-12 ">
+    <h1>Statistics</h1>
+    <hr><br>
+    <div>
+      <div>
+        <div>
+          <div class="form-check form-check-inline width-100">
+            <button class="button-neumorphism" (click)="randomize()">Update</button>
+            <button class="button-neumorphism">Weekly</button>
+            <button class="button-neumorphism">Today</button>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 caller-information-col">
+            </div>
+            <div class="col-sm-6 ">
+              <div style="display: block">
+                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"
+                  (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

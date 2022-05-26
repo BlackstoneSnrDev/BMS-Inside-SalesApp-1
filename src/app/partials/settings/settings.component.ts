@@ -1,18 +1,19 @@
-import { Component } from "@angular/core";
+import { Component, OnInit  } from "@angular/core";
 
 @Component({
 
     selector: 'settings',
     templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.css']
+    styleUrls: ['./settings.component.css',
+    '../../css/neumorphism.component.css',]
 
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
   
-    constructor(){
+    constructor(){}
 
-        console.log("Constructor Executed");
-
+    ngOnInit() {
+       
     }
 
 }

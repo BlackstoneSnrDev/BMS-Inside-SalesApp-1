@@ -15,11 +15,18 @@ import { FormVerticalComponent } from './components/form-vertical/form-vertical.
 
 import { QueueComponent } from './partials/queue/queue.component';
 import { CallInfoComponent } from './partials/call-information/call-information.component';
+import { SettingsComponent } from './partials/settings/settings.component';
+import { StatisticsComponent } from './partials/statistics/statistics.component';
+
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgChartsModule } from 'ng2-charts';
+
 @NgModule({
 
   declarations: [
@@ -30,6 +37,8 @@ import { MatSortModule } from '@angular/material/sort';
     SidebarComponent,
     QueueComponent,
     CallInfoComponent,
+    SettingsComponent,
+    StatisticsComponent,
     TextareaAutoresizeDirective
   ],
 
@@ -41,6 +50,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTooltipModule,
+    NgChartsModule,
     routing
   ],
 

@@ -14,7 +14,7 @@
 
     <ul class="ul-sidebar">
         <li class="sidebar-tab-container" *ngFor="let tab of sidebartabs">
-            <div class="sidebar-tab" data-toggle="tooltip" title="{{ tab.tab_name }}" routerLinkActive="active-tab">
+            <div class="sidebar-tab" matTooltip="{{ tab.tab_name }}" matTooltipPosition="right" routerLinkActive="active-tab">
                 <a class="a-sidebar" [routerLink]="[tab.tab_route]" >
                     <i class="{{ tab.tab_icon }} i-sidebar"></i>
                 </a>

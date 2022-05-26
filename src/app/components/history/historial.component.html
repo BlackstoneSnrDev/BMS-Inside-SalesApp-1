@@ -1,7 +1,7 @@
 <div class="row inherit-row">
   <div class="col-12 notes-container-col ">
     <div class="col-12 float-right">
-      <div class="iconbutton-neumorphism" (click)="toggleAddNote()" id="add-note">
+      <div class="iconbutton-neumorphism" (click)="toggleAddNote()" id="add-note" matTooltip="Add note" matTooltipPosition="above">
         <i class="bi bi-plus-circle-fill i-neumorphism" *ngIf="!addNote"></i>
         <i class="bi bi-x-circle-fill i-neumorphism" *ngIf="addNote"></i>
       </div>
@@ -22,11 +22,13 @@
     <br>
     <div *ngFor="let log of historial">
       <div>
-        <h6>{{ log.patient }}</h6>
-        <small>{{ log.date }}</small>
-        <div>
+        <div class="form-check form-check-inline width-100">
+          <h6>{{ log.patient }} | <small>{{ log.date }}</small> </h6>
+        </div>
+        <div class="container-content">
           {{ log.content }}
         </div>
+        <small>{{ log.rep }}</small>
         <hr>
         <br>
       </div>
