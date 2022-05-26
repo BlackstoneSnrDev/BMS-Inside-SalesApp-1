@@ -5,7 +5,8 @@ import { DataService } from '../../services/services.service';
 
     selector: 'call-information',
     templateUrl: './call-information.component.html',
-    styleUrls: ['./call-information.component.css']
+    styleUrls: ['./call-information.component.css',
+    '../../css/neumorphism.component.css',]
 
 })
 

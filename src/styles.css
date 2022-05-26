@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 html{ 
     background-color: #e6e7ee; 
     font-size: 0.90rem;
@@ -9,6 +11,7 @@ html{
 body{
     height: 100%;
     background-color: #e6e7ee;   
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 
 }
 
@@ -49,3 +52,10 @@ input[type=number]::-webkit-outer-spin-button {
 -webkit-appearance: none;
 margin: 0;
 }
+
+.mat-select-panel{
+  
+  background-color: #e6e7ee;
+
+}
+
