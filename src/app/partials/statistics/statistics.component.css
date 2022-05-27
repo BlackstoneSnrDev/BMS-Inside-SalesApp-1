@@ -5,13 +5,31 @@
     height: 57rem;
 }
 
-.caller-information-col {
-    background: #e6e7ee;
+.chart-col{
     overflow-y: hidden;
     border-radius: 2rem;
     border: 0.10rem solid #d1d9e6;
-  }
-  
-  .caller-information-col{
     padding: 1.5rem;
-  }
+}
+
+.chart-sum-col{
+    overflow-y: hidden;
+    border-radius: 2rem;
+    border: 0.10rem solid #d1d9e6;
+    padding: 2.5rem;
+    height: 56.9rem;
+}
+
+.icon-rep{
+    font-size: 3.9rem    ;
+    vertical-align: text-top;
+    background-color: #e6e7ee;
+    border-radius: 5rem;
+    border: .0625rem solid #d1d9e6;
+    padding: 1rem 2.5rem 1rem 2.5rem;
+
+}
+
+.dials-percentage{
+    margin-left: 37%;
+}

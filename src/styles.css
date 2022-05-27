@@ -49,6 +49,18 @@ margin: 0;
   width: 100%;
 }
 
+.margin-bt{
+  margin-bottom: 1rem;
+}
+
+.margin-lg-bt{
+  margin-bottom: 2rem;
+}
+
+.margin-lt{
+  margin-left: 1rem;
+}
+
 .mat-select-panel{
   background-color: #e6e7ee;
 }

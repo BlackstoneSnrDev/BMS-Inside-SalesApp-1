@@ -101,7 +101,7 @@
     <div class="history-log">
       <div *ngFor="let log of historyLog; let i = index" id="list">
         <div class="width-100" (click)="showTimeHandle($event)" id="{{ i }}">
-          <div class="form-check form-check-inline width-100" id="{{ i }}">
+          <div class="form-check form-check-inline width-100 " id="{{ i }}">
             <h6 class="width-100" id="{{ i }}">{{ log.caller_name }}</h6>
             <small id="{{ i }}">{{ log.caller_in_date }}</small>
           </div>

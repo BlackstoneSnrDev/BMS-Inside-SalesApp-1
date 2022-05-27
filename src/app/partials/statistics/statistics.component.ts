@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild  } from "@angular/core";
 import { ChartConfiguration, ChartData, ChartEvent, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+
 @Component({
 
     selector: 'statistics',
@@ -10,7 +12,8 @@ import { BaseChartDirective } from 'ng2-charts';
 
 })
 export class StatisticsComponent {
-  
+  value = 100;
+
     @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
     public barChartOptions: ChartConfiguration['options'] = {
@@ -30,7 +33,8 @@ export class StatisticsComponent {
         legend: { display: true },
       }
     };
-    public barChartLabels: string[] = [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ];
+
+    public barChartLabels: string[] = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ];
     public barChartType: ChartType = 'bar';
   
     public barChartData: ChartData<'bar'> = {

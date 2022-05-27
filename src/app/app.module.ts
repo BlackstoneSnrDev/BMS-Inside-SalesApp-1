@@ -26,6 +26,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgChartsModule } from 'ng2-charts';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
 
@@ -52,6 +54,8 @@ import { NgChartsModule } from 'ng2-charts';
     MatSortModule,
     MatTooltipModule,
     NgChartsModule,
+    MatProgressSpinnerModule,
+
     routing
   ],
 

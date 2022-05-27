@@ -5,18 +5,56 @@
     <div>
       <div>
         <div>
-          <div class="form-check form-check-inline width-100">
-            <button class="button-neumorphism" (click)="randomize()">Update</button>
-            <button class="button-neumorphism">Weekly</button>
-            <button class="button-neumorphism">Today</button>
+          <div class="form-check form-check-inline width-100 margin-bt">
+            <div class="iconbutton-neumorphism ">
+              <i class="bi bi-sliders"></i>
+            </div>
+            <button class="button-neumorphism margin-lt" (click)="randomize()">
+              <i class="bi bi-reception-4"></i>
+              <i class="bi bi-graph-up"></i>
+            </button>
+            <button class="button-neumorphism margin-lt">Weekly</button>
+            <button class="button-neumorphism margin-lt">Today</button>
           </div>
           <div class="row">
-            <div class="col-sm-6 caller-information-col">
+            <div class="col-sm-8 ">
+              <div class="chart-col">
+                <div style="display: block">
+                  <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"
+                    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+              </div>
             </div>
-            <div class="col-sm-6 ">
-              <div style="display: block">
-                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"
-                  (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            <div class="col-sm-4">
+              <div class="chart-sum-col ">
+                <!-- <div class="text-center margin-lg-bt">
+                <i class="bi bi-person-fill icon-rep"></i>
+              </div> -->
+                <h4 class="text-center margin-lg-bt">Representative's Name</h4>
+                <div class="margin-lg-bt" matTooltip="Dials {{ value }}%" matTooltipPosition="above">
+                  <mat-progress-spinner class="dials-percentage" [value]="value">
+                  </mat-progress-spinner>
+                  <h6 class="percentage text-center">400</h6>
+                </div>
+                <h5>Recent activities</h5>
+                <h6>Today</h6>
+                <div class="form-check form-check-inline width-100">
+                  <p class="width-100">Tier one</p>
+                  <p>50%</p>
+                </div>
+                <div class="form-check form-check-inline width-100">
+                  <p class="width-100">Tier two</p>
+                  <p>80%</p>
+                </div>
+                <div class="form-check form-check-inline width-100">
+                  <p class="width-100">Tier three</p>
+                  <p>90%</p>
+                </div>
+                <hr>
+                <div class="form-check form-check-inline width-100">
+                  <h6 class="width-100">Total</h6>
+                  <p>75%</p>
+                </div>
               </div>
             </div>
           </div>
