@@ -12,6 +12,7 @@ import { FormComponent } from './components/form/form.component';
 import { LogComponent } from './components/log/log.component';
 import { PhoneComponent } from './components/phone/phone.component';
 import { TableComponent } from './components/table/table.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 import { QueueComponent } from './partials/queue/queue.component';
@@ -57,6 +58,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTooltipModule,
     NgChartsModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
 
     routing
   ],

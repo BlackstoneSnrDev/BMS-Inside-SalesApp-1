@@ -28,7 +28,7 @@ export class PhoneComponent implements OnInit {
               this.componentPhone = response.componentPhone
             },
             error => {
-              console.log(error)
+              console.error(error)
             }
         )
 
@@ -39,7 +39,7 @@ export class PhoneComponent implements OnInit {
 
             },
             error => {
-              console.log(error)
+              console.error(error)
             }
         )
       }

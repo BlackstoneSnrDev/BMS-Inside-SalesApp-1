@@ -25,7 +25,7 @@ export class FormComponent implements OnInit {
             },
 
             (error) => {
-                console.log(error);
+                console.error(error);
             }
 
         );

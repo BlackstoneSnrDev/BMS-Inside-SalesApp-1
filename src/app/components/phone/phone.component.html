@@ -1,126 +1,113 @@
-<div class="phone-col">
-  <div class="phone-header">
-
-    <div *ngFor="let element of componentPhone">
-      <div *ngIf="element.element == 'toggle'">
-        <div class="form-check form-check-inline button-inline width-100">
-          <h6 class="toggle-neumorphism-label">{{ element.element_placeholder }}</h6>
-          <label class="toggle-neumorphism">
-            <input type="checkbox" (click)="btnAutoDialer()" />
-            <span class="toggle-slider-neumorphism toggle-round-neumorphism">
-              <label class="toggle-label" [ngClass]="toggleStatus ? 'show' : 'hide'">On</label>
-            </span>
-          </label>
+<div class="phone-header">
+  <div *ngFor="let element of componentPhone">
+    <div *ngIf="element.element == 'toggle'">
+      <div class="form-check form-check-inline button-inline width-100">
+        <h6 class="toggle-neumorphism-label">{{ element.element_placeholder }}</h6>
+        <label class="toggle-neumorphism">
+          <input type="checkbox" (click)="btnAutoDialer()" />
+          <span class="toggle-slider-neumorphism toggle-round-neumorphism">
+            <label class="toggle-label" [ngClass]="toggleStatus ? 'show' : 'hide'">On</label>
+          </span>
+        </label>
+      </div>
+    </div>
+    <div *ngIf="element.element == 'inputIcon'">
+      <div class="form-check form-check-inline button-inline">
+        <input type="{{ element.element_type }}" class="input-neumorphism"
+          placeholder="{{ element.element_placeholder }}">
+        <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall()">
+          <i class="bi bi-telephone-fill i-neumorphism" [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
+          <i class="bi bi-x-circle-fill i-neumorphism" [ngClass]="containerCallStatus ? 'show' : 'hide'"></i>
         </div>
       </div>
-      <div *ngIf="element.element == 'inputIcon'">
-        <div class="form-check form-check-inline button-inline">
-          <input type="{{ element.element_type }}" class="input-neumorphism"
-            placeholder="{{ element.element_placeholder }}">
-          <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall()">
-            <i class="bi bi-telephone-fill i-neumorphism"
-              [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
-            <i class="bi bi-x-circle-fill i-neumorphism"
-              [ngClass]="containerCallStatus ? 'show' : 'hide'"></i>
-          </div>
-        </div>
-      </div>
-      <!-- <div *ngIf="element.element == 'button'">
+    </div>
+    <!-- <div *ngIf="element.element == 'button'">
             <div class="form-check form-check-inline button-inline">
               <div class="button-inline" >
                 <button class="button-neumorphism ">{{ element.element_placeholder }}</button>
               </div>
             </div>
         </div> -->
-    </div>
-    <div *ngIf="containerCallStatus" class="container-neumorphism" [ngClass]="holdStatus ? 'change-on-hold' : ''">
-      <div class="form-check form-check-inline width-100 border-bottom">
-        <small class="margin-right width-100 ">Call established</small>
-        <small class="margin-right">00:01:30</small>
-      </div>
-      <div class="form-check form-check-inline width-100">
-        <h6 class="margin-right width-100">Calling at Name</h6>
-      </div>
-      <div class="form-check form-check-inline width-100">
-        <small class="margin-right width-100">6126163731</small>
-        <button class="mini-iconbutton-neumorphism mute-toggle" matTooltip="Mute" matTooltipPosition="above"
-          (click)="btnMuteCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
-          <i class="bi bi-mic-fill mute-toggle-unmuted i-neumorphism"
-            [ngClass]="muteStatus ? 'hide' : 'show'"></i>
-          <i class="bi bi-mic-mute-fill mute-toggle-muted i-neumorphism"
-            [ngClass]="muteStatus ? 'show' : 'hide'"></i>
-        </button>
-        <button class="mini-iconbutton-neumorphism hold-toggle" matTooltip="Hold" matTooltipPosition="above"
-          (click)="btnHoldCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
-          <i class="bi bi-pause-fill hold-toggle-onhold i-neumorphism"
-            [ngClass]="holdStatus ? 'hide' : 'show'"></i>
-          <i class="bi bi-play-fill hold-toggle-oncall i-neumorphism "
-            [ngClass]="holdStatus ? 'show' : 'hide'"></i>
-        </button>
-        <input type="number" class="mini-input-neumorphism" placeholder="Transfer to..."
-          [ngClass]="xferStatus ? 'show' : 'hide'">
-        <button class="mini-iconbutton-neumorphism" matTooltip="Transfer to" matTooltipPosition="above"
-          (click)="btnXferCall()">
-          <i class="bi bi-telephone-forward-fill i-neumorphism"
-            [ngClass]="xferStatus ? 'hide' : 'show'"></i>
-          <i class="bi bi-x-circle-fill i-neumorphism" [ngClass]="xferStatus ? 'show' : 'hide'"></i>
-        </button>
-        <button class="mini-iconbutton-neumorphism" matTooltip="Hang up" matTooltipPosition="above"
-          (click)="btnHangUpCall()">
-          <i class="bi bi-telephone-x-fill i-neumorphism"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-4 button-inline">
-        <button class="button-neumorphism width-100">VM</button>
-      </div>
-      <div class="col-4 button-inline">
-        <button class="button-neumorphism width-100">SMS</button>
-      </div>
-      <div class="col-4 button-inline">
-        <button class="button-neumorphism width-100">Email</button>
-      </div>
-    </div>
-    <div class="row ">
-      <div class="col-6 button-inline ">
-        <button class="button-neumorphism width-100">Pending</button>
-      </div>
-      <div class="col-6 button-inline ">
-        <button class="button-neumorphism width-100">Payments</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 button-inline " [ngClass]="toggleStatus ? 'hide' : 'show'">
-        <button class="button-neumorphism-disabled float-right"> Next call <i
-            class="bi bi-arrow-right-circle-fill i-neumorphism"></i>
-        </button>
-      </div>
-    </div>
-    <hr>
   </div>
+  <div *ngIf="containerCallStatus" class="container-neumorphism" [ngClass]="holdStatus ? 'change-on-hold' : ''">
+    <div class="form-check form-check-inline width-100 border-bottom">
+      <small class="margin-right width-100 ">Call established</small>
+      <small class="margin-right">00:01:30</small>
+    </div>
+    <div class="form-check form-check-inline width-100">
+      <h6 class="margin-right width-100">Calling at Name</h6>
+    </div>
+    <div class="form-check form-check-inline width-100">
+      <small class="margin-right width-100">6126163731</small>
+      <button class="mini-iconbutton-neumorphism mute-toggle" matTooltip="Mute" matTooltipPosition="above"
+        (click)="btnMuteCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
+        <i class="bi bi-mic-fill mute-toggle-unmuted i-neumorphism" [ngClass]="muteStatus ? 'hide' : 'show'"></i>
+        <i class="bi bi-mic-mute-fill mute-toggle-muted i-neumorphism" [ngClass]="muteStatus ? 'show' : 'hide'"></i>
+      </button>
+      <button class="mini-iconbutton-neumorphism hold-toggle" matTooltip="Hold" matTooltipPosition="above"
+        (click)="btnHoldCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
+        <i class="bi bi-pause-fill hold-toggle-onhold i-neumorphism" [ngClass]="holdStatus ? 'hide' : 'show'"></i>
+        <i class="bi bi-play-fill hold-toggle-oncall i-neumorphism " [ngClass]="holdStatus ? 'show' : 'hide'"></i>
+      </button>
+      <input type="number" class="mini-input-neumorphism" placeholder="Transfer to..."
+        [ngClass]="xferStatus ? 'show' : 'hide'">
+      <button class="mini-iconbutton-neumorphism" matTooltip="Transfer to" matTooltipPosition="above"
+        (click)="btnXferCall()">
+        <i class="bi bi-telephone-forward-fill i-neumorphism" [ngClass]="xferStatus ? 'hide' : 'show'"></i>
+        <i class="bi bi-x-circle-fill i-neumorphism" [ngClass]="xferStatus ? 'show' : 'hide'"></i>
+      </button>
+      <button class="mini-iconbutton-neumorphism" matTooltip="Hang up" matTooltipPosition="above"
+        (click)="btnHangUpCall()">
+        <i class="bi bi-telephone-x-fill i-neumorphism"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 button-inline">
+      <button class="button-neumorphism width-100">VM</button>
+    </div>
+    <div class="col-4 button-inline">
+      <button class="button-neumorphism width-100">SMS</button>
+    </div>
+    <div class="col-4 button-inline">
+      <button class="button-neumorphism width-100">Email</button>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-6 button-inline ">
+      <button class="button-neumorphism width-100">Pending</button>
+    </div>
+    <div class="col-6 button-inline ">
+      <button class="button-neumorphism width-100">Payments</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 button-inline " [ngClass]="toggleStatus ? 'hide' : 'show'">
+      <button class="button-neumorphism-disabled float-right"> Next call <i
+          class="bi bi-arrow-right-circle-fill i-neumorphism"></i>
+      </button>
+    </div>
+  </div>
+  <hr>
+</div>
 
-    <div class="phone-history">
-      <div *ngFor="let log of phoneHistory; let i = index" id="list">
-
-        <div class="phone-log">
-
-        <div class="width-100" (click)="showTimeHandle($event)" id="{{ i }}">
-          <div class="form-check form-check-inline width-100 " id="{{ i }}">
-            <h6 class="width-100" id="{{ i }}">{{ log.caller_name }}</h6>
-            <small id="{{ i }}">{{ log.caller_in_date }}</small>
-          </div>
-          <div class="form-check form-check-inline width-100" id="{{ i }}">
-            <p class="width-100" id="{{ i }}">{{ log.caller_phone }}</p>
-            <small id="{{ i }}">{{ log.caller_in_time }}</small>
-          </div>
-          <div class="hide" matTooltip="Call duration" matTooltipPosition="left">
-            <p>{{ log.call_time }}</p>
-          </div>
-          <hr>
-        </div>  
+<div class="phone-history">
+  <div *ngFor="let log of phoneHistory; let i = index" id="list">
+    <div class="phone-log">
+      <div class="width-100" (click)="showTimeHandle($event)" id="{{ i }}">
+        <div class="form-check form-check-inline width-100 " id="{{ i }}">
+          <h6 class="width-100" id="{{ i }}">{{ log.caller_name }}</h6>
+          <small id="{{ i }}">{{ log.caller_in_date }}</small>
         </div>
+        <div class="form-check form-check-inline width-100" id="{{ i }}">
+          <p class="width-100" id="{{ i }}">{{ log.caller_phone }}</p>
+          <small id="{{ i }}">{{ log.caller_in_time }}</small>
+        </div>
+        <div class="hide" matTooltip="Call duration" matTooltipPosition="left">
+          <p>{{ log.call_time }}</p>
+        </div>
+        <hr>
       </div>
     </div>
+  </div>
 </div>

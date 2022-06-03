@@ -89,6 +89,14 @@ margin: 0;
   outline: none;
 }
 
+.mat-sort-header-arrow {
+  color: #44476A;
+}
+
+.mat-sort-header-container {
+  justify-content: center ;
+}
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(141, 144, 181, 0.7);

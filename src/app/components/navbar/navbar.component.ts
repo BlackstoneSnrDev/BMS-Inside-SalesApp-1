@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
 
             },
             error => {
-                console.log(error)
+                console.error(error)
             }
         )
 
