@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
 
 @Component({
-  selector: 'form-vertical-component',
-  templateUrl: './form-vertical.component.html',
-  styleUrls: ['./form-vertical.component.css',
+  selector: 'phone-component',
+  templateUrl: './phone.component.html',
+  styleUrls: ['./phone.component.css',
   '../../css/neumorphism.component.css',
 ],
 })
 
-export class FormVerticalComponent implements OnInit {
+export class PhoneComponent implements OnInit {
 
   public componentPhone: any;
-  public historyLog: any;
+  public phoneHistory: any;
   public toggleStatus: boolean = false;
   public containerCallStatus: boolean = false;
   public holdStatus: boolean = false;
@@ -22,7 +22,8 @@ export class FormVerticalComponent implements OnInit {
   constructor(private DataService: DataService) { }
 
     ngOnInit() {
-        this.DataService.getFormData().subscribe(
+      
+        this.DataService.getFormElementsData().subscribe(
             response => {
               this.componentPhone = response.componentPhone
             },
@@ -33,7 +34,9 @@ export class FormVerticalComponent implements OnInit {
 
         this.DataService.getCallHistoryData().subscribe(
             response => {
-              this.historyLog = response.callHistory
+              this.phoneHistory = response.callHistory
+              console.log("Output 1" + this.phoneHistory)
+
             },
             error => {
               console.log(error)

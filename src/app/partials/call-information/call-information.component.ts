@@ -1,5 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
-import { DataService } from '../../services/services.service';
+import { Component } from '@angular/core';
 
 @Component({
 
@@ -10,30 +9,10 @@ import { DataService } from '../../services/services.service';
 
 })
 
-export class CallInfoComponent implements OnInit {
+export class CallInfoComponent {
 
-    public forminput: any;
-    public formnotes: any;
 
-    constructor(private DataService: DataService) { }
+    constructor() { }
 
-    ngOnInit() {
-
-        this.DataService.getFormData().subscribe(
-
-            response => {
-
-                this.forminput = response.input
-                this.formnotes = response.notes
-
-                console.log( this.formnotes)
-
-            },
-            error => {
-                console.log(error)
-            }
-        )
-
-      }
 
   }

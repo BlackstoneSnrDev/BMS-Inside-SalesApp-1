@@ -10,11 +10,11 @@ import { Observable } from 'rxjs'
 
 export class DataService {
 
-  public sidebardataURL: string;
-  public formURL: string;
+  public navbarDataURL: string;
+  public formElementsURL: string;
   public callhistoryURL: string;
-  public historialURL: string;
-  public queuedataURL: string;
+  public logURL: string;
+  public tableDataURL: string;
 
   constructor(
 
@@ -22,29 +22,29 @@ export class DataService {
 
   ){
 
-    this.sidebardataURL = "../../assets/json/sidebar-data.json";
-    this.formURL = "../../assets/json/form-data.json";
+    this.navbarDataURL = "../../assets/json/navbar-data.json";
+    this.formElementsURL = "../../assets/json/form-elements.json";
     this.callhistoryURL = "../../assets/json/call-flow.json";
-    this.historialURL = "../../assets/json/historial-data.json";
-    this.queuedataURL = "../../assets/json/queue-data.json";
+    this.logURL = "../../assets/json/log-data.json";
+    this.tableDataURL = "../../assets/json/queueTable-data.json";
 
   }
 
-  getSidebarData(): Observable<any>{
+  getNavbarData(): Observable<any>{
 
-    return this._http.get(this.sidebardataURL);
-
-  }
-
-  getFormData(): Observable<any>{
-
-    return this._http.get(this.formURL);
+    return this._http.get(this.navbarDataURL);
 
   }
 
-  getHistorialData(): Observable<any>{
+  getFormElementsData(): Observable<any>{
 
-    return this._http.get(this.historialURL);
+    return this._http.get(this.formElementsURL);
+
+  }
+
+  getLogData(): Observable<any>{
+
+    return this._http.get(this.logURL);
 
   }
 
@@ -54,9 +54,9 @@ export class DataService {
 
   }
 
-  getQueueData(): Observable<any>{
+  getTableData(): Observable<any>{
 
-    return this._http.get(this.queuedataURL);
+    return this._http.get(this.tableDataURL);
 
   }
 }

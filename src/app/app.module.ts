@@ -7,10 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routing, appRoutingProviders } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormComponent } from './components/form/form.component';
-import { HistorialComponent } from './components/history/historial.component';
-import { FormVerticalComponent } from './components/form-vertical/form-vertical.component';
+import { LogComponent } from './components/log/log.component';
+import { PhoneComponent } from './components/phone/phone.component';
+import { TableComponent } from './components/table/table.component';
 
 
 import { QueueComponent } from './partials/queue/queue.component';
@@ -34,9 +35,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   declarations: [
     AppComponent,
     FormComponent,
-    HistorialComponent,
-    FormVerticalComponent,
-    SidebarComponent,
+    LogComponent,
+    PhoneComponent,
+    NavbarComponent,
+    TableComponent,
     QueueComponent,
     CallInfoComponent,
     SettingsComponent,

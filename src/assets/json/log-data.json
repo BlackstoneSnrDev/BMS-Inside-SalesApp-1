@@ -1,11 +1,10 @@
 {
-    "historial": [
+    "log": [
         {
             "patient": "Timmy MacGee",
             "date": "12/05/2021",
             "content": "Voicemail left",
             "rep": "Jean Doe"
-
         },
         {
             "patient": "Timmy MacGee",

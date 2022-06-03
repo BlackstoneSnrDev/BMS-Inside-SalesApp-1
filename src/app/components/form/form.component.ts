@@ -1,39 +1,39 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
 
 @Component({
     selector: 'form-component',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.css',
-    '../../css/neumorphism.component.css',
-],
+    styleUrls: ['../../css/neumorphism.component.css'],
 })
 
 export class FormComponent implements OnInit {
 
-    public forminput: any;
-    public formnotes: any;
+    public formElement: any;
+    public editField: boolean = false;
+    public disabledField: string = "input-neumorphism";
+    public enableField: string = "input-disabled-neumorphism";
 
     constructor(private DataService: DataService) { }
 
     ngOnInit() {
 
-        this.DataService.getFormData().subscribe(
+        this.DataService.getFormElementsData().subscribe(
 
-            response => {
-
-                this.forminput = response.componentCallInfo
-                this.formnotes = response.notes
-
-                console.log( this.formnotes)
-
+            (response) => {
+                this.formElement = response.componentCallInfo;
             },
-            error => {
-                console.log(error)
+
+            (error) => {
+                console.log(error);
             }
-        )
 
-      }
+        );
+    }
 
-  }
-  
+    editFields(){
+
+        this.editField = !this.editField;
+
+    }
+}

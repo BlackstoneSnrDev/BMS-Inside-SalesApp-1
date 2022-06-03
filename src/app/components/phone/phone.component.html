@@ -1,9 +1,10 @@
 <div class="phone-col">
-  <div class="history-header">
+  <div class="phone-header">
+
     <div *ngFor="let element of componentPhone">
       <div *ngIf="element.element == 'toggle'">
         <div class="form-check form-check-inline button-inline width-100">
-          <h6 class="toggle-neumorphism-label">{{ element.input_placeholder }}</h6>
+          <h6 class="toggle-neumorphism-label">{{ element.element_placeholder }}</h6>
           <label class="toggle-neumorphism">
             <input type="checkbox" (click)="btnAutoDialer()" />
             <span class="toggle-slider-neumorphism toggle-round-neumorphism">
@@ -14,8 +15,8 @@
       </div>
       <div *ngIf="element.element == 'inputIcon'">
         <div class="form-check form-check-inline button-inline">
-          <input type="{{ element.input_type }}" class="input-neumorphism"
-            placeholder="{{ element.input_placeholder }}">
+          <input type="{{ element.element_type }}" class="input-neumorphism"
+            placeholder="{{ element.element_placeholder }}">
           <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall()">
             <i class="bi bi-telephone-fill i-neumorphism"
               [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
@@ -27,7 +28,7 @@
       <!-- <div *ngIf="element.element == 'button'">
             <div class="form-check form-check-inline button-inline">
               <div class="button-inline" >
-                <button class="button-neumorphism ">{{ element.input_placeholder }}</button>
+                <button class="button-neumorphism ">{{ element.element_placeholder }}</button>
               </div>
             </div>
         </div> -->
@@ -90,16 +91,21 @@
         <button class="button-neumorphism width-100">Payments</button>
       </div>
     </div>
-    <div class="row ">
-      <div class="col-12 button-inline ">
+    <div class="row">
+      <div class="col-12 button-inline " [ngClass]="toggleStatus ? 'hide' : 'show'">
         <button class="button-neumorphism-disabled float-right"> Next call <i
             class="bi bi-arrow-right-circle-fill i-neumorphism"></i>
         </button>
       </div>
     </div>
     <hr>
-    <div class="history-log">
-      <div *ngFor="let log of historyLog; let i = index" id="list">
+  </div>
+
+    <div class="phone-history">
+      <div *ngFor="let log of phoneHistory; let i = index" id="list">
+
+        <div class="phone-log">
+
         <div class="width-100" (click)="showTimeHandle($event)" id="{{ i }}">
           <div class="form-check form-check-inline width-100 " id="{{ i }}">
             <h6 class="width-100" id="{{ i }}">{{ log.caller_name }}</h6>
@@ -113,7 +119,8 @@
             <p>{{ log.call_time }}</p>
           </div>
           <hr>
+        </div>  
         </div>
       </div>
     </div>
-  </div>
+</div>

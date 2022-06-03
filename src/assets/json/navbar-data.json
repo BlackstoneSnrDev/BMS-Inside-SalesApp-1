@@ -1,6 +1,7 @@
 {
-    "sidebar_logo": "bmsGreenLogo.png",
-    "sidebar": [
+    "navbar_img_logo": "bmsDarkLogo.png",
+    "navbar_company_name": "Blackstone Medical Services",
+    "navbar_tabs": [
         {
             "tab_name": "Call information",
             "tab_icon": "bi bi-telephone-fill",

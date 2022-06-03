@@ -1,26 +1,31 @@
-<div class="caller-information-col">
-  <form>
-    <div class="iconbutton-neumorphism" matTooltip="Edit fields" matTooltipPosition="above">
-      <i class="bi bi-pencil-square i-neumorphism"></i>
+<form>
+  <div class="iconbutton-container">
+    <div class="btnsave-container margin-right">
+      <button class="button-neumorphism" *ngIf="editField">Save</button>
     </div>
-    <div class="form-row" spellcheck="true">
-      <div class="form-group col-md-6" *ngFor="let input of forminput">
-        <label>{{ input.input_placeholder }}</label>
-
-        <ng-container [ngTemplateOutlet]="input.element == 'input' ? inputElement : textareaElement"
-          [ngTemplateOutletContext]="{input:input}">
-        </ng-container>
-
-        <ng-template #inputElement>
-          <input type="{{ input.input_type }}" class="input-neumorphism" placeholder="{{ input.input_placeholder }}">
-        </ng-template>
-
-        <ng-template #textareaElement>
-          <textarea class="input-neumorphism" placeholder="{{ input.input_placeholder }}" autocomplete="off"
-            appTextareaAutoresize></textarea>
-        </ng-template>
-
-      </div>
+    <div class="iconbutton-neumorphism" matTooltip="Edit fields" matTooltipPosition="above" (click)="editFields()">
+      <i class="bi bi-pencil-square i-neumorphism" *ngIf="!editField"></i>
+      <i class="bi bi-x-circle-fill i-neumorphism" *ngIf="editField"></i>
     </div>
-  </form>
-</div>
+  </div> 
+  <div class="form-row data-form" spellcheck="true">
+    <div class="form-group col-md-6" *ngFor="let element of formElement">
+      <label>{{ element.element_placeholder }}</label>
+
+      <ng-container [ngTemplateOutlet]="element.element == 'input' ? inputElement : textareaElement"
+        [ngTemplateOutletContext]="{input:element}">
+      </ng-container>
+
+      <ng-template #inputElement>
+        <input type="{{ element.element_type }}" class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !editField }" [readonly]="!editField" placeholder="{{ element.element_placeholder }}" value="{{ element.element_value }}" >
+      </ng-template>
+
+      <ng-template #textareaElement>
+        <textarea class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism': !editField }" [readonly]="!editField" placeholder="{{ element.element_placeholder }}" [attr.read-only]="!editField" autocomplete="off" value="{{ element.element_value }} " 
+          appTextareaAutoresize></textarea>
+      </ng-template>
+
+    </div>
+
+  </div>
+</form>

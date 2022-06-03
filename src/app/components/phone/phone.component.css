@@ -7,7 +7,7 @@
   height: 56.9rem;
 }
 
-.history-header{
+.phone-header{
   padding: 0px 24px 0px 24px;
 }
 
@@ -22,14 +22,22 @@
   border-radius: .55rem;
 }
 
-.history-log{
+.phone-history{
   height: 36.9rem;
   overflow-y: scroll;
-  padding: 0px 24px 0px 24px;
 }
 
-.align-right{
-  float: right;
+.phone-log{
+  padding: .55rem 2rem 0 2rem;
+  border: .0625rem solid transparent;
+  border-radius: .55rem;
+}
+
+.phone-log:hover {
+  background-color: #e6e7ee;
+  border: .0625rem solid #d1d9e6;
+  transition: all .2s ease-in-out;
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
 }
 
 h6, p {
@@ -52,9 +60,7 @@ h6, p {
   background-color: rgba(38, 40, 51, 0.03);
 }
 
-.margin-right{
-  margin-right: 1rem;
-}
+
 
 .border-bottom{
   padding-bottom: .44rem !important;
@@ -65,13 +71,4 @@ h6, p {
 .change-on-hold{
   background-color: rgba(38, 40, 51, 0.03);
   color: #c5c6cb;
-}
-
-.show{
-  display: inline;
-}
-
-.hide{
-  display: none;
-  background-color: rgba(38, 40, 51, 0.03);
 }
