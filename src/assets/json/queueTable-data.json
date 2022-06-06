@@ -29,16 +29,24 @@
             "title": "Status",
             "field": "status",
             "element_type": "checkbox"
+        },
+        {
+            "title": "Checkbox",
+            "field": "checkbox",
+            "element_type": "checkbox"
         }
     ],
     "table_td": [
         {
+            "group": "group 1",
             "status": false,
             "name": "A , A",
             "mrn": "JUKqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 3,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
             "status": true,
@@ -46,7 +54,8 @@
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
             "status": true,
@@ -54,7 +63,9 @@
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
             "status": true,
@@ -62,7 +73,8 @@
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
             "status": true,
@@ -70,159 +82,208 @@
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+,
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         },
         {
+            "group": "group 1",
             "status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false,
+
+            "checkbox": false
         },
         {
+            "group": "group 1",
             "status": false,
             "name": "THIS IS THE LAST PAGE ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/1943",
             "tier": 1,
-            "prior_contact": "No"
+            "prior_contact": false
+
         }
     ]
 }
