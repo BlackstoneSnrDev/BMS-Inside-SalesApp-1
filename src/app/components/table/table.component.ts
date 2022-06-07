@@ -4,8 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import {NgForm} from '@angular/forms';
-
+import {SelectionModel} from '@angular/cdk/collections';
 @Component({
 
   selector: 'table-component',
@@ -23,15 +22,28 @@ export class TableComponent implements OnInit {
   public thTitle: any = [];
   public tdData: any;
   public thField: any = [];
-
+  public tdField: any = [];
+  public countRow: any = [];
   public dataSource: any;
+  public selection: any;
+
   public displayedColumns: any;
 
-  public checked: boolean = false;
+  public checked: any;
   public allchecked: boolean = false;
   public selectedRow: boolean = false;
 
   public inputValue: string = ""
+  public editField: boolean = false;
+  public disabledField: string = "input-neumorphism";
+  public enableField: string = "input-disabled-neumorphism";
+
+  public toggleFilter: boolean = false;
+  public toggleMenu: boolean = false;
+  public toggleRowMenu: boolean = false;
+
+  pageNumber: number = 0;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -43,14 +55,23 @@ export class TableComponent implements OnInit {
 
         this.thData = response.table_th
         this.tdData = response.table_td
+        
+        // for (let i = 1; i<=5; i++) {
+        //   this.countRow.push(( this.tdData.length / i).toFixed(0))
+        // }
 
         for (let th of this.thData) {
           this.thTitle.push(th.title);
           this.thField.push(th.field);
         }
 
+        for (let td of this.tdData) {
+          this.tdField.push(td);
+        }
+
         this.displayedColumns = this.thField;
         this.dataSource = new MatTableDataSource(this.tdData);
+        this.selection = new SelectionModel<any>(true, []);
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -77,8 +98,21 @@ export class TableComponent implements OnInit {
 
   }
 
-  allRecordsChecked() {
+  
+goToPage() {
+  this.paginator.pageIndex = this.pageNumber - 1;
+  this.paginator.page.next({
+    pageIndex: this.paginator.pageIndex,
+    pageSize: this.paginator.pageSize,
+    length: this.paginator.length
+  });
+}
+
+
+  allRecordsChecked(id: number) {
     this.allchecked = !this.allchecked
+    this.toggleMenu = ! this.toggleMenu
+    console.log(id)
 
     var recordId: any = []
 
@@ -91,13 +125,19 @@ export class TableComponent implements OnInit {
     });
 
      //return recordId
-    console.log(recordId)
+    //console.log(recordId)
 
   }
 
-  recordChecked(id: number) {
+  recordChecked(id: number, event: Event, rowSelected: number) {
 
-    this.checked = !this.checked
+    this.checked = (event.target as HTMLInputElement).querySelector('input')?.ariaChecked
+
+    if(this.checked === "true" && rowSelected == 1 ){
+      this.toggleMenu = false
+    }else{
+      this.toggleMenu = true
+    }
 
     var recordStatus =
     {
@@ -117,6 +157,8 @@ export class TableComponent implements OnInit {
 
   getRowId(id: number) {
 
+    this.toggleRowMenu = false;
+
     var row =
     {
       "id": id,
@@ -135,8 +177,31 @@ export class TableComponent implements OnInit {
 
 
   }
-  onSubmit(it: NgForm) {
-    console.log(it.value);  // { first: '', last: '' }
-    console.log(it.valid);  // false
+  editFields(){
+
+    this.editField = !this.editField;
+
+}
+
+showFilter(){
+  this.toggleFilter = ! this.toggleFilter
+}
+
+displayMenu(){
+  this.toggleMenu = ! this.toggleMenu
+
+}
+
+get allSelected(): boolean {
+  return this.selection.selected.length === this.tdField.length
+ ;
+ }
+
+ toggleMasterSelection() {
+  if (this.allSelected) {
+    this.selection.clear();
+  } else {
+    this.selection.select(...this.tdField);
   }
+}
 }

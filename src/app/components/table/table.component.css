@@ -1,0 +1,13 @@
+
+.width-sm{
+    width: 4rem;
+    text-align: center;
+    
+  }
+  
+  .width-sm .mat-form-field{
+    text-align: center;
+    font-size: small !important;
+    padding-top: 1.3rem;
+  }
+  

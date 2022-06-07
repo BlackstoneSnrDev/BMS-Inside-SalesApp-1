@@ -1,28 +1,77 @@
-<mat-form-field appearance="standard">
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-</mat-form-field>
+<div class="row width-100 margin-bt">
+    <div class="iconbutton-neumorphism " (click)="displayMenu()">
+      <i class="bi bi-sliders"></i>
+    </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="announceSortChange($event)">
+
+
+      <button class="button-neumorphism margin-lt margin-bt" matTooltip="Add new record" matTooltipPosition="above" [ngClass]="toggleMenu ? 'show' : 'hide'">
+        <i class="bi bi-plus-square-fill "></i> Add new record
+      </button>
+
+      <button class="button-neumorphism margin-lt margin-bt" matTooltip="Group record" matTooltipPosition="above" [ngClass]="toggleMenu ? 'show' : 'hide'">
+        <i class="bi bi-bounding-box"></i> Group record
+      </button>
+
+      <div class="button-neumorphism margin-lt margin-bt" matTooltip="Hide filter" matTooltipPosition="above"
+        (click)="showFilter()" [ngClass]="toggleMenu ? 'show' : 'hide'">
+        <span [ngClass]="toggleFilter ? 'hide' : 'show'">
+          <i class="bi bi-eye-slash-fill "></i> Hide filter
+        </span>
+        <span [ngClass]="toggleFilter ? 'show' : 'hide'">
+          <i class="bi bi-eye-fill "></i> Show filter
+        </span>
+      </div>
+
+</div>
+
+<div [ngClass]="toggleFilter ? 'hide' : 'show'">
+  <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput type="text" (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+  
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+  (matSortChange)="announceSortChange($event)">
 
   <ng-container [matColumnDef]="col" *ngFor="let col of  displayedColumns">
-
-    <ng-container *ngIf="col !== 'checkbox'">    
-      <th mat-header-cell *matHeaderCellDef mat-sort-header matTooltipPosition="above" matTooltip="Sort by {{col}}">{{col}}</th>
-      <td mat-cell *matCellDef="let element ; let i = index" (keyup)="editColumn(col, inputValue)">
-					<input matInput placeholder="{{element[col]}}" id="{{col + i + 1}}" value="{{element[col]}}">
-         </td>
+    <ng-container *ngIf="col !== 'selected'">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header matTooltipPosition="above" matTooltip="Sort by {{col}}">
+        {{col}}</th>
+      <td mat-cell *matCellDef="let element ; let i = index" (keyup)="editColumn(col, inputValue)" >
+        <!-- <div class="iconbutton-table-container" *ngIf="toggleRowMenu">
+          <div class="form-check form-check-inline button-inline">
+            <div class="iconbutton-neumorphism" matTooltip="Edit fields" matTooltipPosition="above"
+              (click)="editFields()">
+              <i class="bi bi-pencil-square i-neumorphism" *ngIf="!editField"></i>
+              <i class="bi bi-x-circle-fill i-neumorphism" *ngIf="editField"></i>
+            </div>
+            <div class="iconbutton-neumorphism" matTooltip="Save changes" matTooltipPosition="above" *ngIf="editField">
+              <i class="bi bi-check-circle-fill i-neumorphism"></i>
+            </div>
+            <div class="iconbutton-neumorphism" matTooltip="Delete fields" matTooltipPosition="above" *ngIf="!editField">
+              <i class="bi bi-trash-fill i-neumorphism"></i>
+            </div>
+          </div>
+        </div> -->
+        <input matInput type="text" placeholder="{{element[col]}}" id="{{col + i}}" value="{{element[col]}}">
+      </td>
     </ng-container>
 
-    <ng-container *ngIf="col === 'checkbox'">     
-      <th mat-header-cell *matHeaderCellDef  matTooltipPosition="above" matTooltip="Sort by {{col}} ">
-        <mat-checkbox
-        (change)="allRecordsChecked()">
-      </mat-checkbox></th>
+    <ng-container *ngIf="col === 'selected'">
+      <th mat-header-cell *matHeaderCellDef matTooltipPosition="above" matTooltip="Sort by {{col}} ">
+        <mat-checkbox [checked]="allSelected"
+        (change)="toggleMasterSelection()" [indeterminate]="!!selection.selected.length && !allSelected" (change)="allRecordsChecked(selection.selected)">
+        <span class="selected-text" *ngIf="selection.selected.length"> ({{selection.selected.length}} selected)</span>
+      </mat-checkbox>
+        
+      </th>
       <td mat-cell *matCellDef="let i = index" id="{{ i }}">
-        <mat-checkbox
-        (change)="recordChecked( i )">
-      </mat-checkbox></td>
+        <mat-checkbox (click)="recordChecked( i , $event, selection.selected.length)" [checked]="selection.isSelected(i)" (change)="selection.toggle(i)">
+        </mat-checkbox>
+      </td>
     </ng-container>
 
   </ng-container>
@@ -32,9 +81,18 @@
   </tr>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"  (click)="row.selectedRow = !row.selectedRow ; getRowId(i)" [ngClass]="{selectedRow: row.selectedRow}"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"
+    ></tr>
 </table>
 
-<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
-  showFirstLastButtons>
-</mat-paginator>
+<div class="row width-100 margin-bt">
+<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" showFirstLastButtons></mat-paginator>
+<div class="width-sm margin-lt ">
+  <mat-form-field matTooltipPosition="above" matTooltip="Go to page">
+    <input matInput type="number" placeholder="Page" [(ngModel)]="pageNumber" (ngModelChange)="goToPage()">
+  </mat-form-field>
+</div>
+</div>
+
+<!-- <mat-paginator [pageSizeOptions]="[5, dataSource.data.length>8? dataSource.data.length:''  ]" showFirstLastButtons>
+</mat-paginator> -->

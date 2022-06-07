@@ -3,27 +3,27 @@
         {
             "title": "Name",
             "field": "name",
-            "element_type": "txt"
+            "element_type": "text"
         },
         {
             "title": "MRN",
             "field": "mrn",
-            "element_type": "txt"
+            "element_type": "text"
         },
         {
             "title": "DOB",
             "field": "dob",
-            "element_type": "txt"
+            "element_type": "date"
         },
         {
             "title": "Tier",
             "field": "tier",
-            "element_type": "txt"
+            "element_type": "number"
         },
         {
             "title": "Prior Contact",
             "field": "prior_contact",
-            "element_type": "txt"
+            "element_type": "text"
         },
         {
             "title": "Status",
@@ -31,9 +31,9 @@
             "element_type": "checkbox"
         },
         {
-            "title": "Checkbox",
-            "field": "checkbox",
-            "element_type": "checkbox"
+            "title": "Selected",
+            "field": "selected",
+            "element_type": "selected"
         }
     ],
     "table_td": [
@@ -46,10 +46,11 @@
             "tier": 3,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
-            "status": true,
+            "group": "group 1",
+"status": true,
             "name": "D , D",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
@@ -58,17 +59,19 @@
 
         },
         {
-            "status": true,
+            "group": "group 1",
+"status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
-            "status": true,
+            "group": "group 1",
+"status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
@@ -77,14 +80,15 @@
 
         },
         {
-            "status": true,
+            "group": "group 1",
+"status": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -105,7 +109,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -126,7 +130,7 @@
             "tier": 1,
             "prior_contact": false
 ,
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -147,7 +151,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -168,7 +172,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -189,7 +193,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -210,7 +214,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -231,7 +235,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -252,7 +256,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
@@ -273,7 +277,7 @@
             "tier": 1,
             "prior_contact": false,
 
-            "checkbox": false
+            "selected": false
         },
         {
             "group": "group 1",
