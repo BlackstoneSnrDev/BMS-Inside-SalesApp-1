@@ -12,7 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormComponent } from './components/form/form.component';
 import { LogComponent } from './components/log/log.component';
 import { PhoneComponent } from './components/phone/phone.component';
-import { TableComponent } from './components/table/table.component';
+import { TablecccComponent } from './components/table/table.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
@@ -31,6 +31,32 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgChartsModule } from 'ng2-charts';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { TableModule } from 'primeng/table';
+import { ProductService } from './components/table/productservice';
+import { PaginatorModule } from 'primeng/paginator';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+
+
+import { ToastModule } from 'primeng/toast';
+import { CalendarModule } from 'primeng/calendar';
+import { SliderModule } from 'primeng/slider';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { InputTextModule } from 'primeng/inputtext';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToolbarModule } from 'primeng/toolbar';
+import { RatingModule } from 'primeng/rating';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
 
@@ -40,12 +66,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LogComponent,
     PhoneComponent,
     NavbarComponent,
-    TableComponent,
+    TablecccComponent,
     QueueComponent,
     CallInfoComponent,
     SettingsComponent,
     StatisticsComponent,
-    TextareaAutoresizeDirective
+    TextareaAutoresizeDirective,
   ],
 
   imports: [
@@ -61,13 +87,20 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
     MatCheckboxModule,
     FormsModule,
+    TableModule,
+    PaginatorModule,
+    CheckboxModule,
+    ToastModule, InputTextModule, FileUploadModule, ToolbarModule, RatingModule, RadioButtonModule, InputNumberModule,
+    ConfirmDialogModule, InputTextareaModule, CalendarModule, SliderModule, ContextMenuModule, MultiSelectModule, DialogModule, DropdownModule, ProgressBarModule, TooltipModule
+    ,
+    ButtonModule,
     routing
   ],
 
   providers: [
-    appRoutingProviders
+    appRoutingProviders, ProductService, MessageService, ConfirmationService
   ],
-  
+
   bootstrap: [AppComponent]
 })
 

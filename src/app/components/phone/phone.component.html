@@ -39,24 +39,24 @@
     </div>
     <div class="form-check form-check-inline width-100">
       <small class="margin-right width-100">6126163731</small>
-      <button class="mini-iconbutton-neumorphism mute-toggle" matTooltip="Mute" matTooltipPosition="above"
+      <button class="mini-iconbutton-neumorphism mute-toggle" pTooltip="Mute" tooltipPosition="above"
         (click)="btnMuteCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
         <i class="bi bi-mic-fill mute-toggle-unmuted i-neumorphism" [ngClass]="muteStatus ? 'hide' : 'show'"></i>
         <i class="bi bi-mic-mute-fill mute-toggle-muted i-neumorphism" [ngClass]="muteStatus ? 'show' : 'hide'"></i>
       </button>
-      <button class="mini-iconbutton-neumorphism hold-toggle" matTooltip="Hold" matTooltipPosition="above"
+      <button class="mini-iconbutton-neumorphism hold-toggle" pTooltip="Hold" tooltipPosition="above"
         (click)="btnHoldCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
         <i class="bi bi-pause-fill hold-toggle-onhold i-neumorphism" [ngClass]="holdStatus ? 'hide' : 'show'"></i>
         <i class="bi bi-play-fill hold-toggle-oncall i-neumorphism " [ngClass]="holdStatus ? 'show' : 'hide'"></i>
       </button>
       <input type="number" class="mini-input-neumorphism" placeholder="Transfer to..."
         [ngClass]="xferStatus ? 'show' : 'hide'">
-      <button class="mini-iconbutton-neumorphism" matTooltip="Transfer to" matTooltipPosition="above"
+      <button class="mini-iconbutton-neumorphism" pTooltip="Transfer to" tooltipPosition="above"
         (click)="btnXferCall()">
         <i class="bi bi-telephone-forward-fill i-neumorphism" [ngClass]="xferStatus ? 'hide' : 'show'"></i>
         <i class="bi bi-x-circle-fill i-neumorphism" [ngClass]="xferStatus ? 'show' : 'hide'"></i>
       </button>
-      <button class="mini-iconbutton-neumorphism" matTooltip="Hang up" matTooltipPosition="above"
+      <button class="mini-iconbutton-neumorphism" pTooltip="Hang up" tooltipPosition="above"
         (click)="btnHangUpCall()">
         <i class="bi bi-telephone-x-fill i-neumorphism"></i>
       </button>
@@ -103,7 +103,7 @@
           <p class="width-100" id="{{ i }}">{{ log.caller_phone }}</p>
           <small id="{{ i }}">{{ log.caller_in_time }}</small>
         </div>
-        <div class="hide" matTooltip="Call duration" matTooltipPosition="left">
+        <div class="hide" pTooltip="Call duration" tooltipPosition="left">
           <p>{{ log.call_time }}</p>
         </div>
         <hr>

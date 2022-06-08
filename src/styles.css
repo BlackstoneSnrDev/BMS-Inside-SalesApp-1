@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeicons/primeicons.css";
+
+@import "../node_modules/primeng/resources/themes/nova/theme.css";
 
 html{ 
   background-color: #e6e7ee; 
@@ -189,3 +193,22 @@ margin: 0;
   box-shadow: 2px 2px 5px #b8b9be;
 }
 
+.p-toolbar {
+ background: #e6e7ee; 
+  border: none; 
+}
+
+.p-datatable .p-datatable-header {
+  background: #e6e7ee; 
+  border: none; 
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: #e6e7ee; 
+  border: none; 
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  background: #e6e7ee; 
+  border-bottom: .0625rem solid #b1bcce;
+}

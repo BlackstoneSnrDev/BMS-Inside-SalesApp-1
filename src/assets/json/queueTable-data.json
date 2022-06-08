@@ -26,267 +26,273 @@
             "element_type": "text"
         },
         {
-            "title": "Status",
-            "field": "status",
+            "title": "Pending",
+            "field": "pending",
             "element_type": "checkbox"
-        },
-        {
-            "title": "Selected",
-            "field": "selected",
-            "element_type": "selected"
         }
     ],
     "table_td": [
         {
             "group": "group 1",
-            "status": false,
+            "pending": false,
             "name": "A , A",
             "mrn": "JUKqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 3,
-            "prior_contact": false,
+            "prior_contact": false
 
-            "selected": false
+            
         },
         {
             "group": "group 1",
-"status": true,
+"pending": true,
             "name": "D , D",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
+            
 
         },
         {
             "group": "group 1",
-"status": true,
+"pending": true,
+            "name": "This is true",
+            "mrn": "QWEqmaRb30apP9ma-zCCZg",
+            "dob": "19/12/2000",
+            "tier": 1,
+            "prior_contact": false
+
+            
+        },
+        {
+            "group": "group 1",
+"pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-"status": true,
+"pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-"status": true,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": true,
+            "name": "Santiago , Marilyn A ",
+            "mrn": "QWEqmaRb30apP9ma-zCCZg",
+            "dob": "19/12/2000",
+            "tier": 1,
+            "prior_contact": false
+            
+        },
+        {
+            "group": "group 1",
+            "pending": true,
+            "name": "Santiago , Marilyn A ",
+            "mrn": "QWEqmaRb30apP9ma-zCCZg",
+            "dob": "19/12/2000",
+            "tier": 1,
+            "prior_contact": false
+            
+
+        },
+        {
+            "group": "group 1",
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
-,
-            "selected": false
-        },
-        {
-            "group": "group 1",
-            "status": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
-            "tier": 1,
-            "prior_contact": false
+            
 
         },
         {
             "group": "group 1",
-            "status": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
-            "tier": 1,
-            "prior_contact": false,
-
-            "selected": false
-        },
-        {
-            "group": "group 1",
-            "status": false,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": false,
+            "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-            "status": false,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": false,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": true,
+            "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
-            "prior_contact": false,
+            "prior_contact": false
+            
 
-            "selected": false
         },
         {
             "group": "group 1",
-            "status": false,
+            "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/2000",
             "tier": 1,
             "prior_contact": false
 
+            
         },
         {
             "group": "group 1",
-            "status": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
-            "tier": 1,
-            "prior_contact": false,
-
-            "selected": false
-        },
-        {
-            "group": "group 1",
-            "status": false,
+            "pending": false,
             "name": "THIS IS THE LAST PAGE ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
             "dob": "19/12/1943",
             "tier": 1,
             "prior_contact": false
+            
 
         }
     ]
