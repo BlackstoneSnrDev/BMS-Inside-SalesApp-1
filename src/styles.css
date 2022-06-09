@@ -49,22 +49,6 @@ input[type=number]::-webkit-outer-spin-button {
 margin: 0;
 }
 
-.width-100{
-  width: 100%;
-}
-
-.margin-bt{
-  margin-bottom: 1rem;
-}
-
-.margin-lg-bt{
-  margin-bottom: 2rem;
-}
-
-.margin-lt{
-  margin-left: 1rem;
-}
-
 .mat-select-panel{
   background-color: #e6e7ee;
 }
@@ -135,7 +119,13 @@ margin: 0;
 
 .hide{
   display: none;
-  background-color: rgba(38, 40, 51, 0.03);
+}
+.show-line{
+  display: inline-flex;
+}
+
+.hide-line{
+  display: none;
 }
 
 .margin-right{
@@ -146,69 +136,30 @@ margin: 0;
   margin-left: 1rem;
 }
 
+.width-100{
+  width: 100%;
+}
+
+.margin-bt{
+  margin-bottom: 1rem;
+}
+
+.margin-lg-bt{
+  margin-bottom: 2rem;
+}
+
+.margin-lt{
+  margin-left: 1rem;
+}
+
+.margin-rt{
+  margin-right: 1rem;
+}
+
+.float-rt{
+  float: right;
+}
 .input-disabled-neumorphism{
   outline: 0 !important;
   box-shadow: none !important;
-}
-
-.mat-focus-indicator{
-  border-bottom: none !important;
-}
-
-.mat-checkbox-inner-container{
-  background-color: #e6e7ee;
-  border-radius: 30% !important;
-}
-
-.mat-checkbox-frame {
-  border-width: .0625rem !important;
-  border-color: #b1bcce;
-}
-
-.mat-checkbox-background, .mat-checkbox-frame {
-  border-radius: 30% !important;
-}
-
-.mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
-  background-color: #e6e7ee;
-  border: .0625rem solid #b1bcce;
-}
-
-.mat-checkbox-checkmark-path {
-  stroke-width: .33rem !important;
-  stroke-linecap: round !important;
-  stroke: #44476A!important
-}
-
-.mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-  background-color: black !important;
-}
-
-.mat-row.selectedRow{
-  color: #44476A !important;
-  font-weight: bold;
-  background-color: #e6e7ee;
-  transition: all .2s ease-in-out;
-  box-shadow: 2px 2px 5px #b8b9be;
-}
-
-.p-toolbar {
- background: #e6e7ee; 
-  border: none; 
-}
-
-.p-datatable .p-datatable-header {
-  background: #e6e7ee; 
-  border: none; 
-}
-
-.p-datatable .p-datatable-thead > tr > th {
-  background: #e6e7ee; 
-  border: none; 
-}
-
-.p-datatable .p-datatable-tbody > tr > td {
-  background: #e6e7ee; 
-  border-bottom: .0625rem solid #b1bcce;
 }

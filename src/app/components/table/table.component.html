@@ -1,111 +1,69 @@
-<!-- <p-table [columns]="thData" [value]="tdData" 
-[paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
-sortMode="multiple"
-#dt2 [globalFilterFields]="thField"
-[(selection)]="selectedRows" selectionMode="single"
->
-
-<ng-template pTemplate="caption">
-    <div class="flex">
-        <span class="p-input-icon-left ml-auto">
-            <input pInputText #textInput type="text" (input)="dt2.filterGlobal(textInput.value, 'contains')" placeholder="Filter" />
-        </span>
-    </div>
-</ng-template>
-
-  <ng-template pTemplate="header" let-columns let-rowIndex="rowIndex">
-      <tr>
-        <th style="width: 3rem">
- 
-        </th>
-          <th *ngFor="let col of columns"  pSortableColumn="{{col.field}}" >
-              {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
-          </th>
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
-      <tr>
-        <td>
-            <p-tableCheckbox [value]="i" (click)="selectProduct(i)" 
-            >
-            </p-tableCheckbox>
-        </td>
-          <td *ngFor="let col of columns">
-              {{rowData[col.field]}}
-          </td>
-      </tr>
-  </ng-template>
-  
-  <ng-template pTemplate="paginatorleft">
-    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
-</ng-template>
-<ng-template pTemplate="paginatorright">
-    <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
-</ng-template>
-</p-table> -->
-
-
-<div class="card">
-    <p-toolbar >
-        <ng-template pTemplate="left">
-
-        <button class="button-neumorphism margin-lt margin-bt" (click)="deleteSelectedRows()" [disabled]="!selectedRows || !selectedRows.length">
-            <i class="bi bi-trash-fill "></i> Delete all
-          </button>
-
-          <button class="button-neumorphism margin-lt margin-bt" >
-            <i class="bi bi-plus-square-fill "></i> Add new record
-          </button>
-    
-          <button class="button-neumorphism margin-lt margin-bt" >
-            <i class="bi bi-bounding-box"></i> Group record
-          </button>
-
-        </ng-template>
-    </p-toolbar>
-
-    <p-table #dt  [columns]="thData" [value]="tdData" [rows]="10" [paginator]="true" [globalFilterFields]="thData" [rowsPerPageOptions]="[10,25,50]"
-        [(selection)]="selectedRows" [rowHover]="true" dataKey="index"
+<div>
+    <div class="margin-bt">
+        <button class="iconbutton-neumorphism " (click)="toggleMenu()">
+            <i class="bi bi-sliders"></i>
+        </button>
+            <div [ngClass]="toggleMenuTable ? 'show' : 'hide'">
+                
+                    <button class="button-neumorphism margin-lt" (click)="deleteSelectedRows()"
+                        [disabled]="!selectedRows || !selectedRows.length">
+                        <i class="bi bi-trash-fill "></i> Delete all
+                    </button>
+                    <button class="button-neumorphism margin-lt">
+                        <i class="bi bi-plus-square-fill "></i> Add new record
+                    </button>
+                    <button class="button-neumorphism margin-lt ">
+                        <i class="bi bi-bounding-box"></i> Group record
+                    </button>
+            </div>
+        </div>
+        <div class="messageContainer">{{messageDanger}}</div>
+    <p-table #dataTable [columns]="thData" [value]="tdData" [rows]="5" [paginator]="true" [globalFilterFields]="thData"
+        [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="selectedRows" [rowHover]="true" dataKey="slIndex"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-
             <div>
-                    <mat-form-field appearance="standard">
-                        <mat-label>Filter by</mat-label>
-                        <input matInput type="text" #textInput (keyup)="dt.filterGlobal(textInput.value, 'contains')" placeholder="Ex. ium">
-                    </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>Filter by</mat-label>
+                    <input matInput type="text" #textInput (keyup)="dataTable.filterGlobal(textInput.value, 'contains')"
+                        placeholder="Ex. ium">
+                </mat-form-field>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>
-                    <p-tableHeaderCheckbox ></p-tableHeaderCheckbox>
+                    <p-tableHeaderCheckbox (click)="toggleMenu()"></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns"  pSortableColumn="{{col.field}}" >
+                <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
                     {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
                 </th>
-                
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
+                
                 <td>
-                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="rowData" (click)="toggleRowMenu()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns">
                     {{rowData[col.field]}}
                 </td>
                 <td>
-                    <div class="iconbutton-neumorphism">
-                    <i class="bi bi-pencil-square i-neumorphism"></i>
-                  </div>
-                  <div class="iconbutton-neumorphism ">
-                    <i class="bi bi-trash-fill i-neumorphism"></i>
-                  </div>
+                        <div [ngClass]="toggleRowMenuTable ? 'show-line' : 'hide-line'">
+                            <div class="iconbutton-neumorphism margin-bt">
+                                <i class="bi bi-pencil-square i-neumorphism "></i>
+                            </div>
+                            <div class=" margin-lt"></div>
+                            <div class="iconbutton-neumorphism margin-bt">
+                                <i class="bi bi-trash-fill i-neumorphism"></i>
+                            </div>
+                        </div>
                 </td>
             </tr>
         </ng-template>
     </p-table>
+
 </div>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
