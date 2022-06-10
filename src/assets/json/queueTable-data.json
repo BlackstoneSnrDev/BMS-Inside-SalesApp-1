@@ -28,7 +28,7 @@
         {
             "title": "Pending",
             "field": "pending",
-            "element_type": "checkbox"
+            "element_type": "text"
         }
     ],
     "table_td": [
@@ -37,7 +37,7 @@
             "pending": false,
             "name": "A , A",
             "mrn": "JUKqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 3,
             "prior_contact": false
 
@@ -48,7 +48,7 @@
 "pending": true,
             "name": "D , D",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -59,7 +59,7 @@
 "pending": true,
             "name": "This is true",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -70,7 +70,7 @@
 "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -81,7 +81,7 @@
 "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -92,7 +92,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -103,7 +103,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -114,7 +114,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -125,7 +125,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -135,7 +135,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -146,7 +146,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -157,7 +157,7 @@
             "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -168,7 +168,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -179,7 +179,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -190,7 +190,7 @@
             "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -201,7 +201,7 @@
             "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -212,7 +212,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -223,7 +223,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -234,7 +234,7 @@
             "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -245,7 +245,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -256,7 +256,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -267,7 +267,7 @@
             "pending": false,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
             
@@ -278,7 +278,7 @@
             "pending": true,
             "name": "Santiago , Marilyn A ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/2000",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
 
@@ -289,11 +289,9 @@
             "pending": false,
             "name": "THIS IS THE LAST PAGE ",
             "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "19/12/1943",
+            "dob": "2020-11-30",
             "tier": 1,
             "prior_contact": false
-            
-
         }
     ]
 }

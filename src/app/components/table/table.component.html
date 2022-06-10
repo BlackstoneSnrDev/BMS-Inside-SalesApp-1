@@ -17,15 +17,14 @@
                     </button>
             </div>
         </div>
-        <div class="messageContainer">{{messageDanger}}</div>
     <p-table #dataTable [columns]="thData" [value]="tdData" [rows]="5" [paginator]="true" [globalFilterFields]="thData"
         [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="selectedRows" [rowHover]="true" dataKey="slIndex"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" editMode="row">
         <ng-template pTemplate="caption">
             <div>
                 <mat-form-field appearance="standard">
                     <mat-label>Filter by</mat-label>
-                    <input matInput type="text" #textInput (keyup)="dataTable.filterGlobal(textInput.value, 'contains')"
+                    <input matInput type="text" #filterInput (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')"
                         placeholder="Ex. ium">
                 </mat-form-field>
             </div>
@@ -40,25 +39,37 @@
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
+            <tr [pEditableRow]="rowData">
                 
                 <td>
-                    <p-tableCheckbox [value]="rowData" (click)="toggleRowMenu()"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns">
-                    {{rowData[col.field]}}
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <mat-form-field appearance="standard">
+                                <input matInput type="{{col.element_type}}" placeholder="{{col.title}}" [(ngModel)]="rowData[col.field]" required >
+                            </mat-form-field>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData[col.field]}}
+                        </ng-template>
+                    </p-cellEditor>
                 </td>
                 <td>
-                        <div [ngClass]="toggleRowMenuTable ? 'show-line' : 'hide-line'">
-                            <div class="iconbutton-neumorphism margin-bt">
-                                <i class="bi bi-pencil-square i-neumorphism "></i>
-                            </div>
-                            <div class=" margin-lt"></div>
-                            <div class="iconbutton-neumorphism margin-bt">
-                                <i class="bi bi-trash-fill i-neumorphism"></i>
-                            </div>
-                        </div>
+                    <button pRipple *ngIf="!editing" type="button" pInitEditableRow (click)="onRowEditInit(rowData)" class="iconbutton-neumorphism">
+                        <i class="bi bi-pencil-square i-neumorphism "></i>
+                    </button>
+                    <button pRipple *ngIf="!editing" type="button" (click)="deleteRow(rowIndex)" class="iconbutton-neumorphism">
+                        <i class="bi bi-trash-fill i-neumorphism" ></i>
+                    </button>
+                    <button  pRipple *ngIf="editing" type="button" pSaveEditableRow (click)="onRowEditSave(rowData, rowIndex)" class="iconbutton-neumorphism">
+                        <i class="pi pi-check i-neumorphism" ></i>
+                    </button>
+                    <button  pRipple *ngIf="editing" type="button" pCancelEditableRow (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism">
+                        <i class="pi pi-times i-neumorphism"></i>
+                    </button>
                 </td>
             </tr>
         </ng-template>

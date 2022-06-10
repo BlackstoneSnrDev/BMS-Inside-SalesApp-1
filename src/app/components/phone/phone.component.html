@@ -31,14 +31,14 @@
   </div>
   <div *ngIf="containerCallStatus" class="container-neumorphism" [ngClass]="holdStatus ? 'change-on-hold' : ''">
     <div class="form-check form-check-inline width-100 border-bottom">
-      <small class="margin-right width-100 ">Call established</small>
-      <small class="margin-right">00:01:30</small>
+      <small class="margin-rt width-100 ">Call established</small>
+      <small class="margin-rt">00:01:30</small>
     </div>
     <div class="form-check form-check-inline width-100">
-      <h6 class="margin-right width-100">Calling at Name</h6>
+      <h6 class="margin-rt width-100">Calling at Name</h6>
     </div>
     <div class="form-check form-check-inline width-100">
-      <small class="margin-right width-100">6126163731</small>
+      <small class="margin-rt width-100">6126163731</small>
       <button class="mini-iconbutton-neumorphism mute-toggle" pTooltip="Mute" tooltipPosition="above"
         (click)="btnMuteCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
         <i class="bi bi-mic-fill mute-toggle-unmuted i-neumorphism" [ngClass]="muteStatus ? 'hide' : 'show'"></i>

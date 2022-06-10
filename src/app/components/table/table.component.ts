@@ -22,10 +22,10 @@ export class TableComponent {
     
     public thData: any;
     public tdData: any;
+    public clonedtdData: any = {};
+
     public selectedRows: any = [];
     public toggleMenuTable: boolean = false;
-    public toggleRowMenuTable: boolean = false;
-    public messageDanger: string = ""
 
     constructor(private DataService: DataService, private messageService: MessageService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
 
@@ -43,7 +43,7 @@ export class TableComponent {
                     slIndex = i
                     this.tdData[slIndex]["slIndex"] = i;
                 }
-                
+
             },
             error => {
                 console.error(error)
@@ -54,11 +54,11 @@ export class TableComponent {
     @ViewChild('dataTable') table!: Table;
 
     toggleMenu(){
-        this.toggleMenuTable = ! this.toggleMenuTable
+
+        this.toggleMenuTable = !this.toggleMenuTable
+
     }
-    toggleRowMenu(){
-        this.toggleRowMenuTable = ! this.toggleRowMenuTable
-    }
+
 
     deleteSelectedRows() {
 
@@ -68,19 +68,54 @@ export class TableComponent {
                 header: 'Confirm',
                 icon: 'pi pi-exclamation-triangle',
                 accept: () => {
+                    this.toggleMenuTable = false
                     this.tdData = this.tdData.filter((val: any) => !this.selectedRows.includes(val));
                     this.selectedRows = [];
-                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Rows Deleted', life: 3000 });
                 }
             });
         }else{
-            this.messageDanger = "Please select a row down below."
             console.log(this.tdData)
 
         }
 
-        
     }
 
+    deleteRow(id: any) {
+
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete this selection?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.tdData = this.tdData.filter( (i:any) => ![id].includes( i.slIndex ) );
+                this.selectedRows = [];
+            }
+        });
+
+    }
+
+    // editedField(event: Event, rowId: number, colName: string){
+    //     var editedField = [{
+
+    //         "row_id": rowId,
+    //         "col_name": colName,
+    //         "col_value": (event.target as HTMLInputElement).value
+    //     }
+    //     ]
+    // }
+
+    onRowEditInit(thdata: any) {
+        this.clonedtdData[thdata.id] = { ...thdata };
+    }
+    
+    onRowEditSave(thdata: any, id: number) {
+        delete this.clonedtdData[thdata.id];
+        console.log(this.tdData[id])
+    }
+    
+    onRowEditCancel(thdata: any, index: number) {
+    this.tdData[index] = this.clonedtdData[thdata.id];
+    delete this.tdData[thdata.id];
+    }
 
 }
