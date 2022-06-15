@@ -3,32 +3,142 @@
         <button class="iconbutton-neumorphism " (click)="toggleMenu()">
             <i class="bi bi-sliders"></i>
         </button>
-            <div [ngClass]="toggleMenuTable ? 'show' : 'hide'">
-                
-                    <button class="button-neumorphism margin-lt" (click)="deleteSelectedRows()"
-                        [disabled]="!selectedRows || !selectedRows.length">
-                        <i class="bi bi-trash-fill "></i> Delete all
-                    </button>
-                    <button class="button-neumorphism margin-lt">
-                        <i class="bi bi-plus-square-fill "></i> Add new record
-                    </button>
-                    <button class="button-neumorphism margin-lt ">
-                        <i class="bi bi-bounding-box"></i> Group record
-                    </button>
+        <ng-container>
+            <button class="button-neumorphism margin-lt" (click)="toggleAddNewRecord()">
+                <i class="bi bi-plus-square-fill "></i> Add new record
+            </button>
+            <div [ngClass]="tglMenuTable ? 'show' : 'hide'">
+                <button class="button-neumorphism margin-lt" (click)="deleteSelection()">
+                    <i class="bi bi-trash-fill "></i> Delete all
+                </button>
+                <button class="button-neumorphism margin-lt" (click)="toggleGroupSection()">
+                    <i class="bi bi-gear-wide-connected "></i> Groups
+                </button>
+                <div [ngClass]="tglGroupMenu ? 'show' : 'hide'">
+                    <div class="dropdown">
+                        <button class="button-neumorphism margin-lt " (click)="toggleCreateNewGroup()">
+                            <i class="bi bi-bounding-box"></i> Create new group
+                        </button>
+                        <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
+                            <div class="dropdown-content">
+                                <div class="width-100 dropdown-content-container elm-rounded">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Create new group</mat-label>
+                                        <input matInput type="text" #newGroupName placeholder="New group name"
+                                            autocomplete="off" class="not-rounded" [(ngModel)]="clearInput">
+                                    </mat-form-field>
+                                    <button class="button-neumorphism elm-rounded width-50"
+                                        (click)="saveCreateNewGroup(newGroupName.value)">
+                                        Save
+                                    </button>
+                                    <button class="button-neumorphism elm-rounded width-50"
+                                        (click)="cancelCreateNewGroup()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <select class="button-neumorphism margin-lt" (change)="groupSelection($event)">
+                        <option hidden value="None" selected>(+) Add to group</option>
+                        <option value="{{groupOpt.group_id}}" *ngFor="let groupOpt of tbGroups">{{groupOpt.group_name}}
+                        </option>
+                    </select>
+                    <select class="button-neumorphism margin-lt" (change)="ungroupSelection($event)">
+                        <option hidden value="None" selected>(&#xd7;) Delete from group</option>
+                        <option value="{{groupOpt.group_id}}" *ngFor="let groupOpt of tbGroups">{{groupOpt.group_name}}
+                        </option>
+                    </select>
+
+                </div>
             </div>
-        </div>
+            <div [ngClass]="tglAddNewRecord ? 'show' : 'hide'">
+                <div spellcheck="true">
+                    <form [formGroup]="addNewRecordForm" (ngSubmit)="saveAddNewRecord(dataTable)">
+                        <h5>Add new record</h5>
+                        <hr>
+                        <div class="form-row">
+                            <div *ngFor="let newtd of thData ; let newtdIndex = index">
+                                <div class="col">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>{{newtd.title}}</mat-label>
+                                        <input matInput type="{{newtd.element_type}}" placeholder="New {{newtd.field}}"
+                                            autocomplete="off" id="{{newtdIndex + newtd.field}}"
+                                            formControlName="{{newtd.field}}" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row">
+                            <div class="col">
+                                <button type="submit" class="button-neumorphism width-50" value="save">
+                                    Save
+                                </button>
+                                <button class="button-neumorphism width-50" (click)="cancelAddNewRecord()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </ng-container>
+    </div>
     <p-table #dataTable [columns]="thData" [value]="tdData" [rows]="5" [paginator]="true" [globalFilterFields]="thData"
-        [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="selectedRows" [rowHover]="true" dataKey="slIndex"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" editMode="row">
+        [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="tbSelectedRows" [rowHover]="true" dataKey="slIndex"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+        editMode="row" responsiveLayout="scroll">
+
         <ng-template pTemplate="caption">
             <div>
                 <mat-form-field appearance="standard">
                     <mat-label>Filter by</mat-label>
-                    <input matInput type="text" #filterInput (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')"
-                        placeholder="Ex. ium">
+                    <input matInput type="text" #filterInput
+                        (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')" placeholder="Ex. ium">
                 </mat-form-field>
             </div>
+            <button class="button-neumorphism margin-lt" (click)="clear(dataTable)">Clear filters</button>
+        
+
+            <div class="dropdown" *ngFor="let groupOpt of tbGroups">
+                <button pRipple (click)="changeTBToGroupView(groupOpt.group_id)"
+                    class="button-neumorphism margin-lt dropbtn-neumorphism"> {{groupOpt.group_name}}
+                    <span class="button-icon"><i class="bi bi-chevron-down i-neumorphism"></i></span>
+                </button>
+                <div class="dropdown-content">
+                    <div class="width-100 dropdown-content-container">
+                        <div (click)="toggleEditGroup($event)">
+                            <i class="bi bi-pencil-square i-neumorphism "></i>
+                            Rename group
+                        </div>
+                        <div class="rename-group-container hide">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Rename group</mat-label>
+                                <input matInput type="text" placeholder="Rename to" class="not-rounded"
+                                    autocomplete="off" #renamedGroup id="rename{{groupOpt.group_id}}"
+                                    [(ngModel)]="clearInput">
+                            </mat-form-field>
+                            <button class="button-neumorphism elm-rounded width-50"
+                                (click)="saveRenameGroup(groupOpt.group_id, renamedGroup.value, $event)">
+                                Save
+                            </button>
+                            <button class="button-neumorphism elm-rounded width-50" (click)="cancelRenameGroup($event)">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="width-100 delete-container">
+                        <div class="width-100 dropdown-content-container" (click)="deleteGroup(groupOpt.group_id)">
+                            <i class="bi bi-trash-fill"></i>
+                            Delete group
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </ng-template>
+
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>
@@ -36,20 +146,26 @@
                 </th>
                 <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
                     {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
+
+                    <p-columnFilter type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+
                 </th>
             </tr>
         </ng-template>
+
         <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
+
             <tr [pEditableRow]="rowData">
-                
                 <td>
-                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="rowData" (click)="toggleMenu()"></p-tableCheckbox>
                 </td>
+
                 <td *ngFor="let col of columns">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <mat-form-field appearance="standard">
-                                <input matInput type="{{col.element_type}}" placeholder="{{col.title}}" [(ngModel)]="rowData[col.field]" required >
+                                <input matInput type="{{col.element_type}}" placeholder="{{col.title}}"
+                                    [(ngModel)]="rowData[col.field]" required>
                             </mat-form-field>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -57,22 +173,34 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
+
                 <td>
-                    <button pRipple *ngIf="!editing" type="button" pInitEditableRow (click)="onRowEditInit(rowData)" class="iconbutton-neumorphism">
+                    <button pRipple *ngIf="!editing" type="button" pInitEditableRow (click)="onRowEditInit(rowData)"
+                        class="iconbutton-neumorphism">
                         <i class="bi bi-pencil-square i-neumorphism "></i>
                     </button>
-                    <button pRipple *ngIf="!editing" type="button" (click)="deleteRow(rowIndex)" class="iconbutton-neumorphism">
-                        <i class="bi bi-trash-fill i-neumorphism" ></i>
+                    <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex)"
+                        class="iconbutton-neumorphism">
+                        <i class="bi bi-trash-fill i-neumorphism"></i>
                     </button>
-                    <button  pRipple *ngIf="editing" type="button" pSaveEditableRow (click)="onRowEditSave(rowData, rowIndex)" class="iconbutton-neumorphism">
-                        <i class="pi pi-check i-neumorphism" ></i>
+                    <button pRipple *ngIf="editing" type="button" pSaveEditableRow
+                        (click)="onRowEditSave(rowData, rowIndex)" class="iconbutton-neumorphism">
+                        <i class="pi pi-check i-neumorphism"></i>
                     </button>
-                    <button  pRipple *ngIf="editing" type="button" pCancelEditableRow (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism">
+                    <button pRipple *ngIf="editing" type="button" pCancelEditableRow
+                        (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism">
                         <i class="pi pi-times i-neumorphism"></i>
                     </button>
                 </td>
             </tr>
         </ng-template>
+
+        <ng-template pTemplate="emptymessage" let-columns="columns">
+            <tr class="txt-center">
+                <td [attr.colspan]="thDataLength + 1">No data matching the filter </td>
+            </tr>
+        </ng-template>
+
     </p-table>
 
 </div>

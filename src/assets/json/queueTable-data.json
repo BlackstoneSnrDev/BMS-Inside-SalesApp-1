@@ -1,4 +1,14 @@
 {
+    "table_group": [
+        {
+            "group_id": "g1",
+            "group_name": "Pending call"
+        },
+        {
+            "group_id": "g2",
+            "group_name": "Pending insurance"
+        }
+    ],
     "table_th": [
         {
             "title": "Name",
@@ -33,265 +43,211 @@
     ],
     "table_td": [
         {
-            "group": "group 1",
-            "pending": false,
-            "name": "A , A",
-            "mrn": "JUKqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
+            "name": "Daniel , Moreno",
+            "mrn": "qwermaRb20apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 2,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Daniel , Moreno",
+            "mrn": "qwermaRb20apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 2,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Daniel , Moreno",
+            "mrn": "qwermaRb20apP9ma-zCCZg",
+            "dob": "1999-01-22",
             "tier": 3,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
-"pending": true,
-            "name": "D , D",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
-        },
-        {
-            "group": "group 1",
-"pending": true,
-            "name": "This is true",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
-"pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
-        },
-        {
-            "group": "group 1",
-"pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
+            "prior_contact": false,
             "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
+            "group": []
         },
         {
-            "group": "group 1",
+            "name": "Daniel , Moreno",
+            "mrn": "89jkmaRb30apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 3,
+            "prior_contact": true,
             "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
+            "group": []
         },
         {
-            "group": "group 1",
+            "name": "Daniel , Moreno",
+            "mrn": "89jkmaRb30apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 3,
+            "prior_contact": true,
             "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
+            "group": []
         },
         {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-        },
-        {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
-        },
-        {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
+            "name": "Daniel , Moreno",
+            "mrn": "89jkmaRb30apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 3,
+            "prior_contact": true,
             "pending": false,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
+            "group": []
         },
         {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
-        },
-        {
-            "group": "group 1",
+            "name": "Daniel , Moreno",
+            "mrn": "89jkmaRb30apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 3,
+            "prior_contact": true,
             "pending": false,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
+            "group": []
         },
         {
-            "group": "group 1",
+            "name": "Daniel , Moreno",
+            "mrn": "89jkmaRb30apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 3,
+            "prior_contact": true,
             "pending": false,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
+            "group": []
         },
         {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9ma-zCCZg",
+            "dob": "2020-11-10",
             "tier": 1,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
-        },
-        {
-            "group": "group 1",
+            "prior_contact": true,
             "pending": false,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
+            "group": []
         },
         {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9ma-zCCZg",
+            "dob": "2020-11-10",
             "tier": 1,
-            "prior_contact": false
-            
-
-        },
-        {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
+            "prior_contact": true,
             "pending": false,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
-            "tier": 1,
-            "prior_contact": false
-            
-
+            "group": []
         },
         {
-            "group": "group 1",
-            "pending": true,
-            "name": "Santiago , Marilyn A ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9majhgggg",
+            "dob": "2020-11-10",
             "tier": 1,
-            "prior_contact": false
-
-            
-        },
-        {
-            "group": "group 1",
+            "prior_contact": true,
             "pending": false,
-            "name": "THIS IS THE LAST PAGE ",
-            "mrn": "QWEqmaRb30apP9ma-zCCZg",
-            "dob": "2020-11-30",
+            "group": []
+        },
+        {
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9majhgggg",
+            "dob": "2020-11-10",
             "tier": 1,
-            "prior_contact": false
+            "prior_contact": true,
+            "pending": false,
+            "group": []
+        },
+        {
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9majhgggg",
+            "dob": "2020-11-10",
+            "tier": 1,
+            "prior_contact": true,
+            "pending": false,
+            "group": []
+        },
+        {
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9majhgggg",
+            "dob": "1956-04-10",
+            "tier": 1,
+            "prior_contact": false,
+            "pending": false,
+            "group": []
+        },
+        {
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9majhgggg",
+            "dob": "1956-04-10",
+            "tier": 1,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Zoo , Tycon",
+            "mrn": "89jkmaRb10apP9majhgggg",
+            "dob": "1956-04-10",
+            "tier": 1,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Andres , Marquez",
+            "mrn": "qwermaRb10apP9ma-zCCZg",
+            "dob": "1956-04-10",
+            "tier": 1,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Andres , Marquez",
+            "mrn": "qwermaRb10apP9ma-zCCZg",
+            "dob": "1956-04-10",
+            "tier": 1,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Andres , Marquez",
+            "mrn": "qwermaRb10apP9ma-zCCZg",
+            "dob": "1956-04-10",
+            "tier": 2,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Andres , Marquez",
+            "mrn": "qwermaRb20apP9ma-zCCZg",
+            "dob": "1956-04-10",
+            "tier": 2,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Andres , Marquez",
+            "mrn": "qwermaRb20apP9ma-zCCZg",
+            "dob": "1956-04-10",
+            "tier": 2,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Andres , Marquez",
+            "mrn": "qwermaRb20apP9ma-zCCZg",
+            "dob": "1956-04-10",
+            "tier": 2,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
+        },
+        {
+            "name": "Daniel , Moreno",
+            "mrn": "qwermaRb20apP9ma-zCCZg",
+            "dob": "1999-01-22",
+            "tier": 2,
+            "prior_contact": false,
+            "pending": true,
+            "group": []
         }
     ]
 }

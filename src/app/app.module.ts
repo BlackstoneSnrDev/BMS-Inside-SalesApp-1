@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routing, appRoutingProviders } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 ///// My components 
 // HTML
@@ -66,6 +67,9 @@ import { TooltipModule } from 'primeng/tooltip';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+        ReactiveFormsModule,
+    routing,
     ///// Libraries
     // Angular material
     MatInputModule,
@@ -81,7 +85,6 @@ import { TooltipModule } from 'primeng/tooltip';
     ConfirmDialogModule,
     DialogModule,
     TooltipModule,
-    routing
   ],
 
   providers: [

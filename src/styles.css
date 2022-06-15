@@ -140,6 +140,10 @@ margin: 0;
   width: 100%;
 }
 
+.width-50{
+  width: 50%;
+}
+
 .margin-bt{
   margin-bottom: 1rem;
 }
@@ -159,6 +163,19 @@ margin: 0;
 .float-rt{
   float: right;
 }
+
+.txt-center{
+  text-align: center;
+}
+
+.not-rounded{
+  border-radius: 0 !important;
+}
+
+.elm-rounded{
+  border-radius: 1rem !important;
+}
+
 .input-disabled-neumorphism{
   outline: 0 !important;
   box-shadow: none !important;
