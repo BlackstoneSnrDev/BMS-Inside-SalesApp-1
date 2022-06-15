@@ -28,6 +28,8 @@ import { TextareaAutoresizeDirective } from './directives/resize.directive';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+
 
 // Ng2 Charts
 import { NgChartsModule } from 'ng2-charts';
@@ -68,13 +70,14 @@ import { TooltipModule } from 'primeng/tooltip';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-        ReactiveFormsModule,
+    ReactiveFormsModule,
     routing,
     ///// Libraries
     // Angular material
     MatInputModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     // Ng2 Charts
     NgChartsModule,
     // PrimeNG

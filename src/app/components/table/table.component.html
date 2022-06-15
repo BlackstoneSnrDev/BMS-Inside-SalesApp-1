@@ -1,9 +1,11 @@
 <div>
     <div class="margin-bt">
-        <button class="iconbutton-neumorphism " (click)="toggleMenu()">
+        <button class="iconbutton-neumorphism " (click)="toggleTableMenu()">
             <i class="bi bi-sliders"></i>
         </button>
         <ng-container>
+
+            
             <button class="button-neumorphism margin-lt" (click)="toggleAddNewRecord()">
                 <i class="bi bi-plus-square-fill "></i> Add new record
             </button>
@@ -20,18 +22,21 @@
                             <i class="bi bi-bounding-box"></i> Create new group
                         </button>
                         <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
-                            <div class="dropdown-content">
+                            <div class="dropdown-content create-group-container">
                                 <div class="width-100 dropdown-content-container elm-rounded">
                                     <mat-form-field appearance="standard">
                                         <mat-label>Create new group</mat-label>
                                         <input matInput type="text" #newGroupName placeholder="New group name"
-                                            autocomplete="off" class="not-rounded" [(ngModel)]="clearInput">
+                                            autocomplete="off" class="not-rounded" name="newGroupName" [(ngModel)]="clearInput" required>
+                                            <mat-error *ngIf="onValidationError">
+                                                Group name is <strong>required</strong>
+                                              </mat-error>
                                     </mat-form-field>
-                                    <button class="button-neumorphism elm-rounded width-50"
+                                    <button class="button-neumorphism elm-rounded width-50 margin-tp"
                                         (click)="saveCreateNewGroup(newGroupName.value)">
                                         Save
                                     </button>
-                                    <button class="button-neumorphism elm-rounded width-50"
+                                    <button class="button-neumorphism elm-rounded width-50 margin-tp"
                                         (click)="cancelCreateNewGroup()">
                                         Cancel
                                     </button>
@@ -39,32 +44,44 @@
                             </div>
                         </div>
                     </div>
-                    <select class="button-neumorphism margin-lt" (change)="groupSelection($event)">
-                        <option hidden value="None" selected>(+) Add to group</option>
-                        <option value="{{groupOpt.group_id}}" *ngFor="let groupOpt of tbGroups">{{groupOpt.group_name}}
-                        </option>
-                    </select>
-                    <select class="button-neumorphism margin-lt" (change)="ungroupSelection($event)">
-                        <option hidden value="None" selected>(&#xd7;) Delete from group</option>
-                        <option value="{{groupOpt.group_id}}" *ngFor="let groupOpt of tbGroups">{{groupOpt.group_name}}
-                        </option>
-                    </select>
+                        <mat-form-field appearance="fill" class="margin-tp" >
+                            <mat-label>(+) Add to group</mat-label>
+                            <mat-select (selectionChange)="groupSelection($event.value)" [(ngModel)]="clearInput">
+                                <mat-option selected hidden></mat-option>
+                              <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
+                                {{groupOpt.group_name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
 
+                          <mat-form-field appearance="fill" class="margin-tp" >
+                            <mat-label>(&#xd7;) Delete from group</mat-label>
+                            <mat-select (selectionChange)="ungroupSelection($event.value)" [(ngModel)]="clearInput">
+                                <mat-option selected hidden></mat-option>
+                              <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
+                                {{groupOpt.group_name}}
+                              </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="onValidationError">
+                                {{onValidationError}}
+                              </mat-error>
+                          </mat-form-field>
                 </div>
             </div>
             <div [ngClass]="tglAddNewRecord ? 'show' : 'hide'">
                 <div spellcheck="true">
-                    <form [formGroup]="addNewRecordForm" (ngSubmit)="saveAddNewRecord(dataTable)">
+                    <form [formGroup]="addNewRecordForm" (ngSubmit)="saveAddNewRecord(dataTable)" *ngIf="addNewRecordForm" novalidate>
                         <h5>Add new record</h5>
+                        <div [ngClass]="!addNewRecordForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
                         <hr>
                         <div class="form-row">
                             <div *ngFor="let newtd of thData ; let newtdIndex = index">
                                 <div class="col">
                                     <mat-form-field appearance="standard">
                                         <mat-label>{{newtd.title}}</mat-label>
-                                        <input matInput type="{{newtd.element_type}}" placeholder="New {{newtd.field}}"
+                                        <input matInput class="input-neumorphism" type="{{newtd.element_type}}" placeholder="New {{newtd.field}}"
                                             autocomplete="off" id="{{newtdIndex + newtd.field}}"
-                                            formControlName="{{newtd.field}}" />
+                                            formControlName="{{newtd.field}}"/>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -72,12 +89,12 @@
                         <hr>
                         <div class="form-row">
                             <div class="col">
-                                <button type="submit" class="button-neumorphism width-50" value="save">
+                                <button type="submit" class="width-50 show-line-b txt-center" value="save" [disabled]="!addNewRecordForm.valid" [ngClass]="!addNewRecordForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
                                     Save
                                 </button>
-                                <button class="button-neumorphism width-50" (click)="cancelAddNewRecord()">
+                                <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewRecord()">
                                     Cancel
-                                </button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -91,7 +108,7 @@
         editMode="row" responsiveLayout="scroll">
 
         <ng-template pTemplate="caption">
-            <div>
+            <div class="filter-container">
                 <mat-form-field appearance="standard">
                     <mat-label>Filter by</mat-label>
                     <input matInput type="text" #filterInput
@@ -136,13 +153,12 @@
                     </div>
                 </div>
             </div>
-
         </ng-template>
 
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>
-                    <p-tableHeaderCheckbox (click)="toggleMenu()"></p-tableHeaderCheckbox>
+                    <p-tableHeaderCheckbox (click)="toggleTableMenu()"></p-tableHeaderCheckbox>
                 </th>
                 <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
                     {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
@@ -157,14 +173,15 @@
 
             <tr [pEditableRow]="rowData">
                 <td>
-                    <p-tableCheckbox [value]="rowData" (click)="toggleMenu()"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="rowData" (click)="toggleTableMenu()"></p-tableCheckbox>
                 </td>
 
                 <td *ngFor="let col of columns">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <mat-form-field appearance="standard">
-                                <input matInput type="{{col.element_type}}" placeholder="{{col.title}}"
+                                <mat-label>{{col.title}}</mat-label>
+                                <input matInput type="{{col.element_type}}" placeholder="New {{col.field}}"
                                     [(ngModel)]="rowData[col.field]" required>
                             </mat-form-field>
                         </ng-template>

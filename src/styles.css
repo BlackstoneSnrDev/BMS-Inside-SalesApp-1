@@ -123,6 +123,9 @@ margin: 0;
 .show-line{
   display: inline-flex;
 }
+.show-line-b{
+  display: inline-block;
+}
 
 .hide-line{
   display: none;
@@ -159,7 +162,9 @@ margin: 0;
 .margin-rt{
   margin-right: 1rem;
 }
-
+.margin-tp{
+  margin-top: 1rem;
+}
 .float-rt{
   float: right;
 }
@@ -175,7 +180,9 @@ margin: 0;
 .elm-rounded{
   border-radius: 1rem !important;
 }
-
+.not-bold{
+  font-weight: normal !important;
+}
 .input-disabled-neumorphism{
   outline: 0 !important;
   box-shadow: none !important;

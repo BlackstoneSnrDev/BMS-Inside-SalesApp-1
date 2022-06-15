@@ -42,6 +42,7 @@ export class TableComponent {
 
     public addNewRecordForm!:FormGroup;
     public newFormControl: any = {};
+    public onValidationError: string = "";
 
     constructor(private DataService: DataService, private messageService: MessageService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig, fb: FormBuilder) { }
 
@@ -60,7 +61,7 @@ export class TableComponent {
                 this.thDataLength = this.thData.length
 
                 for (let i of this.thData) {
-                    this.newFormControl[i.field] =  new FormControl();  
+                    this.newFormControl[i.field] =  new FormControl('', [Validators.required, Validators.minLength(1)]);  
                 }
                 this.addNewRecordForm = new FormGroup(this.newFormControl);
 
@@ -76,7 +77,6 @@ export class TableComponent {
             }
         )
     }
-
 
     @ViewChild('dataTable') table!: Table;
 
@@ -113,7 +113,7 @@ export class TableComponent {
 
     }
 
-    toggleMenu() {
+    toggleTableMenu() {
         if(this.tbSelectedRows.length > 0){
             this.tglMenuTable = true
 
@@ -126,17 +126,18 @@ export class TableComponent {
 
     toggleAddNewRecord() {
 
-        this.tglAddNewRecord = true
+        this.tglAddNewRecord = ! this.tglAddNewRecord
     }
 
     saveAddNewRecord(table: Table){
-
+        
         let value = this.addNewRecordForm.value;
         value['group'] = []
         this.tdData.push(value);
         
         table._totalRecords = this.tdData.length
         this.addNewRecordForm.reset();
+        console.log(this.tdData)
 
     }
 
@@ -144,7 +145,7 @@ export class TableComponent {
     cancelAddNewRecord(){
 
         this.tglAddNewRecord = false
-        this.clearInput = ""
+        this.addNewRecordForm.reset();
 
     }
 
@@ -181,8 +182,18 @@ export class TableComponent {
 
     saveCreateNewGroup(groupName: string) {
 
-        let newIndex = this.tdData.length + 1
-        this.tdData.push({ "group_id": "g" + newIndex, "group_name": groupName.charAt(0).toUpperCase() + groupName.slice(1) });
+        if(!groupName){
+            this.onValidationError = "*Group name must be specified."
+        }else{
+            let newIndex = this.tbGroups.length + 1
+            this.tbGroups.push({ "group_id": "g" + newIndex, "group_name": groupName});
+
+            this.groupSelection("g" + newIndex)
+
+            this.tglCreateNewGroup = false
+            this.clearInput = ""
+            console.log(this.tbGroups)
+        }
 
     }
 
@@ -190,7 +201,7 @@ export class TableComponent {
 
         this.tglCreateNewGroup = false
         this.clearInput = ""
-
+        this.onValidationError = ""
     }
 
     // Edit group created
@@ -229,38 +240,43 @@ export class TableComponent {
     }
 
     // Add selection to group
-    groupSelection(event: Event) {
-
-        let groupId = (event.target as HTMLInputElement).value;
-
+    groupSelection(groupId: any) {
+        this.clearInput = ""
             for (let i = 0; i < this.tbSelectedRows.length; i++) {
-                let oldGroupLenght = this.tdData[i]["group"].length
+                let oldGroupLenght = this.tbSelectedRows[i]["group"].length
+
+                let doubleGroup = this.tbSelectedRows[i].group
+                        
+                        if(doubleGroup.includes(groupId)){
+                            this.onValidationError = "Selection is already grouped."
+                        }else{
+
+                            if (oldGroupLenght == 0) {
+                                this.tbSelectedRows[i]["group"][0] = groupId
+                            } else {
+                                this.tbSelectedRows[i]["group"][oldGroupLenght] = groupId
+                            }
+                        }
     
-                if (oldGroupLenght == 0) {
-                    this.tdData[i]["group"][0] = groupId
-                } else {
-                    this.tdData[i]["group"][oldGroupLenght] = groupId
-                }
+                this.tdData[i] = this.tbSelectedRows[i]
+                console.log(this.tdData[i])
+
             }
+
             console.log(this.tdData)
-        let reset =  (event.target as HTMLInputElement).value = 'None'
+            this.clearInput = ""
     }
 
     // Delete selection from group
-    ungroupSelection(event: Event) {
-
-        let groupId = (event.target as HTMLInputElement).value;
-
+    ungroupSelection(groupId: Event) {
+        
         for (let i = 0; i < this.tbSelectedRows.length; i++) {
-
             let groupIndex = this.tbSelectedRows[i].group.findIndex((i: any) => i === groupId)
-            this.tbSelectedRows[i].group.splice(groupIndex)
-
-            this.tdData[i] = this.tbSelectedRows[i]
-
+            // Missing delete index 
         }
+
+        this.clearInput = ""
         console.log(this.tdData)
-        let reset =  (event.target as HTMLInputElement).value = 'None'
 
     }
     
