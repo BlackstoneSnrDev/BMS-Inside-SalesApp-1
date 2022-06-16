@@ -1,11 +1,9 @@
 <div>
-    <div class="margin-bt">
-        <button class="iconbutton-neumorphism " (click)="toggleTableMenu()">
+    <div class="margin-bt menu-table-container">
+        <button class="iconbutton-neumorphism-disabled">
             <i class="bi bi-sliders"></i>
         </button>
         <ng-container>
-
-            
             <button class="button-neumorphism margin-lt" (click)="toggleAddNewRecord()">
                 <i class="bi bi-plus-square-fill "></i> Add new record
             </button>
@@ -14,7 +12,7 @@
                     <i class="bi bi-trash-fill "></i> Delete all
                 </button>
                 <button class="button-neumorphism margin-lt" (click)="toggleGroupSection()">
-                    <i class="bi bi-gear-wide-connected "></i> Groups
+                    <i class="bi bi-gear-wide-connected"></i> Groups <i class="bi bi-caret-right-fill"></i>
                 </button>
                 <div [ngClass]="tglGroupMenu ? 'show' : 'hide'">
                     <div class="dropdown">
@@ -24,13 +22,13 @@
                         <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
                             <div class="dropdown-content create-group-container">
                                 <div class="width-100 dropdown-content-container elm-rounded">
+                                    <small *ngIf="onValidationError" class="color-rd">
+                                        {{onValidationError}}
+                                    </small> 
                                     <mat-form-field appearance="standard">
                                         <mat-label>Create new group</mat-label>
                                         <input matInput type="text" #newGroupName placeholder="New group name"
-                                            autocomplete="off" class="not-rounded" name="newGroupName" [(ngModel)]="clearInput" required>
-                                            <mat-error *ngIf="onValidationError">
-                                                Group name is <strong>required</strong>
-                                              </mat-error>
+                                            autocomplete="off" class="not-rounded" name="newGroupName" id="newGroupName" [(ngModel)]="clearInput" required>
                                     </mat-form-field>
                                     <button class="button-neumorphism elm-rounded width-50 margin-tp"
                                         (click)="saveCreateNewGroup(newGroupName.value)">
@@ -45,7 +43,7 @@
                         </div>
                     </div>
                         <mat-form-field appearance="fill" class="margin-tp" >
-                            <mat-label>(+) Add to group</mat-label>
+                            <mat-label>(&#x2b;) Add to group</mat-label>
                             <mat-select (selectionChange)="groupSelection($event.value)" [(ngModel)]="clearInput">
                                 <mat-option selected hidden></mat-option>
                               <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
@@ -62,9 +60,6 @@
                                 {{groupOpt.group_name}}
                               </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="onValidationError">
-                                {{onValidationError}}
-                              </mat-error>
                           </mat-form-field>
                 </div>
             </div>
@@ -108,6 +103,9 @@
         editMode="row" responsiveLayout="scroll">
 
         <ng-template pTemplate="caption">
+            <div class="onValidationContainer" *ngIf="onValidationMsg">
+                {{onValidationMsg}}
+        </div> 
             <div class="filter-container">
                 <mat-form-field appearance="standard">
                     <mat-label>Filter by</mat-label>
@@ -115,11 +113,13 @@
                         (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')" placeholder="Ex. ium">
                 </mat-form-field>
             </div>
+           
             <button class="button-neumorphism margin-lt" (click)="clear(dataTable)">Clear filters</button>
-        
-
+            <button pRipple (click)="changeTBToGroupView('0', 'all')"
+            class="button-neumorphism margin-lt">All
+        </button>
             <div class="dropdown" *ngFor="let groupOpt of tbGroups">
-                <button pRipple (click)="changeTBToGroupView(groupOpt.group_id)"
+                <button pRipple (click)="changeTBToGroupView(groupOpt.group_id, groupOpt.group_name)"
                     class="button-neumorphism margin-lt dropbtn-neumorphism"> {{groupOpt.group_name}}
                     <span class="button-icon"><i class="bi bi-chevron-down i-neumorphism"></i></span>
                 </button>
@@ -130,12 +130,16 @@
                             Rename group
                         </div>
                         <div class="rename-group-container hide">
+                            <small *ngIf="onValidationError" class="color-rd">
+                                {{onValidationError}}
+                            </small> 
                             <mat-form-field appearance="standard">
                                 <mat-label>Rename group</mat-label>
                                 <input matInput type="text" placeholder="Rename to" class="not-rounded"
-                                    autocomplete="off" #renamedGroup id="rename{{groupOpt.group_id}}"
-                                    [(ngModel)]="clearInput">
+                                    autocomplete="off" #renamedGroup id="rename {{groupOpt.group_id}}"
+                                    name="renamedGroup" [(ngModel)]="clearInput" required>
                             </mat-form-field>
+                           
                             <button class="button-neumorphism elm-rounded width-50"
                                 (click)="saveRenameGroup(groupOpt.group_id, renamedGroup.value, $event)">
                                 Save
@@ -146,7 +150,7 @@
                         </div>
                     </div>
                     <div class="width-100 delete-container">
-                        <div class="width-100 dropdown-content-container" (click)="deleteGroup(groupOpt.group_id)">
+                        <div class="width-100 dropdown-content-container" (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name)">
                             <i class="bi bi-trash-fill"></i>
                             Delete group
                         </div>
@@ -222,4 +226,4 @@
 
 </div>
 
-<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>

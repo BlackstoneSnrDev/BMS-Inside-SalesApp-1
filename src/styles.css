@@ -172,7 +172,9 @@ margin: 0;
 .txt-center{
   text-align: center;
 }
-
+.color-rd{
+  color: #f44336;
+}
 .not-rounded{
   border-radius: 0 !important;
 }
