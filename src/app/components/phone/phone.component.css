@@ -11,6 +11,8 @@
 .iconbutton-neumorphism.btnCall{
   margin-left: 0.5rem;
   border-radius: .55rem;
+  padding-left: 0.59rem;
+  padding-top: 0.5rem !important;
 }
 
 .phone-history{
@@ -50,8 +52,6 @@ h6, p {
 .container-neumorphism:focus{
   background-color: rgba(38, 40, 51, 0.03);
 }
-
-
 
 .border-bottom{
   padding-bottom: .44rem !important;

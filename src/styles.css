@@ -169,11 +169,15 @@ margin: 0;
   float: right;
 }
 
+.txt-lf{
+  text-align: left;
+}
+
 .txt-center{
   text-align: center;
 }
 .color-rd{
-  color: #f44336;
+  color: #a91e2c;
 }
 .not-rounded{
   border-radius: 0 !important;
@@ -189,3 +193,4 @@ margin: 0;
   outline: 0 !important;
   box-shadow: none !important;
 }
+

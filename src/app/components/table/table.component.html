@@ -115,11 +115,11 @@
             </div>
            
             <button class="button-neumorphism margin-lt" (click)="clear(dataTable)">Clear filters</button>
-            <button pRipple (click)="changeTBToGroupView('0', 'all')"
+            <button pRipple (click)="changeTBToGroupView('0', 'all', tdData)"
             class="button-neumorphism margin-lt">All
         </button>
             <div class="dropdown" *ngFor="let groupOpt of tbGroups">
-                <button pRipple (click)="changeTBToGroupView(groupOpt.group_id, groupOpt.group_name)"
+                <button pRipple (click)="changeTBToGroupView(groupOpt.group_id, groupOpt.group_name, tdData)"
                     class="button-neumorphism margin-lt dropbtn-neumorphism"> {{groupOpt.group_name}}
                     <span class="button-icon"><i class="bi bi-chevron-down i-neumorphism"></i></span>
                 </button>

@@ -4,7 +4,7 @@ import { DataService } from '../../services/services.service';
 @Component({
     selector: 'form-component',
     templateUrl: './form.component.html',
-    styleUrls: ['../../css/neumorphism.component.css'],
+    styleUrls: ['./form.component.css','../../css/neumorphism.component.css'],
 })
 
 export class FormComponent implements OnInit {

@@ -59,4 +59,5 @@ export class DataService {
     return this._http.get(this.tableDataURL);
 
   }
+
 }

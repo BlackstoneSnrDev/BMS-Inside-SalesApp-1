@@ -19,9 +19,11 @@ import { QueueComponent } from './partials/queue/queue.component';
 import { CallInfoComponent } from './partials/call-information/call-information.component';
 import { SettingsComponent } from './partials/settings/settings.component';
 import { StatisticsComponent } from './partials/statistics/statistics.component';
+import { LoginComponent } from './partials/login/login.component';
 
 ///// My directives
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
+import { AuthGuard } from "./services/auth.guard";
 
 ///// Libraries
 // Angular material
@@ -29,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 // Ng2 Charts
@@ -61,6 +64,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CallInfoComponent,
     SettingsComponent,
     StatisticsComponent,
+    LoginComponent,
     ///// My directives
     TextareaAutoresizeDirective,
   ],
@@ -78,6 +82,7 @@ import { TooltipModule } from 'primeng/tooltip';
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatGridListModule,
     // Ng2 Charts
     NgChartsModule,
     // PrimeNG
@@ -95,6 +100,7 @@ import { TooltipModule } from 'primeng/tooltip';
     // PrimeNG
     ConfirmationService,
     MessageService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

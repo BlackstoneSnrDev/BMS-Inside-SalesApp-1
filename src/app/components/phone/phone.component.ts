@@ -35,8 +35,6 @@ export class PhoneComponent implements OnInit {
         this.DataService.getCallHistoryData().subscribe(
             response => {
               this.phoneHistory = response.callHistory
-              console.log("Output 1" + this.phoneHistory)
-
             },
             error => {
               console.error(error)

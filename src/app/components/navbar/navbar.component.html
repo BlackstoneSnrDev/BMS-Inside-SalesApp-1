@@ -6,13 +6,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
 <!-- my-navbar -->
-<div class="my-navbar">
+<div class="my-navbar" *ngIf="isLoggedIn$ | async as isLoggedIn">
 
     <div class="my-navbar-header">
         <img class="my-navbar-logo" src="{{ navbarlogo }}" matTooltip="{{ navbarname }}" matTooltipPosition="right">
     </div>
 
     <ul class="ul-my-navbar">
+        <li class="my-navbar-tab-container">
+            <div class="my-navbar-tab" matTooltip="Log out" matTooltipPosition="right" routerLinkActive="active-tab">
+                <a class="a-my-navbar" (click)="onLogout()" *ngIf="isLoggedIn">
+                    <i class="bi bi-box-arrow-left i-my-navbar"></i>
+                </a>
+            </div>
+        </li>
         <li class="my-navbar-tab-container" *ngFor="let tab of navbartabs">
             <div class="my-navbar-tab" matTooltip="{{ tab.tab_name }}" matTooltipPosition="right" routerLinkActive="active-tab">
                 <a class="a-my-navbar" [routerLink]="[tab.tab_route]" >

@@ -420,26 +420,23 @@ export class TableComponent {
     }
 
     // Change normal view to group selected view
-    changeTBToGroupView(groupId: string, groupName: string) {
+    changeTBToGroupView(groupId: string, groupName: string, tdData: any) {
 
         let recordsInGroup = this.tdData.filter((i: any) => i.group.includes(groupId))
 
         if(groupName === "all"){
 
-            this.tdData = this.tdData
-
-            console.log(this.tdData)
+            this.clonedtdData[tdData] = { ...tdData };
+            console.log(this.clonedtdData[tdData])
 
         }else if (recordsInGroup == 0){
 
-            this.tdData = this.tdData
+            this.tdData = this.clonedtdData[tdData]
 
             this.onValidationMsg = 'There is no record added to group "' + groupName + '".'
             setTimeout(() => {
                 this.onValidationMsg = "";
             }, 5000);
-
-            console.log(this.tdData)
             
         }else {
 
@@ -449,8 +446,6 @@ export class TableComponent {
             setTimeout(() => {
                 this.onValidationMsg = "";
             }, 5000);
-
-            console.log(this.tdData)
 
         } 
 
