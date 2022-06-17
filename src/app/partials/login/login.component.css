@@ -1,8 +1,8 @@
 .component-container {
   background-image: url("../../../assets/img/login-back.png");
-  height: 38rem;
-  overflow: hidden;
-  min-width: 667px;
+  min-height: 100%;
+  overflow: auto;
+  min-width: 477px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
