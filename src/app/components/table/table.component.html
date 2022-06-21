@@ -55,7 +55,7 @@
 
                     <mat-form-field appearance="fill" class="margin-tp">
                         <mat-label>(&#xd7;) Delete from group</mat-label>
-                        <mat-select (selectionChange)="ungroupSelection($event.value)" [(ngModel)]="clearInput">
+                        <mat-select (selectionChange)="ungroupSelection($event.value, 'selection')" [(ngModel)]="clearInput">
                             <mat-option selected hidden></mat-option>
                             <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
                                 {{groupOpt.group_name}}
@@ -121,7 +121,7 @@
             <div class="filter-container">
                 <mat-form-field appearance="standard">
                     <mat-label>Filter by</mat-label>
-                    <input matInput type="text" #filterInput
+                    <input matInput type="text" #filterInput [(ngModel)]="clearInput"
                         (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')" placeholder="Ex. ium">
                 </mat-form-field>
             </div>

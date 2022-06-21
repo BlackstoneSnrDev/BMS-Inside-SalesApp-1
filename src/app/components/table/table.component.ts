@@ -83,7 +83,15 @@ export class TableComponent {
     clear(table: Table) {
 
         table.clear();
-        this.tdData = this.tdData
+        this.modifyTable = 'all'
+        this.tbSelectedRows = [];
+        this.clearInput = ""
+
+        let modifyLastElmActive = document.getElementsByClassName("button-neumorphism-active");
+        while (modifyLastElmActive.length > 0) {
+            modifyLastElmActive[0].classList.remove('button-neumorphism-active');
+        }
+        table.filterGlobal('', 'contains')
 
         this.onValidationMsg = "Table was restored.";
         setTimeout(() => {
@@ -154,7 +162,7 @@ export class TableComponent {
     saveAddNewRecord(table: Table) {
 
         let value = this.addNewRecordForm.value;
-        value['group'] = [] 
+        value['group'] = []
         value['slIndex'] = this.tdData.length
         this.tdData.push(value);
 
@@ -320,27 +328,29 @@ export class TableComponent {
         this.onValidationError = ""
     }
 
-    deleteGroup(groupId: number, groupName: string) {
+    deleteGroup(groupId: any, groupName: string) {
 
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete "<b>' + groupName + '</b>"?',
-            header: 'Deleting group',
-            accept: () => {
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to delete "<b>' + groupName + '</b>"?',
+                header: 'Deleting group',
+                accept: () => {
 
-                let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
-                this.tbGroups = this.tbGroups.filter((i: any) => i.group_id.includes(groupIndex))
+                    let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
+                    this.tbGroups = this.tbGroups.filter((i: any) => i.group_id !== groupId)
 
-                this.tdData = this.tdData
+                    console.log(groupIndex)
 
-                this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
-                setTimeout(() => {
-                    this.onValidationMsg = "";
-                }, 2000);
+                    this.ungroupSelection(groupId, 'deleteGroup');
 
-                console.log(this.tbGroups)
+                    this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
+                    setTimeout(() => {
+                        this.onValidationMsg = "";
+                    }, 2000);
 
-            }
-        });
+                    console.log(this.tbGroups)
+
+                }
+            });
 
         this.onValidationError = ""
         this.clearInput = ""
@@ -380,6 +390,11 @@ export class TableComponent {
                         }
                     }
 
+                    this.modifyTable = 'all'
+                    let modifyLastElmActive = document.getElementsByClassName("button-neumorphism-active");
+                    while (modifyLastElmActive.length > 0) {
+                        modifyLastElmActive[0].classList.remove('button-neumorphism-active');
+                    }
                     this.clearInput = ""
 
                 }
@@ -399,32 +414,50 @@ export class TableComponent {
     }
 
     // Delete selection from group
-    ungroupSelection(groupId: Event) {
+    ungroupSelection(groupId: Event, event: string) {
 
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to ungroup <b>' + this.tbSelectedRows.length + '</b> records?',
-            header: 'Ungrouping records',
-            accept: () => {
+        let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
+        if (event === 'deleteGroup') {
 
-                let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
-                let groupName = this.tbGroups[groupIndex]["group_name"]
+            for (let i = 0; i < this.tdData.length; i++) {
 
-                for (let i = 0; i < this.tbSelectedRows.length; i++) {
-
-                    let groupIndex = this.tbSelectedRows[i].group.findIndex((i: any) => i === groupId)
-                    this.tbSelectedRows[i].group.splice(groupIndex, 1);
-
-                }
-
-                this.onValidationMsg = '"' + this.tbSelectedRows.length + '" were removed from "' + groupName + '" successfully.'
-                setTimeout(() => {
-                    this.onValidationMsg = "";
-                }, 2000);
-
-                console.log(this.tdData)
+                let groupIndex = this.tdData[i].group.findIndex((i: any) => i === groupId)
+                this.tdData[i].group.splice(groupIndex, 1);
 
             }
-        });
+
+        }else{
+
+            this.confirmationService.confirm({
+                message: 'Are you sure you want to ungroup <b>' + this.tbSelectedRows.length + '</b> records?',
+                header: 'Ungrouping records',
+                accept: () => {
+
+                    let groupName = this.tbGroups[groupIndex]["group_name"]
+
+                    for (let i = 0; i < this.tbSelectedRows.length; i++) {
+
+                        let groupIndex = this.tbSelectedRows[i].group.findIndex((i: any) => i === groupId)
+                        this.tbSelectedRows[i].group.splice(groupIndex, 1);
+
+                    }
+
+                    this.modifyTable = 'all'
+                    let modifyLastElmActive = document.getElementsByClassName("button-neumorphism-active");
+                    while (modifyLastElmActive.length > 0) {
+                        modifyLastElmActive[0].classList.remove('button-neumorphism-active');
+                    }
+
+                    this.onValidationMsg = '"' + this.tbSelectedRows.length + '" were removed from "' + groupName + '" successfully.'
+                    setTimeout(() => {
+                        this.onValidationMsg = "";
+                    }, 2000);
+
+                    console.log(this.tdData)
+
+                }
+            });
+        }
 
         this.clearInput = ""
         console.log(this.tdData)
