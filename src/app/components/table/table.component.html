@@ -1,7 +1,7 @@
-<div>
+<div class="table-container">
     <div class="margin-bt menu-table-container">
         <button class="iconbutton-neumorphism-disabled">
-            <i class="bi bi-sliders"></i>
+            <i class="bi bi-sliders i-colored"></i>
         </button>
         <ng-container>
             <button class="button-neumorphism margin-lt" (click)="toggleAddNewRecord()">
@@ -24,11 +24,12 @@
                                 <div class="width-100 dropdown-content-container elm-rounded">
                                     <small *ngIf="onValidationError" class="color-rd">
                                         {{onValidationError}}
-                                    </small> 
+                                    </small>
                                     <mat-form-field appearance="standard">
                                         <mat-label>Create new group</mat-label>
                                         <input matInput type="text" #newGroupName placeholder="New group name"
-                                            autocomplete="off" class="not-rounded" name="newGroupName" id="newGroupName" [(ngModel)]="clearInput" required>
+                                            autocomplete="off" class="not-rounded" name="newGroupName" id="newGroupName"
+                                            [(ngModel)]="clearInput" required>
                                     </mat-form-field>
                                     <button class="button-neumorphism elm-rounded width-50 margin-tp"
                                         (click)="saveCreateNewGroup(newGroupName.value)">
@@ -42,52 +43,62 @@
                             </div>
                         </div>
                     </div>
-                        <mat-form-field appearance="fill" class="margin-tp" >
-                            <mat-label>(&#x2b;) Add to group</mat-label>
-                            <mat-select (selectionChange)="groupSelection($event.value)" [(ngModel)]="clearInput">
-                                <mat-option selected hidden></mat-option>
-                              <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
+                    <mat-form-field appearance="fill" class="margin-tp">
+                        <mat-label>(&#x2b;) Add to group</mat-label>
+                        <mat-select (selectionChange)="groupSelection($event.value)" [(ngModel)]="clearInput">
+                            <mat-option selected hidden></mat-option>
+                            <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
                                 {{groupOpt.group_name}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
-                          <mat-form-field appearance="fill" class="margin-tp" >
-                            <mat-label>(&#xd7;) Delete from group</mat-label>
-                            <mat-select (selectionChange)="ungroupSelection($event.value)" [(ngModel)]="clearInput">
-                                <mat-option selected hidden></mat-option>
-                              <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
+                    <mat-form-field appearance="fill" class="margin-tp">
+                        <mat-label>(&#xd7;) Delete from group</mat-label>
+                        <mat-select (selectionChange)="ungroupSelection($event.value)" [(ngModel)]="clearInput">
+                            <mat-option selected hidden></mat-option>
+                            <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
                                 {{groupOpt.group_name}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
             <div [ngClass]="tglAddNewRecord ? 'show' : 'hide'">
                 <div spellcheck="true">
-                    <form [formGroup]="addNewRecordForm" (ngSubmit)="saveAddNewRecord(dataTable)" *ngIf="addNewRecordForm" novalidate>
+                    <form [formGroup]="addNewRecordForm" (ngSubmit)="saveAddNewRecord(dataTable)"
+                        *ngIf="addNewRecordForm" novalidate>
                         <h5>Add new record</h5>
                         <div [ngClass]="!addNewRecordForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
                         <hr>
                         <div class="form-row">
                             <div *ngFor="let newtd of thData ; let newtdIndex = index">
-                                <div class="col">
-                                    <mat-form-field appearance="standard">
-                                        <mat-label>{{newtd.title}}</mat-label>
-                                        <input matInput class="input-neumorphism" type="{{newtd.element_type}}" placeholder="New {{newtd.field}}"
-                                            autocomplete="off" id="{{newtdIndex + newtd.field}}"
-                                            formControlName="{{newtd.field}}"/>
-                                    </mat-form-field>
+                                <div class="form-group col-xl-auto">
+                                    <ng-container *ngIf="newtd.element_type === 'boolean'; else matInp">
+                                        <p-checkbox  [binary]="true"
+                                            label="{{newtd.title}}" inputId="{{newtdIndex + newtd.field}}" [(ngModel)]="checked"  formControlName="{{newtd.field}}"></p-checkbox>
+                                    </ng-container>
+                                    <ng-template #matInp>
+                                        <mat-form-field appearance="standard">
+                                            <mat-label>{{newtd.title}}</mat-label>
+                                            <input matInput class="input-neumorphism" type="{{newtd.element_type}}"
+                                                placeholder="New {{newtd.field}}" autocomplete="off"
+                                                id="{{newtdIndex + newtd.field}}" formControlName="{{newtd.field}}" />
+                                        </mat-form-field>
+                                    </ng-template>
                                 </div>
                             </div>
                         </div>
                         <hr>
                         <div class="form-row">
                             <div class="col">
-                                <button type="submit" class="width-50 show-line-b txt-center" value="save" [disabled]="!addNewRecordForm.valid" [ngClass]="!addNewRecordForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
+                                <button type="submit" class="width-50 show-line-b txt-center" value="save"
+                                    [disabled]="!addNewRecordForm.valid"
+                                    [ngClass]="!addNewRecordForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
                                     Save
                                 </button>
-                                <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewRecord()">
+                                <div class="button-neumorphism width-50 show-line-b txt-center"
+                                    (click)="cancelAddNewRecord()">
                                     Cancel
                                 </div>
                             </div>
@@ -97,15 +108,16 @@
             </div>
         </ng-container>
     </div>
-    <p-table #dataTable [columns]="thData" [value]="tdData" [rows]="5" [paginator]="true" [globalFilterFields]="thData"
-        [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="tbSelectedRows" [rowHover]="true" dataKey="slIndex"
+    <p-table #dataTable [columns]="thData" [value]="tdData | changeView: modifyTable" [rows]="5" [paginator]="true"
+        [globalFilterFields]="thData" [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="tbSelectedRows"
+        [rowHover]="true" dataKey="slIndex"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
         editMode="row" responsiveLayout="scroll">
 
         <ng-template pTemplate="caption">
             <div class="onValidationContainer" *ngIf="onValidationMsg">
                 {{onValidationMsg}}
-        </div> 
+            </div>
             <div class="filter-container">
                 <mat-form-field appearance="standard">
                     <mat-label>Filter by</mat-label>
@@ -113,33 +125,34 @@
                         (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')" placeholder="Ex. ium">
                 </mat-form-field>
             </div>
-           
-            <button class="button-neumorphism margin-lt" (click)="clear(dataTable)">Clear filters</button>
-            <button pRipple (click)="changeTBToGroupView('0', 'all', tdData)"
-            class="button-neumorphism margin-lt">All
-        </button>
+            <button *ngIf="tbSelectedRows.length > 0" class="button-neumorphism-disabled i-colored">
+                <b>({{tbSelectedRows.length}})</b>
+            </button>
+            <button class="button-neumorphism margin-lt margin-bt" (click)="clear(dataTable)">Clear filters</button>
+            <button pRipple (click)="modifyTableView('all', $event)" class="button-neumorphism margin-lt margin-bt">All
+            </button>
             <div class="dropdown" *ngFor="let groupOpt of tbGroups">
-                <button pRipple (click)="changeTBToGroupView(groupOpt.group_id, groupOpt.group_name, tdData)"
-                    class="button-neumorphism margin-lt dropbtn-neumorphism"> {{groupOpt.group_name}}
-                    <span class="button-icon"><i class="bi bi-chevron-down i-neumorphism"></i></span>
+                <button pRipple (click)="modifyTableView(groupOpt.group_id, $event)"
+                    class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt"> {{groupOpt.group_name}}
+                    <span class="button-icon"><i class="bi bi-chevron-down "></i></span>
                 </button>
                 <div class="dropdown-content">
                     <div class="width-100 dropdown-content-container">
                         <div (click)="toggleEditGroup($event)">
-                            <i class="bi bi-pencil-square i-neumorphism "></i>
+                            <i class="bi bi-pencil-square  "></i>
                             Rename group
                         </div>
                         <div class="rename-group-container hide">
                             <small *ngIf="onValidationError" class="color-rd">
                                 {{onValidationError}}
-                            </small> 
+                            </small>
                             <mat-form-field appearance="standard">
                                 <mat-label>Rename group</mat-label>
                                 <input matInput type="text" placeholder="Rename to" class="not-rounded"
                                     autocomplete="off" #renamedGroup id="rename {{groupOpt.group_id}}"
                                     name="renamedGroup" [(ngModel)]="clearInput" required>
                             </mat-form-field>
-                           
+
                             <button class="button-neumorphism elm-rounded width-50"
                                 (click)="saveRenameGroup(groupOpt.group_id, renamedGroup.value, $event)">
                                 Save
@@ -150,7 +163,8 @@
                         </div>
                     </div>
                     <div class="width-100 delete-container">
-                        <div class="width-100 dropdown-content-container" (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name)">
+                        <div class="width-100 dropdown-content-container"
+                            (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name)">
                             <i class="bi bi-trash-fill"></i>
                             Delete group
                         </div>
@@ -175,7 +189,7 @@
 
         <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
 
-            <tr [pEditableRow]="rowData">
+            <tr [pEditableRow]="rowData" id='tr{{rowIndex}}'>
                 <td>
                     <p-tableCheckbox [value]="rowData" (click)="toggleTableMenu()"></p-tableCheckbox>
                 </td>
@@ -183,34 +197,44 @@
                 <td *ngFor="let col of columns">
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <mat-form-field appearance="standard">
-                                <mat-label>{{col.title}}</mat-label>
-                                <input matInput type="{{col.element_type}}" placeholder="New {{col.field}}"
-                                    [(ngModel)]="rowData[col.field]" required>
-                            </mat-form-field>
+                            <ng-container *ngIf="col.element_type === 'boolean'; else matIn">
+                                <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary">
+                                </p-checkbox>
+                            </ng-container>
+                            <ng-template #matIn>
+                                <mat-form-field appearance="standard">
+                                    <mat-label>{{col.title}}</mat-label>
+                                    <input matInput type="{{col.element_type}}" placeholder="New {{col.field}}"
+                                        [(ngModel)]="rowData[col.field]" required>
+                                </mat-form-field>
+                            </ng-template>
+                            <br>
+                            <small *ngIf="onValidationError" class="color-rd">
+                                {{col.title}} must be filled out.
+                            </small>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{rowData[col.field]}}
+                            {{rowData[col.field] | formatBoolean: col.field}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
 
                 <td>
-                    <button pRipple *ngIf="!editing" type="button" pInitEditableRow (click)="onRowEditInit(rowData)"
-                        class="iconbutton-neumorphism">
-                        <i class="bi bi-pencil-square i-neumorphism "></i>
+                    <button pRipple *ngIf="!editing" type="button" pInitEditableRow
+                        (click)="onRowEditInit(rowData, rowIndex)" class="iconbutton-neumorphism margin-rt">
+                        <i class="bi bi-pencil-square  "></i>
                     </button>
                     <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex)"
                         class="iconbutton-neumorphism">
-                        <i class="bi bi-trash-fill i-neumorphism"></i>
+                        <i class="bi bi-trash-fill "></i>
                     </button>
                     <button pRipple *ngIf="editing" type="button" pSaveEditableRow
-                        (click)="onRowEditSave(rowData, rowIndex)" class="iconbutton-neumorphism">
-                        <i class="pi pi-check i-neumorphism"></i>
+                        (click)="onRowEditSave(rowData, rowIndex)" class="iconbutton-neumorphism margin-rt">
+                        <i class="pi pi-check "></i>
                     </button>
                     <button pRipple *ngIf="editing" type="button" pCancelEditableRow
-                        (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism">
-                        <i class="pi pi-times i-neumorphism"></i>
+                        (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism ">
+                        <i class="pi pi-times "></i>
                     </button>
                 </td>
             </tr>
@@ -223,7 +247,6 @@
         </ng-template>
 
     </p-table>
-
 </div>
 
 <p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>

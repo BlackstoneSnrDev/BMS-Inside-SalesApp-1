@@ -33,12 +33,12 @@
         {
             "title": "Prior Contact",
             "field": "prior_contact",
-            "element_type": "text"
+            "element_type": "boolean"
         },
         {
             "title": "Pending",
             "field": "pending",
-            "element_type": "text"
+            "element_type": "boolean"
         }
     ],
     "table_td": [

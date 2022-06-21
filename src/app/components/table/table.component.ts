@@ -20,13 +20,12 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 export class TableComponent {
 
-
     public thData: any;
     public thDataLength: number = 0
-    public clonedthData: any = {};
 
     public tdData: any;
     public clonedtdData: any = {};
+    public modifyTable: string = 'all'
 
     public tbSelectedRows: any = [];
 
@@ -36,7 +35,6 @@ export class TableComponent {
 
     public tglCreateNewGroup: boolean = false;
     public tglMenuTable: boolean = false;
-    public tglEditGroup: boolean = false;
     public tglAddNewRecord: boolean = false;
     public tglGroupMenu: boolean = false;
 
@@ -44,8 +42,9 @@ export class TableComponent {
     public newFormControl: any = {};
     public onValidationError: string = "";
     public onValidationMsg: string = "";
+    public checked: boolean = false;
 
-    constructor(private DataService: DataService, private messageService: MessageService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig, fb: FormBuilder) { }
+    constructor(private DataService: DataService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
 
     ngOnInit() {
 
@@ -93,18 +92,29 @@ export class TableComponent {
     }
 
     // Table on row CRUD
-    onRowEditInit(tdData: any) {
+    onRowEditInit(tdData: any, id: number) {
         this.clonedtdData[tdData.id] = { ...tdData };
     }
 
-    onRowEditSave(tdData: any, id: number) {
-        delete this.clonedtdData[tdData.id];
-        console.log(this.tdData[id])
+    onRowEditSave(tdData: any, index: number) {
+
+        let modifyLastElmActive = (document.getElementById('tr' + index) as HTMLInputElement).getElementsByClassName('ng-invalid')
+
+        if (modifyLastElmActive.length > 0) {
+            this.onValidationError = '*All fields must be filled out.'
+        } else {
+
+            delete this.clonedtdData[tdData.id];
+
+            console.log('clicked')
+        }
     }
 
     onRowEditCancel(tdData: any, index: number) {
+
         this.tdData[index] = this.clonedtdData[tdData.id];
         delete this.tdData[tdData.id];
+
     }
 
     onRowDeleteRow(id: any) {
@@ -116,7 +126,6 @@ export class TableComponent {
             accept: () => {
                 this.tdData = this.tdData.filter((i: any) => ![id].includes(i.slIndex));
                 this.tbSelectedRows = [];
-
                 this.onValidationMsg = 'Record was deleted successfully.'
                 setTimeout(() => {
                     this.onValidationMsg = "";
@@ -145,7 +154,8 @@ export class TableComponent {
     saveAddNewRecord(table: Table) {
 
         let value = this.addNewRecordForm.value;
-        value['group'] = []
+        value['group'] = [] 
+        value['slIndex'] = this.tdData.length
         this.tdData.push(value);
 
         table._totalRecords = this.tdData.length
@@ -178,17 +188,18 @@ export class TableComponent {
                 accept: () => {
                     this.tglMenuTable = false
                     this.tdData = this.tdData.filter((val: any) => !this.tbSelectedRows.includes(val));
-                    this.tbSelectedRows = [];
 
                     this.onValidationMsg = this.tbSelectedRows.length + ' records were deleted successfully.'
                     setTimeout(() => {
                         this.onValidationMsg = "";
                     }, 2000);
+                    this.tbSelectedRows = [];
 
                     console.log(this.tdData)
 
                 }
             });
+
         } else {
 
             this.onValidationMsg = 'There are ' + this.tbSelectedRows.length + ' records selected.'
@@ -207,6 +218,7 @@ export class TableComponent {
         this.tglGroupMenu = !this.tglGroupMenu
 
     }
+
     // Create new group
     toggleCreateNewGroup() {
         this.tglCreateNewGroup = true
@@ -215,6 +227,7 @@ export class TableComponent {
     saveCreateNewGroup(groupName: string) {
 
         if (!groupName) {
+
             this.onValidationError = "*Group name must be specified."
             setTimeout(() => {
                 this.onValidationError = "";
@@ -223,6 +236,7 @@ export class TableComponent {
             console.log(this.tbGroups)
 
         } else {
+
             let newIndex = this.tbGroups.length + 1
             this.tbGroups.push({ "group_id": "g" + newIndex, "group_name": groupName });
 
@@ -292,7 +306,6 @@ export class TableComponent {
                 }
             });
 
-
             this.clearInput = ""
             this.onValidationError = ""
         }
@@ -316,10 +329,10 @@ export class TableComponent {
 
                 let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
                 this.tbGroups = this.tbGroups.filter((i: any) => i.group_id.includes(groupIndex))
-                this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
 
                 this.tdData = this.tdData
 
+                this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
                 setTimeout(() => {
                     this.onValidationMsg = "";
                 }, 2000);
@@ -336,6 +349,7 @@ export class TableComponent {
 
     // Add selection to group
     groupSelection(groupId: any) {
+        this.clearInput = ""
 
         this.confirmationService.confirm({
             message: 'Are you sure you want to group <b>' + this.tbSelectedRows.length + '</b> records?',
@@ -366,8 +380,7 @@ export class TableComponent {
                         }
                     }
 
-                    this.tdData[i] = this.tbSelectedRows[i]
-                    console.log(this.tdData[i])
+                    this.clearInput = ""
 
                 }
 
@@ -376,12 +389,12 @@ export class TableComponent {
                     this.onValidationMsg = "";
                 }, 2000);
 
-                console.log(this.tdData)
+                this.clearInput = ""
+
 
             }
         });
 
-        console.log(this.tdData)
         this.clearInput = ""
     }
 
@@ -400,7 +413,6 @@ export class TableComponent {
 
                     let groupIndex = this.tbSelectedRows[i].group.findIndex((i: any) => i === groupId)
                     this.tbSelectedRows[i].group.splice(groupIndex, 1);
-                    this.tdData[i] = this.tbSelectedRows[i]
 
                 }
 
@@ -419,35 +431,17 @@ export class TableComponent {
 
     }
 
-    // Change normal view to group selected view
-    changeTBToGroupView(groupId: string, groupName: string, tdData: any) {
+    // Change normal view to group selected view}
+    modifyTableView(modifyBy: string, event: Event) {
 
-        let recordsInGroup = this.tdData.filter((i: any) => i.group.includes(groupId))
+        let modifyLastElmActive = document.getElementsByClassName("button-neumorphism-active");
+        while (modifyLastElmActive.length > 0) {
+            modifyLastElmActive[0].classList.remove('button-neumorphism-active');
+        }
 
-        if(groupName === "all"){
+        let setActiveElm = (event.target as HTMLInputElement).classList.toggle("button-neumorphism-active");
 
-            this.clonedtdData[tdData] = { ...tdData };
-            console.log(this.clonedtdData[tdData])
-
-        }else if (recordsInGroup == 0){
-
-            this.tdData = this.clonedtdData[tdData]
-
-            this.onValidationMsg = 'There is no record added to group "' + groupName + '".'
-            setTimeout(() => {
-                this.onValidationMsg = "";
-            }, 5000);
-            
-        }else {
-
-            this.tdData = recordsInGroup
-
-            this.onValidationMsg = 'Table was filtered to "' + groupName + '" successfully. Now you see ' + recordsInGroup.length + ' records.'
-            setTimeout(() => {
-                this.onValidationMsg = "";
-            }, 5000);
-
-        } 
+        this.modifyTable = modifyBy
 
     }
 

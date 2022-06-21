@@ -16,8 +16,8 @@
         <input type="{{ element.element_type }}" class="input-neumorphism"
           placeholder="{{ element.element_placeholder }}">
         <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall()">
-          <i class="bi bi-telephone-fill i-neumorphism" [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
-          <i class="bi bi-x-circle-fill i-neumorphism" [ngClass]="containerCallStatus ? 'show' : 'hide'"></i>
+          <i class="bi bi-telephone-fill " [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
+          <i class="bi bi-x-circle-fill " [ngClass]="containerCallStatus ? 'show' : 'hide'"></i>
         </div>
       </div>
     </div>
@@ -41,24 +41,24 @@
       <small class="margin-rt width-100">6126163731</small>
       <button class="mini-iconbutton-neumorphism mute-toggle" pTooltip="Mute" tooltipPosition="above"
         (click)="btnMuteCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
-        <i class="bi bi-mic-fill mute-toggle-unmuted i-neumorphism" [ngClass]="muteStatus ? 'hide' : 'show'"></i>
-        <i class="bi bi-mic-mute-fill mute-toggle-muted i-neumorphism" [ngClass]="muteStatus ? 'show' : 'hide'"></i>
+        <i class="bi bi-mic-fill mute-toggle-unmuted " [ngClass]="muteStatus ? 'hide' : 'show'"></i>
+        <i class="bi bi-mic-mute-fill mute-toggle-muted " [ngClass]="muteStatus ? 'show' : 'hide'"></i>
       </button>
       <button class="mini-iconbutton-neumorphism hold-toggle" pTooltip="Hold" tooltipPosition="above"
         (click)="btnHoldCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
-        <i class="bi bi-pause-fill hold-toggle-onhold i-neumorphism" [ngClass]="holdStatus ? 'hide' : 'show'"></i>
-        <i class="bi bi-play-fill hold-toggle-oncall i-neumorphism " [ngClass]="holdStatus ? 'show' : 'hide'"></i>
+        <i class="bi bi-pause-fill hold-toggle-onhold " [ngClass]="holdStatus ? 'hide' : 'show'"></i>
+        <i class="bi bi-play-fill hold-toggle-oncall  " [ngClass]="holdStatus ? 'show' : 'hide'"></i>
       </button>
       <input type="number" class="mini-input-neumorphism" placeholder="Transfer to..."
         [ngClass]="xferStatus ? 'show' : 'hide'">
       <button class="mini-iconbutton-neumorphism" pTooltip="Transfer to" tooltipPosition="above"
         (click)="btnXferCall()">
-        <i class="bi bi-telephone-forward-fill i-neumorphism" [ngClass]="xferStatus ? 'hide' : 'show'"></i>
-        <i class="bi bi-x-circle-fill i-neumorphism" [ngClass]="xferStatus ? 'show' : 'hide'"></i>
+        <i class="bi bi-telephone-forward-fill " [ngClass]="xferStatus ? 'hide' : 'show'"></i>
+        <i class="bi bi-x-circle-fill " [ngClass]="xferStatus ? 'show' : 'hide'"></i>
       </button>
       <button class="mini-iconbutton-neumorphism" pTooltip="Hang up" tooltipPosition="above"
         (click)="btnHangUpCall()">
-        <i class="bi bi-telephone-x-fill i-neumorphism"></i>
+        <i class="bi bi-telephone-x-fill "></i>
       </button>
     </div>
   </div>
@@ -84,7 +84,7 @@
   <div class="row">
     <div class="col-12 button-inline " [ngClass]="toggleStatus ? 'hide' : 'show'">
       <button class="button-neumorphism float-right"> Next call <i
-          class="bi bi-arrow-right-circle-fill i-neumorphism"></i>
+          class="bi bi-arrow-right-circle-fill "></i>
       </button>
     </div>
   </div>

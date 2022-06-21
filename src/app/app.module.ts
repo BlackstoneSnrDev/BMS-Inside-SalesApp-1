@@ -25,6 +25,12 @@ import { LoginComponent } from './partials/login/login.component';
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
 import { AuthGuard } from "./services/auth.guard";
 
+///// My pipes
+import { FormatBoolean } from './pipes/formatBoolean.pipe';
+import { ChangeView } from './pipes/changeView.pipe';
+
+
+
 ///// Libraries
 // Angular material
 import { MatInputModule } from '@angular/material/input';
@@ -47,7 +53,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
-
+import {ToastModule} from 'primeng/toast';
+import {CalendarModule} from 'primeng/calendar';
 @NgModule({
 
   declarations: [
@@ -67,6 +74,9 @@ import { TooltipModule } from 'primeng/tooltip';
     LoginComponent,
     ///// My directives
     TextareaAutoresizeDirective,
+///// My pipes
+    FormatBoolean,
+    ChangeView,
   ],
 
   imports: [
@@ -93,6 +103,8 @@ import { TooltipModule } from 'primeng/tooltip';
     ConfirmDialogModule,
     DialogModule,
     TooltipModule,
+    ToastModule,
+    CalendarModule
   ],
 
   providers: [

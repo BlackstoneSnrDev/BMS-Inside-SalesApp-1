@@ -18,7 +18,7 @@ export class UsersService {
 
   login(user: any): Observable<any> {
 
-    if (user.username === "eve.holt@reqres.in") {
+    if (user.username) {
 
       this.loggedIn.next(true);
       this.router.navigateByUrl('call-information');
