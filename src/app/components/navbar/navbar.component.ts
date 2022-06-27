@@ -15,6 +15,8 @@ export class NavbarComponent implements OnInit {
     public navbarname: any;
     public navbartabs: any;
     isLoggedIn$!: Observable<boolean>;
+    public dbObjKey: any;
+    public userInfo: any;
 
     get auth(){
         return this.usersService.auth
@@ -25,6 +27,8 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
 
     this.isLoggedIn$ = this.usersService.isLoggedIn;
+
+    this.usersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
   
         this.DataService.getNavbarData().subscribe(
 
@@ -43,8 +47,11 @@ export class NavbarComponent implements OnInit {
       }
 
       onLogout() {
-        this.usersService.logout();
+        this.usersService.SignOut();
       }
+
+      log(val: any) { console.log(val); }
+      
   }
 
   

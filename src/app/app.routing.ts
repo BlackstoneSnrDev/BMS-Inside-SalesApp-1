@@ -7,6 +7,7 @@ import { CallInfoComponent } from './partials/call-information/call-information.
 import { QueueComponent } from './partials/queue/queue.component';
 import { SettingsComponent } from './partials/settings/settings.component';
 import { StatisticsComponent } from './partials/statistics/statistics.component';
+import { AdminComponent } from './partials/admin/admin.component';
 import { LoginComponent } from './partials/login/login.component';
 import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
 
@@ -22,7 +23,8 @@ const appRoutes: Routes = [
     {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     {path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
     {path: '404', component: PageNotFoundComponent, canActivate: [AuthGuard] },
-    {path: '**', redirectTo: '404'}
+    {path: '**', redirectTo: '404'},
+    {path: 'admin', component: AdminComponent, canActivate: [AuthGuard] }
 
 ];
 

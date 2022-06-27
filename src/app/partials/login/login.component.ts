@@ -50,6 +50,7 @@ export class LoginComponent {
     }
 
     login() {
+<<<<<<< HEAD
     
         const user = {username: this.username, password: this.password};
         
@@ -73,5 +74,8 @@ export class LoginComponent {
 
         });
 
+=======
+        this.userService.SignIn(this.username, this.password);
+>>>>>>> 00695072531030c5fcc233d68a706066145408fe
       }
 }

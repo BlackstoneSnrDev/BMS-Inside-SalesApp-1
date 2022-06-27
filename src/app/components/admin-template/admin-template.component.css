@@ -1,0 +1,12 @@
+li {
+    list-style-type: none;
+}
+
+.active {
+    color: red;
+}
+
+.template-list-item-active-span {
+    margin-left: 100px;
+    cursor: pointer;
+}

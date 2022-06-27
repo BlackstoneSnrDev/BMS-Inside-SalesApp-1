@@ -10,6 +10,8 @@
 
     <div class="my-navbar-header">
         <img class="my-navbar-logo" src="{{ navbarlogo }}" matTooltip="{{ navbarname }}" matTooltipPosition="right">
+        <div><b>{{userInfo.tenant}}</b></div>
+        <div>{{userInfo.name}}</div>
     </div>
        
     <ul class="ul-my-navbar">
@@ -40,6 +42,17 @@
                 </a>
             </div>
         </li>
+
+<!-- IF ADMIN USER, DISPLAY ADMIN PAGE OPTION -->
+        <li class="my-navbar-tab-container" *ngIf="userInfo.admin">
+            <hr />
+            <div class="my-navbar-tab" matTooltip="Admin" matTooltipPosition="right" routerLinkActive="active-tab">
+                <a class="a-my-navbar" routerLink="admin" >
+                    <i class="bi bi-safe2-fill i-my-navbar"></i>
+                </a>
+            </div>
+        </li>
+        
     </ul>
 
 </div>

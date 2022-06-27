@@ -40,6 +40,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 
+// Firebase 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from '../environments/environment';
 
 // Ng2 Charts
 import { NgChartsModule } from 'ng2-charts';
@@ -55,10 +62,9 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import {ToastModule} from 'primeng/toast';
-import {KnobModule} from 'primeng/knob';
-import {MultiSelectModule} from 'primeng/multiselect';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-
+import {CalendarModule} from 'primeng/calendar';
+import { AdminComponent } from './partials/admin/admin.component';
+import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
 @NgModule({
 
   declarations: [
@@ -82,6 +88,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 ///// My pipes
     FormatBoolean,
     ChangeView,
+    AdminComponent,
+    AdminTemplateComponent,
   ],
 
   imports: [
@@ -98,6 +106,12 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatGridListModule,
+    // Firebase
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
     // Ng2 Charts
     NgChartsModule,
     // PrimeNG

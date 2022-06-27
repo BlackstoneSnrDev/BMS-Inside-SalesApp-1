@@ -48,34 +48,37 @@ export class TableComponent {
 
     ngOnInit() {
 
+        this.DataService.getTableData().then( data => this.thData = data.sort((a,b) => a.element_order - b.element_order));
+
+
         this.primengConfig.ripple = true;
 
-        this.DataService.getTableData().subscribe(
-            response => {
+        // this.DataService.getTableData().subscribe(
+        //     response => {
 
-                this.thData = response.table_th
-                this.tdData = response.table_td
-                this.tbGroups = response.table_group
-                this.tbGroupsLength = response.table_group.length
+        //         this.thData = response.table_th
+        //         this.tdData = response.table_td
+        //         this.tbGroups = response.table_group
+        //         this.tbGroupsLength = response.table_group.length
 
-                this.thDataLength = this.thData.length
+        //         this.thDataLength = this.thData.length
 
-                for (let i of this.thData) {
-                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
-                }
-                this.addNewRecordForm = new FormGroup(this.newFormControl);
+        //         for (let i of this.thData) {
+        //             this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
+        //         }
+        //         this.addNewRecordForm = new FormGroup(this.newFormControl);
 
-                let slIndex = 0
-                for (let i = 0; i < this.tdData.length; i++) {
-                    slIndex = i
-                    this.tdData[slIndex]["slIndex"] = i;
-                }
+        //         let slIndex = 0
+        //         for (let i = 0; i < this.tdData.length; i++) {
+        //             slIndex = i
+        //             this.tdData[slIndex]["slIndex"] = i;
+        //         }
 
-            },
-            error => {
-                console.error(error)
-            }
-        )
+        //     },
+        //     error => {
+        //         console.error(error)
+        //     }
+        // )
     }
 
     @ViewChild('dataTable') table!: Table;
