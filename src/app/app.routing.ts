@@ -8,7 +8,8 @@ import { QueueComponent } from './partials/queue/queue.component';
 import { SettingsComponent } from './partials/settings/settings.component';
 import { StatisticsComponent } from './partials/statistics/statistics.component';
 import { LoginComponent } from './partials/login/login.component';
-import { RegisterComponent } from './partials/register/register.component';
+import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
+
 import { AuthGuard } from "./services/auth.guard";
 
 // URL Config
@@ -16,12 +17,12 @@ const appRoutes: Routes = [
 
     {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
     {path: 'call-information', component: CallInfoComponent, canActivate: [AuthGuard] },
     {path: 'queue', component: QueueComponent, canActivate: [AuthGuard] },
     {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     {path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
-    {path: '**', component: CallInfoComponent}
+    {path: '404', component: PageNotFoundComponent, canActivate: [AuthGuard] },
+    {path: '**', redirectTo: '404'}
 
 ];
 

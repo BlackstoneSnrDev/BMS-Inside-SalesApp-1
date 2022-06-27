@@ -20,6 +20,7 @@ import { CallInfoComponent } from './partials/call-information/call-information.
 import { SettingsComponent } from './partials/settings/settings.component';
 import { StatisticsComponent } from './partials/statistics/statistics.component';
 import { LoginComponent } from './partials/login/login.component';
+import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
 
 ///// My directives
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
@@ -54,7 +55,10 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 import {ToastModule} from 'primeng/toast';
-import {CalendarModule} from 'primeng/calendar';
+import {KnobModule} from 'primeng/knob';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+
 @NgModule({
 
   declarations: [
@@ -72,6 +76,7 @@ import {CalendarModule} from 'primeng/calendar';
     SettingsComponent,
     StatisticsComponent,
     LoginComponent,
+    PageNotFoundComponent,
     ///// My directives
     TextareaAutoresizeDirective,
 ///// My pipes
@@ -104,7 +109,9 @@ import {CalendarModule} from 'primeng/calendar';
     DialogModule,
     TooltipModule,
     ToastModule,
-    CalendarModule
+    KnobModule,
+    MultiSelectModule,
+    InputTextareaModule
   ],
 
   providers: [

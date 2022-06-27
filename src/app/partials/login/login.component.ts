@@ -18,7 +18,6 @@ export class LoginComponent {
     public loginLogo: any;
     public loginComapanyName: any;
     public loginForm!: FormGroup;
-    private formSubmitAttempt!: boolean;
 
     public username: string = '';
     public password: string = '';
@@ -53,13 +52,17 @@ export class LoginComponent {
     login() {
     
         const user = {username: this.username, password: this.password};
+        
+        this.userService.getUserData().subscribe( response => {
 
-        this.userService.login(user).subscribe( response => {
-            
-            console.log(response);
-            if (this.loginForm.valid) {
-                this.userService.login(user);
-              }
+            if (user.username === response.data.email && user.password == response.data.first_name) {
+                this.router.navigateByUrl('call-information');
+          
+            }else{
+
+                this.statusMsg = 'No user found.'
+                
+            }
 
         },
 
@@ -69,5 +72,6 @@ export class LoginComponent {
             console.error(error)
 
         });
+
       }
 }

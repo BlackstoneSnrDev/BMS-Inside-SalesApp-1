@@ -358,7 +358,7 @@ input:checked+.toggle-slider-neumorphism::before {
   display: none;
   position: absolute;
   background-color: #e6e7ee;
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
   border-radius: 1rem;
   left: 0.9rem;
   top: 2rem;

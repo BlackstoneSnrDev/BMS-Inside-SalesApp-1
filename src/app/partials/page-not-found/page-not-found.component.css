@@ -1,0 +1,11 @@
+.row{
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .main-row {
+    margin-left: 9rem;
+    margin-right: 1rem;
+    margin-top: 2.5rem;
+    height: 57rem;
+  }

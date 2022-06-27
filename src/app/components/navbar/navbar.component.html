@@ -11,14 +11,27 @@
     <div class="my-navbar-header">
         <img class="my-navbar-logo" src="{{ navbarlogo }}" matTooltip="{{ navbarname }}" matTooltipPosition="right">
     </div>
-
+       
     <ul class="ul-my-navbar">
-        <li class="my-navbar-tab-container">
-            <div class="my-navbar-tab" matTooltip="Log out" matTooltipPosition="right" routerLinkActive="active-tab">
-                <a class="a-my-navbar" (click)="onLogout()" *ngIf="isLoggedIn">
-                    <i class="bi bi-box-arrow-left i-my-navbar"></i>
-                </a>
+        <li class="my-navbar-tab-container" *ngIf="isLoggedIn">
+            <div class="dropdown">
+                <div class="my-navbar-tab">
+                    <a class="a-my-navbar">
+                        <i class="bi bi-person-circle i-my-navbar"></i>
+                    </a>
+                    <div class="txt-my-navbar">
+                        {{ auth.data.first_name }}
+                    </div>
+                </div>
+                <div class="dropdown-content">
+                    <div class="my-navbar-tab" matTooltip="Log out" matTooltipPosition="right" routerLinkActive="active-tab">
+                        <a class="a-my-navbar" (click)="onLogout()">
+                            <i class="bi bi-box-arrow-left i-my-navbar"></i>
+                        </a>
+                    </div>
             </div>
+        </div>
+
         </li>
         <li class="my-navbar-tab-container" *ngFor="let tab of navbartabs">
             <div class="my-navbar-tab" matTooltip="{{ tab.tab_name }}" matTooltipPosition="right" routerLinkActive="active-tab">

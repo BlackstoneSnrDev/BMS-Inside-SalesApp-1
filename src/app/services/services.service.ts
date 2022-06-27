@@ -15,6 +15,7 @@ export class DataService {
   public callhistoryURL: string;
   public logURL: string;
   public tableDataURL: string;
+  public siteConfigURL: string;
 
   constructor(
 
@@ -27,6 +28,7 @@ export class DataService {
     this.callhistoryURL = "../../assets/json/call-flow.json";
     this.logURL = "../../assets/json/log-data.json";
     this.tableDataURL = "../../assets/json/queueTable-data.json";
+    this.siteConfigURL = "../../assets/json/site-config-data.json";
 
   }
 
@@ -57,6 +59,12 @@ export class DataService {
   getTableData(): Observable<any>{
 
     return this._http.get(this.tableDataURL);
+
+  }
+
+  getSiteConfigData(): Observable<any>{
+
+    return this._http.get(this.siteConfigURL);
 
   }
 
