@@ -1,0 +1,8 @@
+DONE!!  Create admin component
+DONE!!  Create admin (admin-conditional) menu item 
+    Create, Read, Edit, Delete INFO TEMPLATE
+DONE!!  Chooses between info templets
+    If an element is shownWhileCalling, and the element_type is boolean, it should display as a checkbox
+
+Active template needs to be attached to a user, not the whole account
+Data leak on forms.component.ts - init database call is fired on every page load
