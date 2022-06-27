@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs'
+import { map, Observable, from } from 'rxjs'
+import { UsersService } from './auth.service';
+import {
+    AngularFirestore,
+    AngularFirestoreDocument,
+  } from '@angular/fire/compat/firestore'; 
+
+  
 
 @Injectable({
 
@@ -15,10 +22,13 @@ export class DataService {
   public callhistoryURL: string;
   public logURL: string;
   public tableDataURL: string;
+  public dbObjKey: any;
 
   constructor(
 
-    private _http: HttpClient
+    private _http: HttpClient,
+    private afs: AngularFirestore,
+    private usersService: UsersService
 
   ){
 
@@ -27,7 +37,7 @@ export class DataService {
     this.callhistoryURL = "../../assets/json/call-flow.json";
     this.logURL = "../../assets/json/log-data.json";
     this.tableDataURL = "../../assets/json/queueTable-data.json";
-
+    this.usersService.dbObjKey.subscribe(dbObjKey => this.dbObjKey = dbObjKey);
   }
 
   getNavbarData(): Observable<any>{
@@ -54,10 +64,62 @@ export class DataService {
 
   }
 
-  getTableData(): Observable<any>{
+  getTableData() {
 
-    return this._http.get(this.tableDataURL);
+    console.log('getActiveTemplate FIRED');
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
+    return data.where('active', '==', true).get().then((docs) => {
+        let filteredTemplateData: any[] = [];
+        Object.values(docs.docs[0].data()).forEach((item) => {
+            if (typeof item === 'object'){
+                filteredTemplateData.push({ 
+                    title: item.element_placeholder,
+                    field: item.element_placeholder, 
+                    element_type: item.element_type,
+                    element_order: item.element_order,
+                });
+            }
+        })
+        return filteredTemplateData;
+    })
 
   }
 
+  getAllTemplates(): Observable<any> {
+    console.log('FIRED!!!!');
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').snapshotChanges().pipe(
+        map(actions => actions.map(a => a.payload.doc.data()))
+      );
+    return data;
+  }
+
+  changeSelectedTemplate(template: string) {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
+// change current active template to false
+    data.where('active', '==', true).get().then((docs) => {
+        docs.forEach((doc) => {
+            this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(doc.id).update({active: false});
+        })
+// change selected template to true
+    }).then((res) => {  
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(template).update({active: true});
+    })
+
+  }
+
+  getActiveTemplate(dbObjKey: string | undefined) {
+    console.log('getActiveTemplate FIRED');
+    const data = this.afs.collection('Tenant').doc(dbObjKey).collection('templates').ref;
+    return data.where('active', '==', true).get().then((docs) => {
+        let filteredTemplateData: any[] = [];
+        Object.values(docs.docs[0].data()).forEach((item) => {
+            if (typeof item === 'object'){
+                filteredTemplateData.push(item);
+            }
+        })
+        return filteredTemplateData;
+    })
 }
+
+}
+

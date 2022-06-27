@@ -51,23 +51,6 @@ export class LoginComponent {
     }
 
     login() {
-    
-        const user = {username: this.username, password: this.password};
-
-        this.userService.login(user).subscribe( response => {
-            
-            console.log(response);
-            if (this.loginForm.valid) {
-                this.userService.login(user);
-              }
-
-        },
-
-        error => {
-
-            this.statusMsg = 'No user found.'
-            console.error(error)
-
-        });
+        this.userService.SignIn(this.username, this.password);
       }
 }

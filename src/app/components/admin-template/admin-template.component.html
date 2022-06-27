@@ -1,0 +1,12 @@
+<p>admin-template works!</p>
+
+<li class="my-template-list-item-container" *ngFor="let template of allTemplates">
+    <div [ngClass]="{'active': template.active }">
+        {{template.templateName}} 
+        <span class="template-list-item-active-span" (click)="templateSelected(template.templateName)">activate</span>
+        <li class="my-template-elements" *ngFor="let elememnt of template  | keyvalue ">
+<!-- Here we need to 1. sort elements by element_order number   2. add a checkbox that toggles "show while calling"  -->
+            <div>{{elememnt.key}} </div>
+        </li>
+    </div>
+</li>
