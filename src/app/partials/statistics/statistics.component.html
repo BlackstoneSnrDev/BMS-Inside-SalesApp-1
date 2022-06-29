@@ -31,10 +31,9 @@
                 <i class="bi bi-person-fill icon-rep"></i>
               </div> -->
                 <h4 class="text-center margin-lg-bt">Representative's Name</h4>
-                <div class="margin-lg-bt" matTooltip="Dials {{ value }}%" matTooltipPosition="above">
-                  <mat-progress-spinner class="dials-percentage" [value]="value">
-                  </mat-progress-spinner>
-                  <h6 class="percentage text-center">400</h6>
+                  <div class="d-flex justify-content-center margin-lg-bt" matTooltip="Dials {{ value }}%" matTooltipPosition="above">
+
+                  <p-knob [(ngModel)]="value" [readonly]="true"></p-knob>
                 </div>
                 <h5>Recent activities</h5>
                 <h6>Today</h6>

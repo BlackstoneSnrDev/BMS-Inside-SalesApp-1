@@ -18,7 +18,6 @@ export class LoginComponent {
     public loginLogo: any;
     public loginComapanyName: any;
     public loginForm!: FormGroup;
-    private formSubmitAttempt!: boolean;
 
     public username: string = '';
     public password: string = '';

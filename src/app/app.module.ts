@@ -13,6 +13,7 @@ import { FormComponent } from './components/form/form.component';
 import { LogComponent } from './components/log/log.component';
 import { PhoneComponent } from './components/phone/phone.component';
 import { TableComponent } from './components/table/table.component';
+import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
 
 ///// Partials
 import { QueueComponent } from './partials/queue/queue.component';
@@ -20,6 +21,8 @@ import { CallInfoComponent } from './partials/call-information/call-information.
 import { SettingsComponent } from './partials/settings/settings.component';
 import { StatisticsComponent } from './partials/statistics/statistics.component';
 import { LoginComponent } from './partials/login/login.component';
+import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
+import { AdminSettings } from './partials/admin-settings/admin-settings.component';
 
 ///// My directives
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
@@ -28,8 +31,6 @@ import { AuthGuard } from "./services/auth.guard";
 ///// My pipes
 import { FormatBoolean } from './pipes/formatBoolean.pipe';
 import { ChangeView } from './pipes/changeView.pipe';
-
-
 
 ///// Libraries
 // Angular material
@@ -60,10 +61,14 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
-import {ToastModule} from 'primeng/toast';
-import {CalendarModule} from 'primeng/calendar';
-import { AdminComponent } from './partials/admin/admin.component';
-import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
+import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
+import { KnobModule } from 'primeng/knob';
+import {AccordionModule} from 'primeng/accordion';
+import { FieldsetModule } from 'primeng/fieldset';
+
+
+
 @NgModule({
 
   declarations: [
@@ -81,12 +86,13 @@ import { AdminTemplateComponent } from './components/admin-template/admin-templa
     SettingsComponent,
     StatisticsComponent,
     LoginComponent,
+    PageNotFoundComponent,
+    AdminSettings,
     ///// My directives
     TextareaAutoresizeDirective,
 ///// My pipes
     FormatBoolean,
     ChangeView,
-    AdminComponent,
     AdminTemplateComponent,
   ],
 
@@ -121,7 +127,10 @@ import { AdminTemplateComponent } from './components/admin-template/admin-templa
     DialogModule,
     TooltipModule,
     ToastModule,
-    CalendarModule
+    DropdownModule,
+    KnobModule,
+    FieldsetModule,
+    AccordionModule,
   ],
 
   providers: [

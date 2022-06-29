@@ -5,7 +5,8 @@ import { UsersService } from "../../services/auth.service";
 @Component({
     selector: 'navbar-component',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.css'],
+    styleUrls: ['./navbar.component.css',
+    '../../css/neumorphism.component.css'],
 })
 
 export class NavbarComponent implements OnInit {
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnInit {
     isLoggedIn$!: Observable<boolean>;
     public dbObjKey: any;
     public userInfo: any;
-
+    
     constructor(private DataService: DataService, private usersService: UsersService) { }
 
     ngOnInit() {

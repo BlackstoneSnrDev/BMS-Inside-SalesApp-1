@@ -1,5 +1,5 @@
 <div class="phone-header">
-  <div *ngFor="let element of componentPhone">
+  <div *ngFor="let element of componentPhone; let i = index">
     <div *ngIf="element.element == 'toggle'">
       <div class="form-check form-check-inline button-inline width-100">
         <h6 class="toggle-neumorphism-label">{{ element.element_placeholder }}</h6>
@@ -9,6 +9,10 @@
             <label class="toggle-label" [ngClass]="toggleStatus ? 'show' : 'hide'">On</label>
           </span>
         </label>
+        <button class="iconbutton-neumorphism btnEditLayout" matTooltip="Remove {{ element.element_placeholder }}"
+        matTooltipPosition="above" (click)="editLayout(i)" *ngIf="tglEditLayout">
+        <i class="bi bi-trash-fill"></i>
+      </button>
       </div>
     </div>
     <div *ngIf="element.element == 'inputIcon'">

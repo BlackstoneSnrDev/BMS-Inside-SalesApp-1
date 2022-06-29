@@ -4,11 +4,15 @@ import { DataService } from '../../services/services.service';
 import { UsersService } from "../../services/auth.service";
 
 @Component({
-    selector: 'app-admin',
-    templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.css']
+
+    selector: 'admin-settings',
+    templateUrl: './admin-settings.component.html',
+    styleUrls: ['./admin-settings.component.css',
+    '../../css/neumorphism.component.css',]
+
 })
-export class AdminComponent implements OnInit {
+
+export class AdminSettings {
 
     public dbObjKey: any;
     public userInfo: any;
@@ -20,4 +24,5 @@ export class AdminComponent implements OnInit {
     ngOnInit(): void {
     }
 
-}
+
+  }

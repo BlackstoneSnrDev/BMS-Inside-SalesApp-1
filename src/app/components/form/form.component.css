@@ -1,3 +1,117 @@
-.iconbutton-neumorphism i{
-    padding-left: 0.7rem;
+.iconbutton-neumorphism.btnEditLayout {
+  border-radius: 0.55rem;
+  position: relative !important;
+  top: 0.7rem;
+}
+textarea {
+  resize: none;
+  height: fit-content !important;
+}
+
+.txtFormComponen,
+.slcFormComponent {
+  width: 100% !important;
+  height: 2.9rem !important;
+}
+
+::ng-deep .txtFormComponent.mat-form-field {
+  display: inline-block !important;
+  position: unset !important;
+  width: 100% !important;
+}
+
+::ng-deep .txtFormComponent .mat-input-element {
+  box-sizing: border-box;
+}
+
+::ng-deep .txtFormComponen t.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+::ng-deep .txtFormComponent .mat-form-field-label {
+  top: 2.1rem !important;
+}
+
+::ng-deep .txtFormComponent .cdk-overlay-pane {
+  transform: translateX(-6px) translateY(0px) !important;
+}
+
+::ng-deep
+  .txtFormComponent.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-2em) scale(1);
+}
+
+::ng-deep .slcFormComponent.mat-form-field-appearance-fill {
+  margin-left: 0 !important;
+  margin-top: 1.7rem;
+  width: 100% !important;
+}
+
+::ng-deep .slcFormComponent .mat-form-field-flex {
+  width: 99% !important;
+}
+
+::ng-deep
+  .slcFormComponent.mat-form-field-appearance-fill
+  .mat-form-field-label-wrapper {
+  top: -1.84375em !important;
+  padding-top: 1.84375em !important;
+}
+
+::ng-deep
+  .slcFormComponent.mat-form-field-type-mat-select
+  .mat-form-field-label {
+  width: calc(100% - 3rem) !important;
+  font-size: small;
+}
+
+::ng-deep .mat-select-panel:not([class*="mat-elevation-z"]) {
+  min-width: calc(100% + 1rem) !important;
+}
+
+::ng-deep
+  .slcFormComponent.mat-form-field-appearance-fill.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-0.59375em) scale(0.99);
+}
+
+::ng-deep .modifyingAddress .p-dialog {
+  width: 44% !important;
+}
+
+::ng-deep .modifyingAddress .p-dropdown,
+::ng-deep .modifyingAddress .p-dropdown.p-focus {
+  width: 88%;
+  border: none !important;
+  margin-top: 2.3rem;
+}
+
+::ng-deep .checkFormComponent .p-checkbox {
+  margin-top: 2.4rem;
+  margin-left: 1.1rem;
+}
+
+::ng-deep .checkFormComponent .p-checkbox-label {
+  margin-top: 2.3rem;
+}
+
+::ng-deep .lblFormComponent {
+  margin-bottom: 0;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  color: #5c5c5f;
+}
+
+::ng-deep .modifyingAddress .p-dropdown-items-wrapper {
+  max-height: 7rem !important;
+}
+
+::ng-deep .modifyingAddress .p-dropdown .p-dropdown-panel {
+  width: 14rem;
+  left: -11px !important;
+}
+
+::ng-deep .modifyingAddress .button-neumorphism {
+  width: 100% !important;
 }

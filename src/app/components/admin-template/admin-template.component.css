@@ -10,3 +10,7 @@ li {
     margin-left: 100px;
     cursor: pointer;
 }
+
+::ng-deep .p-button-icon-only {
+    visibility: hidden;
+}

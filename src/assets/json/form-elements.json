@@ -2,86 +2,87 @@
     "componentCallInfo": [
         {
             "element": "input",
+            "element_name": "full-name",
             "element_placeholder": "Full name",
             "element_type": "text",
-            "element_icon": "",
             "element_value": "JAMES MEDLIN"
         },
         {
             "element": "input",
+            "element_name": "phone-number",
             "element_placeholder": "Phone number",
             "element_type": "number",
-            "element_icon": "",
             "element_value": 8325236545
         },
         {
             "element": "input",
+            "element_name": "email",
             "element_placeholder": "Email address",
             "element_type": "email",
-            "element_icon": "",
             "element_value": "jmedlin@aol.com"
         },
         {
             "element": "input",
+            "element_name": "address",
             "element_placeholder": "Address",
-            "element_type": "",
-            "element_icon": "",
+            "element_type": "address",
             "element_value": "430 West Muhammad Ali Blvd Louisville KY 40202"
             
         },
         {
             "element": "input",
+            "element_name": "balance",
             "element_placeholder": "Balance",
             "element_type": "number",
-            "element_icon": "",
             "element_value": 12
         }
     ],
     "componentPhone": [
         {
             "element": "toggle",
+            "element_name": "auto-dialer",
             "element_placeholder": "Auto-dialer",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "inputIcon",
+            "element_name": "btn-call-at",
             "element_placeholder": "Call...",
             "element_type": "number",
             "element_icon": "bi bi-telephone-fill"
         },
         {
-            "element": "icon",
-            "element_placeholder": "",
-            "element_type": "",
-            "element_icon": "bi bi-telephone-fill"
-        },
-        {
             "element": "button",
+            "element_name": "btn-voice-mail",
             "element_placeholder": "VM",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
+            "element_name": "btn-text-message",
             "element_placeholder": "SMS",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
+            "element_name": "btn-email",
             "element_placeholder": "Emails",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
+            "element_name": "btn-pending",
             "element_placeholder": "Pending",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
+            "element_name": "btn-payments",
             "element_placeholder": "Payments",
             "element_type": "",
             "element_icon": ""

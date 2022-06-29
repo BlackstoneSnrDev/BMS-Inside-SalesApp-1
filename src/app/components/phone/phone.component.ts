@@ -18,7 +18,8 @@ export class PhoneComponent implements OnInit {
   public holdStatus: boolean = false;
   public muteStatus: boolean = false;
   public xferStatus: boolean = false;
-    
+  public tglEditLayout: boolean = false;
+
   constructor(private DataService: DataService) { }
 
     ngOnInit() {
@@ -73,5 +74,20 @@ export class PhoneComponent implements OnInit {
         this.xferStatus = ! this.xferStatus
         this.holdStatus = true
       }
+
+      toggleEditLayout(){
+
+        this.tglEditLayout = !this.tglEditLayout;
+
+    }
+
+    
+    editLayout(elementId: number){
+        console.log(elementId)
+    }
+
+    createNewField(){
+      console.log('elementId')
+  }
   }
   

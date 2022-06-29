@@ -1,8 +1,10 @@
 import { Injectable, NgZone } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { tap, map } from "rxjs/operators";
+import { Auth } from '../interfaces/auth.interface';
 
 import { User } from '../services/user';
 import * as auth from 'firebase/auth';
@@ -23,9 +25,13 @@ export class UsersService {
   userInfo = this.user.asObservable();
 
 
+  private userDataURL: string = '';
+  private _auth: Auth | undefined;
+
   get isLoggedIn() {
     this.getUserData(this.userData?.uid)
     return this.loggedIn.asObservable();
+
   }
 
   getCurrentUser() {

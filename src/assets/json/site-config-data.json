@@ -1,0 +1,14 @@
+{
+    "config": [
+        {
+            "title": "Name",
+            "field": "name",
+            "element_type": "text"
+        },
+        {
+            "title": "Name",
+            "field": "name",
+            "element_type": "text"
+        }
+    ]
+ }
