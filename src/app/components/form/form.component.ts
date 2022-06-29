@@ -26,7 +26,7 @@ export class FormComponent implements OnInit {
         this.usersService.dbObjKey.subscribe(
             dbObjKey => [
                 this.dbObjKey = dbObjKey, 
-                this.dataService.getActiveTemplate(this.dbObjKey)
+                this.dataService.getShowWhileCallingElements(this.dbObjKey)
                 .then( activeTemplate => this.activeTemplate = activeTemplate.sort((a,b) => a.element_order - b.element_order))
                 .then(() => {
                     this.formElement = this.activeTemplate;

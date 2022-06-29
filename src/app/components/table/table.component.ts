@@ -23,7 +23,7 @@ export class TableComponent {
     public thData: any;
     public thDataLength: number = 0
 
-    public tdData: any;
+    public tdData: any = [];
     public clonedtdData: any = {};
     public modifyTable: string = 'all'
 
@@ -48,10 +48,40 @@ export class TableComponent {
 
     ngOnInit() {
 
-        this.DataService.getTableData().then( data => this.thData = data.sort((a,b) => a.element_order - b.element_order));
-
-
         this.primengConfig.ripple = true;
+
+        this.DataService.getTableData().then(
+            (data => this.thData = data.filteredTemplateData.sort((a, b) => a.element_order - b.element_order)
+            )).then(() => {
+                (data: { customerArray: any; }) => this.tdData = data.customerArray
+            }).then(() => {
+                (data: { customerArray: string | any[]; }) => this.thDataLength = data.customerArray.length
+            }).then(() => {
+                for (let i of this.thData) {
+                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
+                }
+                this.addNewRecordForm = new FormGroup(this.newFormControl);
+
+                let slIndex = 0
+                for (let i = 0; i < this.tdData.length; i++) {
+                    console.log(i);
+                    slIndex = i
+                    this.tdData[slIndex]["slIndex"] = i;
+                }
+            })
+
+            this.tbGroups = [
+                {
+                    "group_id": "g1",
+                    "group_name": "Pending call"
+                },
+                {
+                    "group_id": "g2",
+                    "group_name": "Pending insurance"
+                }
+            ]
+            this.tbGroupsLength = 2;
+            
 
         // this.DataService.getTableData().subscribe(
         //     response => {
@@ -63,16 +93,16 @@ export class TableComponent {
 
         //         this.thDataLength = this.thData.length
 
-        //         for (let i of this.thData) {
-        //             this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
-        //         }
-        //         this.addNewRecordForm = new FormGroup(this.newFormControl);
+                // for (let i of this.thData) {
+                //     this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
+                // }
+                // this.addNewRecordForm = new FormGroup(this.newFormControl);
 
-        //         let slIndex = 0
-        //         for (let i = 0; i < this.tdData.length; i++) {
-        //             slIndex = i
-        //             this.tdData[slIndex]["slIndex"] = i;
-        //         }
+                // let slIndex = 0
+                // for (let i = 0; i < this.tdData.length; i++) {
+                //     slIndex = i
+                //     this.tdData[slIndex]["slIndex"] = i;
+                // }
 
         //     },
         //     error => {
