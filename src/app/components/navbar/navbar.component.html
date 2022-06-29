@@ -10,23 +10,29 @@
 
     <div class="my-navbar-header">
         <img class="my-navbar-logo" src="{{ navbarlogo }}" matTooltip="{{ navbarname }}" matTooltipPosition="right">
-        <div><b>{{userInfo.tenant}}</b></div>
-        <div>{{userInfo.name}}</div>
     </div>
        
+    <div class="partialsContainer">
+
     <ul class="ul-my-navbar">
         <li class="my-navbar-tab-container" *ngIf="isLoggedIn">
             <div class="dropdown">
-                <div class="my-navbar-tab">
+                <div class="my-navbar-tab " routerLinkActive="active-tab">
                     <a class="a-my-navbar">
                         <i class="bi bi-person-circle i-my-navbar"></i>
                     </a>
-                    <div class="txt-my-navbar">
-                        {{ auth.data.first_name }}
+                    <div class="txt-my-navbar" matTooltip="{{userInfo.tenant}}" matTooltipPosition="right" >
+                        {{userInfo.name}}
                     </div>
                 </div>
                 <div class="dropdown-content">
-                    <div class="my-navbar-tab" matTooltip="Log out" matTooltipPosition="right" routerLinkActive="active-tab">
+                
+                    <div class="my-navbar-tab" matTooltip="Admin settings" matTooltipPosition="right"  *ngIf="userInfo.admin" >
+                        <a class="a-my-navbar" routerLink="admin-settings">
+                            <i class="bi bi-safe2-fill i-my-navbar"></i>
+                        </a>
+                    </div>
+                    <div class="my-navbar-tab" matTooltip="Log out" matTooltipPosition="right">
                         <a class="a-my-navbar" (click)="onLogout()">
                             <i class="bi bi-box-arrow-left i-my-navbar"></i>
                         </a>
@@ -41,19 +47,9 @@
                     <i class="{{ tab.tab_icon }} i-my-navbar"></i>
                 </a>
             </div>
-        </li>
-
-<!-- IF ADMIN USER, DISPLAY ADMIN PAGE OPTION -->
-        <li class="my-navbar-tab-container" *ngIf="userInfo.admin">
-            <hr />
-            <div class="my-navbar-tab" matTooltip="Admin" matTooltipPosition="right" routerLinkActive="active-tab">
-                <a class="a-my-navbar" routerLink="admin" >
-                    <i class="bi bi-safe2-fill i-my-navbar"></i>
-                </a>
-            </div>
-        </li>
-        
+        </li>      
     </ul>
+</div>
 
 </div>
 

@@ -50,32 +50,6 @@ export class LoginComponent {
     }
 
     login() {
-<<<<<<< HEAD
-    
-        const user = {username: this.username, password: this.password};
-        
-        this.userService.getUserData().subscribe( response => {
-
-            if (user.username === response.data.email && user.password == response.data.first_name) {
-                this.router.navigateByUrl('call-information');
-          
-            }else{
-
-                this.statusMsg = 'No user found.'
-                
-            }
-
-        },
-
-        error => {
-
-            this.statusMsg = 'No user found.'
-            console.error(error)
-
-        });
-
-=======
         this.userService.SignIn(this.username, this.password);
->>>>>>> 00695072531030c5fcc233d68a706066145408fe
       }
 }

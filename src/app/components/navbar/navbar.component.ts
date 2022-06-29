@@ -17,10 +17,6 @@ export class NavbarComponent implements OnInit {
     isLoggedIn$!: Observable<boolean>;
     public dbObjKey: any;
     public userInfo: any;
-
-    get auth(){
-        return this.usersService.auth
-    }
     
     constructor(private DataService: DataService, private usersService: UsersService) { }
 

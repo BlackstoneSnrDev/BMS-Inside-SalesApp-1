@@ -19,6 +19,10 @@ export class DataService {
 
   public navbarDataURL: string;
   public formElementsURL: string;
+  public formCityURL: string;
+  public formCountryURL: string;
+  public formStateURL: string;
+
   public callhistoryURL: string;
   public logURL: string;
   public tableDataURL: string;
@@ -34,26 +38,37 @@ export class DataService {
 
     this.navbarDataURL = "../../assets/json/navbar-data.json";
     this.formElementsURL = "../../assets/json/form-elements.json";
+    this.formCityURL = "https://countriesnow.space/api/v0.1/countries/";
+    this.formCountryURL = "https://countriesnow.space/api/v0.1/countries/iso";
+    this.formStateURL = "https://countriesnow.space/api/v0.1/countries/states";
+
     this.callhistoryURL = "../../assets/json/call-flow.json";
     this.logURL = "../../assets/json/log-data.json";
     this.tableDataURL = "../../assets/json/queueTable-data.json";
-<<<<<<< HEAD
-    this.siteConfigURL = "../../assets/json/site-config-data.json";
-
-=======
-    this.usersService.dbObjKey.subscribe(dbObjKey => this.dbObjKey = dbObjKey);
->>>>>>> 00695072531030c5fcc233d68a706066145408fe
-  }
-
-  getNavbarData(): Observable<any>{
-
-    return this._http.get(this.navbarDataURL);
 
   }
 
   getFormElementsData(): Observable<any>{
 
     return this._http.get(this.formElementsURL);
+
+  }
+
+  getFormCity(): Observable<any>{
+
+    return this._http.get(this.formCityURL);
+
+  }
+
+  getFormCountry(): Observable<any>{
+
+    return this._http.get(this.formCountryURL);
+
+  }
+
+  getFormState(): Observable<any>{
+
+    return this._http.get(this.formStateURL);
 
   }
 
@@ -87,6 +102,12 @@ export class DataService {
         })
         return filteredTemplateData;
     })
+
+  }
+
+  getNavbarData(): Observable<any>{
+
+    return this._http.get(this.navbarDataURL);
 
   }
 

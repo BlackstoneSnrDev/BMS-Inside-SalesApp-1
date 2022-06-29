@@ -2,24 +2,28 @@
     "componentCallInfo": [
         {
             "element": "input",
+            "element_name": "full-name",
             "element_placeholder": "Full name",
             "element_type": "text",
             "element_value": "JAMES MEDLIN"
         },
         {
             "element": "input",
+            "element_name": "phone-number",
             "element_placeholder": "Phone number",
             "element_type": "number",
             "element_value": 8325236545
         },
         {
             "element": "input",
+            "element_name": "email",
             "element_placeholder": "Email address",
             "element_type": "email",
             "element_value": "jmedlin@aol.com"
         },
         {
             "element": "input",
+            "element_name": "address",
             "element_placeholder": "Address",
             "element_type": "address",
             "element_value": "430 West Muhammad Ali Blvd Louisville KY 40202"
@@ -27,6 +31,7 @@
         },
         {
             "element": "input",
+            "element_name": "balance",
             "element_placeholder": "Balance",
             "element_type": "number",
             "element_value": 12
@@ -35,56 +40,49 @@
     "componentPhone": [
         {
             "element": "toggle",
-            "element_id": "auto-dialer",
+            "element_name": "auto-dialer",
             "element_placeholder": "Auto-dialer",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "inputIcon",
-            "element_id": "call-at",
+            "element_name": "btn-call-at",
             "element_placeholder": "Call...",
             "element_type": "number",
             "element_icon": "bi bi-telephone-fill"
         },
         {
-            "element": "icon",
-            "element_id": "call-at",
-            "element_placeholder": "",
-            "element_type": "",
-            "element_icon": "bi bi-telephone-fill"
-        },
-        {
             "element": "button",
-            "element_id": "voice-mail",
+            "element_name": "btn-voice-mail",
             "element_placeholder": "VM",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
-            "element_id": "text-message",
+            "element_name": "btn-text-message",
             "element_placeholder": "SMS",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
-            "element_id": "email",
+            "element_name": "btn-email",
             "element_placeholder": "Emails",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
-            "element_id": "pending",
+            "element_name": "btn-pending",
             "element_placeholder": "Pending",
             "element_type": "",
             "element_icon": ""
         },
         {
             "element": "button",
-            "element_id": "payments",
+            "element_name": "btn-payments",
             "element_placeholder": "Payments",
             "element_type": "",
             "element_icon": ""

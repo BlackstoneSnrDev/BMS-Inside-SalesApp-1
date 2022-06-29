@@ -21,11 +21,6 @@
             "tab_name": "Statistics",
             "tab_icon": "bi bi-bar-chart-line-fill",
             "tab_route": "statistics"
-        },
-        {
-            "tab_name": "Site config",
-            "tab_icon": "bi bi-layout-wtf",
-            "tab_route": "site_config"
         }
     ]
 }

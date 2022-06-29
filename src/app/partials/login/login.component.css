@@ -98,14 +98,15 @@
 }
 
 .link {
-  line-height: 29px;
+  line-height: 27px;
   color: #44476a;
   float: right;
+  padding-left: 1rem;
 }
 
 .link:hover,
 .link:focus {
-  font-weight: bold;
+  font-weight: 500;
   text-decoration: none;
 }
 

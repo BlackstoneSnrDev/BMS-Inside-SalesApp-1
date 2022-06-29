@@ -1,245 +1,140 @@
-<button class="button-neumorphism" (click)="toggleEditLayout()">
-  Edit layout
-</button>
-<button class="button-neumorphism margin-lt" (click)="createNewField()">
-  Create new field
-</button>
-<button
-  class="iconbutton-neumorphism"
-  matTooltip="Edit fields"
-  matTooltipPosition="above"
-  (click)="cancelCreateNewField()"
-  *ngIf="creating"
->
-  <i class="bi bi-x-circle-fill"></i>
-</button>
 <div spellcheck="true">
   <form [formGroup]="callDataForm" *ngIf="callDataForm" novalidate>
     <div class="iconbutton-container">
       <div class="btnsave-container margin-rt">
-        <button
-          [disabled]="!callDataForm.valid"
-          [ngClass]="
+        <button [disabled]="!callDataForm.valid" [ngClass]="
             !callDataForm.valid
               ? 'button-neumorphism-disabled'
               : 'button-neumorphism'
-          "
-          *ngIf="editField"
-        >
+          " *ngIf="tgleditField" (click)="saveEditFields()">
           Save
         </button>
       </div>
-      <button
-        class="iconbutton-neumorphism"
-        matTooltip="Edit fields"
-        matTooltipPosition="above"
-        (click)="editFields()"
-        *ngIf="!editField"
-      >
+      <button class="iconbutton-neumorphism" matTooltip="Edit fields" matTooltipPosition="above" (click)="toggleEditFields()"
+        *ngIf="!tgleditField">
         <i class="bi bi-pencil-square"></i>
       </button>
-      <button
-        class="iconbutton-neumorphism"
-        matTooltip="Edit fields"
-        matTooltipPosition="above"
-        (click)="cancelEditFields()"
-        *ngIf="editField"
-      >
+      <button class="iconbutton-neumorphism" matTooltip="Edit fields" matTooltipPosition="above"
+        (click)="cancelEditFields()" *ngIf="tgleditField">
         <i class="bi bi-x-circle-fill"></i>
       </button>
     </div>
-
+    <div class="onValidationContainer" *ngIf="onValidationMsg">
+      {{onValidationMsg}}
+    </div>
     <div class="form-row">
-      <div *ngIf="creating" class="form-check form-check-inline col-md-6">
-        <mat-label>New field</mat-label>
-        <mat-form-field appearance="standard">
-          <input
-            matInput
-            class="input-neumorphism"
-            type="text"
-            placeholder="New field"
-            autocomplete="off"
-            formControlName="newField"
-          />
-        </mat-form-field>
-      </div>
-
-      <div
-        class="col-md-6"
-        *ngFor="let callData of formElement; let callDataIndex = index"
-      >
-        <div
-          class="form-check form-check-inline button-inline width-100"
-          *ngIf="!creating"
-        >
-          <ng-container
-            [ngSwitch]="
+      <div *ngFor="let callData of formElement; let callDataIndex = index">
+        <!--  callData.element_placeholder === 'Address', line 31, needs to be modified for callData.element_type === 'Address' -->
+        <ng-container [ngSwitch]="
               callData.element_type === 'boolean'
-                ? 1
-                : callData.element_type === 'address'
-                ? 2
+                ? 'checkbox'
+                : callData.element_placeholder === 'Address'
+                ? 'address'
                 : -1
-            "
-          >
-            <ng-container *ngSwitchCase="1">
-              <p-checkbox
-                [binary]="true"
-                label="{{ callData.element_placeholder }}"
-                inputId="{{ callDataIndex }}"
-                value="{{ callData.element_value }}"
-                formControlName="{{ callData.element_placeholder }}"
-              ></p-checkbox>
-            </ng-container>
-            <ng-container *ngSwitchCase="2">
-              <div *ngIf="!editField">
-                <mat-form-field appearance="standard">
-                  <mat-label>{{ callData.element_placeholder }}</mat-label>
-                  <input
-                    matInput
-                    class="input-neumorphism"
-                    [ngClass]="{ 'input-disabled-neumorphism ': !editField }"
-                    [readonly]="!editField"
-                    type="{{ callData.element_type }}"
-                    placeholder="New {{ callData.element_placeholder }}"
-                    autocomplete="off"
-                    value="{{ callData.element_value }}"
-                    id="{{ callDataIndex }}"
-                    formControlName="{{ callData.element_placeholder }}"
-                  />
-                </mat-form-field>
-              </div>
-            </ng-container>
-            <ng-container *ngSwitchDefault>
-              <mat-form-field appearance="standard">
-                <mat-label>{{ callData.element_placeholder }}</mat-label>
-                <input
-                  matInput
-                  class="input-neumorphism"
-                  [ngClass]="{ 'input-disabled-neumorphism ': !editField }"
-                  [readonly]="!editField"
-                  type="{{ callData.element_type }}"
-                  placeholder="New {{ callData.element_placeholder }}"
-                  autocomplete="off"
-                  value="{{ callData.element_value }}"
-                  id="{{ callDataIndex }}"
-                  formControlName="{{ callData.element_placeholder }}"
-                />
-              </mat-form-field>
-            </ng-container>
+            ">
+          <ng-container *ngSwitchCase="'checkbox'">
+            <div class="col-md-12">
+              <p-checkbox class="checkFormComponent" [binary]="true" [readonly]="!tgleditField"
+                label="{{ callData.element_placeholder }}" inputId="{{ callDataIndex }}"
+                value="{{ callData.element_value }}" formControlName="{{ callData.element_placeholder }}"></p-checkbox>
+            </div>
           </ng-container>
-          <button
-            class="iconbutton-neumorphism btnEditLayout"
-            matTooltip="Remove {{ callData.element.element_placeholder }}"
-            matTooltipPosition="above"
-            (click)="editLayout(callDataIndex)"
-            *ngIf="tglEditLayout"
-          >
-            <i class="bi bi-trash-fill"></i>
-          </button>
+          <ng-container *ngSwitchCase="'address'">
+            <div class="col-md-12">
+              <label for="{{ callDataIndex }}" class="lblFormComponent">{{ callData.element_placeholder }} *</label>
+              <textarea
+              pInputTextarea class="input-neumorphism txtFormComponent"
+                (click)="!tgleditField ||toggleModifyAddressForm(callDataIndex, callData.element_placeholder)"
+                [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }" [readonly]="true"
+                placeholder="New {{ callData.element_placeholder }}" autocomplete="off"
+                value="{{ callData.element_value }}" id="{{ callDataIndex }}"
+                formControlName="{{ callData.element_placeholder }}"></textarea>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <div class="col-md-12">
+
+              <mat-form-field appearance="standard" class="txtFormComponent">
+                <mat-label>{{ callData.element_placeholder }}</mat-label>
+                <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+                  [readonly]="!tgleditField" type="{{ callData.element_type }}"
+                  placeholder="New {{ callData.element_placeholder }}" autocomplete="off"
+                  value="{{ callData.element_value }}" id="{{ callDataIndex }}"
+                  formControlName="{{ callData.element_placeholder }}" />
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<p-dialog header="Add new address" [(visible)]="tglModifyAddressForm" [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '50vw' }" [draggable]="true" [resizable]="false" class="modifyingAddress">
+  <div *ngIf="tgleditField">
+    <form [formGroup]="addressForm" *ngIf="addressForm" novalidate>
+      <div class="form-row width-100">
+        <div class="col-md-4">
+          <p-dropdown [options]="countries" class="input-neumorphism"
+            (onChange)="getCountryInfo()" optionLabel="name" optionValue="Iso2" placeholder="Country"
+            formControlName="slcCountry"></p-dropdown>
+        </div>
+        <div class="col-md-4">
+          <p-dropdown [options]="states" class="input-neumorphism" optionLabel="name"
+            optionValue="state_code" placeholder="State" formControlName="slcState"></p-dropdown>
+        </div>
+        <div class="col-md-4">
+          <!-- <p-dropdown [options]="cities" class="input-neumorphism" optionLabel="name"
+          optionValue="name" placeholder="City" formControlName="slcCity"></p-dropdown> -->
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>City</mat-label>
+            <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+              [readonly]="!tgleditField" type="text" placeholder="New City" autocomplete="off" #city
+              formControlName="txtCity" />
+          </mat-form-field>
         </div>
       </div>
-     
-
-
-<<<<<<< HEAD
-     
-  </div>
-  <div *ngIf="editField">
-    <div class="form-row width-100">
-      <div class="col-md-4">
-
-        <mat-form-field appearance="standard">
-          <mat-label>Street</mat-label>
-          <input
-            matInput
-            class="input-neumorphism"
-            [ngClass]="{ 'input-disabled-neumorphism ': !editField }"
-            [readonly]="!editField"
-            type="text"
-            placeholder="New Street"
-            autocomplete="off"
-            id="street"
-          />
-        </mat-form-field>
-      </div>
-
+      <div class="form-row width-100">
         <div class="col-md-4">
-
-        <mat-form-field appearance="standard">
-          <mat-label>City</mat-label>
-          <input
-            matInput
-            class="input-neumorphism"
-            [ngClass]="{ 'input-disabled-neumorphism ': !editField }"
-            [readonly]="!editField"
-            type="text"
-            placeholder="New City"
-            autocomplete="off"
-            id="city"
-          />
-        </mat-form-field>
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>Street</mat-label>
+            <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+              [readonly]="!tgleditField" type="text" placeholder="New Street" autocomplete="off" #street
+              formControlName="txtStreet" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>Apt/Suite</mat-label>
+            <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+              [readonly]="!tgleditField" type="text" placeholder="New apt" autocomplete="off" #apt
+              formControlName="txtApt" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>Zip/Postal code</mat-label>
+            <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+              [readonly]="!tgleditField" type="number" placeholder="New zip code" autocomplete="off" #zip
+              formControlName="txtZip" />
+          </mat-form-field>
+        </div>
       </div>
-      <div class="col-md-4">
-
-        <mat-form-field appearance="standard">
-          <mat-label>Apt/Unit</mat-label>
-          <input
-            matInput
-            class="input-neumorphism"
-            [ngClass]="{ 'input-disabled-neumorphism ': !editField }"
-            [readonly]="!editField"
-            type="text"
-            placeholder="New apt"
-            autocomplete="off"
-            id="apt"
-          />
-        </mat-form-field>
+      <div class="form-row width-100">
+        <div class="col-md-6">
+          <button class="button-neumorphism" (click)="tglModifyAddressForm = false">Cancel</button>
+        </div>
+        <div class="col-md-6">
+          <button class="button-neumorphism" [disabled]="!addressForm.valid" [ngClass]="
+      !addressForm.valid
+        ? 'button-neumorphism-disabled'
+        : 'button-neumorphism'"
+            (click)="saveAddressModified(city.value, street.value, apt.value, zip.value)">Save</button>
+        </div>
       </div>
-
-=======
-    </div>
->>>>>>> 00695072531030c5fcc233d68a706066145408fe
+    </form>
   </div>
 
-<div class="form-row width-100">
-  <div class="col-md-4">
-
-        <mat-form-field appearance="fill">
-          <mat-label>State</mat-label>
-          <mat-select>
-            <mat-option selected hidden></mat-option>
-            <mat-option> FL </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-
-      <mat-form-field appearance="standard">
-        <mat-label>Zip code</mat-label>
-        <input
-          matInput
-          class="input-neumorphism"
-          [ngClass]="{ 'input-disabled-neumorphism ': !editField }"
-          [readonly]="!editField"
-          type="number"
-          placeholder="New zip code"
-          autocomplete="off"
-          id="zipCode"
-        />
-      </mat-form-field>
-    </div>
-    <div class="col-md-4">
-
-      <mat-form-field appearance="fill">
-        <mat-label>Country</mat-label>
-        <mat-select>
-          <mat-option selected hidden></mat-option>
-          <mat-option> USA </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
-
-    </div>
-</form>
-</div>
+</p-dialog>

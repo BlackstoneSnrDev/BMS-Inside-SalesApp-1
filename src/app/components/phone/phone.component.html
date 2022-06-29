@@ -1,7 +1,4 @@
 <div class="phone-header">
-  <button class="button-neumorphism" (click)="toggleEditLayout()">Edit layout</button>
-  <button class="button-neumorphism" (click)="createNewField()">Create new field</button>
-
   <div *ngFor="let element of componentPhone; let i = index">
     <div *ngIf="element.element == 'toggle'">
       <div class="form-check form-check-inline button-inline width-100">
