@@ -20,7 +20,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 export class TableComponent {
 
-    public thData: any;
+    public thData: any = null;
     public thDataLength: number = 0
 
     public tdData: any = [];
@@ -50,25 +50,27 @@ export class TableComponent {
 
         this.primengConfig.ripple = true;
 
-        this.DataService.getTableData().then(
-            (data => this.thData = data.filteredTemplateData.sort((a, b) => a.element_order - b.element_order)
-            )).then(() => {
-                (data: { customerArray: any; }) => this.tdData = data.customerArray
-            }).then(() => {
-                (data: { customerArray: string | any[]; }) => this.thDataLength = data.customerArray.length
-            }).then(() => {
-                for (let i of this.thData) {
-                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
-                }
-                this.addNewRecordForm = new FormGroup(this.newFormControl);
+        this.DataService.getTableData().then((data) => [
+            this.tdData = data.customerArray,
+            this.thData = data.filteredTemplateData.sort((a, b) => a.element_order - b.element_order),
+            this.thDataLength = this.thData.length]
+        ).then((data) => {
+            for (let i of this.thData) {
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
+            }
+            this.addNewRecordForm = new FormGroup(this.newFormControl);
 
-                let slIndex = 0
-                for (let i = 0; i < this.tdData.length; i++) {
-                    console.log(i);
+            let slIndex = 0
+            if (data[0].length) {
+                for (let i = 0; i < data[0].length; i++) {
                     slIndex = i
                     this.tdData[slIndex]["slIndex"] = i;
                 }
-            })
+            } else  {
+                console.log('no iteems');
+            }
+
+        })
 
             this.tbGroups = [
                 {
