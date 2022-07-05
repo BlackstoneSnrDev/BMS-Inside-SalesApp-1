@@ -10,8 +10,11 @@ export class FormatBoolean implements PipeTransform {
 
         if(typeof initValue === 'boolean'){
             return ( initValue )
-            ? columnName.charAt(0).toUpperCase() + columnName.slice(1).replace(/_/g,' ')
-            : 'Not ' + columnName.replace(/_/g,' ');
+            // ? columnName.charAt(0).toUpperCase() + columnName.slice(1).replace(/_/g,' ')
+            // : 'Not ' + columnName.replace(/_/g,' ');
+
+            ? 'True ' : 'False';
+
         }else{
             return ( initValue )
 

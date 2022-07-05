@@ -34,9 +34,10 @@ export class UsersService {
 
   }
 
-  getCurrentUser() {
-    this.getUserData(this.userData?.uid)
-  }
+//   getCurrentUser() {
+//     console.log("getCurrentUser" + this.userData?.uid);
+//     this.getUserData(this.userData?.uid)
+//   }
 
   userData: any; // Save logged in user data
   
