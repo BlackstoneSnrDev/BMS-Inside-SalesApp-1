@@ -54,6 +54,8 @@ export class FormComponent implements OnInit {
                             this.newFormControl[i.element_placeholder] = new FormControl({ value: i.element_value, disabled: this.tgleditField }, [Validators.required, Validators.minLength(1)]);
                         }
                         this.callDataForm = new FormGroup(this.newFormControl);
+
+                        //console.log(this.formElement)
                     })
             ])
 
