@@ -47,7 +47,9 @@ export class DataService {
     this.logURL = "../../assets/json/log-data.json";
     this.tableDataURL = "../../assets/json/queueTable-data.json";
 
-       this.usersService.dbObjKey.subscribe(dbObjKey => this.dbObjKey = dbObjKey);
+
+    this.usersService.dbObjKey.subscribe(dbObjKey => this.dbObjKey = dbObjKey);
+
 
   }
 
