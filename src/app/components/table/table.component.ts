@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 // Get table data
 import { DataService } from '../../services/services.service';
+// User Info
+import { UsersService } from "../../services/auth.service";
 // PrimeNG
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
@@ -19,6 +21,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 
 export class TableComponent {
+
+    public userInfo: any;
 
     public thData: any = null;
     public thDataLength: number = 0
@@ -42,13 +46,15 @@ export class TableComponent {
     public newFormControl: any = {};
     public onValidationError: string = "";
     public onValidationMsg: string = "";
-    public checked: boolean = false;
+    //public checked: boolean = false;
 
-    constructor(private DataService: DataService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
+    constructor(private DataService: DataService, private UsersService: UsersService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
 
     ngOnInit() {
 
         this.primengConfig.ripple = true;
+        this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
+        //this.DataService.populateTemplateWithCustomers();
 
         this.DataService.getTableData().then((data) => [
             this.tdData = data.customerArray,
@@ -56,7 +62,7 @@ export class TableComponent {
             this.thDataLength = this.thData.length]
         ).then((data) => {
             for (let i of this.thData) {
-                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
+                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
             }
             this.addNewRecordForm = new FormGroup(this.newFormControl);
 
@@ -190,7 +196,7 @@ export class TableComponent {
     }
 
     toggleAddNewRecord() {
-
+        console.log(this.addNewRecordForm);
         this.tglAddNewRecord = !this.tglAddNewRecord
     }
 
@@ -198,18 +204,14 @@ export class TableComponent {
 
         let value = this.addNewRecordForm.value;
         value['group'] = []
-        value['slIndex'] = this.tdData.length
-        this.tdData.push(value);
+        this.DataService.addNewRecord(value);
 
-        table._totalRecords = this.tdData.length
-        this.addNewRecordForm.reset();
+        this.addNewRecordForm.reset();  
 
         this.onValidationMsg = 'New record was added successfully.'
         setTimeout(() => {
             this.onValidationMsg = "";
         }, 5000);
-
-        console.log(this.tdData)
 
     }
 
@@ -512,5 +514,7 @@ export class TableComponent {
         this.modifyTable = modifyBy
 
     }
+
+    log = (data: any) => console.log(data);
 
 }

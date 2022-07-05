@@ -76,7 +76,7 @@
                                 <div class="form-group col-xl-auto">
                                     <ng-container *ngIf="newtd.element_type === 'boolean'; else matInp">
                                         <p-checkbox  [binary]="true"
-                                            label="{{newtd.title}}" inputId="{{newtdIndex + newtd.field}}" [(ngModel)]="checked"  formControlName="{{newtd.field}}"></p-checkbox>
+                                            label="{{newtd.title}}" inputId="{{newtdIndex + newtd.field}}" [(ngModel)]="newtd.value" formControlName="{{newtd.field}}"></p-checkbox>
                                     </ng-container>
                                     <ng-template #matInp>
                                         <mat-form-field appearance="standard">
@@ -219,7 +219,7 @@
                     </p-cellEditor>
                 </td>
 
-                <td>
+                <td *ngIf="userInfo.admin">
                     <button pRipple *ngIf="!editing" type="button" pInitEditableRow
                         (click)="onRowEditInit(rowData, rowIndex)" class="iconbutton-neumorphism margin-rt">
                         <i class="bi bi-pencil-square  "></i>
