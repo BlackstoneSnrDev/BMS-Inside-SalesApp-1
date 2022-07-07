@@ -9,6 +9,8 @@ import { SettingsComponent } from './partials/settings/settings.component';
 import { StatisticsComponent } from './partials/statistics/statistics.component';
 import { AdminSettings } from './partials/admin-settings/admin-settings.component';
 import { LoginComponent } from './partials/login/login.component';
+import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
+import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
 
 import { AuthGuard } from "./services/auth.guard";
@@ -22,7 +24,11 @@ const appRoutes: Routes = [
     {path: 'queue', component: QueueComponent, canActivate: [AuthGuard] },
     {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     {path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
-    {path: 'admin-settings', component: AdminSettings, canActivate: [AuthGuard] },
+    {path: 'admin-settings', component: AdminSettings, canActivate: [AuthGuard], children: [
+        {path: 'admin-template', component: AdminTemplateComponent, canActivate: [AuthGuard] },
+        {path: 'admin-user', component: AdminUserComponent, canActivate: [AuthGuard] },
+
+    ]},
     {path: '404', component: PageNotFoundComponent, canActivate: [AuthGuard] },
     {path: '**', redirectTo: '404'},
 ];

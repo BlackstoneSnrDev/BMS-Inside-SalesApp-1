@@ -249,5 +249,102 @@
             "pending": true,
             "group": []
         }
+    ],
+    "tableUser_td": [
+        {
+            "name": "Daniel , Moreno",
+            "username": "dmm827",
+            "dept": "Inside Sales",
+            "role": "Lead",
+            "password": "bae1637"
+
+        },
+        {
+            "name": "Daniel , Moreno",
+            "username": "danoM",
+            "dept": "Inside Sales",
+            "role": "Rep",
+            "password": "bae1637"
+        },
+        {
+            "name": "Daniel , Moreno",
+            "username": "danoM",
+            "dept": "Inside Sales",
+            "role": "Rep",
+            "password": "bae1637"
+        },
+        {
+            "name": "Daniel , Moreno",
+            "username": "danoM",
+            "dept": "Inside Sales",
+            "role": "Rep",
+            "password": "bae1637"
+        },
+        {
+            "name": "Daniel , Moreno",
+            "username": "danoM",
+            "dept": "Inside Sales",
+            "role": "Rep",
+            "password": "bae1637"
+        },
+        {
+            "name": "Daniel , Moreno",
+            "username": "danoM",
+            "dept": "Inside Sales",
+            "role": "Admin",
+            "password": "bae1637"
+        },
+        {
+            "username": "danoM",
+            "name": "Daniel , Moreno",
+            "dept": "Inside Sales",
+            "role": "Rep",
+            "password": "bae1637"
+        }
+    ],
+    "tableUser_th": [
+        {
+            "title": "Name",
+            "field": "name",
+            "element_type": "text"
+        },
+        {
+            "title": "Username",
+            "field": "username",
+            "element_type": "text"
+        },
+        {
+            "title": "Department",
+            "field": "dept",
+            "element_type": "text"
+        },
+        {
+            "title": "Role",
+            "field": "role",
+            "element_type": "text"
+        },
+        {
+            "title": "Password",
+            "field": "password",
+            "element_type": "password"
+        }
+        
+    ],
+    "tableTemplate_th": [
+        {
+            "title": "Name",
+            "field": "name",
+            "element_type": "text"
+        },
+        {
+            "title": "Type",
+            "field": "type",
+            "element_type": "text"
+        },
+        {
+            "title": "Visible",
+            "field": "visible",
+            "element_type": "boolean"
+        }
     ]
 }

@@ -14,6 +14,8 @@ import { LogComponent } from './components/log/log.component';
 import { PhoneComponent } from './components/phone/phone.component';
 import { TableComponent } from './components/table/table.component';
 import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
+import { AdminUserComponent } from './components/admin-user/admin-user.component';
+import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 
 ///// Partials
 import { QueueComponent } from './partials/queue/queue.component';
@@ -31,6 +33,7 @@ import { AuthGuard } from "./services/auth.guard";
 ///// My pipes
 import { FormatBoolean } from './pipes/formatBoolean.pipe';
 import { ChangeView } from './pipes/changeView.pipe';
+import { FormatPassword } from './pipes/formatPassword.pipe';
 
 ///// Libraries
 // Angular material
@@ -66,7 +69,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { KnobModule } from 'primeng/knob';
 import {AccordionModule} from 'primeng/accordion';
 import { FieldsetModule } from 'primeng/fieldset';
-
+import {TabMenuModule} from 'primeng/tabmenu';
 
 
 @NgModule({
@@ -88,12 +91,15 @@ import { FieldsetModule } from 'primeng/fieldset';
     LoginComponent,
     PageNotFoundComponent,
     AdminSettings,
+    AdminUserComponent,
+    AdminTemplateComponent,
+    AdminNavbarComponent,
     ///// My directives
     TextareaAutoresizeDirective,
 ///// My pipes
     FormatBoolean,
     ChangeView,
-    AdminTemplateComponent,
+    FormatPassword,
   ],
 
   imports: [
@@ -131,6 +137,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     KnobModule,
     FieldsetModule,
     AccordionModule,
+    TabMenuModule,
+    
   ],
 
   providers: [
@@ -138,7 +146,7 @@ import { FieldsetModule } from 'primeng/fieldset';
     // PrimeNG
     ConfirmationService,
     MessageService,
-    AuthGuard
+    AuthGuard,
   ],
   bootstrap: [AppComponent]
 })

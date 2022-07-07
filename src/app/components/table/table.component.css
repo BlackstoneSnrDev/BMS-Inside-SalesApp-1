@@ -45,6 +45,7 @@
     text-align: center;
     background-color: transparent;
     border: none;
+    width: fit-content;
 }
 
 ::ng-deep .p-datatable .p-datatable-tbody>tr {
@@ -154,12 +155,13 @@ p-paginator-icon {
     font-size: 1.5rem;
 }
 
-::ng-deep.p-disabled {
-    display: none !important;
+::ng-deep.p-datatable .p-paginator-bottom {
+   
+    margin-bottom: 1rem;
 }
 
-::ng-deep.pi-sort-alt:before {
-    content: '\e933 \A \e930';
+::ng-deep.p-disabled {
+    display: none !important;
 }
 
 ::ng-deep.pi-sort-amount-up-alt:before {
@@ -359,6 +361,16 @@ form {
 .table-container {
     min-width: 1115px;
     overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+::ng-deep .pi.pi-filter-icon.pi-filter{
+    color: #b8bac7 !important;
+
+}
+::ng-deep.p-column-filter-menu-button:hover .pi.pi-filter-icon.pi-filter{
+    color: #44476a !important;
+
 }
 
 ::ng-deep .p-column-filter-menu-button.p-column-filter-menu-button-active {

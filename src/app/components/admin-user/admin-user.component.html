@@ -1,0 +1,163 @@
+<div class="margin-bt menu-table-container">
+  <button class="iconbutton-neumorphism-disabled">
+    <i class="bi bi-menu-button-fill i-colored"></i>
+  </button>
+
+  <ng-container>
+    <button class="button-neumorphism margin-lt" (click)="toggleAddNewUser()">
+      <i class="bi bi-plus-square-fill "></i> Add new user
+    </button>
+
+    <div [ngClass]="tglAddNewUser ? 'show' : 'hide'">
+      <div spellcheck="true">
+        <form [formGroup]="addNewUserForm" (ngSubmit)="saveAddNewUser(dataTable)" *ngIf="addNewUserForm" novalidate>
+          <h5>Add new user</h5>
+          <div [ngClass]="!addNewUserForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
+          <hr>
+          <div class="form-row">
+            <div *ngFor="let newtd of thData ; let newtdIndex = index">
+              <div class="form-group col-xl-auto">
+                <ng-container *ngIf="newtd.element_type === 'boolean'; else matInp">
+                  <p-checkbox [binary]="true" label="{{newtd.title}}" inputId="{{newtdIndex + newtd.field}}"
+                    [(ngModel)]="newtd.value" formControlName="{{newtd.field}}"></p-checkbox>
+                </ng-container>
+                <ng-template #matInp>
+                  <mat-form-field appearance="standard">
+                    <mat-label>{{newtd.title}}</mat-label>
+                    <input matInput class="input-neumorphism" type="{{newtd.element_type}}"
+                      placeholder="New {{newtd.field}}" autocomplete="off" id="{{newtdIndex + newtd.field}}"
+                      formControlName="{{newtd.field}}" />
+                  </mat-form-field>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="col">
+              <button type="submit" class="width-50 show-line-b txt-center" value="save"
+                [disabled]="!addNewUserForm.valid"
+                [ngClass]="!addNewUserForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
+                Save
+              </button>
+              <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewUser()">
+                Cancel
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<p-table #dataTable [columns]="thData" [value]="tdData" [rows]="5" [paginator]="true"
+  [rowsPerPageOptions]="[5, 10, 25, 50]" [(selection)]="tbSelectedRows" [rowHover]="true" dataKey="slIndex"
+  editMode="row" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [showCurrentPageReport]="true">
+
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th>
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
+        {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
+        <p-columnFilter type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
+    <tr [pEditableRow]="rowData" id='tr{{rowIndex}}'>
+      <td>
+        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+      </td>
+      <td *ngFor="let col of columns">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <ng-container [ngSwitch]="
+                            col.element_type === 'boolean'
+                        ? 'checkbox'
+                        : col.field === 'type'
+                        ? 'select'
+                        : -1
+                    ">
+              <ng-container *ngSwitchCase="'checkbox'">
+                <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary">
+                </p-checkbox>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'select'">
+                <p-dropdown [options]="selectElmType" class="input-neumorphism" optionLabel="typeName"
+                  optionValue="typeCode" placeholder="Type" [(ngModel)]="rowData[col.field]"></p-dropdown>
+              </ng-container>
+
+              <ng-container *ngSwitchDefault>
+                <mat-form-field appearance="standard">
+                  <mat-label>{{col.title}}</mat-label>
+                  <input matInput type="{{col.element_type}}" placeholder="New {{col.field}}"
+                    [(ngModel)]="rowData[col.field]" required>
+                </mat-form-field>
+              </ng-container>
+
+              <br>
+              <small *ngIf="onValidationError" class="color-rd">
+                {{col.title}} must be filled out.
+              </small>
+            </ng-container>
+
+          </ng-template>
+          <ng-template pTemplate="output">
+            <ng-container [ngSwitch]="
+                          col.element_type === 'boolean'
+                      ? 'checkbox'
+                      : -1
+                  ">
+              <ng-container *ngSwitchCase="'checkbox'">
+                <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary" [readonly]=true>
+                </p-checkbox>
+              </ng-container>
+
+
+              <ng-container *ngSwitchDefault>
+                <div *ngIf="col.field === 'password'">
+                  {{rowData[col.field] | formatPassword}}
+                </div>
+                <div *ngIf="col.field 
+                        !== 'password'">
+                  {{rowData[col.field]}}
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+        </p-cellEditor>
+      </td>
+      <td>
+        <button pRipple *ngIf="!editing" type="button" pInitEditableRow (click)="onRowEditInit(rowData, rowIndex)"
+          class="iconbutton-neumorphism margin-rt">
+          <i class="bi bi-pencil-square  "></i>
+        </button>
+        <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex)"
+          class="iconbutton-neumorphism">
+          <i class="bi bi-trash-fill "></i>
+        </button>
+        <button pRipple *ngIf="editing" type="button" pSaveEditableRow (click)="onRowEditSave(rowData, rowIndex)"
+          class="iconbutton-neumorphism margin-rt">
+          <i class="pi pi-check "></i>
+        </button>
+        <button pRipple *ngIf="editing" type="button" pCancelEditableRow (click)="onRowEditCancel(rowData, rowIndex)"
+          class="iconbutton-neumorphism ">
+          <i class="pi pi-times "></i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+  </ng-template>
+  <ng-template pTemplate="paginatorright">
+    <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-table>
+<p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
