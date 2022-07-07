@@ -22,5 +22,17 @@
             "tab_icon": "bi bi-bar-chart-line-fill",
             "tab_route": "statistics"
         }
+    ],
+    "adminMenu_tabs": [
+        {
+            "label": "Templates",
+            "icon": "bi bi-columns-gap",
+            "routerLink": ["admin-template"]
+        },
+        {
+            "label": "Users",
+            "icon": "bi bi-people-fill",
+            "routerLink": ["admin-user"]
+        }
     ]
 }
