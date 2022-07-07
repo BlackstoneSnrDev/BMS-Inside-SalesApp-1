@@ -25,6 +25,7 @@ export class DataService {
   public formCityURL: string;
   public formCountryURL: string;
   public formStateURL: string;
+  public selectDataURL: string;
 
   public callhistoryURL: string;
   public logURL: string;
@@ -40,7 +41,7 @@ export class DataService {
 
   ){
 
-    this.navbarDataURL = "../../assets/json/navbar-data.json";
+    this.navbarDataURL = "../../assets/json/menu-data.json";
     this.formElementsURL = "../../assets/json/form-elements.json";
     this.formCityURL = "https://countriesnow.space/api/v0.1/countries/";
     this.formCountryURL = "https://countriesnow.space/api/v0.1/countries/iso";
@@ -49,11 +50,23 @@ export class DataService {
     this.callhistoryURL = "../../assets/json/call-flow.json";
     this.logURL = "../../assets/json/log-data.json";
     this.tableDataURL = "../../assets/json/queueTable-data.json";
+    this.selectDataURL = "../../assets/json/select-data.json";
 
 
     this.usersService.dbObjKey.subscribe(dbObjKey => this.dbObjKey = dbObjKey);
     this.usersService.activeTemplate.subscribe(template => this.activeTemplate = template);
 
+
+  }
+
+  getMyTableData(): Observable<any>{
+    return this._http.get(this.tableDataURL);
+
+  }
+
+
+  getSelectData(): Observable<any>{
+    return this._http.get(this.selectDataURL);
 
   }
 

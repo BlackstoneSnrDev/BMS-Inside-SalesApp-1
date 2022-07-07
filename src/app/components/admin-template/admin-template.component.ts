@@ -1,66 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
-import { UsersService } from "../../services/auth.service";
-
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-admin-template',
     templateUrl: './admin-template.component.html',
     styleUrls: ['./admin-template.component.css', '../../css/neumorphism.component.css', '../../components/table/table.component.css']
 })
+
 export class AdminTemplateComponent implements OnInit {
 
     public dbObjKey: any;
     public userInfo: any;
     public allTemplates: any;
 
-    public tdData: any;
     public thData: any;
-    public clonedElements: any = {};
+    public tdData: any;
     public selectElmType: any;
-
+    public clonedTdData: any = {};
     public tbSelectedRows: any;
+
+    public tglTemplate: boolean = false
+    public onValidationMsg: string = "";
     public onValidationError: string = "";
-    public selectedType: string = "";
-    constructor(private dataService: DataService, private usersService: UsersService) { }
+
+    constructor(private dataService: DataService, private confirmationService: ConfirmationService) { }
 
     ngOnInit() {
-
-        this.usersService.userInfo.subscribe(
-
-            (response) => {
-
-                this.userInfo = response
-
-            },
-
-            (error) => {
-                console.error(error);
-            }
-
-        );
 
         this.dataService.getAllTemplates().subscribe(
 
             (response) => {
 
-                this.thData = [{
-                    "title": "Name",
-                    "field": "name",
-                    "element_type": "text"
-                }, {
-                    "title": "Type",
-                    "field": "type",
-                    "element_type": "text"
-                }, {
-                    "title": "Visible",
-                    "field": "visible",
-                    "element_type": "boolean"
-                }];
+                this.dataService.getMyTableData().subscribe(
+
+                    (response) => {
+
+                        this.thData = response.tableTemplate_th
+
+                    },
+
+                    (error) => {
+                        console.error(error);
+                    }
+
+                );
 
                 this.allTemplates = response
+
                 let tdData: any = [];
                 let slIndex: number = 0;
+
                 for (const [index, value] of this.allTemplates.entries()) {
 
                     tdData.push({ 'templateName': value.templateName, 'templateStatus': value.active, 'templateFields': [] });
@@ -75,25 +65,22 @@ export class AdminTemplateComponent implements OnInit {
                     }
 
                 }
-
                 this.tdData = tdData
 
-                this.selectElmType = [{
-                    "typeName": "False / True",
-                    "typeCode": "boolean"
-                }, {
-                    "typeName": "Address",
-                    "typeCode": "address"
-                }, {
-                    "typeName": "Text",
-                    "typeCode": "text"
-                }, {
-                    "typeName": "Number",
-                    "typeCode": "number"
-                }, {
-                    "typeName": "Date",
-                    "typeCode": "date"
-                }];
+                this.dataService.getSelectData().subscribe(
+
+                    (response) => {
+
+                        this.selectElmType = response.selectInputType
+
+
+                    },
+
+                    (error) => {
+                        console.error(error);
+                    }
+
+                );
             },
 
             (error) => {
@@ -107,11 +94,9 @@ export class AdminTemplateComponent implements OnInit {
         this.dataService.changeSelectedTemplate(template)
     }
 
-    log(val: any) { console.log(val); }
-
     // Table on row CRUD
     onRowEditInit(tdData: any, id: number) {
-        this.clonedElements[tdData.id] = { ...tdData };
+        this.clonedTdData[tdData.id] = { ...tdData };
     }
 
     onRowEditSave(rowTdData: any, indexElm: number, indexTemplate: any) {
@@ -119,8 +104,11 @@ export class AdminTemplateComponent implements OnInit {
         let modifyLastElmActive = (document.getElementById('tr' + indexElm) as HTMLInputElement).getElementsByClassName('ng-invalid')
 
         if (modifyLastElmActive.length > 0) {
+
             this.onValidationError = '*All fields must be filled out.'
+
         } else {
+
             for (const [index, value] of this.tdData.entries()) {
                 if (index == indexTemplate) {
 
@@ -128,16 +116,19 @@ export class AdminTemplateComponent implements OnInit {
 
                 }
             }
-            delete this.clonedElements[rowTdData.id];
+            delete this.clonedTdData[rowTdData.id];
             console.log(this.tdData)
+
         }
     }
 
     onRowEditCancel(rowTdData: any, index: number) {
 
         for (const tdData of this.tdData) {
-            tdData.templateFields[index] = this.clonedElements[rowTdData.id];
+
+            tdData.templateFields[index] = this.clonedTdData[rowTdData.id];
             delete tdData.templateFields[rowTdData.id];
+
         }
         console.log(this.tdData)
 
@@ -150,12 +141,34 @@ export class AdminTemplateComponent implements OnInit {
             if (index == indexTemplate) {
 
                 // NEEDS TO BE FIXED
-                value.templateFields = value.templateFields.filter((i: any) => ![id].includes(i.slIndex))
+                this.confirmationService.confirm({
+                    message: 'Are you sure you want to delete this field?',
+                    header: 'Confirm',
+                    icon: 'pi pi-exclamation-triangle',
+                    accept: () => {
+                        value.templateFields = value.templateFields.filter((i: any) => ![id].includes(i.slIndex))
+                    }
+                });
+
 
             }
 
         }
         console.log(this.tdData)
     }
+
+    toggleTemplate() {
+
+        let toggled = document.querySelectorAll(".p-accordion-header-link[aria-expanded='true']").length
+
+        if (toggled > 0) {
+            this.tglTemplate = true
+        } else {
+            this.tglTemplate = false
+        }
+
+    }
+
+    log(val: any) { console.log(val); }
 
 }

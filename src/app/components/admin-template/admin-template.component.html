@@ -1,109 +1,119 @@
-<div *ngFor="let td of tdData ; let indexTemplate = index">
-  <p-accordion [ngClass]="{ active: td.templateStatus }">
-    <p-accordionTab header="{{ td.templateName }}">
-      <p-table #dataTable [columns]="thData" [value]=td.templateFields [rows]="5" [paginator]="true"
-        [rowsPerPageOptions]="[5, 10, 25, 50]" [(selection)]="tbSelectedRows" [rowHover]="true" dataKey="slIndex"
-        editMode="row" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true">
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <th>
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
-              {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
+<div class="row">
+  <div *ngFor="let td of tdData ; let indexTemplate = index" class="template-container"
+    [ngClass]="!tglTemplate ? 'col-lg-4' : 'col-lg-12'" (click)="toggleTemplate()">
 
-              <p-columnFilter type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+    <p-accordion [ngClass]="{ active: td.templateStatus }">
+      <p-accordionTab header="{{ td.templateName }}">
 
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
-          <tr [pEditableRow]="rowData" id='tr{{rowIndex}}'>
-            <td>
-              <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-            </td>
-            <td *ngFor="let col of columns">
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <ng-container [ngSwitch]="
+        <p-table #dataTable [columns]="thData" [value]=td.templateFields [rows]="5" [paginator]="true"
+          [rowsPerPageOptions]="[5, 10, 25, 50]" [(selection)]="tbSelectedRows" [rowHover]="true" dataKey="slIndex"
+          editMode="row" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true">
+
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th>
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
+                {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
+                <p-columnFilter type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
+            <tr [pEditableRow]="rowData" id='tr{{rowIndex}}'>
+              <td>
+                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+              </td>
+              <td *ngFor="let col of columns">
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <ng-container [ngSwitch]="
+                            col.element_type === 'boolean'
+                        ? 'checkbox'
+                        : col.field === 'type'
+                        ? 'select'
+                        : -1
+                    ">
+                      <ng-container *ngSwitchCase="'checkbox'">
+                        <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary">
+                        </p-checkbox>
+                      </ng-container>
+
+                      <ng-container *ngSwitchCase="'select'">
+                        <p-dropdown [options]="selectElmType" class="input-neumorphism" optionLabel="typeName"
+                          optionValue="typeCode" placeholder="Type" [(ngModel)]="rowData[col.field]"></p-dropdown>
+                      </ng-container>
+
+                      <ng-container *ngSwitchDefault>
+                        <mat-form-field appearance="standard">
+                          <mat-label>{{col.title}}</mat-label>
+                          <input matInput type="{{col.element_type}}" placeholder="New {{col.field}}"
+                            [(ngModel)]="rowData[col.field]" required>
+                        </mat-form-field>
+                      </ng-container>
+
+                      <br>
+                      <small *ngIf="onValidationError" class="color-rd">
+                        {{col.title}} must be filled out.
+                      </small>
+                    </ng-container>
+
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <ng-container [ngSwitch]="
                           col.element_type === 'boolean'
                       ? 'checkbox'
-                      : col.field === 'type'
-                      ? 'select'
                       : -1
                   ">
-                    <ng-container *ngSwitchCase="'checkbox'">
-                      <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary">
-                      </p-checkbox>
+                      <ng-container *ngSwitchCase="'checkbox'">
+                        <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary" [readonly]=true>
+                        </p-checkbox>
+                      </ng-container>
+
+
+                      <ng-container *ngSwitchDefault>
+                        {{rowData[col.field]}}
+                      </ng-container>
                     </ng-container>
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <button pRipple *ngIf="!editing" type="button" pInitEditableRow
+                  (click)="onRowEditInit(rowData, rowIndex)" class="iconbutton-neumorphism margin-rt">
+                  <i class="bi bi-pencil-square  "></i>
+                </button>
+                <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex, indexTemplate)"
+                  class="iconbutton-neumorphism">
+                  <i class="bi bi-trash-fill "></i>
+                </button>
+                <button pRipple *ngIf="editing" type="button" pSaveEditableRow
+                  (click)="onRowEditSave(rowData, rowIndex, indexTemplate)" class="iconbutton-neumorphism margin-rt">
+                  <i class="pi pi-check "></i>
+                </button>
+                <button pRipple *ngIf="editing" type="button" pCancelEditableRow
+                  (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism ">
+                  <i class="pi pi-times "></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
 
-                    <ng-container *ngSwitchCase="'select'">
-                      <p-dropdown [options]="selectElmType" class="input-neumorphism" optionLabel="typeName"
-                        optionValue="typeCode" placeholder="Type" [(ngModel)]="rowData[col.field]"></p-dropdown>
-                    </ng-container>
+          <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+          </ng-template>
+          <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+          </ng-template>
 
-                    <ng-container *ngSwitchDefault>
-                      <mat-form-field appearance="standard">
-                        <mat-label>{{col.title}}</mat-label>
-                        <input matInput type="{{col.element_type}}" placeholder="New {{col.field}}"
-                          [(ngModel)]="rowData[col.field]" required>
-                      </mat-form-field>
-                    </ng-container>
+        </p-table>
 
-                    <br>
-                    <small *ngIf="onValidationError" class="color-rd">
-                      {{col.title}} must be filled out.
-                    </small>
-                  </ng-container>
+      </p-accordionTab>
+    </p-accordion>
 
-                </ng-template>
-                <ng-template pTemplate="output">
-                  <ng-container [ngSwitch]="
-                        col.element_type === 'boolean'
-                    ? 'checkbox'
-                    : -1
-                ">
-                    <ng-container *ngSwitchCase="'checkbox'">
-                      <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary" [readonly]=true>
-                      </p-checkbox>
-                    </ng-container>
-
-
-                    <ng-container *ngSwitchDefault>
-                      {{rowData[col.field]}}
-                    </ng-container>
-                  </ng-container>
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <button pRipple *ngIf="!editing" type="button" pInitEditableRow (click)="onRowEditInit(rowData, rowIndex)"
-                class="iconbutton-neumorphism margin-rt">
-                <i class="bi bi-pencil-square  "></i>
-              </button>
-              <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex, indexTemplate)"
-                class="iconbutton-neumorphism">
-                <i class="bi bi-trash-fill "></i>
-              </button>
-              <button pRipple *ngIf="editing" type="button" pSaveEditableRow
-                (click)="onRowEditSave(rowData, rowIndex, indexTemplate)" class="iconbutton-neumorphism margin-rt">
-                <i class="pi pi-check "></i>
-              </button>
-              <button pRipple *ngIf="editing" type="button" pCancelEditableRow
-                (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism ">
-                <i class="pi pi-times "></i>
-              </button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="paginatorleft">
-          <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
-        </ng-template>
-        <ng-template pTemplate="paginatorright">
-          <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
-        </ng-template>
-      </p-table>
-    </p-accordionTab>
-  </p-accordion>
+  </div>
 </div>
+<p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>

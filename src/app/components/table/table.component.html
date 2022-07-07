@@ -112,15 +112,15 @@
         [globalFilterFields]="thData" [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="tbSelectedRows"
         [rowHover]="true" dataKey="slIndex"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-        editMode="row" responsiveLayout="scroll">
-
+        editMode="row" [resizableColumns]="true" [autoLayout]="true" [style]="{'width':'100%'}">
+ 
         <ng-template pTemplate="caption">
             <div class="onValidationContainer" *ngIf="onValidationMsg">
                 {{onValidationMsg}}
             </div>
             <div class="filter-container">
                 <mat-form-field appearance="standard">
-                    <mat-label>Filter by</mat-label>
+                    <mat-label>Search</mat-label>
                     <input matInput type="text" #filterInput [(ngModel)]="clearInput"
                         (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')" placeholder="Ex. ium">
                 </mat-form-field>

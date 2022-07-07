@@ -1,0 +1,28 @@
+{
+    "selectInputType": [
+        {
+            "typeName": "False / True",
+            "typeCode": "boolean"
+        },
+        {
+            "typeName": "Address",
+            "typeCode": "address"
+        },
+        {
+            "typeName": "Text",
+            "typeCode": "text"
+        },
+        {
+            "typeName": "Number",
+            "typeCode": "number"
+        },
+        {
+            "typeName": "Date",
+            "typeCode": "date"
+        },
+        {
+            "typeName": "Password",
+            "typeCode": "password"
+        }
+    ]
+}
