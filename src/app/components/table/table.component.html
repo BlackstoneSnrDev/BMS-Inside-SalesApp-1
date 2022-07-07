@@ -224,7 +224,7 @@
                         (click)="onRowEditInit(rowData, rowIndex)" class="iconbutton-neumorphism margin-rt">
                         <i class="bi bi-pencil-square  "></i>
                     </button>
-                    <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex)"
+                    <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowData.uid)"
                         class="iconbutton-neumorphism">
                         <i class="bi bi-trash-fill "></i>
                     </button>

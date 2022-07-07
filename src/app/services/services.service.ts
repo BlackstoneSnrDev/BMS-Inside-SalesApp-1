@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, from } from 'rxjs'
 import { UsersService } from './auth.service';
+import { RandomId } from './services.randomId';
 import {
     AngularFirestore,
     AngularFirestoreDocument,
   } from '@angular/fire/compat/firestore'; 
 import firebase from 'firebase/compat';
 
-  
+let len = 12;    
+let pattern = 'aA0'   
 
 @Injectable({
 
@@ -28,6 +30,7 @@ export class DataService {
   public logURL: string;
   public tableDataURL: string;
   public dbObjKey: any;
+  public activeTemplate: any;
 
   constructor(
 
@@ -49,6 +52,7 @@ export class DataService {
 
 
     this.usersService.dbObjKey.subscribe(dbObjKey => this.dbObjKey = dbObjKey);
+    this.usersService.activeTemplate.subscribe(template => this.activeTemplate = template);
 
 
   }
@@ -89,24 +93,15 @@ export class DataService {
 
   }
 
- getTableData() {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
-    return data.where('active', '==', true).get().then(async (docs) => {
-        let filteredTemplateData: any[] = [];
-        let templateId = docs.docs[0].id;
-        let customerArray: firebase.firestore.DocumentData[] = [];
+  getTableHeader() { 
 
-        let customerData = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(templateId).collection('customers').ref;
-        await customerData.get().then((docs) => { 
-            docs.forEach((doc) => {
-            // if data is a date, format it to a string
-                customerArray.push(doc.data());
-            })
-        })
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref
+    return data.get().then((doc: any) => {
+        let tableHeader: any[] = [];
+        Object.values(doc.data()).forEach((item: any) => {
 
-        Object.values(docs.docs[0].data()).forEach((item) => {
             if (typeof item === 'object'){
-                filteredTemplateData.push({ 
+                tableHeader.push({ 
                     title: item.element_placeholder,
                     field: item.element_table_value, 
                     value: item.element_value,
@@ -115,12 +110,18 @@ export class DataService {
                 });
             }
         })
-
-        // console.log(filteredTemplateData);
-        // console.log(customerArray);
-        return ({ filteredTemplateData, customerArray });
+        return tableHeader;
     })
 
+  } 
+
+  getTableData(): Observable<any> {
+        
+        const customerArray = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+            map(actions => actions.map(a => a.payload.doc.data()))
+        )
+        
+        return customerArray;
   }
 
   getNavbarData(): Observable<any>{
@@ -180,35 +181,34 @@ export class DataService {
 
 
     async getallCustomers() {
-    const template = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
-    let templateId = template.where('active', '==', true).get().then((docs) => {
-        return docs.docs[0].id;
-     })
-    let data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(await templateId).collection('customers').ref;
     let docArray: firebase.firestore.DocumentData[] = [];
-    data.get().then((docs) => { 
-        docs.forEach((doc) => {
-            docArray.push(doc.data());
-        })
-    })
+    this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+        map(actions => actions.map(a => docArray.push(a.payload.doc.data())))
+    );
     console.log(docArray);
     return docArray;
 }
 
-   async addNewRecord(data: any) {
-        const template = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
-        let templateId = template.where('active', '==', true).get().then((docs) => {
-            return docs.docs[0].id;
-         })
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(await templateId).collection('customers').add(data);
+    async addNewRecord(data: any) {
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').add(data);
     }
 
+    async editCustomer(data: any) {
+        delete data.slIndex;
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(data.uid).update(data);
+    }
+
+    async deleteCustomer(uid: any) {
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).delete();
+    }
 // populateTemplateWithCustomers() {
+
 //     const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc('Template One').collection('customers').ref;
    
 //     customers.forEach((customer) => { 
+//         let id = RandomId(len, pattern)
 //         // set documents in template collection
-//         data.add(customer);
+//         data.doc(id).set({...customer, uid: id})
 //     })
 //   }
 

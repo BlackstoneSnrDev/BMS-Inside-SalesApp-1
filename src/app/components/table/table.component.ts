@@ -55,28 +55,54 @@ export class TableComponent {
         this.primengConfig.ripple = true;
         this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
         //this.DataService.populateTemplateWithCustomers();
+        
+        this.DataService.getTableHeader()
+            .then(data => {
+                this.thData = data.sort((a, b) => a.element_order - b.element_order)
+            }).then(async() => {
+                this.DataService.getTableData().subscribe(data => { 
+                    this.tdData = data
+                    this.tdData.forEach((element: any, index: number) => {
+                        this.tdData[index]["slIndex"] = index;
+                    })
+                 })
+            }).then(() => {
+                this.thDataLength = this.thData.length
+            }).then(() => {
 
-        this.DataService.getTableData().then((data) => [
-            this.tdData = data.customerArray,
-            this.thData = data.filteredTemplateData.sort((a, b) => a.element_order - b.element_order),
-            this.thDataLength = this.thData.length]
-        ).then((data) => {
-            for (let i of this.thData) {
-                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
-            }
-            this.addNewRecordForm = new FormGroup(this.newFormControl);
-
-            let slIndex = 0
-            if (data[0].length) {
-                for (let i = 0; i < data[0].length; i++) {
-                    slIndex = i
-                    this.tdData[slIndex]["slIndex"] = i;
+                for (let i of this.thData) {
+                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
                 }
-            } else  {
-                console.log('no iteems');
-            }
+                this.addNewRecordForm = new FormGroup(this.newFormControl);
+            },
+                error => {
+                    console.error(error)
+                }
+            )
 
-        })
+            
+
+        // this.DataService.getTableData().then((data) => [
+        //     this.tdData = data.customerArray,
+        //     this.thData = data.filteredTemplateData.sort((a, b) => a.element_order - b.element_order),
+        //     this.thDataLength = this.thData.length]
+        // ).then((data) => {
+        //     for (let i of this.thData) {
+        //             this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+        //     }
+        //     this.addNewRecordForm = new FormGroup(this.newFormControl);
+
+        //     let slIndex = 0
+        //     if (data[0].length) {
+        //         for (let i = 0; i < data[0].length; i++) {
+        //             slIndex = i
+        //             this.tdData[slIndex]["slIndex"] = i;
+        //         }
+        //     } else  {
+        //         console.log('no iteems');
+        //     }
+
+        // })
 
             this.tbGroups = [
                 {
@@ -147,15 +173,15 @@ export class TableComponent {
 
     onRowEditSave(tdData: any, index: number) {
 
+        console.log(tdData, index)
+
         let modifyLastElmActive = (document.getElementById('tr' + index) as HTMLInputElement).getElementsByClassName('ng-invalid')
 
         if (modifyLastElmActive.length > 0) {
             this.onValidationError = '*All fields must be filled out.'
         } else {
+            this.DataService.editCustomer(tdData);
 
-            delete this.clonedtdData[tdData.id];
-
-            console.log('clicked')
         }
     }
 
@@ -166,14 +192,14 @@ export class TableComponent {
 
     }
 
-    onRowDeleteRow(id: any) {
-
+    onRowDeleteRow(uid: any) {
+        console.log(uid);
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete this selection?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.tdData = this.tdData.filter((i: any) => ![id].includes(i.slIndex));
+                this.DataService.deleteCustomer(uid);
                 this.tbSelectedRows = [];
                 this.onValidationMsg = 'Record was deleted successfully.'
                 setTimeout(() => {
@@ -517,4 +543,8 @@ export class TableComponent {
 
     log = (data: any) => console.log(data);
 
+}
+
+function subscribe(arg0: (data: any) => void) {
+    throw new Error('Function not implemented.');
 }

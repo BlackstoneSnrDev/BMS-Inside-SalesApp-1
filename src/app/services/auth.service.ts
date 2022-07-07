@@ -21,8 +21,10 @@ export class UsersService {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private tenantName = new BehaviorSubject<any>(null);
   private user = new BehaviorSubject<object>({user: null});
+  private template = new BehaviorSubject<any>(null);
   dbObjKey = this.tenantName.asObservable();
   userInfo = this.user.asObservable();
+  activeTemplate = this.template.asObservable();
 
 
   private userDataURL: string = '';
@@ -125,6 +127,11 @@ export class UsersService {
             localUserData.get().then((res) => {
                 let localUserInfo: any = res.data();
                 this.user.next(localUserInfo);
+            })
+        }).then((res) => {
+            const dataTwo = this.afs.collection('Tenant').doc(localTenantName).collection('templates').ref;
+            dataTwo.where('active', '==', true).get().then(async (docs) => {
+                this.template.next(docs.docs[0].id) 
             })
         })
       } else {
