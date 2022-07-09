@@ -42,9 +42,10 @@ export class FormComponent implements OnInit {
 
         // Subscribe to dbObjKey to ensure we have a logged in user and a tenant ID.  When we have the dbObjKey send it to getActiveTemplate service.
         // This sequence is needed so that the db is not called without a tenant ID.  To do otherwise resulted is errors when the user refreshes the page.  
+        
         this.usersService.dbObjKey.subscribe(
-
             dbObjKey => [
+                
                 this.dbObjKey = dbObjKey,
                 this.dataService.getActiveTemplate(this.dbObjKey)
                     .then(activeTemplate => this.activeTemplate = activeTemplate.sort((a, b) => a.element_order - b.element_order))
@@ -54,8 +55,6 @@ export class FormComponent implements OnInit {
                             this.newFormControl[i.element_placeholder] = new FormControl({ value: i.element_value, disabled: this.tgleditField }, [Validators.required, Validators.minLength(1)]);
                         }
                         this.callDataForm = new FormGroup(this.newFormControl);
-
-                        //console.log(this.formElement)
                     })
             ])
 
@@ -124,8 +123,9 @@ export class FormComponent implements OnInit {
                 
                 this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
                 this.states = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
-                for (let a of this.states) {
-                    this.states = a.states
+
+                for (let i of this.states) {
+                    this.states = i.states
                 }
                 console.log(this.states)
 
@@ -179,21 +179,6 @@ export class FormComponent implements OnInit {
         console.log(this.callDataForm.value)
         this.tgleditField = false;
     }
-
-
-    // toggleEditLayout(){
-
-    //     this.tglEditLayout = !this.tglEditLayout;
-
-    // }
-
-
-    // editLayout(elementId: number){
-    //     console.log(elementId)
-    //     console.log(this.formElement)
-    //     this.formElement.splice(elementId, 1)
-
-    // }
 
     log(val: any) { console.log(val); }
 }

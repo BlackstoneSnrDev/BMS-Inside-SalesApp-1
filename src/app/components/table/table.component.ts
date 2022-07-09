@@ -37,6 +37,7 @@ export class TableComponent {
     public tbGroupsLength: number = 0;
     public clearInput: any
 
+    public tglUploadList: boolean = false;
     public tglCreateNewGroup: boolean = false;
     public tglMenuTable: boolean = false;
     public tglAddNewRecord: boolean = false;
@@ -54,6 +55,7 @@ export class TableComponent {
 
         this.primengConfig.ripple = true;
         this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
+        console.log(this.userInfo)
         //this.DataService.populateTemplateWithCustomers();
 
         this.DataService.getTableData().then((data) => [
@@ -62,7 +64,7 @@ export class TableComponent {
             this.thDataLength = this.thData.length]
         ).then((data) => {
             for (let i of this.thData) {
-                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
             }
             this.addNewRecordForm = new FormGroup(this.newFormControl);
 
@@ -72,24 +74,24 @@ export class TableComponent {
                     slIndex = i
                     this.tdData[slIndex]["slIndex"] = i;
                 }
-            } else  {
+            } else {
                 console.log('no iteems');
             }
 
         })
 
-            this.tbGroups = [
-                {
-                    "group_id": "g1",
-                    "group_name": "Pending call"
-                },
-                {
-                    "group_id": "g2",
-                    "group_name": "Pending insurance"
-                }
-            ]
-            this.tbGroupsLength = 2;
-            
+        this.tbGroups = [
+            {
+                "group_id": "g1",
+                "group_name": "Pending call"
+            },
+            {
+                "group_id": "g2",
+                "group_name": "Pending insurance"
+            }
+        ]
+        this.tbGroupsLength = 2;
+
 
         // this.DataService.getTableData().subscribe(
         //     response => {
@@ -101,22 +103,33 @@ export class TableComponent {
 
         //         this.thDataLength = this.thData.length
 
-                // for (let i of this.thData) {
-                //     this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
-                // }
-                // this.addNewRecordForm = new FormGroup(this.newFormControl);
+        // for (let i of this.thData) {
+        //     this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
+        // }
+        // this.addNewRecordForm = new FormGroup(this.newFormControl);
 
-                // let slIndex = 0
-                // for (let i = 0; i < this.tdData.length; i++) {
-                //     slIndex = i
-                //     this.tdData[slIndex]["slIndex"] = i;
-                // }
+        // let slIndex = 0
+        // for (let i = 0; i < this.tdData.length; i++) {
+        //     slIndex = i
+        //     this.tdData[slIndex]["slIndex"] = i;
+        // }
 
         //     },
         //     error => {
         //         console.error(error)
         //     }
         // )
+    }
+
+    toggleUploadList() {
+
+        this.tglUploadList = !this.tglUploadList
+
+    }
+
+    getFileUploaded(event: Event) {
+
+        console.log(event)
     }
 
     @ViewChild('dataTable') table!: Table;
@@ -206,7 +219,7 @@ export class TableComponent {
         value['group'] = []
         this.DataService.addNewRecord(value);
 
-        this.addNewRecordForm.reset();  
+        this.addNewRecordForm.reset();
 
         this.onValidationMsg = 'New record was added successfully.'
         setTimeout(() => {
@@ -367,27 +380,27 @@ export class TableComponent {
 
     deleteGroup(groupId: any, groupName: string) {
 
-            this.confirmationService.confirm({
-                message: 'Are you sure you want to delete "<b>' + groupName + '</b>"?',
-                header: 'Deleting group',
-                accept: () => {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete "<b>' + groupName + '</b>"?',
+            header: 'Deleting group',
+            accept: () => {
 
-                    let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
-                    this.tbGroups = this.tbGroups.filter((i: any) => i.group_id !== groupId)
+                let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
+                this.tbGroups = this.tbGroups.filter((i: any) => i.group_id !== groupId)
 
-                    console.log(groupIndex)
+                console.log(groupIndex)
 
-                    this.ungroupSelection(groupId, 'deleteGroup');
+                this.ungroupSelection(groupId, 'deleteGroup');
 
-                    this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
-                    setTimeout(() => {
-                        this.onValidationMsg = "";
-                    }, 2000);
+                this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
+                setTimeout(() => {
+                    this.onValidationMsg = "";
+                }, 2000);
 
-                    console.log(this.tbGroups)
+                console.log(this.tbGroups)
 
-                }
-            });
+            }
+        });
 
         this.onValidationError = ""
         this.clearInput = ""
@@ -463,7 +476,7 @@ export class TableComponent {
 
             }
 
-        }else{
+        } else {
 
             this.confirmationService.confirm({
                 message: 'Are you sure you want to ungroup <b>' + this.tbSelectedRows.length + '</b> records?',

@@ -1,3 +1,43 @@
 ::ng-deep .p-button-icon-only {
-    visibility: hidden;
+  visibility: hidden;
+}
+
+form {
+  max-width: 72% !important;
+}
+
+.passwordContainer ::ng-deep .p-inputtext {
+  border: none;
+  border-bottom: 0.0625rem solid #44476a;
+  background: transparent;
+  border-radius: 0;
+}
+
+.passwordContainer ::ng-deep .p-inputtext:enabled:hover {
+  border: none;
+  border-bottom: 0.0625rem solid #44476a;
+}
+
+.passwordContainer ::ng-deep .p-inputtext:enabled:focus {
+  box-shadow: none;
+  border: none;
+  border-bottom: 0.0625rem solid #44476a;
+}
+
+::ng-deep.p-float-label.passwordContainer {
+  top: 0.73rem;
+}
+
+::ng-deep.p-float-label input:focus ~ label,
+.p-float-label input.p-filled ~ label,
+.p-float-label textarea:focus ~ label,
+.p-float-label textarea.p-filled ~ label,
+.p-float-label .p-inputwrapper-focus ~ label,
+.p-float-label .p-inputwrapper-filled ~ label {
+  top: -0.11rem;
+  font-size: 0.7rem;
+}
+
+::ng-deep.p-float-label > label {
+  color: #44476a;
 }

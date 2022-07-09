@@ -42,6 +42,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <mat-form-field appearance="fill" class="margin-tp">
                         <mat-label>(&#x2b;) Add to group</mat-label>
@@ -55,7 +56,8 @@
 
                     <mat-form-field appearance="fill" class="margin-tp">
                         <mat-label>(&#xd7;) Delete from group</mat-label>
-                        <mat-select (selectionChange)="ungroupSelection($event.value, 'selection')" [(ngModel)]="clearInput">
+                        <mat-select (selectionChange)="ungroupSelection($event.value, 'selection')"
+                            [(ngModel)]="clearInput">
                             <mat-option selected hidden></mat-option>
                             <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
                                 {{groupOpt.group_name}}
@@ -66,42 +68,58 @@
             </div>
             <div [ngClass]="tglAddNewRecord ? 'show' : 'hide'">
                 <div spellcheck="true">
-                    <form [formGroup]="addNewRecordForm" (ngSubmit)="saveAddNewRecord(dataTable)"
-                        *ngIf="addNewRecordForm" novalidate>
+                    <form [formGroup]="addNewRecordForm" *ngIf="addNewRecordForm" novalidate>
                         <h5>Add new record</h5>
                         <div [ngClass]="!addNewRecordForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
+                        <div class="float-rt margin-bt" [ngClass]="userInfo.admin ? 'show' : 'hide'">
+                            <button class="button-neumorphism margin-lt" (click)="toggleUploadList()">
+                                <i class="bi bi-plus-square-fill "></i> Upload record list
+                            </button>
+                        </div>
                         <hr>
-                        <div class="form-row">
-                            <div *ngFor="let newtd of thData ; let newtdIndex = index">
-                                <div class="form-group col-xl-auto">
-                                    <ng-container *ngIf="newtd.element_type === 'boolean'; else matInp">
-                                        <p-checkbox  [binary]="true"
-                                            label="{{newtd.title}}" inputId="{{newtdIndex + newtd.field}}" [(ngModel)]="newtd.value" formControlName="{{newtd.field}}"></p-checkbox>
-                                    </ng-container>
-                                    <ng-template #matInp>
-                                        <mat-form-field appearance="standard">
-                                            <mat-label>{{newtd.title}}</mat-label>
-                                            <input matInput class="input-neumorphism" type="{{newtd.element_type}}"
-                                                placeholder="New {{newtd.field}}" autocomplete="off"
-                                                id="{{newtdIndex + newtd.field}}" formControlName="{{newtd.field}}" />
-                                        </mat-form-field>
-                                    </ng-template>
+                        <div [ngClass]="!tglUploadList ? 'show' : 'hide'">
+                            <br>
+
+                            <div class="form-row">
+                                <div *ngFor="let newtd of thData ; let newtdIndex = index">
+                                    <div class="form-group col-xl-auto">
+                                        <ng-container *ngIf="newtd.element_type === 'boolean'; else matInp">
+                                            <p-checkbox [binary]="true" label="{{newtd.title}}"
+                                                inputId="{{newtdIndex + newtd.field}}" [(ngModel)]="newtd.value"
+                                                formControlName="{{newtd.field}}"></p-checkbox>
+                                        </ng-container>
+                                        <ng-template #matInp>
+                                            <mat-form-field appearance="standard">
+                                                <mat-label>{{newtd.title}}</mat-label>
+                                                <input matInput class="input-neumorphism" type="{{newtd.element_type}}"
+                                                    placeholder="New {{newtd.field}}" autocomplete="off"
+                                                    id="{{newtdIndex + newtd.field}}"
+                                                    formControlName="{{newtd.field}}" />
+                                            </mat-form-field>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-row">
+                                <div class="col">
+                                    <button (click)="saveAddNewRecord(dataTable)"
+                                        class="width-50 show-line-b txt-center" value="save"
+                                        [disabled]="!addNewRecordForm.valid"
+                                        [ngClass]="!addNewRecordForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
+                                        Save
+                                    </button>
+                                    <div class="button-neumorphism width-50 show-line-b txt-center"
+                                        (click)="cancelAddNewRecord()">
+                                        Cancel
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="form-row">
-                            <div class="col">
-                                <button type="submit" class="width-50 show-line-b txt-center" value="save"
-                                    [disabled]="!addNewRecordForm.valid"
-                                    [ngClass]="!addNewRecordForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
-                                    Save
-                                </button>
-                                <div class="button-neumorphism width-50 show-line-b txt-center"
-                                    (click)="cancelAddNewRecord()">
-                                    Cancel
-                                </div>
-                            </div>
+
+                        <div [ngClass]="tglUploadList ? 'show' : 'hide'">
+                            <p-fileUpload name="queueList[]" url="./thisNeedToBeSetUpByBackend" accept=".xlsx"
+                                [auto]="true" (onUpload)="getFileUploaded($event)"></p-fileUpload>
                         </div>
                     </form>
                 </div>
@@ -113,7 +131,7 @@
         [rowHover]="true" dataKey="slIndex"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
         editMode="row" [resizableColumns]="true" [autoLayout]="true" [style]="{'width':'100%'}">
- 
+
         <ng-template pTemplate="caption">
             <div class="onValidationContainer" *ngIf="onValidationMsg">
                 {{onValidationMsg}}

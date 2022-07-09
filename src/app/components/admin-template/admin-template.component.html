@@ -1,3 +1,50 @@
+<div class="margin-bt menu-table-container">
+  <button class="iconbutton-neumorphism-disabled">
+    <i class="bi bi-menu-button-fill i-colored"></i>
+  </button>
+
+  <ng-container>
+    <button class="button-neumorphism margin-lt" (click)="toggleAddNewTemplate()">
+      <i class="bi bi-plus-square-fill "></i> Add new template
+    </button>
+
+    <div [ngClass]="tglAddNewTemplate ? 'show' : 'hide'">
+      <div spellcheck="true">
+        <form [formGroup]="addNewTemplateForm" (ngSubmit)="saveAddNewTemplate()" *ngIf="addNewTemplateForm" novalidate>
+          <h5>Add new template</h5>
+          <div [ngClass]="!addNewTemplateForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
+          <hr>
+          <div class="form-row">
+            <div class="width-100">
+              <mat-form-field appearance="standard">
+                <mat-label>Template name</mat-label>
+                <input matInput class="input-neumorphism" type="text" placeholder="Template name" autocomplete="off"
+                  id="templateName" formControlName="templateName" />
+              </mat-form-field>
+            </div>
+            <div class="width-100">
+              <p-multiSelect [options]="tdFields" optionLabel="name" formControlName="templateFields"
+                placeholder="Template fields"></p-multiSelect>
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="col">
+              <button type="submit" class="width-50 show-line-b txt-center" value="save"
+                [disabled]="!addNewTemplateForm.valid"
+                [ngClass]="!addNewTemplateForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
+                Save
+              </button>
+              <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewTemplate()">
+                Cancel
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>
 <div class="row">
   <div *ngFor="let td of tdData ; let indexTemplate = index" class="template-container"
     [ngClass]="!tglTemplate ? 'col-lg-4' : 'col-lg-12'" (click)="toggleTemplate()">
@@ -117,3 +164,5 @@
   </div>
 </div>
 <p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
+
+<!-- <reusableTable-component [thData]="thFullData" [tdData]="tdData" [addNew]="addNew" [showBtnAddNew]="true"></reusableTable-component> -->
