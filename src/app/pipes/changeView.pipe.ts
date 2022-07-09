@@ -14,9 +14,8 @@ export class ChangeView implements PipeTransform {
             return tdData
 
             default:
+        // finds the group_id in the row's group array
             return tdData.filter((i: any) => i.group.includes(modifyBy))
-
         }
-
     }
 }

@@ -126,12 +126,8 @@ export class UsersService {
             const localUserData = this.afs.collection('Tenant').doc(localTenantName).collection('users').doc(uid).ref;
             localUserData.get().then((res) => {
                 let localUserInfo: any = res.data();
+                this.template.next(localUserInfo.activeTemplate) 
                 this.user.next(localUserInfo);
-            })
-        }).then((res) => {
-            const dataTwo = this.afs.collection('Tenant').doc(localTenantName).collection('templates').ref;
-            dataTwo.where('active', '==', true).get().then(async (docs) => {
-                this.template.next(docs.docs[0].id) 
             })
         })
       } else {

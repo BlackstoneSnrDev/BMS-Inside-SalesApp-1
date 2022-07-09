@@ -52,14 +52,14 @@ export class TableComponent {
 
     ngOnInit() {
 
-        this.primengConfig.ripple = true;
+        this.primengConfig.ripple = false;
         this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
         //this.DataService.populateTemplateWithCustomers();
         
         this.DataService.getTableHeader()
             .then(data => {
                 this.thData = data.sort((a, b) => a.element_order - b.element_order)
-            }).then(async() => {
+            }).then(() => {
                 this.DataService.getTableData().subscribe(data => { 
                     this.tdData = data
                     this.tdData.forEach((element: any, index: number) => {
@@ -69,7 +69,11 @@ export class TableComponent {
             }).then(() => {
                 this.thDataLength = this.thData.length
             }).then(() => {
-
+                this.DataService.getCustomerGroups().subscribe(data => {
+                    this.tbGroups = data,
+                    this.tbGroupsLength = data.length
+                })
+            }).then(() => {
                 for (let i of this.thData) {
                     this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
                 }
@@ -80,41 +84,19 @@ export class TableComponent {
                 }
             )
 
-            
+        
 
-        // this.DataService.getTableData().then((data) => [
-        //     this.tdData = data.customerArray,
-        //     this.thData = data.filteredTemplateData.sort((a, b) => a.element_order - b.element_order),
-        //     this.thDataLength = this.thData.length]
-        // ).then((data) => {
-        //     for (let i of this.thData) {
-        //             this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
-        //     }
-        //     this.addNewRecordForm = new FormGroup(this.newFormControl);
-
-        //     let slIndex = 0
-        //     if (data[0].length) {
-        //         for (let i = 0; i < data[0].length; i++) {
-        //             slIndex = i
-        //             this.tdData[slIndex]["slIndex"] = i;
-        //         }
-        //     } else  {
-        //         console.log('no iteems');
-        //     }
-
-        // })
-
-            this.tbGroups = [
-                {
-                    "group_id": "g1",
-                    "group_name": "Pending call"
-                },
-                {
-                    "group_id": "g2",
-                    "group_name": "Pending insurance"
-                }
-            ]
-            this.tbGroupsLength = 2;
+            // this.tbGroups = [
+            //     {
+            //         "group_id": "g1",
+            //         "group_name": "Pending call"
+            //     },
+            //     {
+            //         "group_id": "g2",
+            //         "group_name": "Pending insurance"
+            //     }
+            // ]
+            // this.tbGroupsLength = 2;
             
 
         // this.DataService.getTableData().subscribe(
@@ -304,14 +286,16 @@ export class TableComponent {
                 this.onValidationError = "";
             }, 2000);
 
-            console.log(this.tbGroups)
-
         } else {
 
-            let newIndex = this.tbGroups.length + 1
-            this.tbGroups.push({ "group_id": "g" + newIndex, "group_name": groupName });
+            let rowUidArray: any[] = []
+            this.tbSelectedRows.map((row: any) => {
+                rowUidArray.push(row.uid)
+            })
+            
+            this.DataService.createNewCustomerGroup(groupName, rowUidArray);
 
-            this.groupSelection("g" + newIndex)
+            //this.groupSelection("g" + newIndex)
             this.onValidationMsg = 'New group was created as "' + groupName + '" successfully.'
             setTimeout(() => {
                 this.onValidationMsg = "";
@@ -321,7 +305,6 @@ export class TableComponent {
             this.clearInput = ""
             this.onValidationError = ""
 
-            console.log(this.tbGroups)
         }
 
     }
@@ -537,6 +520,8 @@ export class TableComponent {
 
         let setActiveElm = (event.target as HTMLInputElement).classList.toggle("button-neumorphism-active");
 
+        let myArray = this.tdData.filter( (e: { uid: string; }) => modifyBy.includes(e.uid) );
+        console.log(modifyBy,  this.tbGroups);
         this.modifyTable = modifyBy
 
     }

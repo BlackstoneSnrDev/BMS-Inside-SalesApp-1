@@ -108,8 +108,8 @@
             </div>
         </ng-container>
     </div>
-    <p-table #dataTable [columns]="thData" [value]="tdData | changeView: modifyTable" [rows]="5" [paginator]="true"
-        [globalFilterFields]="thData" [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="tbSelectedRows"
+    <p-table #dataTable [columns]="thData" [value]="tdData | changeView: modifyTable" [rows]="10" [paginator]="true"
+        [globalFilterFields]="thData" [rowsPerPageOptions]="[10,25,50]" [(selection)]="tbSelectedRows"
         [rowHover]="true" dataKey="slIndex"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
         editMode="row" [resizableColumns]="true" [autoLayout]="true" [style]="{'width':'100%'}">
