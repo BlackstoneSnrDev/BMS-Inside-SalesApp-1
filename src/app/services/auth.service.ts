@@ -65,20 +65,6 @@ export class UsersService {
       }
     });
   }
-
-//   login(user: any): Observable<any> {
-
-//     if (user.username === "eve.holt@reqres.in") {
-
-//       this.loggedIn.next(true);
-//       this.router.navigateByUrl('call-information');
-
-//     }
-
-//     return this.http.post("https://reqres.in/api/login", user);
-
-//   }
-
     // Sign in with email/password
     SignIn(email: string, password: string) {
         return this.afAuth
@@ -90,20 +76,7 @@ export class UsersService {
             window.alert(error.message);
           });
       }
-
-  // register(user: any): Observable<any> {
-
-  //   return this.http.post("https://reqres.in/api/register", user);
-
-  // }
-
-//   logout() {
-
-//     this.loggedIn.next(false);
-//     this.router.navigateByUrl('login');
-
-//   }
-
+      
   SignOut() {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');

@@ -37,6 +37,7 @@ export class TableComponent {
     public tbGroupsLength: number = 0;
     public clearInput: any
 
+    public tglUploadList: boolean = false;
     public tglCreateNewGroup: boolean = false;
     public tglMenuTable: boolean = false;
     public tglAddNewRecord: boolean = false;
@@ -54,6 +55,7 @@ export class TableComponent {
 
         this.primengConfig.ripple = false;
         this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
+        console.log(this.userInfo)
         //this.DataService.populateTemplateWithCustomers();
         
         this.DataService.getTableCustomerHeader()
@@ -84,6 +86,18 @@ export class TableComponent {
                 }
             )
 
+
+    }
+
+    toggleUploadList() {
+
+        this.tglUploadList = !this.tglUploadList
+
+    }
+
+    getFileUploaded(event: Event) {
+
+        console.log(event)
     }
 
     @ViewChild('dataTable') table!: Table;
@@ -173,7 +187,7 @@ export class TableComponent {
         value['group'] = []
         this.DataService.addNewRecord(value);
 
-        this.addNewRecordForm.reset();  
+        this.addNewRecordForm.reset();
 
         this.onValidationMsg = 'New record was added successfully.'
         setTimeout(() => {
@@ -334,10 +348,10 @@ export class TableComponent {
 
     deleteGroup(groupId: any, groupName: string) {
 
-            this.confirmationService.confirm({
-                message: 'Are you sure you want to delete "<b>' + groupName + '</b>"?',
-                header: 'Deleting group',
-                accept: () => {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete "<b>' + groupName + '</b>"?',
+            header: 'Deleting group',
+            accept: () => {
 
                     this.DataService.deleteCustomerGroup(groupId);
 
@@ -398,7 +412,7 @@ export class TableComponent {
 
             }
 
-        }else{
+        } else {
 
             this.confirmationService.confirm({
                 message: 'Are you sure you want to ungroup <b>' + this.tbSelectedRows.length + '</b> records?',

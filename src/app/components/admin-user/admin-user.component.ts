@@ -3,6 +3,7 @@ import { DataService } from '../../services/services.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
+import { UsersService } from "../../services/auth.service";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AdminUserComponent implements OnInit {
     public clonedTdData: any = {};
     public tbSelectedRows: any;
 
+    public tglUploadList: boolean = false;
     public tglAddNewUser: boolean = false;
     public addNewUserForm!: FormGroup;
     public newFormControl: any = {};
@@ -26,7 +28,10 @@ export class AdminUserComponent implements OnInit {
     public onValidationError: string = "";
     public onValidationMsg: string = "";
 
-    constructor(private dataService: DataService, private confirmationService: ConfirmationService) { }
+    public dbObjKey: any;
+    public userInfo: any;
+
+    constructor(private dataService: DataService, private confirmationService: ConfirmationService, private usersService: UsersService) { }
 
     ngOnInit() {
 
@@ -37,7 +42,6 @@ export class AdminUserComponent implements OnInit {
                 this.tdData = data;
             })
         })
-
 
         this.dataService.getMyTableData().subscribe(
 
@@ -129,7 +133,7 @@ export class AdminUserComponent implements OnInit {
 
         this.addNewUserForm.reset();
 
-        this.onValidationMsg = 'New record was added successfully.'
+        this.onValidationMsg = 'New user was added successfully.'
         setTimeout(() => {
             this.onValidationMsg = "";
         }, 5000);
@@ -141,6 +145,17 @@ export class AdminUserComponent implements OnInit {
         this.tglAddNewUser = false
         this.addNewUserForm.reset();
 
+    }
+
+    toggleUploadList() {
+
+        this.tglUploadList = !this.tglUploadList
+
+    }
+
+    getFileUploaded(event: Event) {
+
+        console.log(event)
     }
 
     log(val: any) { console.log(val); }
