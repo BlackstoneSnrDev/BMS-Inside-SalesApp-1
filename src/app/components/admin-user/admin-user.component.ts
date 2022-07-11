@@ -35,15 +35,20 @@ export class AdminUserComponent implements OnInit {
 
     ngOnInit() {
 
-        this.usersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
-        console.log(this.userInfo)
+        this.dataService.getUserTableHeader().then((data: any) => {
+            this.thData = data.sort((a: { element_order: number; }, b: { element_order: number; }) => a.element_order - b.element_order);
+        }).then(() => {
+            this.dataService.getAllUsers().subscribe((data: any) => {
+                this.tdData = data;
+            })
+        })
 
         this.dataService.getMyTableData().subscribe(
 
             (response) => {
 
-                this.thData = response.tableUser_th
-                this.tdData = response.tableUser_td
+                //this.thData = response.tableUser_th
+                //this.tdData = response.tableUser_td
 
                 for (let i of this.thData) {
                     this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])

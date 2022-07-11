@@ -1,6 +1,6 @@
 DONE!!  Create admin component
 DONE!!  Create admin (admin-conditional) menu item 
-    Create, Read, Edit, Delete INFO TEMPLATE
+    Create, Read, Edit, Delete INFO TEMPLATE (check that no users have deleted template as active)
 DONE!!  Chooses between info templets
 DONE!!  If an element is shownWhileCalling, and the element_type is boolean, it should display as a checkbox
 
@@ -9,17 +9,23 @@ DONE!!  If an element is shownWhileCalling, and the element_type is boolean, it 
 DONE!!   edit/delete buttons only availbe to admin users
 DONE!!   in add new record, have it mirror activeTemplate elements
 DONE!!   debug the two checkboxes in addNewRecord (they both check and unCheck together)
-*    edit/deletes connected to database 
-DONE!!  sorting not working properly (balance does not decend properly)
-DONE!!  fix date formatting
-DONE!!  fix boolean values in table (should be 'true' to 'false')
-*    debug number-of-items-shown menu at bottom of the table (sometimes it doesnt open) 
-karla    in add new record, csv file upload option     
-karla    change 'filter' to 'search'
-karla    debug addNewRecord so it doesn't show validation errors after submitting
+DONE!!   make getTableData a realtime listener 
+DONE!!   have activeTenant as global variable, 
+DONE!!   replace all the where calls
+DONE!!   edit/deletes connected to database 
+DONE!!   sorting not working properly (balance does not decend properly)
+DONE!!   fix date formatting
+DONE!!   fix boolean values in table (should be 'true' to 'false')
+*   debug number-of-items-shown menu at bottom of the table (sometimes it doesnt open) 
+- karla    in add new record, csv file upload option     
+- karla    change 'filter' to 'search'
+- karla    debug addNewRecord so it doesn't show validation errors after submitting
 DONE!!  phone number and balance not showing up when editing a single record (this is a formatting problem - needs to be strictly numbers, no () or $)
 
 
 
-Active template needs to be attached to a user, not the whole account
+DONE!!  Active template needs to be attached to a user, not the whole account
+get rid of getActiveTemplate service function
+user to change templates
+
 Data leak on forms.component.ts - init database call is fired on every page load

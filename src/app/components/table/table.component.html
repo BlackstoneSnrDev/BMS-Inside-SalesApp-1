@@ -46,7 +46,7 @@
                     </div>
                     <mat-form-field appearance="fill" class="margin-tp">
                         <mat-label>(&#x2b;) Add to group</mat-label>
-                        <mat-select (selectionChange)="groupSelection($event.value)" [(ngModel)]="clearInput">
+                        <mat-select (selectionChange)="addToExistingGroup($event.value)" [(ngModel)]="clearInput">
                             <mat-option selected hidden></mat-option>
                             <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
                                 {{groupOpt.group_name}}
@@ -126,8 +126,8 @@
             </div>
         </ng-container>
     </div>
-    <p-table #dataTable [columns]="thData" [value]="tdData | changeView: modifyTable" [rows]="5" [paginator]="true"
-        [globalFilterFields]="thData" [rowsPerPageOptions]="[5,10,25,50]" [(selection)]="tbSelectedRows"
+    <p-table #dataTable [columns]="thData" [value]="tdData | changeView: modifyTable" [rows]="10" [paginator]="true"
+        [globalFilterFields]="thData" [rowsPerPageOptions]="[10,25,50]" [(selection)]="tbSelectedRows"
         [rowHover]="true" dataKey="slIndex"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
         editMode="row" [resizableColumns]="true" [autoLayout]="true" [style]="{'width':'100%'}">
@@ -242,7 +242,7 @@
                         (click)="onRowEditInit(rowData, rowIndex)" class="iconbutton-neumorphism margin-rt">
                         <i class="bi bi-pencil-square  "></i>
                     </button>
-                    <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex)"
+                    <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowData.uid)"
                         class="iconbutton-neumorphism">
                         <i class="bi bi-trash-fill "></i>
                     </button>

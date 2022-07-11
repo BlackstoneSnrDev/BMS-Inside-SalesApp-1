@@ -53,72 +53,40 @@ export class TableComponent {
 
     ngOnInit() {
 
-        this.primengConfig.ripple = true;
+        this.primengConfig.ripple = false;
         this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
         console.log(this.userInfo)
         //this.DataService.populateTemplateWithCustomers();
-
-        this.DataService.getTableData().then((data) => [
-            this.tdData = data.customerArray,
-            this.thData = data.filteredTemplateData.sort((a, b) => a.element_order - b.element_order),
-            this.thDataLength = this.thData.length]
-        ).then((data) => {
-            for (let i of this.thData) {
-                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
-            }
-            this.addNewRecordForm = new FormGroup(this.newFormControl);
-
-            let slIndex = 0
-            if (data[0].length) {
-                for (let i = 0; i < data[0].length; i++) {
-                    slIndex = i
-                    this.tdData[slIndex]["slIndex"] = i;
+        
+        this.DataService.getTableCustomerHeader()
+            .then(data => {
+                this.thData = data.sort((a, b) => a.element_order - b.element_order)
+            }).then(() => {
+                this.DataService.getTableData().subscribe(data => { 
+                    this.tdData = data
+                    this.tdData.forEach((element: any, index: number) => {
+                        this.tdData[index]["slIndex"] = index;
+                    })
+                 })
+            }).then(() => {
+                this.thDataLength = this.thData.length
+            }).then(() => {
+                this.DataService.getCustomerGroups().subscribe(data => {
+                    this.tbGroups = data,
+                    this.tbGroupsLength = data.length
+                })
+            }).then(() => {
+                for (let i of this.thData) {
+                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
                 }
-            } else {
-                console.log('no iteems');
-            }
-
-        })
-
-        this.tbGroups = [
-            {
-                "group_id": "g1",
-                "group_name": "Pending call"
+                this.addNewRecordForm = new FormGroup(this.newFormControl);
             },
-            {
-                "group_id": "g2",
-                "group_name": "Pending insurance"
-            }
-        ]
-        this.tbGroupsLength = 2;
+                error => {
+                    console.error(error)
+                }
+            )
 
 
-        // this.DataService.getTableData().subscribe(
-        //     response => {
-
-        //         this.thData = response.table_th
-        //         this.tdData = response.table_td
-        //         this.tbGroups = response.table_group
-        //         this.tbGroupsLength = response.table_group.length
-
-        //         this.thDataLength = this.thData.length
-
-        // for (let i of this.thData) {
-        //     this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)]);
-        // }
-        // this.addNewRecordForm = new FormGroup(this.newFormControl);
-
-        // let slIndex = 0
-        // for (let i = 0; i < this.tdData.length; i++) {
-        //     slIndex = i
-        //     this.tdData[slIndex]["slIndex"] = i;
-        // }
-
-        //     },
-        //     error => {
-        //         console.error(error)
-        //     }
-        // )
     }
 
     toggleUploadList() {
@@ -160,15 +128,15 @@ export class TableComponent {
 
     onRowEditSave(tdData: any, index: number) {
 
+        console.log(tdData, index)
+
         let modifyLastElmActive = (document.getElementById('tr' + index) as HTMLInputElement).getElementsByClassName('ng-invalid')
 
         if (modifyLastElmActive.length > 0) {
             this.onValidationError = '*All fields must be filled out.'
         } else {
+            this.DataService.editCustomer(tdData);
 
-            delete this.clonedtdData[tdData.id];
-
-            console.log('clicked')
         }
     }
 
@@ -179,14 +147,14 @@ export class TableComponent {
 
     }
 
-    onRowDeleteRow(id: any) {
-
+    onRowDeleteRow(uid: any) {
+        console.log(uid);
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete this selection?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.tdData = this.tdData.filter((i: any) => ![id].includes(i.slIndex));
+                this.DataService.deleteCustomer(uid);
                 this.tbSelectedRows = [];
                 this.onValidationMsg = 'Record was deleted successfully.'
                 setTimeout(() => {
@@ -291,14 +259,15 @@ export class TableComponent {
                 this.onValidationError = "";
             }, 2000);
 
-            console.log(this.tbGroups)
-
         } else {
 
-            let newIndex = this.tbGroups.length + 1
-            this.tbGroups.push({ "group_id": "g" + newIndex, "group_name": groupName });
+            let rowUidArray: any[] = []
+            this.tbSelectedRows.map((row: any) => {
+                rowUidArray.push(row.uid)
+            })
+            
+            this.DataService.createNewCustomerGroup(groupName, rowUidArray);
 
-            this.groupSelection("g" + newIndex)
             this.onValidationMsg = 'New group was created as "' + groupName + '" successfully.'
             setTimeout(() => {
                 this.onValidationMsg = "";
@@ -308,7 +277,6 @@ export class TableComponent {
             this.clearInput = ""
             this.onValidationError = ""
 
-            console.log(this.tbGroups)
         }
 
     }
@@ -385,22 +353,16 @@ export class TableComponent {
             header: 'Deleting group',
             accept: () => {
 
-                let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
-                this.tbGroups = this.tbGroups.filter((i: any) => i.group_id !== groupId)
+                    this.DataService.deleteCustomerGroup(groupId);
 
-                console.log(groupIndex)
+                    this.modifyTable = 'all'
+                    this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
+                    setTimeout(() => {
+                        this.onValidationMsg = "";
+                    }, 2000);
 
-                this.ungroupSelection(groupId, 'deleteGroup');
-
-                this.onValidationMsg = '"' + groupName + '" was deleted successfully.'
-                setTimeout(() => {
-                    this.onValidationMsg = "";
-                }, 2000);
-
-                console.log(this.tbGroups)
-
-            }
-        });
+                }
+            });
 
         this.onValidationError = ""
         this.clearInput = ""
@@ -408,7 +370,7 @@ export class TableComponent {
     }
 
     // Add selection to group
-    groupSelection(groupId: any) {
+    addToExistingGroup(groupId: any) {
         this.clearInput = ""
 
         this.confirmationService.confirm({
@@ -416,47 +378,21 @@ export class TableComponent {
             header: 'Grouping records',
             accept: () => {
 
+                let rowUidArray: any[] = []
+                this.tbSelectedRows.map((row: any) => {
+                    rowUidArray.push(row.uid)
+                })
+                this.DataService.addToExistingCustomerGroup(groupId, rowUidArray);
+
                 let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
                 let groupName = this.tbGroups[groupIndex]["group_name"]
-                let doubledMsg = ""
 
-                for (let i = 0; i < this.tbSelectedRows.length; i++) {
-                    let oldGroupLenght = this.tbSelectedRows[i]["group"].length
-
-                    let doubleGroup = this.tbSelectedRows[i].group
-
-                    if (doubleGroup.includes(groupId)) {
-
-                        doubledMsg = 'Records selected are already grouped to "' + groupName + '".'
-
-                    } else {
-
-                        doubledMsg = '"' + this.tbSelectedRows.length + '" records were added to "' + groupName + '" successfully.'
-
-                        if (oldGroupLenght == 0) {
-                            this.tbSelectedRows[i]["group"][0] = groupId
-                        } else {
-                            this.tbSelectedRows[i]["group"][oldGroupLenght] = groupId
-                        }
-                    }
-
-                    this.modifyTable = 'all'
-                    let modifyLastElmActive = document.getElementsByClassName("button-neumorphism-active");
-                    while (modifyLastElmActive.length > 0) {
-                        modifyLastElmActive[0].classList.remove('button-neumorphism-active');
-                    }
-                    this.clearInput = ""
-
-                }
-
-                this.onValidationMsg = doubledMsg
+                this.onValidationMsg = 'Records were added to "' + groupName + '" successfully.'
                 setTimeout(() => {
                     this.onValidationMsg = "";
                 }, 2000);
 
                 this.clearInput = ""
-
-
             }
         });
 
@@ -464,7 +400,7 @@ export class TableComponent {
     }
 
     // Delete selection from group
-    ungroupSelection(groupId: Event, event: string) {
+    ungroupSelection(groupId: any, event: string) {
 
         let groupIndex = this.tbGroups.findIndex((i: any) => i.group_id === groupId)
         if (event === 'deleteGroup') {
@@ -485,12 +421,11 @@ export class TableComponent {
 
                     let groupName = this.tbGroups[groupIndex]["group_name"]
 
-                    for (let i = 0; i < this.tbSelectedRows.length; i++) {
-
-                        let groupIndex = this.tbSelectedRows[i].group.findIndex((i: any) => i === groupId)
-                        this.tbSelectedRows[i].group.splice(groupIndex, 1);
-
-                    }
+                    let rowUidArray: any[] = []
+                    this.tbSelectedRows.map((row: any) => {
+                        rowUidArray.push(row.uid)
+                    })
+                    this.DataService.removeFromCustomerGroup(groupId, rowUidArray);
 
                     this.modifyTable = 'all'
                     let modifyLastElmActive = document.getElementsByClassName("button-neumorphism-active");
@@ -530,4 +465,8 @@ export class TableComponent {
 
     log = (data: any) => console.log(data);
 
+}
+
+function subscribe(arg0: (data: any) => void) {
+    throw new Error('Function not implemented.');
 }
