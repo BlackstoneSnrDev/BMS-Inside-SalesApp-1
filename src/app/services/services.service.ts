@@ -64,6 +64,21 @@ export class DataService {
 
   }
 
+  getAllUsers(): Observable<any>{
+// get all the users for the current tenant
+    return this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').snapshotChanges().pipe(
+        map(actions => actions.map(a => a.payload.doc.data() ))
+    )
+  }
+
+  getUserTableHeader() {
+// get userTableElements from the current tenant
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).ref
+    return data.get().then((doc: any) => {
+        return Object.values(doc.data().usersTableElements);
+    })
+  }
+
   getMyTableData(): Observable<any>{
     return this._http.get(this.tableDataURL);
 
@@ -111,7 +126,7 @@ export class DataService {
 
   }
 
-  getTableHeader() { 
+  getTableCustomerHeader() { 
 
     const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref
     return data.get().then((doc: any) => {

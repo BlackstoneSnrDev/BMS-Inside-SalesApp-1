@@ -56,7 +56,7 @@ export class TableComponent {
         this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
         //this.DataService.populateTemplateWithCustomers();
         
-        this.DataService.getTableHeader()
+        this.DataService.getTableCustomerHeader()
             .then(data => {
                 this.thData = data.sort((a, b) => a.element_order - b.element_order)
             }).then(() => {
