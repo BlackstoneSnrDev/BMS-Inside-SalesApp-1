@@ -7,7 +7,7 @@ import {
     AngularFirestore,
     AngularFirestoreDocument,
   } from '@angular/fire/compat/firestore'; 
-import { arrayUnion } from '@angular/fire/firestore'
+import { arrayUnion, arrayRemove } from '@angular/fire/firestore'
 import firebase from 'firebase/compat';
 
 let len = 12;    
@@ -161,6 +161,45 @@ export class DataService {
     rowUidArray.forEach((rowUid: any) => {
         this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(rowUid).update({
             group: arrayUnion(id)
+        })
+    })
+  }
+
+    deleteCustomerGroup(groupId: string) {
+// delete group from user's group collection
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').doc(groupId).delete()
+// delete group from each row's group array
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.where('group', 'array-contains', groupId).get().then((snapshot: any) => {
+            snapshot.forEach((row: any) => {
+                this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(row.id).update({
+                    group: arrayRemove(groupId)
+                })
+            })
+        })
+    }
+
+  addToExistingCustomerGroup(groupId: string, rowUidArray: any[]) {
+// update the group up for the current user - the group array of row uids
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').doc(groupId).update({ 
+        group: arrayUnion(...rowUidArray)
+    })
+// adds the group_id to each added row's group array
+    rowUidArray.forEach((rowUid: any) => {
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(rowUid).update({
+            group: arrayUnion(groupId)
+        })
+    })
+  }
+
+  removeFromCustomerGroup(groupId: string, rowUidArray: any[]) {
+// update the group up for the current user - the group array of row uids
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').doc(groupId).update({ 
+        group: arrayRemove(...rowUidArray)
+    })
+// removes the group_id from each removed row's group array
+    rowUidArray.forEach((rowUid: any) => {
+        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(rowUid).update({
+            group: arrayRemove(groupId)
         })
     })
   }

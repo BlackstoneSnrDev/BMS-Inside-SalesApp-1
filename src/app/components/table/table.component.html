@@ -45,7 +45,7 @@
                     </div>
                     <mat-form-field appearance="fill" class="margin-tp">
                         <mat-label>(&#x2b;) Add to group</mat-label>
-                        <mat-select (selectionChange)="groupSelection($event.value)" [(ngModel)]="clearInput">
+                        <mat-select (selectionChange)="addToExistingGroup($event.value)" [(ngModel)]="clearInput">
                             <mat-option selected hidden></mat-option>
                             <mat-option [value]="groupOpt.group_id" *ngFor="let groupOpt of tbGroups">
                                 {{groupOpt.group_name}}
