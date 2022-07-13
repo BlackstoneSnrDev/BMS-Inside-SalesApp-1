@@ -37,43 +37,36 @@ export class AdminUserComponent implements OnInit {
 
         this.dataService.getUserTableHeader().then((data: any) => {
             this.thData = data.sort((a: { element_order: number; }, b: { element_order: number; }) => a.element_order - b.element_order);
+            console.log(this.thData)
+            for (let i of this.thData) {
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+            }
+            this.addNewUserForm = new FormGroup(this.newFormControl);
+
+           
+            
         }).then(() => {
             this.dataService.getAllUsers().subscribe((data: any) => {
                 this.tdData = data;
+
+                console.log(this.tdData)
+
+            let slIndex = 0
+            if (this.tdData.length) {
+
+                for (let i = 0; i < this.tdData.length; i++) {
+                    slIndex = i
+                    this.tdData[slIndex]["slIndex"] = i;
+                }
+
+            } else {
+                console.log('no items');
+            }
             })
+
+            
         })
 
-        this.dataService.getMyTableData().subscribe(
-
-            (response) => {
-
-                //this.thData = response.tableUser_th
-                //this.tdData = response.tableUser_td
-
-                for (let i of this.thData) {
-                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
-                }
-                this.addNewUserForm = new FormGroup(this.newFormControl);
-
-                let slIndex = 0
-                if (this.tdData.length) {
-
-                    for (let i = 0; i < this.tdData.length; i++) {
-                        slIndex = i
-                        this.tdData[slIndex]["slIndex"] = i;
-                    }
-
-                } else {
-                    console.log('no items');
-                }
-
-            },
-
-            (error) => {
-                console.error(error);
-            }
-
-        );
 
     }
 

@@ -33,6 +33,16 @@ export class AdminNavbarComponent implements OnInit {
         )
 
       }
+
+      onActivate(event: Event) {
+     
+        window.scroll({ 
+                top: 0, 
+                left: 0, 
+                behavior: 'smooth' 
+         });
+     
+     }
       
       log(val: any) { console.log(val); }
       

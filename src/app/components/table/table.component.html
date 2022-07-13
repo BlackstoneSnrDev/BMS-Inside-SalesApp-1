@@ -118,7 +118,7 @@
                         </div>
 
                         <div [ngClass]="tglUploadList ? 'show' : 'hide'">
-                            <p-fileUpload name="queueList[]" url="./thisNeedToBeSetUpByBackend" accept=".xlsx"
+                            <p-fileUpload name="queueList[]" url="./thisNeedToBeSetUpByBackend" accept=".csv"
                                 [auto]="true" (onUpload)="getFileUploaded($event)"></p-fileUpload>
                         </div>
                     </form>
