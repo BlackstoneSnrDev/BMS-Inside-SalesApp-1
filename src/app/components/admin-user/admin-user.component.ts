@@ -50,37 +50,6 @@ export class AdminUserComponent implements OnInit {
             }
             this.addNewUserForm = new FormGroup(this.newFormControl);
         })
-
-
-        // this.dataService.getMyTableData().subscribe(
-
-        //     (response) => {
-
-        //         //this.thData = response.tableUser_th
-        //         //this.tdData = response.tableUser_td
-
-
-
-        //         let slIndex = 0
-        //         if (this.tdData.length) {
-
-        //             for (let i = 0; i < this.tdData.length; i++) {
-        //                 slIndex = i
-        //                 this.tdData[slIndex]["slIndex"] = i;
-        //             }
-
-        //         } else {
-        //             console.log('no items');
-        //         }
-
-        //     },
-
-        //     (error) => {
-        //         console.error(error);
-        //     }
-
-        // );
-
     }
 
 
