@@ -16,6 +16,7 @@ import { TableComponent } from './components/table/table.component';
 import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
+import { ReusableTableComponent } from './components/reusableTable/reusableTable.component';
 
 ///// Partials
 import { QueueComponent } from './partials/queue/queue.component';
@@ -71,7 +72,9 @@ import { KnobModule } from 'primeng/knob';
 import {AccordionModule} from 'primeng/accordion';
 import { FieldsetModule } from 'primeng/fieldset';
 import {TabMenuModule} from 'primeng/tabmenu';
-
+import {FileUploadModule} from 'primeng/fileupload';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {PasswordModule} from 'primeng/password';
 
 @NgModule({
 
@@ -95,6 +98,7 @@ import {TabMenuModule} from 'primeng/tabmenu';
     AdminUserComponent,
     AdminTemplateComponent,
     AdminNavbarComponent,
+    ReusableTableComponent,
     ///// My directives
     TextareaAutoresizeDirective,
 ///// My pipes
@@ -140,7 +144,9 @@ import {TabMenuModule} from 'primeng/tabmenu';
     FieldsetModule,
     AccordionModule,
     TabMenuModule,
-    
+    FileUploadModule,
+    MultiSelectModule,
+    PasswordModule
   ],
 
   providers: [

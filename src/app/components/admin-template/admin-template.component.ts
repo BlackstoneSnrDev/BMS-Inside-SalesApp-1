@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
 import { ConfirmationService } from 'primeng/api';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-admin-template',
@@ -10,19 +11,24 @@ import { ConfirmationService } from 'primeng/api';
 
 export class AdminTemplateComponent implements OnInit {
 
-    public dbObjKey: any;
-    public userInfo: any;
     public allTemplates: any;
 
     public thData: any;
     public tdData: any;
+    public tdFields: any;
     public selectElmType: any;
     public clonedTdData: any = {};
     public tbSelectedRows: any;
 
     public tglTemplate: boolean = false
+    public tglAddNewTemplate: boolean = false;
+    public addNewTemplateForm!: FormGroup;
+    public newFormControl: any = {};
+
     public onValidationMsg: string = "";
     public onValidationError: string = "";
+
+    public addNew: string = ''
 
     constructor(private dataService: DataService, private confirmationService: ConfirmationService) { }
 
@@ -38,6 +44,11 @@ export class AdminTemplateComponent implements OnInit {
 
                         this.thData = response.tableTemplate_th
 
+                        this.addNewTemplateForm = new FormGroup({
+                            templateName: new FormControl('', [Validators.required, Validators.minLength(1)]),
+                            templateFields: new FormControl('', [Validators.required, Validators.minLength(1)])
+                        });
+
                     },
 
                     (error) => {
@@ -50,6 +61,7 @@ export class AdminTemplateComponent implements OnInit {
 
                 let tdData: any = [];
                 let slIndex: number = 0;
+                let tdFields: any = [];
 
                 for (const [index, value] of this.allTemplates.entries()) {
 
@@ -60,13 +72,15 @@ export class AdminTemplateComponent implements OnInit {
                             slIndex += 1
 
                             tdData[index]['templateFields'].push({ 'name': value[templateData]['element_placeholder'], 'type': value[templateData]['element_type'], 'visible': value[templateData]['showWhileCalling'], 'slIndex': slIndex - 1 })
-
+                            tdFields.push({ 'name': value[templateData]['element_placeholder'] })
                         }
                     }
 
                 }
                 this.tdData = tdData
+                this.tdFields = tdFields
 
+                console.log(this.tdFields)
                 this.dataService.getSelectData().subscribe(
 
                     (response) => {
@@ -89,6 +103,7 @@ export class AdminTemplateComponent implements OnInit {
 
         );
     }
+
 
     templateSelected(template: string) {
         this.dataService.changeSelectedTemplate(template)
@@ -169,6 +184,30 @@ export class AdminTemplateComponent implements OnInit {
 
     }
 
-    log(val: any) { console.log(val); }
+    toggleAddNewTemplate() {
+        console.log(this.addNewTemplateForm);
+        this.tglAddNewTemplate = !this.tglAddNewTemplate
+    }
+
+    saveAddNewTemplate() {
+
+        let value = this.addNewTemplateForm.value;
+
+        this.addNewTemplateForm.reset();
+
+        this.onValidationMsg = 'New template was added successfully.'
+        setTimeout(() => {
+            this.onValidationMsg = "";
+        }, 5000);
+
+    }
+
+    cancelAddNewTemplate() {
+
+        this.tglAddNewTemplate = false
+        this.addNewTemplateForm.reset();
+
+    }
+
 
 }

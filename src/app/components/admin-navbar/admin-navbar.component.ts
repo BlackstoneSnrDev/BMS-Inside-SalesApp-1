@@ -1,6 +1,5 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { DataService } from '../../services/services.service';
-import { Observable } from 'rxjs';
 import { UsersService } from "../../services/auth.service";
 @Component({
     selector: 'admin-navbar-component',
@@ -14,11 +13,12 @@ export class AdminNavbarComponent implements OnInit {
 
     public adminMenuTabs: any;
     public activeItem: any;
-
+  
     constructor(private DataService: DataService, private usersService: UsersService) { }
 
+    
     ngOnInit() {
-  
+
         this.DataService.getNavbarData().subscribe(
 
             response => {

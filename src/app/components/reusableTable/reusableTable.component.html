@@ -1,64 +1,49 @@
-<div class="margin-bt menu-table-container">
+<!-- <div class="margin-bt menu-table-container" [ngClass]="showBtnAddNew ? 'show' : 'hide'">
   <button class="iconbutton-neumorphism-disabled">
     <i class="bi bi-menu-button-fill i-colored"></i>
   </button>
 
   <ng-container>
     <button class="button-neumorphism margin-lt" (click)="toggleAddNewUser()">
-      <i class="bi bi-plus-square-fill "></i> Add new user
+      <i class="bi bi-plus-square-fill "></i> Add new {{addNew}}
     </button>
 
     <div [ngClass]="tglAddNewUser ? 'show' : 'hide'">
       <div spellcheck="true">
         <form [formGroup]="addNewUserForm" (ngSubmit)="saveAddNewUser(dataTable)" *ngIf="addNewUserForm" novalidate>
-          <h5>Add new user</h5>
-
-
+          <h5>Add new {{addNew}}</h5>
           <div [ngClass]="!addNewUserForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
-          <div class="float-rt margin-bt">
-            <button class="button-neumorphism margin-lt" (click)="toggleUploadList()">
-              <i class="bi bi-plus-square-fill "></i> Upload user list
-            </button>
+          <hr>
+          <div class="form-row">
+            <div *ngFor="let newtd of thData ; let newtdIndex = index">
+              <div class="form-group col-xl-auto">
+                <ng-container *ngIf="newtd.element_type === 'boolean'; else matInp">
+                  <p-checkbox [binary]="true" label="{{newtd.title}}" inputId="{{newtdIndex + newtd.field}}"
+                    [(ngModel)]="newtd.value" formControlName="{{newtd.field}}"></p-checkbox>
+                </ng-container>
+                <ng-template #matInp>
+                  <mat-form-field appearance="standard">
+                    <mat-label>{{newtd.title}}</mat-label>
+                    <input matInput class="input-neumorphism" type="{{newtd.element_type}}"
+                      placeholder="New {{newtd.field}}" autocomplete="off" id="{{newtdIndex + newtd.field}}"
+                      formControlName="{{newtd.field}}" />
+                  </mat-form-field>
+                </ng-template>
+              </div>
+            </div>
           </div>
           <hr>
-          <div [ngClass]="!tglUploadList ? 'show' : 'hide'">
-            <br>
-            <div class="form-row">
-              <div *ngFor="let newtd of thData ; let newtdIndex = index">
-                <div class="form-group col-xl-auto">
-
-                  <ng-container *ngIf="newtd.element_type === 'boolean'; else matInp">
-                    <p-checkbox [binary]="true" label="{{newtd.title}}" inputId="{{newtdIndex + newtd.field}}"
-                      [(ngModel)]="newtd.value" formControlName="{{newtd.field}}"></p-checkbox>
-                  </ng-container>
-                  <ng-template #matInp>
-                    <mat-form-field appearance="standard">
-                      <mat-label>{{newtd.title}}</mat-label>
-                      <input matInput class="input-neumorphism" type="{{newtd.element_type}}"
-                        placeholder="New {{newtd.field}}" autocomplete="off" id="{{newtdIndex + newtd.field}}"
-                        formControlName="{{newtd.field}}" />
-                    </mat-form-field>
-                  </ng-template>
-                </div>
+          <div class="form-row">
+            <div class="col">
+              <button type="submit" class="width-50 show-line-b txt-center" value="save"
+                [disabled]="!addNewUserForm.valid"
+                [ngClass]="!addNewUserForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
+                Save
+              </button>
+              <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewUser()">
+                Cancel
               </div>
             </div>
-            <hr>
-            <div class="form-row">
-              <div class="col">
-                <button type="submit" class="width-50 show-line-b txt-center" value="save"
-                  [disabled]="!addNewUserForm.valid"
-                  [ngClass]="!addNewUserForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
-                  Save
-                </button>
-                <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewUser()">
-                  Cancel
-                </div>
-              </div>
-            </div>
-          </div>
-          <div [ngClass]="tglUploadList ? 'show' : 'hide'">
-            <p-fileUpload name="userList[]" url="./thisNeedToBeSetUpByBackend" accept=".xlsx" [auto]="true"
-              (onUpload)="getFileUploaded($event)"></p-fileUpload>
           </div>
         </form>
       </div>
@@ -96,8 +81,6 @@
                         ? 'checkbox'
                         : col.field === 'type'
                         ? 'select'
-                        : col.element_type === 'password'
-                        ? 'password'
                         : -1
                     ">
               <ng-container *ngSwitchCase="'checkbox'">
@@ -108,14 +91,6 @@
               <ng-container *ngSwitchCase="'select'">
                 <p-dropdown [options]="selectElmType" class="input-neumorphism" optionLabel="typeName"
                   optionValue="typeCode" placeholder="Type" [(ngModel)]="rowData[col.field]"></p-dropdown>
-              </ng-container>
-
-              <ng-container *ngSwitchCase="'password'">
-                <span class="p-float-label passwordContainer ">
-                  <p-password [(ngModel)]="rowData[col.field]" [showClear]="true" [toggleMask]="true" [required]="true">
-                  </p-password>
-                  <label>Password</label>
-                </span>
               </ng-container>
 
               <ng-container *ngSwitchDefault>
@@ -186,3 +161,6 @@
   </ng-template>
 </p-table>
 <p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
+-->
+{{thData | json}} 
+{{tdData}} 
