@@ -37,6 +37,11 @@ export class AdminUserComponent implements OnInit {
 
         this.dataService.getUserTableHeader().then((data: any) => {
             this.thData = data.sort((a: { element_order: number; }, b: { element_order: number; }) => a.element_order - b.element_order);
+            console.log(this.thData)
+            for (let i of this.thData) {
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+            }
+            this.addNewUserForm = new FormGroup(this.newFormControl);
         }).then(() => {
             this.dataService.getAllUsers().subscribe((data: any) => {
                 this.tdData = data

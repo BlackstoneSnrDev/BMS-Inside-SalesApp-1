@@ -34,4 +34,6 @@
 
 ::ng-deep.p-tabmenu .p-tabmenu-nav {
     padding-top: .55rem;
+    padding-left: .55rem;
+
 }

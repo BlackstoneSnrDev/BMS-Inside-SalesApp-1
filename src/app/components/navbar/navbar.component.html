@@ -16,12 +16,13 @@
 
     <ul class="ul-my-navbar">
         <li class="my-navbar-tab-container" *ngIf="isLoggedIn">
-            <div class="dropdown">
-                <div class="my-navbar-tab " routerLinkActive="active-tab">
+            <ng-container *ngIf="userInfo.name">            
+            <div class="dropdown" (click)="onActivate($event)">
+                <div class="my-navbar-tab " routerLinkActive="active-tab"  matTooltip="{{userInfo.tenant  +  userInfo.name}}" matTooltipPosition="right" >
                     <a class="a-my-navbar">
                         <i class="bi bi-person-circle i-my-navbar"></i>
                     </a>
-                    <div class="txt-my-navbar" matTooltip="{{userInfo.tenant}}" matTooltipPosition="right" >
+                    <div class="txt-my-navbar">
                         {{userInfo.name}}
                     </div>
                 </div>
@@ -39,6 +40,7 @@
                     </div>
             </div>
         </div>
+    </ng-container>
 
         </li>
         <li class="my-navbar-tab-container" *ngFor="let tab of navbartabs">
