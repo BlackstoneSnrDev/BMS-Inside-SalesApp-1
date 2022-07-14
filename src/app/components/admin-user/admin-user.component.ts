@@ -42,32 +42,19 @@ export class AdminUserComponent implements OnInit {
                 this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
             }
             this.addNewUserForm = new FormGroup(this.newFormControl);
-
-           
-            
         }).then(() => {
             this.dataService.getAllUsers().subscribe((data: any) => {
-                this.tdData = data;
-
-                console.log(this.tdData)
-
-            let slIndex = 0
-            if (this.tdData.length) {
-
-                for (let i = 0; i < this.tdData.length; i++) {
-                    slIndex = i
-                    this.tdData[slIndex]["slIndex"] = i;
-                }
-
-            } else {
-                console.log('no items');
-            }
+                this.tdData = data
+                this.tdData.forEach((element: any, index: number) => {
+                    this.tdData[index]["slIndex"] = index;
+                })
             })
-
-            
+        }).then(() => {
+            for (let i of this.thData) {
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+            }
+            this.addNewUserForm = new FormGroup(this.newFormControl);
         })
-
-
     }
 
 
@@ -123,6 +110,8 @@ export class AdminUserComponent implements OnInit {
     saveAddNewUser(table: Table) {
 
         let value = this.addNewUserForm.value;
+
+        this.dataService.createUser(value).subscribe((res: any) => {console.log(res);})
 
         this.addNewUserForm.reset();
 
