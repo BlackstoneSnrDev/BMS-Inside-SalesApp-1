@@ -8,6 +8,8 @@ import {
     AngularFirestoreDocument,
   } from '@angular/fire/compat/firestore'; 
 import { arrayUnion, arrayRemove } from '@angular/fire/firestore'
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import firebase from 'firebase/compat';
 
 let len = 12;    
@@ -40,7 +42,8 @@ export class DataService {
 
     private _http: HttpClient,
     private afs: AngularFirestore,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private fns: AngularFireFunctions
 
   ){
 
@@ -62,6 +65,26 @@ export class DataService {
 
     this.currentUid = this.userInfo.uid;
 
+  }
+
+  createUser(data: any) {
+    console.log(data);
+    const callable = this.fns.httpsCallable('createNewUser');
+    var userData = {
+        "email": "name@example.com",
+        "emailVerified": true,
+        "phoneNumber": "+15551212",
+        "password": "randomPW",
+        "displayName": "User Name",
+        "disabled": false,
+        "sponsor": "Extra Payload #1 (optional)",
+        "study": "Extra Payload #2 (optional)",
+        "department": data.department,
+        "tenant": this.activeTemplate,
+        "dbObjKey": this.dbObjKey,
+    }
+    return callable(userData)
+    //return "testing";
   }
 
   getAllUsers(): Observable<any>{

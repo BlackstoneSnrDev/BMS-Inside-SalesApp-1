@@ -34,42 +34,47 @@ export class AdminUserComponent implements OnInit {
             this.thData = data.sort((a: { element_order: number; }, b: { element_order: number; }) => a.element_order - b.element_order);
         }).then(() => {
             this.dataService.getAllUsers().subscribe((data: any) => {
-                this.tdData = data;
+                this.tdData = data
+                this.tdData.forEach((element: any, index: number) => {
+                    this.tdData[index]["slIndex"] = index;
+                })
             })
+        }).then(() => {
+            for (let i of this.thData) {
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+            }
+            this.addNewUserForm = new FormGroup(this.newFormControl);
         })
 
 
-        this.dataService.getMyTableData().subscribe(
+        // this.dataService.getMyTableData().subscribe(
 
-            (response) => {
+        //     (response) => {
 
-                //this.thData = response.tableUser_th
-                //this.tdData = response.tableUser_td
+        //         //this.thData = response.tableUser_th
+        //         //this.tdData = response.tableUser_td
 
-                for (let i of this.thData) {
-                    this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
-                }
-                this.addNewUserForm = new FormGroup(this.newFormControl);
 
-                let slIndex = 0
-                if (this.tdData.length) {
 
-                    for (let i = 0; i < this.tdData.length; i++) {
-                        slIndex = i
-                        this.tdData[slIndex]["slIndex"] = i;
-                    }
+        //         let slIndex = 0
+        //         if (this.tdData.length) {
 
-                } else {
-                    console.log('no items');
-                }
+        //             for (let i = 0; i < this.tdData.length; i++) {
+        //                 slIndex = i
+        //                 this.tdData[slIndex]["slIndex"] = i;
+        //             }
 
-            },
+        //         } else {
+        //             console.log('no items');
+        //         }
 
-            (error) => {
-                console.error(error);
-            }
+        //     },
 
-        );
+        //     (error) => {
+        //         console.error(error);
+        //     }
+
+        // );
 
     }
 
@@ -126,6 +131,8 @@ export class AdminUserComponent implements OnInit {
     saveAddNewUser(table: Table) {
 
         let value = this.addNewUserForm.value;
+
+        this.dataService.createUser(value).subscribe((res: any) => {console.log(res);})
 
         this.addNewUserForm.reset();
 

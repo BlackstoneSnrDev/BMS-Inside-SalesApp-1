@@ -49,6 +49,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import { environment } from '../environments/environment';
 
 // Ng2 Charts
@@ -121,6 +122,7 @@ import {TabMenuModule} from 'primeng/tabmenu';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFireFunctionsModule,
     AngularFireDatabaseModule,
     // Ng2 Charts
     NgChartsModule,
