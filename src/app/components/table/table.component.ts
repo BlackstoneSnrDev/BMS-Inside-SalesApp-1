@@ -585,7 +585,6 @@ saveAddressModified(city: string, street: string, apt: string, zip: string) {
     });
 
     this.tglModifyAddressForm = false
-    // console.log(this.formElement)
 }
 
 }
