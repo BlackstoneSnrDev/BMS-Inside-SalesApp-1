@@ -41,6 +41,8 @@ export class AdminTemplateComponent implements OnInit {
 
     public onValidationMsg: string = '';
     public onValidationError: string = '';
+    items: number[] = [1];
+    public newFormControl: any = {};
 
     constructor(
         private dataService: DataService,
@@ -52,37 +54,27 @@ export class AdminTemplateComponent implements OnInit {
             (response) => {
                 this.dataService.getMyTableData().subscribe(
                     (response) => {
+                        
                         this.thData = response.tableTemplate_th;
 
                         this.addNewTemplateForm = new FormGroup({
+
                             templateName: new FormControl('', [
                                 Validators.required,
-                                Validators.minLength(1),
+                                Validators.minLength(1)
                             ]),
-                            templateFields: new FormControl('', [
+
+                            fieldName0: new FormControl('', [
                                 Validators.required,
-                                Validators.minLength(1),
+                                Validators.minLength(1)
                             ]),
-                            templateStatus: new FormControl('', [
+
+                            fieldType0: new FormControl('', [
                                 Validators.required,
-                                Validators.minLength(1),
-                            ]),
+                                Validators.minLength(1)
+                            ])
                         });
 
-                        this.editFieldForm = new FormGroup({
-                            indexField: new FormControl('', [
-                                Validators.required,
-                                Validators.minLength(1),
-                            ]),
-                            nameField: new FormControl('', [
-                                Validators.required,
-                                Validators.minLength(1),
-                            ]),
-                            typeField: new FormControl('', [
-                                Validators.required,
-                                Validators.minLength(1),
-                            ]),
-                        });
                     },
 
                     (error) => {
@@ -94,41 +86,12 @@ export class AdminTemplateComponent implements OnInit {
 
                 let tdData: any = [];
                 let slIndex: number = 0;
-                let tdFields: any = [];
 
                 for (const [index, value] of this.allTemplates.entries()) {
                     tdData.push({
                         templateName: value.templateName,
                         templateStatus: value.active,
                         templateFields: [],
-                        templateActiveFor: [],
-                    });
-
-                    this.dataService.getAllUsers().subscribe((data: any) => {
-                        this.userList = data;
-
-                        let userActiveTemplate = '';
-
-                        for (const [i, val] of this.userList.entries()) {
-                            Array.from(new Set(tdData[index]['templateActiveFor']));
-
-                            userActiveTemplate = val.activeTemplate;
-
-                            if (userActiveTemplate === value.templateName) {
-                                if (tdData[index]['templateActiveFor'].length > 0) {
-                                    if (!tdData[index]['templateActiveFor'].includes(i))
-                                        tdData[index]['templateActiveFor'].push({
-                                            userIndex: i,
-                                            userName: val.name,
-                                        });
-                                } else {
-                                    tdData[index]['templateActiveFor'].push({
-                                        userIndex: i,
-                                        userName: val.name,
-                                    });
-                                }
-                            }
-                        }
                     });
 
                     for (const templateData in value) {
@@ -142,24 +105,12 @@ export class AdminTemplateComponent implements OnInit {
                                 slIndex: slIndex - 1,
                             });
 
-                            tdFields.push({
-                                element_placeholder: value[templateData]['element_placeholder'],
-                                element_value: value[templateData]['element_value'],
-                                element: value[templateData]['element'],
-                                element_order: value[templateData]['element_order'],
-                                element_table_value: value[templateData]['element_table_value'],
-                                slIndex: slIndex - 1,
-                            });
+                          
                         }
                     }
                 }
                 this.tdData = tdData;
-                this.tdFields = tdFields;
 
-                console.log('HERE');
-                console.log(this.tdFields);
-                console.log(this.tdData);
-                console.log(this.allTemplates);
                 this.dataService.getSelectData().subscribe(
                     (response) => {
                         this.selectElmType = response.selectInputType;
@@ -177,11 +128,24 @@ export class AdminTemplateComponent implements OnInit {
         );
     }
 
-    usersFilter(array: any, searching: any): void {
-        this.filterUserList = array.filter((i: any) =>
-            i.userName.toLowerCase().includes(searching)
-        );
-        console.log(this.filterUserList);
+    cloneAddField() {
+
+        let id = this.items.length
+        this.addNewTemplateForm.addControl('fieldName' + id, new FormControl('', [Validators.required, Validators.minLength(1)]));
+        this.addNewTemplateForm.addControl('fieldType' + id, new FormControl('', [Validators.required, Validators.minLength(1)]));
+
+        this.items.push(id)
+    }
+
+    removeClonedAddField() {
+        let id = this.items.length
+
+        if (id > 1) {
+            this.addNewTemplateForm.removeControl('fieldName' + id);
+            this.addNewTemplateForm.removeControl('fieldType' + id);
+            this.items.pop()
+        }
+
     }
 
     templateSelected(template: string) {
@@ -252,44 +216,28 @@ export class AdminTemplateComponent implements OnInit {
     }
 
     toggleAddNewTemplate() {
-        console.log(this.addNewTemplateForm);
-        this.tglAddNewField = false;
         this.tglAddNewTemplate = !this.tglAddNewTemplate;
     }
 
     saveAddNewTemplate() {
+        
         let value = this.addNewTemplateForm.value;
 
         this.addNewTemplateForm.reset();
-
-        console.log(value);
-        console.log(this.allTemplates);
+        this.tglAddNewTemplate = false;
 
         this.onValidationMsg = 'New template was added successfully.';
         setTimeout(() => {
             this.onValidationMsg = '';
         }, 5000);
+
+        console.log(value);
+
     }
 
     cancelAddNewTemplate() {
         this.tglAddNewTemplate = false;
         this.addNewTemplateForm.reset();
-    }
-
-    toggleAddNewField() {
-        this.tglAddUsers = false;
-        this.tglAddNewField = !this.tglAddNewField;
-    }
-
-    saveAddNewField() {
-        console.log(this.addField);
-        this.tglAddNewField = false;
-        this.addField = [];
-    }
-
-    cancelAddNewField() {
-        this.addField = [];
-        this.tglAddNewField = false;
     }
 
     toggleTemplateStatus(id: any, initValue: any, event: any) {
@@ -311,37 +259,5 @@ export class AdminTemplateComponent implements OnInit {
                 console.log(this.tdData);
             },
         });
-    }
-
-    toggleEditField() {
-        this.tglAddNewTemplate = false;
-        this.tglEditField = !this.tglEditField;
-    }
-
-    saveEditField() {
-        console.log(this.editFieldForm.value);
-        this.editFieldForm.reset();
-    }
-    cancelEditField() {
-        this.tglEditField = false;
-        this.editFieldForm.reset();
-    }
-
-    toggleAddUsers() {
-        this.tglAddNewField = false;
-        this.tglAddUsers = !this.tglAddUsers;
-    }
-
-    saveAddUsers(indexTemplate: number) {
-        console.log(this.addUsers);
-        console.log(indexTemplate);
-
-        this.tglAddUsers = false;
-        this.addUsers = [];
-    }
-    cancelAddUsers() {
-        this.tglAddUsers = false;
-
-        this.addUsers = [];
     }
 }

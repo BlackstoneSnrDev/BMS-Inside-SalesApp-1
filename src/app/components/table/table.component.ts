@@ -49,6 +49,18 @@ export class TableComponent {
     public onValidationMsg: string = "";
     //public checked: boolean = false;
 
+    // Address type
+    public tglModifyAddressForm: boolean = false;
+    public addressForm!: FormGroup
+    public addressInputsForm!: FormGroup
+    public tgleditField: boolean = false;
+    public countries: any;
+    public states: any;
+    public addressFieldId: string = '';
+    public addressFieldName: string = '';
+    public selectedCountryCode: string = 'US';
+    public selectedStateCode: string = '';
+
     constructor(private DataService: DataService, private UsersService: UsersService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
 
     ngOnInit() {
@@ -57,7 +69,8 @@ export class TableComponent {
         this.UsersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
         console.log(this.userInfo)
         //this.DataService.populateTemplateWithCustomers();
-        
+        this.addressInputsForm = new FormGroup({});
+
         this.DataService.getTableCustomerHeader()
             .then(data => {
                 this.thData = data.sort((a, b) => a.element_order - b.element_order)
@@ -123,7 +136,10 @@ export class TableComponent {
 
     // Table on row CRUD
     onRowEditInit(tdData: any, id: number) {
+
+        this.addressInputsForm.addControl('addressTableField' + id, new FormControl('', [Validators.required, Validators.minLength(1)]));
         this.clonedtdData[tdData.id] = { ...tdData };
+           
     }
 
     onRowEditSave(tdData: any, index: number) {
@@ -465,8 +481,117 @@ export class TableComponent {
 
     log = (data: any) => console.log(data);
 
+    // Address type
+
+    toggleEditFields() {
+
+        this.tgleditField = !this.tgleditField;
+
+    }
+
+    toggleModifyAddressForm(addressId: any, addressName: any) {
+
+        this.addressForm = new FormGroup({
+            slcCountry: new FormControl('US', [Validators.required, Validators.minLength(1)]),
+            slcState: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            txtCity: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            txtStreet: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            txtApt: new FormControl(''),
+            txtZip: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        })
+
+        this.addressFieldId = addressId
+        this.addressFieldName = addressName
+
+        this.tglModifyAddressForm = true
+        this.DataService.getFormCountry().subscribe(
+
+            (response) => {
+
+                this.countries = response.data
+                this.getCountryInfo()
+            },
+
+            (error) => {
+                console.error(error);
+            }
+
+        );
+    }
+
+    getCountryInfo() {
+
+
+        // this.dataService.getFormCity().subscribe(
+
+        //     (response) => {
+            // this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
+
+        //         this.cities = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
+        //         for (let a of this.cities) {
+        //             this.cities = a.cities.map((value: any, i: any) => ({ id: i, name: value }))
+        //         }
+        //         console.log(this.cities)
+
+        //     },
+
+        //     (error) => {
+        //         console.error(error);
+        //     } 
+
+        // );
+        this.DataService.getFormState().subscribe(
+
+            (response) => {
+                
+                this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
+                this.states = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
+
+                for (let i of this.states) {
+                    this.states = i.states
+                }
+                console.log(this.states)
+
+            },
+
+            (error) => {
+                console.error(error);
+            }
+
+        );
+    }
+
+saveAddressModified(city: string, street: string, apt: string, zip: string) {
+
+    this.selectedStateCode = this.addressForm.get('slcState')!.value
+
+    this.onValidationMsg = "Address was added successfully.";
+    setTimeout(() => {
+        this.onValidationMsg = "";
+    }, 6000);
+
+    let newAddres
+    if (apt) {
+        newAddres = this.selectedCountryCode + ', ' + this.selectedStateCode + ', ' + city + ', ' + street + ', ' + apt + ', ' + zip
+    } else {
+        newAddres = this.selectedCountryCode + ', ' + this.selectedStateCode + ', ' + city + ', ' + street + ', ' + zip
+    }
+
+    console.log(this.addressFieldName)
+    console.log(newAddres)
+    
+    this.addressInputsForm.patchValue({
+        [this.addressFieldName]: newAddres
+    });
+
+    this.tglModifyAddressForm = false
+    // console.log(this.formElement)
+}
+
 }
 
 function subscribe(arg0: (data: any) => void) {
     throw new Error('Function not implemented.');
 }
+
+
