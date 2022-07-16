@@ -196,6 +196,15 @@ form {
     margin-top: 2rem;
 }
 
+.address-form > form {
+    min-width: 28rem;
+    max-width: 100% !important;
+}
+
+.modifyingAddress .p-dialog {
+    width: 54% !important;
+}
+
 .inRow {
     background: none;
     overflow-y: hidden;

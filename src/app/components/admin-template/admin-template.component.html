@@ -8,85 +8,53 @@
       <i class="bi bi-plus-square-fill"></i> Add new template
     </button>
 
-    <button class="button-neumorphism margin-lt" (click)="toggleEditField()">
-      <i class="bi bi-pencil-square"></i> Edit field
-    </button>
-
     <div [ngClass]="tglAddNewTemplate ? 'show' : 'hide'">
       <div spellcheck="true">
-        <form [formGroup]="addNewTemplateForm" (ngSubmit)="saveAddNewTemplate()" *ngIf="addNewTemplateForm" novalidate>
+        <form [formGroup]="addNewTemplateForm" *ngIf="addNewTemplateForm" novalidate>
           <h5>Add new template</h5>
           <div [ngClass]="!addNewTemplateForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
           <hr>
           <div class="form-row">
-            <div class="col-lg-7 width-100 template-name-container">
+            <div class="col-lg-12 width-100 template-name-container">
               <mat-form-field appearance="standard">
                 <mat-label>Template name</mat-label>
                 <input matInput class="input-neumorphism" type="text" placeholder="Template name" autocomplete="off"
                   id="templateName" formControlName="templateName" />
               </mat-form-field>
             </div>
+          </div>
+          <div class="form-row" *ngFor="let item of items; let indexSection = index">
             <div class="col-lg-5 width-100">
-              <div class="checkContainer">
-                <p-checkbox formControlName="templateStatus" [binary]="true" inputId="binary" label="Visible">
-                </p-checkbox>
-              </div>
+              <mat-form-field appearance="standard">
+                <mat-label>Field name</mat-label>
+                <input matInput class="input-neumorphism width-100" type="text" placeholder="Field name" autocomplete="off"
+                  id="templateName" formControlName="fieldName{{indexSection}}" />
+              </mat-form-field>
             </div>
-            <div class="col-lg-12 width-100">
-              <p-multiSelect [options]="tdFields" optionLabel="element_placeholder" formControlName="templateFields"
-                placeholder="Template fields"></p-multiSelect>
+            <div class="col-lg-5 width-100 no-input-container">
+              <p-dropdown [options]="selectElmType" class="input-neumorphism width-100" optionLabel="typeName"
+                optionValue="typeCode" placeholder="Field type" formControlName="fieldType{{indexSection}}"></p-dropdown>
             </div>
+            <div class="col-lg-2 width-100 remove-btn-container">
+              <button class="iconbutton-neumorphism" (click)="removeClonedAddField()">
+                <i class="bi bi-node-minus-fill i-bigger"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-row width-100">
+            <button class="button-neumorphism width-100" (click)="cloneAddField()">
+              Add another field <i class="bi bi-node-plus-fill i-bigger"></i>
+            </button>
           </div>
           <hr>
           <div class="form-row">
             <div class="col">
-              <button type="submit" class="width-50 show-line-b txt-center" value="save"
+              <button type="submit" class="width-50 show-line-b txt-center" value="save" (click)="saveAddNewTemplate()"
                 [disabled]="!addNewTemplateForm.valid"
                 [ngClass]="!addNewTemplateForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
                 Save
               </button>
               <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewTemplate()">
-                Cancel
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <br>
-    </div>
-
-    <div [ngClass]="tglEditField ? 'show' : 'hide'">
-      <div spellcheck="true">
-        <form [formGroup]="editFieldForm" (ngSubmit)="saveEditField()" *ngIf="editFieldForm" novalidate>
-          <h5>Edit field </h5>
-          <div [ngClass]="!editFieldForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
-          <hr>
-          <div class="form-row">
-            <div class="col-lg-4 width-100 slc-field">
-              <p-dropdown [options]="tdFields" class="input-neumorphism" optionLabel="element_placeholder"
-                optionValue="slIndex" placeholder="Field" formControlName="indexField"></p-dropdown>
-            </div>
-            <div class="col-lg-4 width-100">
-              <mat-form-field appearance="standard">
-                <mat-label>Field new name</mat-label>
-                <input matInput class="input-neumorphism" type="text" placeholder="Field new name" autocomplete="off"
-                  id="fieldName" formControlName="nameField" />
-              </mat-form-field>
-            </div>
-            <div class="col-lg-4 width-100 slc-field">
-              <p-dropdown [options]="selectElmType" class="input-neumorphism" optionLabel="typeName"
-                optionValue="typeCode" placeholder="Field type" formControlName="typeField"></p-dropdown>
-            </div>
-          </div>
-          <hr>
-          <div class="form-row">
-            <div class="col">
-              <button type="submit" class="width-50 show-line-b txt-center" value="save"
-                [disabled]="!editFieldForm.valid"
-                [ngClass]="!editFieldForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
-                Save
-              </button>
-              <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelEditField()">
                 Cancel
               </div>
             </div>
@@ -105,92 +73,6 @@
 
     <p-accordion>
       <p-accordionTab header="{{ td.templateName }}" [ngClass]="td.templateStatus ? 'template-active' : ''">
-        <div class="row">
-          <div class="col-lg-12 width-100 margin-lt chipsFilterContainer">
-            <mat-form-field appearance="standard">
-              <mat-label>Search user in list</mat-label>
-              <input matInput class="search-input" #filterUser [matChipInputFor]="chipList"
-                (keyup)="usersFilter(td.templateActiveFor, filterUser.value)" />
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row" matTooltip="{{ td.templateName }} is active for users in list." matTooltipPosition="above">
-          <div class="col-lg-12 margin-lt width-100 chipsContainer">
-            <mat-form-field>
-              <mat-chip-list #chipList>
-                <ng-container *ngIf="filterUserList">
-                  <mat-chip *ngFor="let tds of filterUserList">{{tds.userName}}
-                  </mat-chip>
-                </ng-container>
-                <ng-container *ngIf="!filterUserList">
-                  <mat-chip *ngFor="let tds of td.templateActiveFor">{{tds.userName}}
-                  </mat-chip>
-                  <mat-chip>Testing</mat-chip>
-                </ng-container>
-              </mat-chip-list>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 width-100">
-            <div class="row">
-              <div class="col-lg-6">
-                <button class="button-neumorphism margin-lt margin-bt width-100" (click)="toggleAddNewField()"
-                  [ngClass]="!tglAddUsers ? 'show' : ''">
-                  <i class="bi bi-plus-square-fill "></i> Add field
-                </button>
-              </div>
-              <div class="col-lg-6">
-                <button class="button-neumorphism margin-lt margin-bt width-100"
-                  matTooltip="Manage which users have this template activate" matTooltipPosition="above"
-                  (click)="toggleAddUsers()">
-                  <i class="bi bi-plus-square-fill "></i> Add users
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 width-100" [ngClass]="!tglAddNewField ? 'hide' : 'show'">
-            <p-multiSelect [options]="tdFields" optionLabel="element_placeholder" placeholder="Template fields"
-              [(ngModel)]="addField"></p-multiSelect>
-          </div>
-          <div class="col-lg-4 width-100" [ngClass]="!tglAddNewField ? 'hide' : 'show'">
-            <div class="row">
-              <div class="col-lg-6 width-100">
-                <button type="submit" class="width-100 show-line-b txt-center" value="save" [disabled]="!addField"
-                  (click)="saveAddNewField()"
-                  [ngClass]="!addField ? 'button-neumorphism-disabled' : 'button-neumorphism'">
-                  Add
-                </button>
-              </div>
-              <div class="col-lg-6 width-100">
-                <div class="button-neumorphism width-100 show-line-b txt-center" (click)="cancelAddNewField()">
-                  Cancel
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 width-100" [ngClass]="!tglAddUsers ? 'hide' : 'show'">
-            <p-multiSelect [options]="userList" optionLabel="name" placeholder="Users" [(ngModel)]="addUsers">
-            </p-multiSelect>
-          </div>
-          <div class="col-lg-4 width-100" [ngClass]="!tglAddUsers ? 'hide' : 'show'">
-            <div class="row">
-              <div class="col-lg-6 width-100">
-                <button type="submit" class="width-100 show-line-b txt-center" value="save" [disabled]="!addUsers"
-                  (click)="saveAddUsers(indexTemplate)"
-                  [ngClass]="!addUsers ? 'button-neumorphism-disabled' : 'button-neumorphism'">
-                  Add
-                </button>
-              </div>
-              <div class="col-lg-6 width-100">
-                <div class="button-neumorphism width-100 show-line-b txt-center" (click)="cancelAddUsers()">
-                  Cancel
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <p-table #dataTable [columns]="thData" [value]=td.templateFields [rows]="5" [paginator]="true"
           [rowsPerPageOptions]="[5, 10, 25, 50]" [(selection)]="tbSelectedRows" [rowHover]="true" dataKey="slIndex"
           editMode="row" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -198,9 +80,6 @@
 
           <ng-template pTemplate="header" let-columns>
             <tr>
-              <th>
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
               <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
                 {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
                 <p-columnFilter type="text" field="{{col.field}}" display="menu"></p-columnFilter>
@@ -217,9 +96,6 @@
 
           <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
             <tr [pEditableRow]="rowData" id='tr{{rowIndex}}'>
-              <td>
-                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-              </td>
               <td *ngFor="let col of columns">
                 <p-cellEditor>
                   <ng-template pTemplate="input">
