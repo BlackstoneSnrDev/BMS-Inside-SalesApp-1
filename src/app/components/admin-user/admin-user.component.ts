@@ -50,6 +50,7 @@ export class AdminUserComponent implements OnInit {
             }
             this.addNewUserForm = new FormGroup(this.newFormControl);
         })
+
     }
 
 

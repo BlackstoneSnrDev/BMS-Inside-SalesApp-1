@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+// Get customer data
+import { DataService } from '../../services/services.service';
+// User Info
+import { UsersService } from "../../services/auth.service";
 
 @Component({
 
@@ -9,10 +13,32 @@ import { Component } from '@angular/core';
 
 })
 
-export class CallInfoComponent {
+export class CallInfoComponent implements OnInit {
 
+    private _customerSubscription: any;
+    public tdData: any = [];
+    public dbObjKey: any;
+    public activeTemplate: any;
+    public dialSessionArray: any = [];
 
-    constructor() { }
+    constructor (private DataService: DataService, private usersService: UsersService) { }
 
+    ngOnInit() {
+// Data on subscriptions and unsubscribing to prevent memory leaks... 
+// https://stackoverflow.com/questions/46906685/property-unsubscribe-does-not-exist-on-type-observabledatasnapshot
 
-  }
+// We frist need to ensure we have an active template (as observed in authServices) so that we can get customers data.
+        this._customerSubscription = this.usersService.activeTemplate.subscribe(template => 
+            template ? 
+            this.DataService.startDialingSession().then(() => {
+                this.DataService.dialSessionArray.subscribe(dialSessionArray => this.dialSessionArray = dialSessionArray);
+            }) : null);
+
+    }
+
+    ngOnDestroy() {
+        console.log(this.dialSessionArray);
+        this._customerSubscription.unsubscribe();
+    }
+
+}

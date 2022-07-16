@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, from } from 'rxjs'
+import { map, Observable, from, BehaviorSubject } from 'rxjs'
 import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
 import {
@@ -38,6 +38,12 @@ export class DataService {
   public currentUid: string;
   public activeTemplate: any;
 
+  private activeDialSessionArray = new BehaviorSubject<any>(null);
+  private activeCall = new BehaviorSubject<any>(null);
+
+  dialSessionArray = this.activeDialSessionArray.asObservable();
+  currentCall = this.activeCall.asObservable();
+
   constructor(
 
     private _http: HttpClient,
@@ -66,6 +72,15 @@ export class DataService {
     this.currentUid = this.userInfo.uid;
 
   }
+
+  async startDialingSession() {
+    const customerArray = await this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+        map(actions => actions.map(a => a.payload.doc.data()))
+    )
+    console.log(customerArray);
+    this.activeDialSessionArray.next(customerArray) 
+    return customerArray;
+}
 
   createUser(data: any) {
     console.log(data);
