@@ -71,6 +71,7 @@
 .txt-my-navbar{
   font-size: 1rem !important;
   overflow-wrap: break-word;
+  width: fit-content;
 }
 
 .dropdown-content{

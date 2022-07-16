@@ -43,6 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 // Firebase 
 import { AngularFireModule } from '@angular/fire/compat';
@@ -75,6 +76,8 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import {FileUploadModule} from 'primeng/fileupload';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {PasswordModule} from 'primeng/password';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
 
@@ -121,6 +124,7 @@ import {PasswordModule} from 'primeng/password';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatGridListModule,
+    MatSlideToggleModule,
     // Firebase
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -146,7 +150,9 @@ import {PasswordModule} from 'primeng/password';
     TabMenuModule,
     FileUploadModule,
     MultiSelectModule,
-    PasswordModule
+    PasswordModule,
+    InputSwitchModule,
+    MatChipsModule
   ],
 
   providers: [

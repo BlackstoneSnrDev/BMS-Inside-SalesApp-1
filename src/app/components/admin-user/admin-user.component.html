@@ -57,8 +57,8 @@
             </div>
           </div>
           <div [ngClass]="tglUploadList ? 'show' : 'hide'">
-            <p-fileUpload name="userList[]" url="./thisNeedToBeSetUpByBackend" accept=".xlsx" [auto]="true"
-              (onUpload)="getFileUploaded($event)"></p-fileUpload>
+            <p-fileUpload name="userList[]" url="./thisNeedToBeSetUpByBackend" accept=".csv"
+            [auto]="true" (onUpload)="getFileUploaded($event)"></p-fileUpload>
           </div>
         </form>
       </div>
