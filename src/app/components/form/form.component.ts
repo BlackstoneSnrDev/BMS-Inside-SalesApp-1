@@ -149,9 +149,10 @@ export class FormComponent implements OnInit {
 
         let newAddres
         if (apt) {
-            newAddres = this.selectedCountryCode + ', ' + this.selectedStateCode + ', ' + city + ', ' + street + ', ' + apt + ', ' + zip
+            newAddres = street + ', ' + apt + ', ' + city + ', ' + this.selectedStateCode + ', ' + zip + ', ' + this.selectedCountryCode
+            
         } else {
-            newAddres = this.selectedCountryCode + ', ' + this.selectedStateCode + ', ' + city + ', ' + street + ', ' + zip
+            newAddres = street + ', ' + city + ', ' + this.selectedStateCode + ', ' + zip  + ', ' + this.selectedCountryCode
         }
 
         this.callDataForm.patchValue({

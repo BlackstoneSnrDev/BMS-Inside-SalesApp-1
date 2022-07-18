@@ -67,7 +67,7 @@
 .iconbutton-neumorphism:focus {
   outline: 0;
   animation: pulse 3s infinite;
-  background-color: rgba(38, 40, 51, 0.03);
+  background-color: #e0e1e9;
 }
 
 .iconbutton-neumorphism-disabled {
@@ -108,7 +108,7 @@
 .mini-iconbutton-neumorphism:focus {
   outline: 0;
   animation: pulse 3s infinite;
-  background-color: rgba(38, 40, 51, 0.03);
+  background-color: #e0e1e9;
 }
 
 .i-colored {
