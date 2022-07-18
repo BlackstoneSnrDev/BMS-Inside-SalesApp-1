@@ -77,27 +77,6 @@
     <form [formGroup]="addressForm" *ngIf="addressForm" novalidate>
       <div class="form-row width-100">
         <div class="col-md-4">
-          <p-dropdown [options]="countries" class="input-neumorphism"
-            (onChange)="getCountryInfo()" optionLabel="name" optionValue="Iso2" placeholder="Country"
-            formControlName="slcCountry"></p-dropdown>
-        </div>
-        <div class="col-md-4">
-          <p-dropdown [options]="states" class="input-neumorphism" optionLabel="name"
-            optionValue="state_code" placeholder="State" formControlName="slcState"></p-dropdown>
-        </div>
-        <div class="col-md-4">
-          <!-- <p-dropdown [options]="cities" class="input-neumorphism" optionLabel="name"
-          optionValue="name" placeholder="City" formControlName="slcCity"></p-dropdown> -->
-          <mat-form-field appearance="standard" class="txtFormComponent">
-            <mat-label>City</mat-label>
-            <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
-              [readonly]="!tgleditField" type="text" placeholder="New City" autocomplete="off" #city
-              formControlName="txtCity" />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="form-row width-100">
-        <div class="col-md-4">
           <mat-form-field appearance="standard" class="txtFormComponent">
             <mat-label>Street</mat-label>
             <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
@@ -112,14 +91,42 @@
               [readonly]="!tgleditField" type="text" placeholder="New apt" autocomplete="off" #apt
               formControlName="txtApt" />
           </mat-form-field>
+          
+          
         </div>
         <div class="col-md-4">
+          <!-- <p-dropdown [options]="cities" class="input-neumorphism" optionLabel="name"
+          optionValue="name" placeholder="City" formControlName="slcCity"></p-dropdown> -->
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>City</mat-label>
+            <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+              [readonly]="!tgleditField" type="text" placeholder="New City" autocomplete="off" #city
+              formControlName="txtCity" />
+          </mat-form-field>
+
+          
+        </div>
+      </div>
+      <div class="form-row width-100">
+        <div class="col-md-4">
+          
+          <p-dropdown [options]="states" class="input-neumorphism" optionLabel="name"
+            optionValue="state_code" placeholder="State" formControlName="slcState"></p-dropdown>
+        </div>
+        <div class="col-md-4">
+          
           <mat-form-field appearance="standard" class="txtFormComponent">
             <mat-label>Zip/Postal code</mat-label>
             <input matInput class="input-neumorphism" [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
               [readonly]="!tgleditField" type="number" placeholder="New zip code" autocomplete="off" #zip
               formControlName="txtZip" />
           </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <p-dropdown [options]="countries" class="input-neumorphism"
+          (onChange)="getCountryInfo()" optionLabel="name" optionValue="Iso2" placeholder="Country"
+          formControlName="slcCountry"></p-dropdown>
+         
         </div>
       </div>
       <div class="form-row width-100">
@@ -138,3 +145,126 @@
   </div>
 
 </p-dialog>
+
+<form
+      [formGroup]="addressForm"
+      *ngIf="addressForm"
+      novalidate
+      class="address-form"
+    >
+      <div class="form-row width-100">
+        <div class="col-md-4">
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>Street</mat-label>
+            <input
+              matInput
+              class="input-neumorphism"
+              type="text"
+              placeholder="New Street"
+              autocomplete="off"
+              #street
+              formControlName="txtStreet"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>Apt/Suite</mat-label>
+            <input
+              matInput
+              class="input-neumorphism"
+              type="text"
+              placeholder="New apt"
+              autocomplete="off"
+              #apt
+              formControlName="txtApt"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <!-- <p-dropdown [options]="cities" class="input-neumorphism" optionLabel="name"
+          optionValue="name" placeholder="City" formControlName="slcCity"></p-dropdown> -->
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>City</mat-label>
+            <input
+              matInput
+              class="input-neumorphism"
+              type="text"
+              placeholder="New City"
+              autocomplete="off"
+              #city
+              formControlName="txtCity"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row width-100">
+        <div class="col-md-4">
+          <p-dropdown
+            [options]="states"
+            class="input-neumorphism"
+            optionLabel="name"
+            optionValue="state_code"
+            placeholder="State"
+            formControlName="slcState"
+          ></p-dropdown>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="standard" class="txtFormComponent">
+            <mat-label>Zip/Postal code</mat-label>
+            <input
+              matInput
+              class="input-neumorphism"
+              type="number"
+              placeholder="New zip code"
+              autocomplete="off"
+              #zip
+              formControlName="txtZip"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <p-dropdown
+            [options]="countries"
+            class="input-neumorphism"
+            (onChange)="getCountryInfo()"
+            optionLabel="name"
+            optionValue="Iso2"
+            placeholder="Country"
+            formControlName="slcCountry"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="form-row width-100">
+        <div class="col-md-6">
+          <button
+            class="button-neumorphism"
+            (click)="tglModifyAddressForm = false"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button
+            class="button-neumorphism"
+            [disabled]="!addressForm.valid"
+            [ngClass]="
+              !addressForm.valid
+                ? 'button-neumorphism-disabled'
+                : 'button-neumorphism'
+            "
+            (click)="
+              saveAddressModified(
+                city.value,
+                street.value,
+                apt.value,
+                zip.value
+              )
+            "
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </form>

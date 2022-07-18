@@ -103,9 +103,6 @@ textarea {
   color: #5c5c5f;
 }
 
-::ng-deep .modifyingAddress .p-dropdown-items-wrapper {
-  max-height: 7rem !important;
-}
 
 ::ng-deep .modifyingAddress .p-dropdown .p-dropdown-panel {
   width: 14rem;
@@ -114,4 +111,13 @@ textarea {
 
 ::ng-deep .modifyingAddress .button-neumorphism {
   width: 100% !important;
+}
+
+.modifyingAddress ::ng-deep.p-dropdown, .modifyingAddress ::ng-deep.p-dropdown.p-focus {
+  margin-top: 1.4rem;
+  margin-bottom: 3rem;
+}
+
+.modifyingAddress ::ng-deep.p-dropdown-items-wrapper {
+  max-height: 6rem !important;
 }
