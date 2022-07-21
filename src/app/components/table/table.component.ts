@@ -145,6 +145,8 @@ export class TableComponent {
     onRowEditSave(tdData: any, index: number) {
 
         console.log(tdData, index)
+        this.addressInputsForm.removeControl('addressTableField' +index);
+        console.log(this.addressInputsForm)
 
         let modifyLastElmActive = (document.getElementById('tr' + index) as HTMLInputElement).getElementsByClassName('ng-invalid')
 
@@ -572,9 +574,10 @@ saveAddressModified(city: string, street: string, apt: string, zip: string) {
 
     let newAddres
     if (apt) {
-        newAddres = this.selectedCountryCode + ', ' + this.selectedStateCode + ', ' + city + ', ' + street + ', ' + apt + ', ' + zip
+        newAddres = street + ', ' + apt + ', ' + city + ', ' + this.selectedStateCode + ', ' + zip + ', ' + this.selectedCountryCode
+        
     } else {
-        newAddres = this.selectedCountryCode + ', ' + this.selectedStateCode + ', ' + city + ', ' + street + ', ' + zip
+        newAddres = street + ', ' + city + ', ' + this.selectedStateCode + ', ' + zip  + ', ' + this.selectedCountryCode
     }
 
     console.log(this.addressFieldName)
@@ -583,6 +586,7 @@ saveAddressModified(city: string, street: string, apt: string, zip: string) {
     this.addressInputsForm.patchValue({
         [this.addressFieldName]: newAddres
     });
+
 
     this.tglModifyAddressForm = false
 }
