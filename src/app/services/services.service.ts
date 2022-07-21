@@ -42,7 +42,7 @@ export class DataService {
   private activeCall = new BehaviorSubject<any>(null);
 
   dialSessionArray = this.activeDialSessionArray.asObservable();
-  currentCall = this.activeCall.asObservable();
+  public currentCall = this.activeCall.asObservable();
 
   constructor(
 
@@ -73,13 +73,44 @@ export class DataService {
 
   }
 
-  async startDialingSession() {
-    const customerArray = await this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-        map(actions => actions.map(a => a.payload.doc.data()))
-    )
-    console.log(customerArray);
-    this.activeDialSessionArray.next(customerArray) 
-    return customerArray;
+  setActiveCall(customerId: string) {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).ref
+    data.get().then((doc: any) => {
+        this.activeCall.next(doc.data());
+    })
+  }
+
+
+
+getDialingSessionTemplate() {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref;
+    return data.get().then((doc: any) => {
+        let filteredTemplateData: any[] = [];
+        Object.values(doc.data()).forEach((item) => {
+            if (typeof item === 'object'){
+                filteredTemplateData.push(item);
+            }
+        })
+        return filteredTemplateData;
+    })
+}
+
+getActiveGroupCustomerArray(): Observable<any> {
+    
+        let withGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+            map( actions => actions.filter(a => a.payload.doc.data()['group'].includes(this.userInfo.activeGroup)).map(a => a.payload.doc.data()))
+        )
+
+        let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+            map( actions => actions.map(a => a.payload.doc.data() ))
+        )
+    
+        if (this.userInfo.activeGroup) {
+            return withGroup;
+        } else {
+            return noGroup;
+        }
+
 }
 
   createUser(data: any) {

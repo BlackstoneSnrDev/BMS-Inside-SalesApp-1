@@ -17,10 +17,11 @@ DONE!!   sorting not working properly (balance does not decend properly)
 DONE!!   fix date formatting
 DONE!!   fix boolean values in table (should be 'true' to 'false')
 DONE!!   debug number-of-items-shown menu at bottom of the table (sometimes it doesnt open) 
-- karla    in add new record, csv file upload option     
-- karla    change 'filter' to 'search'
-- karla    debug addNewRecord so it doesn't show validation errors after submitting
+DONE!!   in add new record, csv file upload option     
+DONE!!   change 'filter' to 'search'
+DONE!!   debug addNewRecord so it doesn't show validation errors after submitting
 DONE!!  phone number and balance not showing up when editing a single record (this is a formatting problem - needs to be strictly numbers, no () or $)
+    when a new group is created, check that the name is not alredy used 
 
 
 -- adminPage --
@@ -28,11 +29,12 @@ DONE!!  phone number and balance not showing up when editing a single record (th
     admin user to create and add roles to users
     roles need to be an array 
     add 'activeTemplate' to createUser options
+    remove deactiveate feature from activeTemplate 
     
-
+    add templateName to any group that a user creates 
 
 DONE!!  Active template needs to be attached to a user, not the whole account
-get rid of getActiveTemplate service function
-user to change templates
+    get rid of getActiveTemplate service function
+    user to change templates
 
-Data leak on forms.component.ts - init database call is fired on every page load
+    Data leak on forms.component.ts - init database call is fired on every page load

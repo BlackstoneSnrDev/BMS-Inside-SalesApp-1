@@ -24,16 +24,21 @@ export class CallInfoComponent implements OnInit {
     constructor (private DataService: DataService, private usersService: UsersService) { }
 
     ngOnInit() {
-// Data on subscriptions and unsubscribing to prevent memory leaks... 
-// https://stackoverflow.com/questions/46906685/property-unsubscribe-does-not-exist-on-type-observabledatasnapshot
+        // Data on subscriptions and unsubscribing to prevent memory leaks... 
+        // https://stackoverflow.com/questions/46906685/property-unsubscribe-does-not-exist-on-type-observabledatasnapshot
 
-// We frist need to ensure we have an active template (as observed in authServices) so that we can get customers data.
-        this._customerSubscription = this.usersService.activeTemplate.subscribe(template => 
-            template ? 
-            this.DataService.startDialingSession().then(() => {
-                this.DataService.dialSessionArray.subscribe(dialSessionArray => this.dialSessionArray = dialSessionArray);
-            }) : null);
-
+        // We frist need to ensure we have an active template (as observed in authServices) so that we can get customers data.
+        this._customerSubscription = this.usersService.activeTemplate.subscribe(template =>
+            template ?
+                this.DataService.getDialingSessionTemplate()
+                    .then(activeTemplate => this.activeTemplate = activeTemplate.sort((a, b) => a.element_order - b.element_order))
+                    .then(() => {
+                        this.DataService.getActiveGroupCustomerArray().subscribe(dialSessionArray =>
+                            this.dialSessionArray = dialSessionArray &&
+                            this.DataService.setActiveCall(dialSessionArray[0].uid)
+                        )
+                    })
+                : null);
     }
 
     ngOnDestroy() {

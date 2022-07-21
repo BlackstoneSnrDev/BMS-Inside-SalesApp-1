@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../../services/services.service';
 import { UsersService } from '../../services/auth.service';
@@ -11,8 +11,13 @@ import { UsersService } from '../../services/auth.service';
 
 export class FormComponent implements OnInit {
 
+    @Input() dialSessionArray: any;
+    @Input() activeTemplate: any;
+
+    public currentCall: any;
+
     public formElement: any;
-    public activeTemplate: any;
+    //public activeTemplate: any;
     public dbObjKey: any;
 
     public tgleditField: boolean = false;
@@ -39,24 +44,14 @@ export class FormComponent implements OnInit {
     constructor(private dataService: DataService, private usersService: UsersService) { }
 
     ngOnInit() {
+        this.dataService.currentCall.subscribe(currentCall => this.currentCall = currentCall);
 
-        // Subscribe to dbObjKey to ensure we have a logged in user and a tenant ID.  When we have the dbObjKey send it to getActiveTemplate service.
-        // This sequence is needed so that the db is not called without a tenant ID.  To do otherwise resulted is errors when the user refreshes the page.  
-        
-        this.usersService.dbObjKey.subscribe(
-            dbObjKey => [
-                
-                this.dbObjKey = dbObjKey,
-                this.dataService.getActiveTemplate(this.dbObjKey)
-                    .then(activeTemplate => this.activeTemplate = activeTemplate.sort((a, b) => a.element_order - b.element_order))
-                    .then(() => {
-                        this.formElement = this.activeTemplate;
-                        for (let i of this.formElement) {
-                            this.newFormControl[i.element_placeholder] = new FormControl({ value: i.element_value, disabled: this.tgleditField }, [Validators.required, Validators.minLength(1)]);
-                        }
-                        this.callDataForm = new FormGroup(this.newFormControl);
-                    })
-            ])
+        this.formElement = this.activeTemplate;
+        for (let i of this.formElement) {
+            this.newFormControl[i.element_placeholder] = new FormControl({ value: i.element_value, disabled: this.tgleditField }, [Validators.required, Validators.minLength(1)]);
+        }
+        this.callDataForm = new FormGroup(this.newFormControl);
+
 
     }
 
