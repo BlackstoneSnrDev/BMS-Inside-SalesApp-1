@@ -4,187 +4,322 @@
   </button>
 
   <ng-container>
-    <button class="button-neumorphism margin-lt" (click)="toggleAddNewTemplate()">
+    <button
+      class="button-neumorphism margin-lt"
+      (click)="toggleAddNewTemplate()"
+    >
       <i class="bi bi-plus-square-fill"></i> Add new template
     </button>
 
     <div [ngClass]="tglAddNewTemplate ? 'show' : 'hide'">
       <div spellcheck="true">
-        <form [formGroup]="addNewTemplateForm" *ngIf="addNewTemplateForm" novalidate>
+        <form
+          [formGroup]="addNewTemplateForm"
+          *ngIf="addNewTemplateForm"
+          novalidate
+        >
           <h5>Add new template</h5>
-          <div [ngClass]="!addNewTemplateForm.valid ? 'show' : 'hide'">*All fields must be filled out.</div>
-          <hr>
+          <div [ngClass]="!addNewTemplateForm.valid ? 'show' : 'hide'">
+            *All fields must be filled out.
+          </div>
+          <hr />
           <div class="form-row">
             <div class="col-lg-12 width-100 template-name-container">
               <mat-form-field appearance="standard">
                 <mat-label>Template name</mat-label>
-                <input matInput class="input-neumorphism" type="text" placeholder="Template name" autocomplete="off"
-                  id="templateName" formControlName="templateName" />
+                <input
+                  matInput
+                  class="input-neumorphism"
+                  type="text"
+                  placeholder="Template name"
+                  autocomplete="off"
+                  id="templateName"
+                  formControlName="templateName"
+                />
               </mat-form-field>
             </div>
           </div>
-          <div class="form-row" *ngFor="let item of items; let indexSection = index">
+          <div
+            class="form-row"
+            *ngFor="let item of items; let indexSection = index"
+          >
             <div class="col-lg-5 width-100">
               <mat-form-field appearance="standard">
                 <mat-label>Field name</mat-label>
-                <input matInput class="input-neumorphism width-100" type="text" placeholder="Field name" autocomplete="off"
-                  id="templateName" formControlName="fieldName{{indexSection}}" />
+                <input
+                  matInput
+                  class="input-neumorphism width-100"
+                  type="text"
+                  placeholder="Field name"
+                  autocomplete="off"
+                  id="templateName"
+                  formControlName="fieldName{{ indexSection }}"
+                />
               </mat-form-field>
             </div>
             <div class="col-lg-5 width-100 no-input-container">
-              <p-dropdown [options]="selectElmType" class="input-neumorphism width-100" optionLabel="typeName"
-                optionValue="typeCode" placeholder="Field type" formControlName="fieldType{{indexSection}}"></p-dropdown>
+              <p-dropdown
+                [options]="selectElmType"
+                class="input-neumorphism width-100"
+                optionLabel="typeName"
+                optionValue="typeCode"
+                placeholder="Field type"
+                formControlName="fieldType{{ indexSection }}"
+              ></p-dropdown>
             </div>
             <div class="col-lg-2 width-100 remove-btn-container">
-              <button class="iconbutton-neumorphism" (click)="removeClonedAddField()">
+              <button
+                class="iconbutton-neumorphism"
+                (click)="removeClonedAddField()"
+              >
                 <i class="bi bi-node-minus-fill i-bigger"></i>
               </button>
             </div>
           </div>
           <div class="form-row width-100">
-            <button class="button-neumorphism width-100" (click)="cloneAddField()">
+            <button
+              class="button-neumorphism width-100"
+              (click)="cloneAddField()"
+            >
               Add another field <i class="bi bi-node-plus-fill i-bigger"></i>
             </button>
           </div>
-          <hr>
+          <hr />
           <div class="form-row">
             <div class="col">
-              <button type="submit" class="width-50 show-line-b txt-center" value="save" (click)="saveAddNewTemplate()"
+              <button
+                type="submit"
+                class="width-50 show-line-b txt-center"
+                value="save"
+                (click)="saveAddNewTemplate()"
                 [disabled]="!addNewTemplateForm.valid"
-                [ngClass]="!addNewTemplateForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
+                [ngClass]="
+                  !addNewTemplateForm.valid
+                    ? 'button-neumorphism-disabled'
+                    : 'button-neumorphism'
+                "
+              >
                 Save
               </button>
-              <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewTemplate()">
+              <div
+                class="button-neumorphism width-50 show-line-b txt-center"
+                (click)="cancelAddNewTemplate()"
+              >
                 Cancel
               </div>
             </div>
           </div>
         </form>
       </div>
-      <br>
+      <br />
     </div>
-
   </ng-container>
 </div>
 <div class="row">
-  <div *ngFor="let td of tdData ; let indexTemplate = index" class="template-container"
-    [ngClass]="[!tglTemplate ? 'col-lg-4' : 'col-lg-12', td.templateStatus ? 'template-div-active' : '' ] "
-    (click)="toggleTemplate()">
-
+  <div
+    *ngFor="let td of tdData; let indexTemplate = index"
+    class="template-container"
+    [ngClass]="[
+      !tglTemplate ? 'col-lg-4' : 'col-lg-12',
+      td.templateStatus ? 'template-div-active' : ''
+    ]"
+    (click)="toggleTemplate()"
+  >
     <p-accordion>
-      <p-accordionTab header="{{ td.templateName }}" [ngClass]="td.templateStatus ? 'template-active' : ''">
-        <p-table #dataTable [columns]="thData" [value]=td.templateFields [rows]="5" [paginator]="true"
-          [rowsPerPageOptions]="[5, 10, 25, 50]" [(selection)]="tbSelectedRows" [rowHover]="true" dataKey="slIndex"
-          editMode="row" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [showCurrentPageReport]="true">
-
+      <p-accordionTab
+        header="{{ td.templateName }}"
+        [ngClass]="td.templateStatus ? 'template-active' : ''"
+      >
+        <p-table
+          #dataTable
+          [columns]="thData"
+          [value]="td.templateFields"
+          [rows]="5"
+          [paginator]="true"
+          [rowsPerPageOptions]="[5, 10, 25, 50]"
+          [(selection)]="tbSelectedRows"
+          [rowHover]="true"
+          dataKey="slIndex"
+          editMode="row"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true"
+        >
           <ng-template pTemplate="header" let-columns>
             <tr>
-              <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">
-                {{col.title}}<p-sortIcon field="{{col.field}}"></p-sortIcon>
-                <p-columnFilter type="text" field="{{col.field}}" display="menu"></p-columnFilter>
+              <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}">
+                {{ col.title }}<p-sortIcon field="{{ col.field }}"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="{{ col.field }}"
+                  display="menu"
+                ></p-columnFilter>
               </th>
               <th>
-                <mat-slide-toggle class="example-margin" [checked]="td.templateStatus" #templateStatus
-                  (change)="toggleTemplateStatus(indexTemplate, td.templateStatus, templateStatus)">
+                <mat-slide-toggle
+                  class="example-margin"
+                  [checked]="td.templateStatus"
+                  #templateStatus
+                  (change)="
+                    toggleTemplateStatus(
+                      indexTemplate,
+                      td.templateStatus,
+                      templateStatus
+                    )
+                  "
+                >
                   <div *ngIf="!td.templateStatus">Activate</div>
-                  <div *ngIf="td.templateStatus">Deactivate</div>
+                  <div *ngIf="td.templateStatus">Active</div>
                 </mat-slide-toggle>
               </th>
             </tr>
           </ng-template>
 
-          <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
-            <tr [pEditableRow]="rowData" id='tr{{rowIndex}}'>
+          <ng-template
+            pTemplate="body"
+            let-rowData
+            let-columns="columns"
+            let-rowIndex="rowIndex"
+            let-editing="editing"
+          >
+            <tr [pEditableRow]="rowData" id="tr{{ rowIndex }}">
               <td *ngFor="let col of columns">
                 <p-cellEditor>
                   <ng-template pTemplate="input">
-                    <ng-container [ngSwitch]="
-                            col.element_type === 'boolean'
-                        ? 'checkbox'
-                        : col.field === 'type'
-                        ? 'selectType'
-                        : -1
-                    ">
+                    <ng-container
+                      [ngSwitch]="
+                        col.element_type === 'boolean'
+                          ? 'checkbox'
+                          : col.field === 'type'
+                          ? 'selectType'
+                          : -1
+                      "
+                    >
                       <ng-container *ngSwitchCase="'checkbox'">
-                        <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary">
+                        <p-checkbox
+                          [(ngModel)]="rowData[col.field]"
+                          [binary]="true"
+                          inputId="binary"
+                        >
                         </p-checkbox>
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'selectType'">
-                        <p-dropdown [options]="selectElmType" class="input-neumorphism" optionLabel="typeName"
-                          optionValue="typeCode" placeholder="Type" [(ngModel)]="rowData[col.field]"></p-dropdown>
+                        <p-dropdown
+                          [options]="selectElmType"
+                          class="input-neumorphism"
+                          optionLabel="typeName"
+                          optionValue="typeCode"
+                          placeholder="Type"
+                          [(ngModel)]="rowData[col.field]"
+                        ></p-dropdown>
                       </ng-container>
 
                       <ng-container *ngSwitchDefault>
                         <mat-form-field appearance="standard">
-                          <mat-label>{{col.title}}</mat-label>
-                          <input matInput type="{{col.element_type}}" placeholder="New {{col.field}}"
-                            [(ngModel)]="rowData[col.field]" required>
+                          <mat-label>{{ col.title }}</mat-label>
+                          <input
+                            matInput
+                            type="{{ col.element_type }}"
+                            placeholder="New {{ col.field }}"
+                            [(ngModel)]="rowData[col.field]"
+                            required
+                          />
                         </mat-form-field>
                       </ng-container>
 
-                      <br>
+                      <br />
                       <small *ngIf="onValidationError" class="color-rd">
-                        {{col.title}} must be filled out.
+                        {{ col.title }} must be filled out.
                       </small>
                     </ng-container>
-
                   </ng-template>
                   <ng-template pTemplate="output">
-                    <ng-container [ngSwitch]="
-                          col.element_type === 'boolean'
-                      ? 'checkbox'
-                      : -1
-                  ">
+                    <ng-container
+                      [ngSwitch]="
+                        col.element_type === 'boolean' ? 'checkbox' : -1
+                      "
+                    >
                       <ng-container *ngSwitchCase="'checkbox'">
-                        <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary" [readonly]=true>
+                        <p-checkbox
+                          [(ngModel)]="rowData[col.field]"
+                          [binary]="true"
+                          inputId="binary"
+                          [readonly]="true"
+                        >
                         </p-checkbox>
                       </ng-container>
 
-
                       <ng-container *ngSwitchDefault>
-                        {{rowData[col.field]}}
+                        {{ rowData[col.field] }}
                       </ng-container>
                     </ng-container>
                   </ng-template>
                 </p-cellEditor>
               </td>
               <td>
-                <button pRipple *ngIf="!editing" type="button" pInitEditableRow
-                  (click)="onRowEditInit(rowData, rowIndex)" class="iconbutton-neumorphism margin-rt">
-                  <i class="bi bi-pencil-square  "></i>
+                <button
+                  pRipple
+                  *ngIf="!editing"
+                  type="button"
+                  pInitEditableRow
+                  (click)="onRowEditInit(rowData, rowIndex)"
+                  class="iconbutton-neumorphism margin-rt"
+                >
+                  <i class="bi bi-pencil-square"></i>
                 </button>
-                <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowIndex, indexTemplate)"
-                  class="iconbutton-neumorphism">
-                  <i class="bi bi-trash-fill "></i>
+                <button
+                  pRipple
+                  *ngIf="!editing"
+                  type="button"
+                  (click)="onRowDeleteRow(rowIndex, indexTemplate)"
+                  class="iconbutton-neumorphism"
+                >
+                  <i class="bi bi-trash-fill"></i>
                 </button>
-                <button pRipple *ngIf="editing" type="button" pSaveEditableRow
-                  (click)="onRowEditSave(rowData, rowIndex, indexTemplate)" class="iconbutton-neumorphism margin-rt">
-                  <i class="pi pi-check "></i>
+                <button
+                  pRipple
+                  *ngIf="editing"
+                  type="button"
+                  pSaveEditableRow
+                  (click)="onRowEditSave(rowData, rowIndex, indexTemplate)"
+                  class="iconbutton-neumorphism margin-rt"
+                >
+                  <i class="pi pi-check"></i>
                 </button>
-                <button pRipple *ngIf="editing" type="button" pCancelEditableRow
-                  (click)="onRowEditCancel(rowData, rowIndex)" class="iconbutton-neumorphism ">
-                  <i class="pi pi-times "></i>
+                <button
+                  pRipple
+                  *ngIf="editing"
+                  type="button"
+                  pCancelEditableRow
+                  (click)="onRowEditCancel(rowData, rowIndex)"
+                  class="iconbutton-neumorphism"
+                >
+                  <i class="pi pi-times"></i>
                 </button>
               </td>
             </tr>
           </ng-template>
 
           <ng-template pTemplate="paginatorleft">
-            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            <p-button
+              type="button"
+              icon="pi pi-plus"
+              styleClass="p-button-text"
+            ></p-button>
           </ng-template>
           <ng-template pTemplate="paginatorright">
-            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            <p-button
+              type="button"
+              icon="pi pi-cloud"
+              styleClass="p-button-text"
+            ></p-button>
           </ng-template>
-
         </p-table>
-
       </p-accordionTab>
     </p-accordion>
-
   </div>
 </div>
 <p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
+<p-toast life="5000" position="top-center"></p-toast>
 
 <!-- <reusableTable-component [thData]="thFullData" [tdData]="tdData" [addNew]="addNew" [showBtnAddNew]="true"></reusableTable-component> -->

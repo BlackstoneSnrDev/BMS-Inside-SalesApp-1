@@ -49,13 +49,13 @@
                       class="not-rounded"
                       name="newGroupName"
                       id="newGroupName"
-                      [(ngModel)]="clearInput"
+                      [formControl]="createNewGroup"
                       required
                     />
                   </mat-form-field>
                   <button
                     class="button-neumorphism elm-rounded width-50 margin-tp"
-                    (click)="saveCreateNewGroup(newGroupName.value)"
+                    (click)="saveCreateNewGroup()"
                   >
                     Save
                   </button>
@@ -108,9 +108,15 @@
             [formGroup]="addNewRecordForm"
             *ngIf="addNewRecordForm"
             novalidate
+            onsubmit=""
           >
-            <h5>Add new record</h5>
-            <div [ngClass]="!addNewRecordForm.valid ? 'show' : 'hide'">
+            <h5 class="show">Add new record</h5>
+            <div
+              [ngClass]="
+                !addNewRecordForm.valid && !tglUploadList ? 'show' : 'hide'
+              "
+            >
+              <br />
               *All fields must be filled out.
             </div>
             <div
@@ -132,30 +138,88 @@
                 <div *ngFor="let newtd of thData; let newtdIndex = index">
                   <div class="form-group col-xl-auto">
                     <ng-container
-                      *ngIf="newtd.element_type === 'boolean'; else matInp"
+                      [ngSwitch]="
+                        newtd.element_type === 'boolean'
+                          ? 'checkbox'
+                          : newtd.field === 'address'
+                          ? 'address'
+                          : newtd.element_type === 'email'
+                          ? 'email'
+                          : -1
+                      "
                     >
-                      <p-checkbox
-                        [binary]="true"
-                        label="{{ newtd.title }}"
-                        inputId="{{ newtdIndex + newtd.field }}"
-                        [(ngModel)]="newtd.value"
-                        formControlName="{{ newtd.field }}"
-                      ></p-checkbox>
-                    </ng-container>
-                    <ng-template #matInp>
-                      <mat-form-field appearance="standard">
-                        <mat-label>{{ newtd.title }}</mat-label>
-                        <input
-                          matInput
-                          class="input-neumorphism"
-                          type="{{ newtd.element_type }}"
-                          placeholder="New {{ newtd.field }}"
-                          autocomplete="off"
-                          id="{{ newtdIndex + newtd.field }}"
+                      <ng-container *ngSwitchCase="'checkbox'">
+                        <p-checkbox
+                          [binary]="true"
+                          label="{{ newtd.title }}"
+                          inputId="{{ newtdIndex + newtd.field }}"
+                          [(ngModel)]="newtd.value"
                           formControlName="{{ newtd.field }}"
-                        />
-                      </mat-form-field>
-                    </ng-template>
+                        ></p-checkbox>
+                      </ng-container>
+
+                      <ng-container
+                        *ngSwitchCase="'address'"
+                        [formGroup]="addressInputsForm"
+                      >
+                        <div class="p-field">
+                          <label
+                            for="lbl-address-field"
+                            class="block lblAddress"
+                            >{{ newtd.title }}</label
+                          >
+
+                          <textarea
+                            id="lbl-address-field"
+                            pInputText
+                            rows="1"
+                            cols="2"
+                            class="input-neumorphism txtFormComponent"
+                            (click)="
+                              toggleModifyAddressForm(
+                                'addressAddNewRecordField' + newtdIndex
+                              )
+                            "
+                            [readonly]="true"
+                            placeholder="New {{ newtd.title | lowercase }}"
+                            autocomplete="off"
+                            formControlName="addressAddNewRecordField{{
+                              newtdIndex
+                            }}"
+                          ></textarea>
+                        </div>
+                      </ng-container>
+
+                      <ng-container *ngSwitchCase="'email'">
+                        <mat-form-field appearance="standard">
+                          <mat-label>{{ newtd.title }}</mat-label>
+                          <input
+                            matInput
+                            pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                            class="input-neumorphism"
+                            type="{{ newtd.element_type }}"
+                            placeholder="New {{ newtd.title | lowercase }}"
+                            autocomplete="off"
+                            id="{{ newtdIndex + newtd.field }}"
+                            formControlName="{{ newtd.field }}"
+                          />
+                        </mat-form-field>
+                      </ng-container>
+                      <ng-container *ngSwitchDefault>
+                        <mat-form-field appearance="standard">
+                          <mat-label>{{ newtd.title }}</mat-label>
+                          <input
+                            matInput
+                            class="input-neumorphism"
+                            type="{{ newtd.element_type }}"
+                            placeholder="New {{ newtd.title | lowercase }}"
+                            autocomplete="off"
+                            id="{{ newtdIndex + newtd.field }}"
+                            formControlName="{{ newtd.field }}"
+                          />
+                        </mat-form-field>
+                      </ng-container>
+                    </ng-container>
                   </div>
                 </div>
               </div>
@@ -186,6 +250,7 @@
             </div>
 
             <div [ngClass]="tglUploadList ? 'show' : 'hide'">
+              <br />
               <p-fileUpload
                 name="queueList[]"
                 url="./thisNeedToBeSetUpByBackend"
@@ -213,14 +278,14 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
     editMode="row"
-    [autoLayout]="true"
-    [resizableColumns]="true"
-    [style]="{ width: '100%' }"
+    [loading]="loading"
+    styleClass="p-datatable-gridlines"
+    scrollHeight="42.857rem"
+    scrollDirection="horizontal"
+    responsiveLayout="scroll"
+    [tableStyle]="{ width: '100%' }"
   >
     <ng-template pTemplate="caption">
-      <div class="onValidationContainer" *ngIf="onValidationMsg">
-        {{ onValidationMsg }}
-      </div>
       <div class="filter-container">
         <mat-form-field appearance="standard">
           <mat-label>Search</mat-label>
@@ -228,7 +293,7 @@
             matInput
             type="text"
             #filterInput
-            [(ngModel)]="clearInput"
+            [formControl]="searchInTable"
             (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')"
             placeholder="Ex. ium"
           />
@@ -260,7 +325,9 @@
           class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt"
         >
           {{ groupOpt.group_name }}
-          <span class="button-icon"><i class="bi bi-chevron-down"></i></span>
+          <span class="button-icon"
+            ><i class="bi bi-chevron-down icon-normal"></i
+          ></span>
         </button>
         <div class="dropdown-content">
           <div class="width-100 dropdown-content-container">
@@ -283,16 +350,14 @@
                   #renamedGroup
                   id="rename {{ groupOpt.group_id }}"
                   name="renamedGroup"
-                  [(ngModel)]="clearInput"
+                  [formControl]="renameGroup"
                   required
                 />
               </mat-form-field>
 
               <button
                 class="button-neumorphism elm-rounded width-50"
-                (click)="
-                  saveRenameGroup(groupOpt.group_id, renamedGroup.value, $event)
-                "
+                (click)="saveRenameGroup(groupOpt.group_id, $event)"
               >
                 Save
               </button>
@@ -319,13 +384,17 @@
 
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th class="sticky-header ">
+        <th class="sticky-column-checkboxes sticky-main">
           <p-tableHeaderCheckbox
             (click)="toggleTableMenu()"
           ></p-tableHeaderCheckbox>
         </th>
-        <th class="sticky-header fixed-th">Actions</th>
-        <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}" class="">
+        <th *ngIf="tdData" class="sticky-column sticky-main">Actions</th>
+        <th
+          *ngFor="let col of columns"
+          pSortableColumn="{{ col.field }}"
+          class="stck-head"
+        >
           {{ col.title }}<p-sortIcon field="{{ col.field }}"></p-sortIcon>
 
           <p-columnFilter
@@ -345,13 +414,13 @@
       let-editing="editing"
     >
       <tr [pEditableRow]="rowData" id="tr{{ rowIndex }}">
-        <td class="sticky-column">
+        <td class="sticky-column-checkboxes">
           <p-tableCheckbox
             [value]="rowData"
             (click)="toggleTableMenu()"
           ></p-tableCheckbox>
         </td>
-        <td *ngIf="userInfo.admin" class="sticky-column fixed-th">
+        <td *ngIf="userInfo.admin" class="sticky-column">
           <button
             pRipple
             *ngIf="!editing"
@@ -401,6 +470,8 @@
                     ? 'checkbox'
                     : col.field === 'address'
                     ? 'address'
+                    : col.element_type === 'email'
+                    ? 'email'
                     : -1
                 "
               >
@@ -417,28 +488,39 @@
                   *ngSwitchCase="'address'"
                   [formGroup]="addressInputsForm"
                 >
-                <div class="p-field">
-                  <label for="lbl-address" class="block lblAddress">{{ col.title }}</label>
+                  <div class="p-field">
+                    <label for="lbl-address" class="block lblAddress">{{
+                      col.title
+                    }}</label>
 
-                  <textarea 
-                    id="lbl-address" pInputText 
-                    class="txtFormComponent address-txt"
-                    (click)="
-                      toggleModifyAddressForm(
-                        rowIndex,
-                        'addressTableField' + rowIndex
-                      )
-                    "
-                    [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
-                    [readonly]="true"
-                    placeholder="New {{ col.field }}"
-                    autocomplete="off"
-                    value="{{ rowData[col.field] }}"
-                    [(ngModel)]="rowData[col.field]"
-                    formControlName="addressTableField{{ rowIndex }}"
-                  ></textarea>
-                </div>
-
+                    <textarea
+                      id="lbl-address"
+                      pInputText
+                      class="txtFormComponent address-txt"
+                      (click)="
+                        toggleModifyAddressForm('addressTableField' + rowIndex)
+                      "
+                      [readonly]="true"
+                      placeholder="New {{ col.title | lowercase }}"
+                      autocomplete="off"
+                      value="{{ rowData[col.field] }}"
+                      [(ngModel)]="rowData[col.field]"
+                      formControlName="addressTableField{{ rowIndex }}"
+                    ></textarea>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'email'">
+                  <mat-form-field appearance="standard">
+                    <mat-label>{{ col.title }}</mat-label>
+                    <input
+                      matInput
+                      pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                      type="{{ col.element_type }}"
+                      placeholder="New {{ col.title | lowercase }}"
+                      [(ngModel)]="rowData[col.field]"
+                      required
+                    />
+                  </mat-form-field>
                 </ng-container>
                 <ng-container *ngSwitchDefault>
                   <mat-form-field appearance="standard">
@@ -446,7 +528,7 @@
                     <input
                       matInput
                       type="{{ col.element_type }}"
-                      placeholder="New {{ col.field }}"
+                      placeholder="New {{ col.title | lowercase }}"
                       [(ngModel)]="rowData[col.field]"
                       required
                     />
@@ -454,7 +536,7 @@
                 </ng-container>
                 <br />
                 <small *ngIf="onValidationError" class="color-rd">
-                  {{ col.title }} must be filled out.
+                  {{ col.title }} must be filled out correctly.
                 </small>
               </ng-container>
             </ng-template>
@@ -610,3 +692,4 @@
     </form>
   </div>
 </p-dialog>
+<p-toast life="5000" position="top-center"></p-toast>
