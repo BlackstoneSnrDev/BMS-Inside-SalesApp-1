@@ -78,6 +78,7 @@ export class TableComponent {
     this.DataService.getTableCustomerHeader()
       .then((data) => {
         this.thData = data.sort((a, b) => a.element_order - b.element_order);
+        console.log( this.thData)
       })
       .then(() => {
         this.DataService.getTableData().subscribe((data) => {
@@ -99,21 +100,14 @@ export class TableComponent {
       .then(
         () => {
           for (let [i, v] of this.thData.entries()) {
-            if (v.field !== 'address') {
               this.newFormControl[v.field] = new FormControl('', [
                 Validators.required,
                 Validators.minLength(1),
               ]);
-            }
-            this.addressInputsForm.addControl(
-              'addressAddNewRecordField' + i,
-              new FormControl('', [
-                Validators.required,
-                Validators.minLength(1),
-              ])
-            );
+           
           }
           this.addNewRecordForm = new FormGroup(this.newFormControl);
+          console.log(this.addNewRecordForm)
         },
         (error) => {
           console.error(error);
@@ -212,12 +206,13 @@ export class TableComponent {
     this.tglAddNewRecord = !this.tglAddNewRecord;
   }
 
-  saveAddNewRecord(table: Table) {
+  saveAddNewRecord() {
     let value = this.addNewRecordForm.value;
     value['group'] = [];
-    this.DataService.addNewRecord(value);
 
+    this.DataService.addNewRecord(value);
     this.addNewRecordForm.reset();
+
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
@@ -228,6 +223,7 @@ export class TableComponent {
   cancelAddNewRecord() {
     this.tglAddNewRecord = false;
     this.addNewRecordForm.reset();
+    console.log(this.addNewRecordForm.value)
   }
 
   // Delete selection
@@ -622,9 +618,16 @@ export class TableComponent {
         this.selectedCountryCode;
     }
 
-    this.addressInputsForm.patchValue({
-      [this.addressFieldName]: newAddres,
-    });
+    let form = this.addNewRecordForm.contains(this.addressFieldName)
+    if(form){
+      this.addNewRecordForm.patchValue({
+        [this.addressFieldName]: newAddres
+      })
+    }else{
+      this.addressInputsForm.patchValue({
+        [this.addressFieldName]: newAddres
+      })
+    }
 
     this.tglModifyAddressForm = false;
     this.messageService.add({

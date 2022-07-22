@@ -151,27 +151,20 @@
 
                       <ng-container
                         *ngSwitchCase="'address'"
-                        [formGroup]="addressInputsForm"
                       >
-                      <span class="p-float-label address-add-record">
-
                           <textarea
-                            id="lbl-address-field"
                             pInputText
                             class="input-neumorphism txtFormComponent"
                             (click)="
                               toggleModifyAddressForm(
-                                'addressAddNewRecordField' + newtdIndex
+                                newtd.field
                               )
                             "
-                            [readonly]="true"
                             autocomplete="off"
-                            formControlName="addressAddNewRecordField{{
-                              newtdIndex
-                            }}"
+                            readonly="true"
+                            placeholder="{{ newtd.title }}"
+                            formControlName="{{ newtd.field }}"
                           ></textarea>
-                          <label for="lbl-address-field">{{ newtd.title }}</label>
-                        </span>
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'email'">
@@ -211,7 +204,7 @@
               <div class="form-row">
                 <div class="col">
                   <button
-                    (click)="saveAddNewRecord(dataTable)"
+                    (click)="saveAddNewRecord()"
                     class="width-50 show-line-b txt-center"
                     value="save"
                     [disabled]="!addNewRecordForm.valid"
