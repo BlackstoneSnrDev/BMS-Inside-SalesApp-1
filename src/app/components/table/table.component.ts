@@ -24,6 +24,7 @@ export class TableComponent {
 
   public tdData: any = [];
   public clonedtdData: any = {};
+
   public modifyTable: string = 'all';
 
   public tbSelectedRows: any = [];
@@ -31,7 +32,6 @@ export class TableComponent {
 
   public tbGroups: any;
   public tbGroupsLength: number = 0;
-  public clearInput: any;
 
   public tglUploadList: boolean = false;
   public tglCreateNewGroup: boolean = false;
@@ -45,6 +45,8 @@ export class TableComponent {
   public createNewGroup = new FormControl();
   public renameGroup = new FormControl();
   public searchInTable = new FormControl();
+  public groupSelect = new FormControl();
+  public ungroupSelect = new FormControl();
 
   // Address type
   public tglModifyAddressForm: boolean = false;
@@ -67,13 +69,12 @@ export class TableComponent {
 
   ngOnInit() {
     this.primengConfig.ripple = false;
+
     this.UsersService.userInfo.subscribe(
       (userInfo) => (this.userInfo = userInfo)
     );
-    console.log(this.userInfo);
-    //this.DataService.populateTemplateWithCustomers();
-    this.addressInputsForm = new FormGroup({});
 
+    this.addressInputsForm = new FormGroup({});
     this.DataService.getTableCustomerHeader()
       .then((data) => {
         this.thData = data.sort((a, b) => a.element_order - b.element_order);
@@ -81,7 +82,6 @@ export class TableComponent {
       .then(() => {
         this.DataService.getTableData().subscribe((data) => {
           this.tdData = data;
-          console.log(this.tdData);
           this.tdData.forEach((element: any, index: number) => {
             this.tdData[index]['slIndex'] = index;
           });
@@ -133,22 +133,14 @@ export class TableComponent {
 
   clear(table: Table) {
     table.clear();
-    this.modifyTable = 'all';
     this.tbSelectedRows = [];
-    this.clearInput = '';
     this.searchInTable.setValue('');
     this.renameGroup.setValue('');
     this.createNewGroup.setValue('');
-    table.sortOrder = -1;
-    table.sortField = '';
-    table.reset();
+    this.tglMenuTable = false;
 
-    let modifyLastElmActive = document.getElementsByClassName(
-      'button-neumorphism-active'
-    );
-    while (modifyLastElmActive.length > 0) {
-      modifyLastElmActive[0].classList.remove('button-neumorphism-active');
-    }
+    this.modifyTableView('all');
+
     table.filterGlobal('', 'contains');
 
     this.messageService.add({
@@ -159,17 +151,17 @@ export class TableComponent {
   }
 
   // Table on row CRUD
-  onRowEditInit(tdData: any, id: number) {
+  onRowEditInit(tdData: any, index: any) {
     this.addressInputsForm.addControl(
-      'addressTableField' + id,
+      'addressTableField' + index,
       new FormControl('', [Validators.required, Validators.minLength(1)])
     );
-    this.clonedtdData[tdData.id] = { ...tdData };
+
+    this.clonedtdData[index] = { ...tdData };
+    console.log(this.clonedtdData[index]);
   }
 
   onRowEditSave(tdData: any, index: number) {
-    console.log(tdData, index);
-
     this.addressInputsForm.removeControl('addressTableField' + index);
 
     let modifyLastElmActive = (
@@ -183,10 +175,11 @@ export class TableComponent {
     }
   }
 
-  onRowEditCancel(tdData: any, index: number) {
+  onRowEditCancel(index: number) {
     this.addressInputsForm.removeControl('addressTableField' + index);
-    this.tdData[index] = this.clonedtdData[tdData.id];
-    delete this.tdData[tdData.id];
+
+    this.tdData[index] = this.clonedtdData[index];
+    delete this.clonedtdData[index];
   }
 
   onRowDeleteRow(uid: any) {
@@ -256,9 +249,9 @@ export class TableComponent {
             severity: 'success',
             summary: 'Service Message',
             detail:
-              '<b>(' +
+              '(' +
               this.tbSelectedRows.length +
-              ')</b> records were deleted successfully.',
+              ') record(s) were deleted successfully.',
           });
 
           this.tbSelectedRows = [];
@@ -269,9 +262,7 @@ export class TableComponent {
         severity: 'error',
         summary: 'Service Message',
         detail:
-          'There are <b>' +
-          this.tbSelectedRows.length +
-          '</b> records selected.',
+          'There are ' + this.tbSelectedRows.length + ' record(s) selected.',
       });
     }
   }
@@ -288,36 +279,36 @@ export class TableComponent {
 
   saveCreateNewGroup() {
     let groupName = this.createNewGroup.value;
-    if (!groupName) {
-      this.onValidationError = '*Group name must be specified.';
-      setTimeout(() => {
-        this.onValidationError = '';
-      }, 2000);
-    } else {
-      let rowUidArray: any[] = [];
-      this.tbSelectedRows.map((row: any) => {
-        rowUidArray.push(row.uid);
-      });
 
-      this.DataService.createNewCustomerGroup(groupName, rowUidArray);
+    let rowUidArray: any[] = [];
+    this.tbSelectedRows.map((row: any) => {
+      rowUidArray.push(row.uid);
+    });
 
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Service Message',
-        detail:
-          'New group was created as <b>"' + groupName + '"</b> successfully.',
-      });
+    this.DataService.createNewCustomerGroup(groupName, rowUidArray);
 
-      this.tglCreateNewGroup = false;
-      this.createNewGroup.setValue('');
-      this.onValidationError = '';
-    }
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'New group was created as "' + groupName + '" successfully.',
+    });
+
+    let newGroupId = '';
+    setTimeout(() => {
+      let newGroupIndex = this.tbGroups.findIndex(
+        (i: any) => i.group_name === groupName
+      );
+      newGroupId = this.tbGroups[newGroupIndex].group_id;
+      this.modifyTableView(newGroupId);
+    }, 500);
+
+    this.tglCreateNewGroup = false;
+    this.createNewGroup.setValue('');
   }
 
   cancelCreateNewGroup() {
     this.tglCreateNewGroup = false;
     this.createNewGroup.setValue('');
-    this.onValidationError = '';
   }
 
   // Edit group created
@@ -330,49 +321,42 @@ export class TableComponent {
 
   saveRenameGroup(groupId: number, event: Event) {
     let groupName = this.renameGroup.value;
-    if (!groupName) {
-      this.onValidationError = '*Group name must be specified.';
-      setTimeout(() => {
-        this.onValidationError = '';
-      }, 2000);
-    } else {
-      let group = this.tbGroups.findIndex((i: any) => i.group_id === groupId);
-      let nameg = this.tbGroups[group]['group_name'];
 
-      this.confirmationService.confirm({
-        message:
-          'Are you sure you want to rename <b>' +
-          nameg +
-          '</b> to "<b>' +
-          groupName +
-          '</b>"?',
-        header: 'Renaming group',
-        accept: () => {
-          this.tbGroups[group]['group_name'] = groupName;
+    let group = this.tbGroups.findIndex((i: any) => i.group_id === groupId);
+    let nameg = this.tbGroups[group]['group_name'];
 
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Service Message',
-            detail:
-              'Group <b>' +
-              nameg +
-              '</b> was renamed as <b>"' +
-              groupName +
-              '"</b> successfully.',
-          });
+    this.confirmationService.confirm({
+      message:
+        'Are you sure you want to rename <b>' +
+        nameg +
+        '</b> to "<b>' +
+        groupName +
+        '</b>"?',
+      header: 'Renaming group',
+      accept: () => {
+        this.tbGroups[group]['group_name'] = groupName;
 
-          let tglEdit = (
-            event.target as HTMLInputElement
-          ).parentElement?.previousElementSibling?.classList.toggle('hide');
-          let tglEdit2 = (
-            event.target as HTMLInputElement
-          ).parentElement?.classList.toggle('hide');
-        },
-      });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail:
+            'Group ' +
+            nameg +
+            ' was renamed as "' +
+            groupName +
+            '" successfully.',
+        });
 
-      this.renameGroup.setValue('');
-      this.onValidationError = '';
-    }
+        let tglEdit = (
+          event.target as HTMLInputElement
+        ).parentElement?.previousElementSibling?.classList.toggle('hide');
+        let tglEdit2 = (
+          event.target as HTMLInputElement
+        ).parentElement?.classList.toggle('hide');
+      },
+    });
+
+    this.renameGroup.setValue('');
   }
 
   cancelRenameGroup(event: Event) {
@@ -383,32 +367,48 @@ export class TableComponent {
       event.target as HTMLInputElement
     ).parentElement?.classList.toggle('hide');
     this.renameGroup.setValue('');
-    this.onValidationError = '';
   }
 
-  deleteGroup(groupId: any, groupName: string) {
+  deleteGroup(groupId: any, groupName: string, event: string) {
+    let records = 0;
+
+    for (let i = 0; i < this.tdData.length; i++) {
+      let recordsGrouped = this.tdData[i].group.includes(groupId);
+      if (recordsGrouped) {
+        records += 1;
+      }
+    }
+
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete "<b>' + groupName + '</b>"?',
+      message:
+        '<b>"' +
+        groupName +
+        '"</b> group has ' +
+        records +
+        ' records grouped. Do you want to delete it?',
       header: 'Deleting group',
       accept: () => {
         this.DataService.deleteCustomerGroup(groupId);
 
-        this.modifyTable = 'all';
+        this.modifyTableView('all');
+
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
-          detail: '<b>"' + groupName + '"</b> was deleted successfully.',
+          detail: '"' + groupName + '" was deleted successfully.',
         });
       },
+      reject: () => {
+        this.modifyTableView(groupId);
+      },
     });
-
-    this.onValidationError = '';
-    this.clearInput = '';
   }
 
   // Add selection to group
-  addToExistingGroup(groupId: any) {
-    this.clearInput = '';
+  addToExistingGroup() {
+    let groupId = this.groupSelect.value;
+    console.log(groupId);
+    this.groupSelect.setValue('');
 
     this.confirmationService.confirm({
       message:
@@ -417,104 +417,98 @@ export class TableComponent {
         '</b> records?',
       header: 'Grouping records',
       accept: () => {
+        let groupIndex = this.tbGroups.findIndex(
+          (i: any) => i.group_id === groupId
+        );
+        let groupName = this.tbGroups[groupIndex]['group_name'];
+
         let rowUidArray: any[] = [];
         this.tbSelectedRows.map((row: any) => {
           rowUidArray.push(row.uid);
         });
         this.DataService.addToExistingCustomerGroup(groupId, rowUidArray);
 
-        let groupIndex = this.tbGroups.findIndex(
-          (i: any) => i.group_id === groupId
-        );
-        let groupName = this.tbGroups[groupIndex]['group_name'];
-
+        console.log(this.tbSelectedRows);
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
           detail:
-            '<b>(' +
+            '(' +
             this.tbSelectedRows.length +
-            ')</b> records were added to <b>"' +
+            ') record(s) were added to "' +
             groupName +
-            '"</b> successfully.',
+            '" successfully.',
         });
-
-        this.clearInput = '';
       },
     });
-
-    this.clearInput = '';
   }
 
   // Delete selection from group
-  ungroupSelection(groupId: any, event: string) {
+  ungroupSelection() {
+    let groupId = this.ungroupSelect.value;
+
     let groupIndex = this.tbGroups.findIndex(
       (i: any) => i.group_id === groupId
     );
-    if (event === 'deleteGroup') {
-      for (let i = 0; i < this.tdData.length; i++) {
-        let groupIndex = this.tdData[i].group.findIndex(
-          (i: any) => i === groupId
-        );
-        this.tdData[i].group.splice(groupIndex, 1);
-      }
-    } else {
-      this.confirmationService.confirm({
-        message:
-          'Are you sure you want to ungroup <b>' +
-          this.tbSelectedRows.length +
-          '</b> records?',
-        header: 'Ungrouping records',
-        accept: () => {
-          let groupName = this.tbGroups[groupIndex]['group_name'];
+    this.confirmationService.confirm({
+      message:
+        'Are you sure you want to ungroup <b>(' +
+        this.tbSelectedRows.length +
+        ')</b> record(s)?',
+      header: 'Ungrouping records',
+      accept: () => {
+        let groupName = this.tbGroups[groupIndex]['group_name'];
 
-          let rowUidArray: any[] = [];
-          this.tbSelectedRows.map((row: any) => {
-            rowUidArray.push(row.uid);
-          });
-          this.DataService.removeFromCustomerGroup(groupId, rowUidArray);
+        let rowUidArray: any[] = [];
+        this.tbSelectedRows.map((row: any) => {
+          rowUidArray.push(row.uid);
+        });
+        this.DataService.removeFromCustomerGroup(groupId, rowUidArray);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail:
+            '(' +
+            this.tbSelectedRows.length +
+            ') record(s) were removed from "' +
+            groupName +
+            '" successfully.',
+        });
 
-          this.modifyTable = 'all';
-          let modifyLastElmActive = document.getElementsByClassName(
-            'button-neumorphism-active'
-          );
-          while (modifyLastElmActive.length > 0) {
-            modifyLastElmActive[0].classList.remove(
-              'button-neumorphism-active'
-            );
+        let records = 0;
+        setTimeout(() => {
+          for (let i = 0; i < this.tdData.length; i++) {
+            let recordsGrouped = this.tdData[i].group.includes(groupId);
+            if (recordsGrouped) {
+              records += 1;
+            }
           }
-
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Service Message',
-            detail:
-              '<b>(' +
-              this.tbSelectedRows.length +
-              ')</b> records were removed from <b>"' +
-              groupName +
-              '"</b> successfully.',
-          });
-        },
-      });
-    }
-
-    this.clearInput = '';
+          if (records == 0) {
+            this.deleteGroup(groupId, groupName, 'noRecordsInside');
+          }
+        }, 500);
+      },
+    });
+    this.ungroupSelect.setValue('');
   }
 
   // Change normal view to group selected view}
-  modifyTableView(modifyBy: string, event: Event) {
+  modifyTableView(modifyById: string) {
     let modifyLastElmActive = document.getElementsByClassName(
       'button-neumorphism-active'
     );
+
     while (modifyLastElmActive.length > 0) {
       modifyLastElmActive[0].classList.remove('button-neumorphism-active');
     }
 
-    let setActiveElm = (event.target as HTMLInputElement).classList.toggle(
-      'button-neumorphism-active'
-    );
+    document
+      .getElementById(modifyById)
+      ?.classList.add('button-neumorphism-active');
 
-    this.modifyTable = modifyBy;
+    this.modifyTable = modifyById;
+
+    console.log(document.getElementById(modifyById));
   }
 
   log = (data: any) => console.log(data);

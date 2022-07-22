@@ -24,7 +24,7 @@
           <i class="bi bi-gear-wide-connected"></i> Groups
           <i class="bi bi-caret-right-fill"></i>
         </button>
-        <div [ngClass]="tglGroupMenu ? 'show' : 'hide'">
+        <div class="tglGroupMenu" [ngClass]="tglGroupMenu ? 'show' : 'hide'">
           <div class="dropdown">
             <button
               class="button-neumorphism margin-lt"
@@ -35,9 +35,6 @@
             <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
               <div class="dropdown-content create-group-container">
                 <div class="width-100 dropdown-content-container elm-rounded">
-                  <small *ngIf="onValidationError" class="color-rd">
-                    {{ onValidationError }}
-                  </small>
                   <mat-form-field appearance="standard">
                     <mat-label>Create new group</mat-label>
                     <input
@@ -55,6 +52,12 @@
                   </mat-form-field>
                   <button
                     class="button-neumorphism elm-rounded width-50 margin-tp"
+                    [disabled]="!createNewGroup.valid"
+                    [ngClass]="
+                      !createNewGroup.valid
+                        ? 'button-neumorphism-disabled'
+                        : 'button-neumorphism'
+                    "
                     (click)="saveCreateNewGroup()"
                   >
                     Save
@@ -69,37 +72,25 @@
               </div>
             </div>
           </div>
-          <mat-form-field appearance="fill" class="margin-tp">
-            <mat-label>(&#x2b;) Add to group</mat-label>
-            <mat-select
-              (selectionChange)="addToExistingGroup($event.value)"
-              [(ngModel)]="clearInput"
-            >
-              <mat-option selected hidden></mat-option>
-              <mat-option
-                [value]="groupOpt.group_id"
-                *ngFor="let groupOpt of tbGroups"
-              >
-                {{ groupOpt.group_name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <p-dropdown
+            [options]="tbGroups"
+            class="button-neumorphism margin-lt"
+            (onChange)="addToExistingGroup()"
+            optionLabel="group_name"
+            optionValue="group_id"
+            placeholder="Add to group"
+            [formControl]="groupSelect"
+          ></p-dropdown>
 
-          <mat-form-field appearance="fill" class="margin-tp">
-            <mat-label>(&#xd7;) Delete from group</mat-label>
-            <mat-select
-              (selectionChange)="ungroupSelection($event.value, 'selection')"
-              [(ngModel)]="clearInput"
-            >
-              <mat-option selected hidden></mat-option>
-              <mat-option
-                [value]="groupOpt.group_id"
-                *ngFor="let groupOpt of tbGroups"
-              >
-                {{ groupOpt.group_name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <p-dropdown
+            [options]="tbGroups"
+            class="button-neumorphism margin-lt"
+            (onChange)="ungroupSelection()"
+            optionLabel="group_name"
+            optionValue="group_id"
+            placeholder="Delete from group"
+            [formControl]="ungroupSelect"
+          ></p-dropdown>
         </div>
       </div>
       <div [ngClass]="tglAddNewRecord ? 'show' : 'hide'">
@@ -162,18 +153,11 @@
                         *ngSwitchCase="'address'"
                         [formGroup]="addressInputsForm"
                       >
-                        <div class="p-field">
-                          <label
-                            for="lbl-address-field"
-                            class="block lblAddress"
-                            >{{ newtd.title }}</label
-                          >
+                      <span class="p-float-label address-add-record">
 
                           <textarea
                             id="lbl-address-field"
                             pInputText
-                            rows="1"
-                            cols="2"
                             class="input-neumorphism txtFormComponent"
                             (click)="
                               toggleModifyAddressForm(
@@ -181,13 +165,13 @@
                               )
                             "
                             [readonly]="true"
-                            placeholder="New {{ newtd.title | lowercase }}"
                             autocomplete="off"
                             formControlName="addressAddNewRecordField{{
                               newtdIndex
                             }}"
                           ></textarea>
-                        </div>
+                          <label for="lbl-address-field">{{ newtd.title }}</label>
+                        </span>
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'email'">
@@ -313,15 +297,17 @@
       </button>
       <button
         pRipple
-        (click)="modifyTableView('all', $event)"
+        id="all"
+        (click)="modifyTableView('all')"
         class="button-neumorphism margin-lt margin-bt"
       >
         All
       </button>
       <div class="dropdown" *ngFor="let groupOpt of tbGroups">
         <button
+          id="{{ groupOpt.group_id }}"
           pRipple
-          (click)="modifyTableView(groupOpt.group_id, $event)"
+          (click)="modifyTableView(groupOpt.group_id)"
           class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt"
         >
           {{ groupOpt.group_name }}
@@ -336,9 +322,6 @@
               Rename group
             </div>
             <div class="rename-group-container hide">
-              <small *ngIf="onValidationError" class="color-rd">
-                {{ onValidationError }}
-              </small>
               <mat-form-field appearance="standard">
                 <mat-label>Rename group</mat-label>
                 <input
@@ -348,14 +331,17 @@
                   class="not-rounded"
                   autocomplete="off"
                   #renamedGroup
-                  id="rename {{ groupOpt.group_id }}"
-                  name="renamedGroup"
                   [formControl]="renameGroup"
                   required
                 />
               </mat-form-field>
 
-              <button
+              <button [disabled]="!renameGroup.valid"
+              [ngClass]="
+                !renameGroup.valid
+                  ? 'button-neumorphism-disabled'
+                  : 'button-neumorphism'
+              "
                 class="button-neumorphism elm-rounded width-50"
                 (click)="saveRenameGroup(groupOpt.group_id, $event)"
               >
@@ -372,7 +358,7 @@
           <div class="width-100 delete-container">
             <div
               class="width-100 dropdown-content-container"
-              (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name)"
+              (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name, '')"
             >
               <i class="bi bi-trash-fill"></i>
               Delete group
@@ -384,7 +370,7 @@
 
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th class="sticky-column-checkboxes sticky-main">
+        <th class="sticky-column-checkboxes sticky-checkboxes-main">
           <p-tableHeaderCheckbox
             (click)="toggleTableMenu()"
           ></p-tableHeaderCheckbox>
@@ -455,7 +441,7 @@
             *ngIf="editing"
             type="button"
             pCancelEditableRow
-            (click)="onRowEditCancel(rowData, rowIndex)"
+            (click)="onRowEditCancel(rowIndex)"
             class="iconbutton-neumorphism"
           >
             <i class="pi pi-times"></i>
