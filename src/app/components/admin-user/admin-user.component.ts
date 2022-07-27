@@ -14,6 +14,48 @@ import { UsersService } from "../../services/auth.service";
 
 export class AdminUserComponent implements OnInit {
 
+//     <<<<<<< main
+//   public tdData: any;
+//   public thData: any;
+//   public selectElmType: any;
+//   public clonedTdData: any = {};
+//   public tbSelectedRows: any;
+//   public loading: boolean = true;
+
+//   public tglUploadList: boolean = false;
+//   public tglAddNewUser: boolean = false;
+//   public addNewUserForm!: FormGroup;
+//   public newFormControl: any = {};
+
+//   public onValidationError: string = '';
+//   public onValidationMsg: string = '';
+
+//   public dbObjKey: any;
+//   public userInfo: any;
+
+//   constructor(
+//     private dataService: DataService,
+//     private confirmationService: ConfirmationService,
+//     private usersService: UsersService,
+//     private messageService: MessageService
+//   ) {}
+
+//   ngOnInit() {
+//     this.dataService
+//       .getUserTableHeader()
+//       .then((data: any) => {
+//         this.thData = data.sort(
+//           (a: { element_order: number }, b: { element_order: number }) =>
+//             a.element_order - b.element_order
+//         );
+//         console.log(this.thData);
+//         for (let i of this.thData) {
+//           this.newFormControl[i.field] = new FormControl('', [
+//             Validators.required,
+//             Validators.minLength(1),
+//           ]);
+// =======
+
     public tdData: any;
     public thData: any;
     public selectElmType: any;
