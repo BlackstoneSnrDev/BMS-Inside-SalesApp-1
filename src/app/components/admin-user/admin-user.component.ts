@@ -3,15 +3,18 @@ import { DataService } from '../../services/services.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
-import { UsersService } from "../../services/auth.service";
-
+import { UsersService } from '../../services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
-    selector: 'admin-user-component',
-    templateUrl: './admin-user.component.html',
-    styleUrls: ['./admin-user.component.css', '../../css/neumorphism.component.css', '../../components/table/table.component.css']
+  selector: 'admin-user-component',
+  templateUrl: './admin-user.component.html',
+  styleUrls: [
+    './admin-user.component.css',
+    '../../css/neumorphism.component.css',
+    '../../components/table/table.component.css',
+  ],
 })
-
 export class AdminUserComponent implements OnInit {
 
 //     <<<<<<< main
@@ -61,6 +64,7 @@ export class AdminUserComponent implements OnInit {
     public selectElmType: any;
     public clonedTdData: any = {};
     public tbSelectedRows: any;
+  public loading: boolean = true;
 
     public tglUploadList: boolean = false;
     public tglAddNewUser: boolean = false;
@@ -116,73 +120,68 @@ export class AdminUserComponent implements OnInit {
 
             delete this.clonedTdData[tdData.id];
 
-            console.log('clicked')
-        }
-
+      console.log('clicked');
     }
+  }
 
-    onRowEditCancel(tdData: any, index: number) {
+  onRowEditCancel(tdData: any, index: number) {
+    this.tdData[index] = this.clonedTdData[tdData.id];
+    delete this.tdData[tdData.id];
+  }
 
-        this.tdData[index] = this.clonedTdData[tdData.id];
-        delete this.tdData[tdData.id];
+  onRowDeleteRow(id: any) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this user?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.tdData = this.tdData.filter((i: any) => ![id].includes(i.slIndex));
+        this.tbSelectedRows = [];
 
-    }
-
-    onRowDeleteRow(id: any) {
-
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete this user?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.tdData = this.tdData.filter((i: any) => ![id].includes(i.slIndex));
-                this.tbSelectedRows = [];
-                this.onValidationMsg = 'Record was deleted successfully.'
-                setTimeout(() => {
-                    this.onValidationMsg = "";
-                }, 2000);
-            }
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Record was deleted successfully.',
         });
-    }
+      },
+    });
+  }
 
-    toggleAddNewUser() {
-        console.log(this.addNewUserForm);
-        this.tglAddNewUser = !this.tglAddNewUser
-    }
+  toggleAddNewUser() {
+    console.log(this.addNewUserForm);
+    this.tglAddNewUser = !this.tglAddNewUser;
+  }
 
-    saveAddNewUser(table: Table) {
+  saveAddNewUser(table: Table) {
+    let value = this.addNewUserForm.value;
 
-        let value = this.addNewUserForm.value;
+    this.dataService.createUser(value).subscribe((res: any) => {
+      console.log(res);
+    });
 
-        this.dataService.createUser(value).subscribe((res: any) => {console.log(res);})
+    this.addNewUserForm.reset();
 
-        this.addNewUserForm.reset();
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'New user was added successfully.',
+    });
+  }
 
-        this.onValidationMsg = 'New user was added successfully.'
-        setTimeout(() => {
-            this.onValidationMsg = "";
-        }, 5000);
+  cancelAddNewUser() {
+    this.tglAddNewUser = false;
+    this.addNewUserForm.reset();
+  }
 
-    }
+  toggleUploadList() {
+    this.tglUploadList = !this.tglUploadList;
+  }
 
-    cancelAddNewUser() {
+  getFileUploaded(event: Event) {
+    console.log(event);
+  }
 
-        this.tglAddNewUser = false
-        this.addNewUserForm.reset();
-
-    }
-
-    toggleUploadList() {
-
-        this.tglUploadList = !this.tglUploadList
-
-    }
-
-    getFileUploaded(event: Event) {
-
-        console.log(event)
-    }
-
-    log(val: any) { console.log(val); }
-
+  log(val: any) {
+    console.log(val);
+  }
 }

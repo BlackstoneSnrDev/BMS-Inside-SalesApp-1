@@ -41,3 +41,10 @@ form {
 ::ng-deep.p-float-label > label {
   color: #44476a;
 }
+
+.admin-user-container {
+  min-width: 804px !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  margin-bottom: 1rem !important;
+}

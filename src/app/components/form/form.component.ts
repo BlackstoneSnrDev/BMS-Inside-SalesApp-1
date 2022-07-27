@@ -2,13 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../../services/services.service';
 import { UsersService } from '../../services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
-    selector: 'form-component',
-    templateUrl: './form.component.html',
-    styleUrls: ['./form.component.css', '../../css/neumorphism.component.css'],
+  selector: 'form-component',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css', '../../css/neumorphism.component.css'],
 })
-
 export class FormComponent implements OnInit {
 
 //     <<<<<<< main
@@ -222,6 +222,13 @@ export class FormComponent implements OnInit {
 
     public onValidationMsg: string = '';
     public tglEditLayout: boolean = false;
+    
+     public filterGroupList: any;
+  public tbGroups: any;
+  public userInfo: any;
+  public groupSelected = new FormControl();
+  public tbGroupActive: any = [];
+  public defaultGroup: boolean = true;
 
     constructor(private dataService: DataService, private usersService: UsersService) { }
 
@@ -234,9 +241,53 @@ export class FormComponent implements OnInit {
         }
         this.callDataForm = new FormGroup(this.newFormControl);
 
-
+ this.dataService.getCustomerGroups().subscribe((data) => {
+      this.tbGroups = data;
+    });
     }
 
+getGroupSelected() {
+    let groupSelected = this.tbGroups.filter(
+      (v: any) => v.group_id === this.groupSelected.value
+    );
+
+    this.defaultGroup = false;
+    // Show only one group
+    // this.tbGroupActive = groupSelected
+
+    // Show multiples groups
+    let groupId = '';
+    let groupName = '';
+    groupSelected.forEach((e: any) => {
+      groupId = e.group_id;
+      groupName = e.group_name;
+    });
+
+    this.tbGroupActive.push({ group_id: groupId, group_name: groupName });
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Group "' + groupName + '" was added to calling.',
+    });
+  }
+
+  removeGroupSelected(groupId: string) {
+    this.tbGroupActive = this.tbGroupActive.filter(
+      (v: any) => v.group_id !== groupId
+    );
+
+    this.tbGroupActive.length > 0
+      ? (this.defaultGroup = false)
+      : (this.defaultGroup = true);
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Group was removed from calling.',
+    });
+  }
+  
     toggleEditFields() {
 
         this.tgleditField = !this.tgleditField;
@@ -299,64 +350,87 @@ export class FormComponent implements OnInit {
             (response) => {
                 
                 this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
-                this.states = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
-
-                for (let i of this.states) {
-                    this.states = i.states
-                }
-                console.log(this.states)
-
-            },
-
-            (error) => {
-                console.error(error);
-            }
-
+                this.states = response.data.filter((i: any) =>  i.iso2.includes(this.selectedCountryCode)
         );
-    }
 
-    saveAddressModified(city: string, street: string, apt: string, zip: string) {
-
-        this.selectedStateCode = this.addressForm.get('slcState')!.value
-
-        this.onValidationMsg = "Address was added successfully.";
-        setTimeout(() => {
-            this.onValidationMsg = "";
-        }, 6000);
-
-        let newAddres
-        if (apt) {
-            newAddres = street + ', ' + apt + ', ' + city + ', ' + this.selectedStateCode + ', ' + zip + ', ' + this.selectedCountryCode
-            
-        } else {
-            newAddres = street + ', ' + city + ', ' + this.selectedStateCode + ', ' + zip  + ', ' + this.selectedCountryCode
+        for (let i of this.states) {
+          this.states = i.states;
         }
+        console.log(this.states);
+      },
 
-        this.callDataForm.patchValue({
-            [this.addressFieldName]: newAddres
-        });
-        this.formElement[this.addressFieldId]['element_value'] = newAddres
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
-        this.tglModifyAddressForm = false
-        console.log(this.formElement)
+  saveAddressModified(city: string, street: string, apt: string, zip: string) {
+    this.selectedStateCode = this.addressForm.get('slcState')!.value;
+
+    let newAddres;
+    if (apt) {
+      newAddres =
+        street +
+        ', ' +
+        apt +
+        ', ' +
+        city +
+        ', ' +
+        this.selectedStateCode +
+        ', ' +
+        zip +
+        ', ' +
+        this.selectedCountryCode;
+    } else {
+      newAddres =
+        street +
+        ', ' +
+        city +
+        ', ' +
+        this.selectedStateCode +
+        ', ' +
+        zip +
+        ', ' +
+        this.selectedCountryCode;
     }
 
-    cancelEditFields() {
+    this.callDataForm.patchValue({
+      [this.addressFieldName]: newAddres,
+    });
+    // this.formElement[this.addressFieldId]['element_value'] = newAddres;
 
-        for (let i of this.formElement) {
-            this.callDataForm.patchValue({
-                [i.element_placeholder]: i.element_value
-            });
-        }
-        this.tgleditField = false;
+    this.tglModifyAddressForm = false;
+    console.log(this.formElement);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Address was added successfully.',
+    });
+  }
 
+  cancelEditFields() {
+    for (let i of this.formElement) {
+      this.callDataForm.patchValue({
+        [i.element_placeholder]: i.element_value,
+      });
     }
+    this.tgleditField = false;
+  }
 
-    saveEditFields() {
+  saveEditFields() {
+    console.log(this.callDataForm.value);
+    this.tgleditField = false;
+  }
 
-        console.log(this.callDataForm.value)
-        this.tgleditField = false;
-    }
+  groupFilter(array: any, searching: any): void {
+    this.filterGroupList = array.filter((i: any) =>
+      i.group_name.toLowerCase().includes(searching.toLowerCase())
+    );
+    console.log(this.filterGroupList);
+  }
 
-    log(val: any) { console.log(val); }
+  log(val: any) {
+    console.log(val);
+  }
 }
