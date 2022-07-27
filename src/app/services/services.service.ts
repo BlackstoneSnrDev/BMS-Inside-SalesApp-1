@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, from } from 'rxjs'
+import { map, Observable, from, BehaviorSubject } from 'rxjs'
 import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
 import {
@@ -38,6 +38,12 @@ export class DataService {
   public currentUid: string;
   public activeTemplate: any;
 
+  private activeDialSessionArray = new BehaviorSubject<any>(null);
+  private activeCall = new BehaviorSubject<any>(null);
+
+  dialSessionArray = this.activeDialSessionArray.asObservable();
+  public currentCall = this.activeCall.asObservable();
+
   constructor(
 
     private _http: HttpClient,
@@ -66,6 +72,46 @@ export class DataService {
     this.currentUid = this.userInfo.uid;
 
   }
+
+  setActiveCall(customerId: string) {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).ref
+    data.get().then((doc: any) => {
+        this.activeCall.next(doc.data());
+    })
+  }
+
+
+
+getDialingSessionTemplate() {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref;
+    return data.get().then((doc: any) => {
+        let filteredTemplateData: any[] = [];
+        Object.values(doc.data()).forEach((item) => {
+            if (typeof item === 'object'){
+                filteredTemplateData.push(item);
+            }
+        })
+        return filteredTemplateData;
+    })
+}
+
+getActiveGroupCustomerArray(): Observable<any> {
+    
+        let withGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+            map( actions => actions.filter(a => a.payload.doc.data()['group'].includes(this.userInfo.activeGroup)).map(a => a.payload.doc.data()))
+        )
+
+        let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+            map( actions => actions.map(a => a.payload.doc.data() ))
+        )
+    
+        if (this.userInfo.activeGroup) {
+            return withGroup;
+        } else {
+            return noGroup;
+        }
+
+}
 
   createUser(data: any) {
     console.log(data);

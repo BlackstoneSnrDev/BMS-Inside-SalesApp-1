@@ -10,7 +10,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "public",
+    "public": "dist/bms-inside-salesapp-1",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -44,6 +44,9 @@
     },
     "ui": {
       "enabled": true
+    },
+    "hosting": {
+      "port": 5000
     }
   }
 }

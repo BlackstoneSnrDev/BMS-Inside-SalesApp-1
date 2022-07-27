@@ -16,82 +16,67 @@ import { MessageService } from 'primeng/api';
   ],
 })
 export class AdminUserComponent implements OnInit {
-  public tdData: any;
-  public thData: any;
-  public selectElmType: any;
-  public clonedTdData: any = {};
-  public tbSelectedRows: any;
+
+    public tdData: any;
+    public thData: any;
+    public selectElmType: any;
+    public clonedTdData: any = {};
+    public tbSelectedRows: any;
   public loading: boolean = true;
 
-  public tglUploadList: boolean = false;
-  public tglAddNewUser: boolean = false;
-  public addNewUserForm!: FormGroup;
-  public newFormControl: any = {};
+    public tglUploadList: boolean = false;
+    public tglAddNewUser: boolean = false;
+    public addNewUserForm!: FormGroup;
+    public newFormControl: any = {};
 
-  public onValidationError: string = '';
-  public onValidationMsg: string = '';
+    public onValidationError: string = "";
+    public onValidationMsg: string = "";
 
-  public dbObjKey: any;
-  public userInfo: any;
+    public dbObjKey: any;
+    public userInfo: any;
 
-  constructor(
-    private dataService: DataService,
-    private confirmationService: ConfirmationService,
-    private usersService: UsersService,
-    private messageService: MessageService
-  ) {}
+    constructor(private dataService: DataService, private confirmationService: ConfirmationService, private usersService: UsersService) { }
 
-  ngOnInit() {
-    this.dataService
-      .getUserTableHeader()
-      .then((data: any) => {
-        this.thData = data.sort(
-          (a: { element_order: number }, b: { element_order: number }) =>
-            a.element_order - b.element_order
-        );
-        console.log(this.thData);
-        for (let i of this.thData) {
-          this.newFormControl[i.field] = new FormControl('', [
-            Validators.required,
-            Validators.minLength(1),
-          ]);
-        }
-        this.addNewUserForm = new FormGroup(this.newFormControl);
-      })
-      .then(() => {
-        this.dataService.getAllUsers().subscribe((data: any) => {
-          this.tdData = data;
-          this.loading = false;
-          this.tdData.forEach((element: any, index: number) => {
-            this.tdData[index]['slIndex'] = index;
-          });
-        });
-      })
-      .then(() => {
-        for (let i of this.thData) {
-          this.newFormControl[i.field] = new FormControl('', [
-            Validators.required,
-            Validators.minLength(1),
-          ]);
-        }
-        this.addNewUserForm = new FormGroup(this.newFormControl);
-      });
-  }
+    ngOnInit() {
 
-  // Table on row CRUD
-  onRowEditInit(tdData: any, id: number) {
-    this.clonedTdData[tdData.id] = { ...tdData };
-  }
+        this.dataService.getUserTableHeader().then((data: any) => {
+            this.thData = data.sort((a: { element_order: number; }, b: { element_order: number; }) => a.element_order - b.element_order);
+            console.log(this.thData)
+            for (let i of this.thData) {
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+            }
+            this.addNewUserForm = new FormGroup(this.newFormControl);
+        }).then(() => {
+            this.dataService.getAllUsers().subscribe((data: any) => {
+                this.tdData = data
+                this.tdData.forEach((element: any, index: number) => {
+                    this.tdData[index]["slIndex"] = index;
+                })
+            })
+        }).then(() => {
+            for (let i of this.thData) {
+                this.newFormControl[i.field] = new FormControl('', [Validators.required, Validators.minLength(1)])
+            }
+            this.addNewUserForm = new FormGroup(this.newFormControl);
+        })
 
-  onRowEditSave(tdData: any, index: number) {
-    let modifyLastElmActive = (
-      document.getElementById('tr' + index) as HTMLInputElement
-    ).getElementsByClassName('ng-invalid');
+    }
 
-    if (modifyLastElmActive.length > 0) {
-      this.onValidationError = '*All fields must be filled out.';
-    } else {
-      delete this.clonedTdData[tdData.id];
+
+    // Table on row CRUD
+    onRowEditInit(tdData: any, id: number) {
+        this.clonedTdData[tdData.id] = { ...tdData };
+    }
+
+    onRowEditSave(tdData: any, index: number) {
+
+        let modifyLastElmActive = (document.getElementById('tr' + index) as HTMLInputElement).getElementsByClassName('ng-invalid')
+
+        if (modifyLastElmActive.length > 0) {
+            this.onValidationError = '*All fields must be filled out.'
+        } else {
+
+            delete this.clonedTdData[tdData.id];
 
       console.log('clicked');
     }

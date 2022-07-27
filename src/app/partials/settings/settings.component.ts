@@ -1,4 +1,5 @@
 import { Component, OnInit  } from "@angular/core";
+import { UsersService } from "../../services/auth.service";
 
 @Component({
 
@@ -10,7 +11,9 @@ import { Component, OnInit  } from "@angular/core";
 })
 export class SettingsComponent implements OnInit {
   
-    constructor(){}
+    constructor(private usersService: UsersService) {
+        this.usersService.dbObjKey.subscribe(dbObjKey => console.log(dbObjKey));
+    }
 
     ngOnInit() {
        

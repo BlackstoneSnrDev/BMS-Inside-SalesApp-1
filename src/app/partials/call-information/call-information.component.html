@@ -3,7 +3,10 @@
     <h1>Call information</h1>
     <hr><br>
     <div class="form-col">
-      <form-component></form-component>
+      <form-component 
+        *ngIf="activeTemplate" 
+        [activeTemplate]="activeTemplate"
+        ></form-component>
     </div>
     <div class="row inherit-row">
       <div class="col-12 log-container-col ">
