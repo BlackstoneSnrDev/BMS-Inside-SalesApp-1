@@ -1,4 +1,4 @@
-.row{
+.row {
   margin-right: 0;
   margin-left: 0;
 }
@@ -11,11 +11,7 @@
 }
 
 .form-col {
-  background: #e6e7ee;
-  overflow-y: hidden;
-  border-radius: 2rem;
-  border: 0.10rem solid #d1d9e6;
-  padding: 1.5rem;
+  overflow: hidden;
   min-width: 28rem;
 }
 
@@ -24,9 +20,9 @@
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 2rem 0rem 0rem 2rem;
-  border: 0.10rem solid #d1d9e6;
+  border: 0.1rem solid #d1d9e6;
   height: 28rem;
-  padding:  1.5rem 0rem 1.5rem 0rem; 
+  padding: 1.5rem 0rem 1.5rem 0rem;
   min-width: 28rem;
 }
 
@@ -39,9 +35,8 @@
   background: #e6e7ee;
   overflow-y: hidden;
   border-radius: 2rem 2rem 2rem 2rem;
-  border: 0.10rem solid #d1d9e6;
+  border: 0.1rem solid #d1d9e6;
   padding: 24px 0px 24px 0px;
   height: 59rem;
   min-width: 28rem;
 }
-

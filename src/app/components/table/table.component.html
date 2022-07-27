@@ -46,6 +46,7 @@
                       class="not-rounded"
                       name="newGroupName"
                       id="newGroupName"
+                      maxlength="20"
                       [formControl]="createNewGroup"
                       required
                     />
@@ -76,7 +77,7 @@
             [options]="tbGroups"
             class="button-neumorphism margin-lt"
             (onChange)="addToExistingGroup()"
-            optionLabel="group_name"
+            optionLabel="group_name "
             optionValue="group_id"
             placeholder="Add to group"
             [formControl]="groupSelect"
@@ -149,22 +150,16 @@
                         ></p-checkbox>
                       </ng-container>
 
-                      <ng-container
-                        *ngSwitchCase="'address'"
-                      >
-                          <textarea
-                            pInputText
-                            class="input-neumorphism txtFormComponent"
-                            (click)="
-                              toggleModifyAddressForm(
-                                newtd.field
-                              )
-                            "
-                            autocomplete="off"
-                            readonly="true"
-                            placeholder="{{ newtd.title }}"
-                            formControlName="{{ newtd.field }}"
-                          ></textarea>
+                      <ng-container *ngSwitchCase="'address'">
+                        <textarea
+                          pInputText
+                          class="input-neumorphism txtFormComponent"
+                          (click)="toggleModifyAddressForm(newtd.field)"
+                          autocomplete="off"
+                          readonly="true"
+                          placeholder="{{ newtd.title }}"
+                          formControlName="{{ newtd.field }}"
+                        ></textarea>
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'email'">
@@ -303,7 +298,7 @@
           (click)="modifyTableView(groupOpt.group_id)"
           class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt"
         >
-          {{ groupOpt.group_name }}
+          {{ groupOpt.group_name | formatLabel }}
           <span class="button-icon"
             ><i class="bi bi-chevron-down icon-normal"></i
           ></span>
@@ -323,18 +318,20 @@
                   placeholder="Rename to"
                   class="not-rounded"
                   autocomplete="off"
+                  maxlength="20"
                   #renamedGroup
                   [formControl]="renameGroup"
                   required
                 />
               </mat-form-field>
 
-              <button [disabled]="!renameGroup.valid"
-              [ngClass]="
-                !renameGroup.valid
-                  ? 'button-neumorphism-disabled'
-                  : 'button-neumorphism'
-              "
+              <button
+                [disabled]="!renameGroup.valid"
+                [ngClass]="
+                  !renameGroup.valid
+                    ? 'button-neumorphism-disabled'
+                    : 'button-neumorphism'
+                "
                 class="button-neumorphism elm-rounded width-50"
                 (click)="saveRenameGroup(groupOpt.group_id, $event)"
               >

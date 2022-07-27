@@ -21,6 +21,7 @@ export class AdminUserComponent implements OnInit {
   public selectElmType: any;
   public clonedTdData: any = {};
   public tbSelectedRows: any;
+  public loading: boolean = true;
 
   public tglUploadList: boolean = false;
   public tglAddNewUser: boolean = false;
@@ -60,6 +61,7 @@ export class AdminUserComponent implements OnInit {
       .then(() => {
         this.dataService.getAllUsers().subscribe((data: any) => {
           this.tdData = data;
+          this.loading = false;
           this.tdData.forEach((element: any, index: number) => {
             this.tdData[index]['slIndex'] = index;
           });

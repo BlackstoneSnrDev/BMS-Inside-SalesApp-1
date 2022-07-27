@@ -78,7 +78,7 @@ export class TableComponent {
     this.DataService.getTableCustomerHeader()
       .then((data) => {
         this.thData = data.sort((a, b) => a.element_order - b.element_order);
-        console.log( this.thData)
+        console.log(this.thData);
       })
       .then(() => {
         this.DataService.getTableData().subscribe((data) => {
@@ -95,19 +95,19 @@ export class TableComponent {
         this.DataService.getCustomerGroups().subscribe((data) => {
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
           this.loading = false;
+          console.log(this.tbGroups);
         });
       })
       .then(
         () => {
           for (let [i, v] of this.thData.entries()) {
-              this.newFormControl[v.field] = new FormControl('', [
-                Validators.required,
-                Validators.minLength(1),
-              ]);
-           
+            this.newFormControl[v.field] = new FormControl('', [
+              Validators.required,
+              Validators.minLength(1),
+            ]);
           }
           this.addNewRecordForm = new FormGroup(this.newFormControl);
-          console.log(this.addNewRecordForm)
+          console.log(this.addNewRecordForm);
         },
         (error) => {
           console.error(error);
@@ -223,7 +223,7 @@ export class TableComponent {
   cancelAddNewRecord() {
     this.tglAddNewRecord = false;
     this.addNewRecordForm.reset();
-    console.log(this.addNewRecordForm.value)
+    console.log(this.addNewRecordForm.value);
   }
 
   // Delete selection
@@ -281,7 +281,10 @@ export class TableComponent {
       rowUidArray.push(row.uid);
     });
 
-    this.DataService.createNewCustomerGroup(groupName, rowUidArray);
+    this.DataService.createNewCustomerGroup(
+      groupName.toLowerCase(),
+      rowUidArray
+    );
 
     this.messageService.add({
       severity: 'success',
@@ -379,9 +382,9 @@ export class TableComponent {
       message:
         '<b>"' +
         groupName +
-        '"</b> group has ' +
+        '"</b> group has (' +
         records +
-        ' records grouped. Do you want to delete it?',
+        ') record(s) grouped. Do you want to delete it?',
       header: 'Deleting group',
       accept: () => {
         this.DataService.deleteCustomerGroup(groupId);
@@ -618,15 +621,15 @@ export class TableComponent {
         this.selectedCountryCode;
     }
 
-    let form = this.addNewRecordForm.contains(this.addressFieldName)
-    if(form){
+    let form = this.addNewRecordForm.contains(this.addressFieldName);
+    if (form) {
       this.addNewRecordForm.patchValue({
-        [this.addressFieldName]: newAddres
-      })
-    }else{
+        [this.addressFieldName]: newAddres,
+      });
+    } else {
       this.addressInputsForm.patchValue({
-        [this.addressFieldName]: newAddres
-      })
+        [this.addressFieldName]: newAddres,
+      });
     }
 
     this.tglModifyAddressForm = false;

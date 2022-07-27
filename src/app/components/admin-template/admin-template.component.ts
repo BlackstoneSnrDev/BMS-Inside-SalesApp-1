@@ -1,8 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
 import { ConfirmationService } from 'primeng/api';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -24,6 +23,7 @@ export class AdminTemplateComponent implements OnInit {
   public selectElmType!: string[];
 
   public tbSelectedRows: any;
+  public loading: boolean = true;
 
   public tglTemplate: boolean = false;
   public tglAddNewTemplate: boolean = false;
@@ -106,6 +106,7 @@ export class AdminTemplateComponent implements OnInit {
           }
         }
         this.tdData = tdData;
+        this.loading = false;
 
         this.dataService.getSelectData().subscribe(
           (response) => {
@@ -249,7 +250,7 @@ export class AdminTemplateComponent implements OnInit {
     } else {
       this.confirmationService.confirm({
         message:
-          'Please activate another template, it will overwrite the current one.',
+          'Please activate another template, so this will overwrite the current one.',
         header: 'Warning',
         icon: 'pi pi-exclamation-triangle',
       });

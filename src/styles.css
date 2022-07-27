@@ -54,7 +54,12 @@ body {
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
-  margin: 0;
+  margin: 0;    
+}
+
+textarea{
+  resize: none !important;
+  overflow-x: auto !important;
 }
 
 .mat-select-panel {
@@ -126,21 +131,21 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .show {
-  display: inline;
+  display: inline !important;
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 .show-line {
-  display: inline-flex;
+  display: inline-flex !important;
 }
 .show-line-b {
-  display: inline-block;
+  display: inline-block !important;
 }
 
 .hide-line {
-  display: none;
+  display: none !important;
 }
 
 .margin-right {

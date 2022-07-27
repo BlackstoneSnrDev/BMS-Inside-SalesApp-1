@@ -35,6 +35,13 @@ export class FormComponent implements OnInit {
   public onValidationMsg: string = '';
   public tglEditLayout: boolean = false;
 
+  public filterGroupList: any;
+  public tbGroups: any;
+  public userInfo: any;
+  public groupSelected = new FormControl();
+  public tbGroupActive: any = [];
+  public defaultGroup: boolean = true;
+
   constructor(
     private dataService: DataService,
     private usersService: UsersService,
@@ -66,6 +73,51 @@ export class FormComponent implements OnInit {
           this.callDataForm = new FormGroup(this.newFormControl);
         }),
     ]);
+    this.dataService.getCustomerGroups().subscribe((data) => {
+      this.tbGroups = data;
+    });
+  }
+
+  getGroupSelected() {
+    let groupSelected = this.tbGroups.filter(
+      (v: any) => v.group_id === this.groupSelected.value
+    );
+
+    this.defaultGroup = false;
+    // Show only one group
+    // this.tbGroupActive = groupSelected
+
+    // Show multiples groups
+    let groupId = '';
+    let groupName = '';
+    groupSelected.forEach((e: any) => {
+      groupId = e.group_id;
+      groupName = e.group_name;
+    });
+
+    this.tbGroupActive.push({ group_id: groupId, group_name: groupName });
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Group "' + groupName + '" was added to calling.',
+    });
+  }
+
+  removeGroupSelected(groupId: string) {
+    this.tbGroupActive = this.tbGroupActive.filter(
+      (v: any) => v.group_id !== groupId
+    );
+
+    this.tbGroupActive.length > 0
+      ? (this.defaultGroup = false)
+      : (this.defaultGroup = true);
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Group was removed from calling.',
+    });
   }
 
   toggleEditFields() {
@@ -184,7 +236,7 @@ export class FormComponent implements OnInit {
     this.callDataForm.patchValue({
       [this.addressFieldName]: newAddres,
     });
-    this.formElement[this.addressFieldId]['element_value'] = newAddres;
+    // this.formElement[this.addressFieldId]['element_value'] = newAddres;
 
     this.tglModifyAddressForm = false;
     console.log(this.formElement);
@@ -207,6 +259,13 @@ export class FormComponent implements OnInit {
   saveEditFields() {
     console.log(this.callDataForm.value);
     this.tgleditField = false;
+  }
+
+  groupFilter(array: any, searching: any): void {
+    this.filterGroupList = array.filter((i: any) =>
+      i.group_name.toLowerCase().includes(searching.toLowerCase())
+    );
+    console.log(this.filterGroupList);
   }
 
   log(val: any) {
