@@ -1,10 +1,8 @@
-<div class="margin-bt">
-    <p-tabMenu  [model]="adminMenuTabs" [activeItem]="activeItem"></p-tabMenu>
+<div class="margin-bt admin-navbar-container">
+  <p-tabMenu [model]="adminMenuTabs" [activeItem]="activeItem"></p-tabMenu>
 </div>
 
 <!-- Angular components -->
 <div class="container-fluid">
-
-    <router-outlet  (activate)="onActivate($event)"></router-outlet>
-
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>

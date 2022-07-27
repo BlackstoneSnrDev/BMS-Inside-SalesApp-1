@@ -1,23 +1,36 @@
 <div class="component-container">
   <div class="d-flex justify-content-center margin-tp">
     <div class="logo-container">
-      <img class="logo" src="{{ loginLogo }}">
+      <img class="logo" src="{{ loginLogo }}" />
     </div>
   </div>
   <div class="d-flex justify-content-center">
-    <form [formGroup]="loginForm" *ngIf="loginForm" class="loginForm" (ngSubmit)="login()">
+    <form
+      [formGroup]="loginForm"
+      *ngIf="loginForm"
+      class="loginForm"
+      (ngSubmit)="login()"
+    >
       <div class="form-row">
         <div class="col">
-          <div class="margin-bt color-rd txt-center"><b>{{statusMsg}}</b>
+          <div class="margin-bt color-rd txt-center">
+            <b>{{ statusMsg }}</b>
           </div>
         </div>
       </div>
       <div class="form-row">
         <div class="col">
           <mat-form-field appearance="standard">
-            <mat-label>Username or email</mat-label>
-            <input matInput class="input-neumorphism" type="text" placeholder="Ex. bms@bms.com" autocomplete="off"
-              id="username" formControlName="username" [(ngModel)]="username" />
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              class="input-neumorphism"
+              type="text"
+              placeholder="Ex. bms@bms.com"
+              autocomplete="off"
+              id="email"
+              formControlName="email"
+            />
           </mat-form-field>
         </div>
       </div>
@@ -25,31 +38,52 @@
         <div class="col">
           <mat-form-field appearance="standard">
             <mat-label>Password</mat-label>
-            <input matInput class="input-neumorphism" type="password" placeholder="****" autocomplete="off"
-              id="password" formControlName="password" [(ngModel)]="password">
+            <input
+              matInput
+              class="input-neumorphism"
+              type="password"
+              placeholder="****"
+              autocomplete="off"
+              id="password"
+              formControlName="password"
+            />
           </mat-form-field>
         </div>
       </div>
       <div class="form-row">
         <div class="col">
-          <small [ngClass]="!loginForm.valid ? 'show' : 'hide'">*All fields must be filled out.</small>
+          <small [ngClass]="!loginForm.valid ? 'show' : 'hide'"
+            >*All fields must be filled out.</small
+          >
         </div>
       </div>
       <div class="form-row">
         <div class="col large">
           <p-checkbox [binary]="true" label="Remember me"></p-checkbox>
-          <a href="#" class="link" role="button" aria-pressed="true">Forgot your password?</a>
+          <a href="#" class="link" role="button" aria-pressed="true"
+            >Forgot your password?</a
+          >
         </div>
       </div>
       <div class="d-flex justify-content-center margin-tp">
-        <button type="submit" value="save" [disabled]="!loginForm.valid"
-          [ngClass]="!loginForm.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'">
+        <button
+          type="submit"
+          value="save"
+          [disabled]="!loginForm.valid"
+          [ngClass]="
+            !loginForm.valid
+              ? 'button-neumorphism-disabled'
+              : 'button-neumorphism'
+          "
+        >
           Log in
         </button>
       </div>
     </form>
   </div>
   <div class="d-flex justify-content-center margin-tp">
-    <a href="#" class="link" role="button" aria-pressed="true">Don't have an account yet? <b>Sign up</b></a>
+    <a href="#" class="link" role="button" aria-pressed="true"
+      >Don't have an account yet? <b>Sign up</b></a
+    >
   </div>
 </div>

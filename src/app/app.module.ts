@@ -6,7 +6,7 @@ import { routing, appRoutingProviders } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-///// My components 
+///// My components
 // HTML
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormComponent } from './components/form/form.component';
@@ -29,12 +29,13 @@ import { AdminSettings } from './partials/admin-settings/admin-settings.componen
 
 ///// My directives
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
-import { AuthGuard } from "./services/auth.guard";
+import { AuthGuard } from './services/auth.guard';
 
 ///// My pipes
 import { FormatBoolean } from './pipes/formatBoolean.pipe';
 import { ChangeView } from './pipes/changeView.pipe';
 import { FormatPassword } from './pipes/formatPassword.pipe';
+import { FormatLabel } from './pipes/formatLabel.pipe';
 
 ///// Libraries
 // Angular material
@@ -43,9 +44,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-// Firebase 
+// Firebase
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -70,20 +71,16 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { KnobModule } from 'primeng/knob';
-import {AccordionModule} from 'primeng/accordion';
-import { FieldsetModule } from 'primeng/fieldset';
-import {TabMenuModule} from 'primeng/tabmenu';
-import {FileUploadModule} from 'primeng/fileupload';
-import {MultiSelectModule} from 'primeng/multiselect';
-import {PasswordModule} from 'primeng/password';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {MatChipsModule} from '@angular/material/chips';
+import { AccordionModule } from 'primeng/accordion';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { FileUploadModule } from 'primeng/fileupload';
+import { PasswordModule } from 'primeng/password';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
-
   declarations: [
     AppComponent,
-    ///// My components 
+    ///// My components
     // HTML
     FormComponent,
     LogComponent,
@@ -104,10 +101,11 @@ import {MatChipsModule} from '@angular/material/chips';
     ReusableTableComponent,
     ///// My directives
     TextareaAutoresizeDirective,
-///// My pipes
+    ///// My pipes
     FormatBoolean,
     ChangeView,
     FormatPassword,
+    FormatLabel,
   ],
 
   imports: [
@@ -145,14 +143,11 @@ import {MatChipsModule} from '@angular/material/chips';
     ToastModule,
     DropdownModule,
     KnobModule,
-    FieldsetModule,
     AccordionModule,
     TabMenuModule,
     FileUploadModule,
-    MultiSelectModule,
     PasswordModule,
     InputSwitchModule,
-    MatChipsModule
   ],
 
   providers: [
@@ -162,7 +157,6 @@ import {MatChipsModule} from '@angular/material/chips';
     MessageService,
     AuthGuard,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-
-export class AppModule { }
+export class AppModule {}
