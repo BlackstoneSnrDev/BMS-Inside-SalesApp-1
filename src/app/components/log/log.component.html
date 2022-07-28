@@ -1,9 +1,9 @@
 <div class="iconbutton-container">
-  <div class="iconbutton-neumorphism" (click)="toggleAddLog()" id="add-log" matTooltip="Add log"
+  <button class="iconbutton-neumorphism" (click)="toggleAddLog()" id="add-log" matTooltip="Add log"
     matTooltipPosition="above">
     <i class="bi bi-plus-circle-fill " *ngIf="!addlog"></i>
     <i class="bi bi-x-circle-fill " *ngIf="addlog"></i>
-  </div>
+</button>
 </div>
 <div *ngIf="show" class="addlog-container">
   <form>

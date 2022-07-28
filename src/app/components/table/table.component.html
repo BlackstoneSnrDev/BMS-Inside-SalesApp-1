@@ -403,7 +403,7 @@
             type="button"
             pInitEditableRow
             (click)="onRowEditInit(rowData, rowIndex)"
-            class="iconbutton-neumorphism margin-rt"
+            class="iconbutton-neumorphism edit-icon margin-rt"
           >
             <i class="bi bi-pencil-square"></i>
           </button>
@@ -412,7 +412,7 @@
             *ngIf="!editing"
             type="button"
             (click)="onRowDeleteRow(rowData.uid)"
-            class="iconbutton-neumorphism"
+            class="iconbutton-neumorphism trash-icon"
           >
             <i class="bi bi-trash-fill"></i>
           </button>

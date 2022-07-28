@@ -10,61 +10,83 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./form.component.css', '../../css/neumorphism.component.css'],
 })
 export class FormComponent implements OnInit {
+  @Input() dialSessionArray: any;
+  @Input() activeTemplate: any;
 
-    @Input() dialSessionArray: any;
-    @Input() activeTemplate: any;
+  public currentCall: any;
 
-    public currentCall: any;
+  public formElement: any;
+  //public activeTemplate: any;
+  public dbObjKey: any;
 
-    public formElement: any;
-    //public activeTemplate: any;
-    public dbObjKey: any;
+  public tgleditField: boolean = false;
 
-    public tgleditField: boolean = false;
+  public callDataForm!: FormGroup;
+  public newFormControl: any = {};
+  public newField: any;
 
-    public callDataForm!: FormGroup
-    public newFormControl: any = {};
-    public newField: any;
+  public tglModifyAddressForm: boolean = false;
+  public addressForm!: FormGroup;
+  public addressFieldId: string = '';
+  public addressFieldName: string = '';
 
-    public tglModifyAddressForm: boolean = false;
-    public addressForm!: FormGroup
-    public addressFieldId: string = '';
-    public addressFieldName: string = '';
+  public countries: any;
+  public selectedCountryCode: string = 'US';
+  public cities: any;
+  public selectedCityCode: string = '';
+  public states: any;
+  public selectedStateCode: string = '';
 
-    public countries: any;
-    public selectedCountryCode: string = 'US';
-    public cities: any;
-    public selectedCityCode: string = '';
-    public states: any;
-    public selectedStateCode: string = '';
+  public onValidationMsg: string = '';
+  public tglEditLayout: boolean = false;
 
-    public onValidationMsg: string = '';
-    public tglEditLayout: boolean = false;
-    
-     public filterGroupList: any;
+  public filterGroupList: any;
   public tbGroups: any;
   public userInfo: any;
   public groupSelected = new FormControl();
   public tbGroupActive: any = [];
   public defaultGroup: boolean = true;
 
-    constructor(private dataService: DataService, private usersService: UsersService) { }
+  constructor(
+    private dataService: DataService,
+    private usersService: UsersService,
+    private messageService: MessageService
+  ) {}
 
-    ngOnInit() {
-        this.dataService.currentCall.subscribe(currentCall => this.currentCall = currentCall);
+  ngOnInit() {
+   
+    this.formElement = this.activeTemplate;
 
-        this.formElement = this.activeTemplate;
-        for (let i of this.formElement) {
-            this.newFormControl[i.element_placeholder] = new FormControl({ value: i.element_value, disabled: this.tgleditField }, [Validators.required, Validators.minLength(1)]);
+        console.log(this.formElement)
+        this.dataService.currentCall.subscribe(
+          (currentCall) => {
+            this.currentCall = currentCall
+          
+            console.log(this.currentCall)
+    
+          for (let fieldName in this.currentCall) {
+            for (let fieldValue of this.formElement) {
+
+              if(fieldName === fieldValue.element_table_value){
+                fieldValue.element_value = this.currentCall[ fieldName ]
+
+                this.newFormControl[fieldValue.element_table_value] = new FormControl(
+                  { value: fieldValue.element_value, disabled: this.tgleditField },
+                  [Validators.required, Validators.minLength(1)]
+                );
+                this.callDataForm = new FormGroup(this.newFormControl);
+              }
+            }
+          }
         }
-        this.callDataForm = new FormGroup(this.newFormControl);
+        );
 
- this.dataService.getCustomerGroups().subscribe((data) => {
+    this.dataService.getCustomerGroups().subscribe((data) => {
       this.tbGroups = data;
     });
-    }
+  }
 
-getGroupSelected() {
+  getGroupSelected() {
     let groupSelected = this.tbGroups.filter(
       (v: any) => v.group_id === this.groupSelected.value
     );
@@ -105,70 +127,77 @@ getGroupSelected() {
       detail: 'Group was removed from calling.',
     });
   }
-  
-    toggleEditFields() {
 
-        this.tgleditField = !this.tgleditField;
+  toggleEditFields() {
+    this.tgleditField = !this.tgleditField;
+    console.log(this.callDataForm.value)
+  }
 
-    }
+  toggleModifyAddressForm(addressId: any, addressName: any) {
+    this.addressForm = new FormGroup({
+      slcCountry: new FormControl('US', [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      slcState: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      txtCity: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      txtStreet: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      txtApt: new FormControl(''),
+      txtZip: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+    });
 
-    toggleModifyAddressForm(addressId: any, addressName: any) {
+    this.addressFieldId = addressId;
+    this.addressFieldName = addressName;
 
-        this.addressForm = new FormGroup({
-            slcCountry: new FormControl('US', [Validators.required, Validators.minLength(1)]),
-            slcState: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            txtCity: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            txtStreet: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            txtApt: new FormControl(''),
-            txtZip: new FormControl('', [Validators.required, Validators.minLength(1)]),
-        })
+    this.tglModifyAddressForm = true;
+    this.dataService.getFormCountry().subscribe(
+      (response) => {
+        this.countries = response.data;
+        this.getCountryInfo();
+      },
 
-        this.addressFieldId = addressId
-        this.addressFieldName = addressName
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
-        this.tglModifyAddressForm = true
-        this.dataService.getFormCountry().subscribe(
+  getCountryInfo() {
+    // this.dataService.getFormCity().subscribe(
 
-            (response) => {
+    //     (response) => {
+    // this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
 
-                this.countries = response.data
-                this.getCountryInfo()
-            },
+    //         this.cities = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
+    //         for (let a of this.cities) {
+    //             this.cities = a.cities.map((value: any, i: any) => ({ id: i, name: value }))
+    //         }
+    //         console.log(this.cities)
 
-            (error) => {
-                console.error(error);
-            }
+    //     },
 
-        );
-    }
+    //     (error) => {
+    //         console.error(error);
+    //     }
 
-    getCountryInfo() {
-
-
-        // this.dataService.getFormCity().subscribe(
-
-        //     (response) => {
-            // this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
-
-        //         this.cities = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
-        //         for (let a of this.cities) {
-        //             this.cities = a.cities.map((value: any, i: any) => ({ id: i, name: value }))
-        //         }
-        //         console.log(this.cities)
-
-        //     },
-
-        //     (error) => {
-        //         console.error(error);
-        //     } 
-
-        // );
-        this.dataService.getFormState().subscribe(
-
-            (response) => {
-                
-                this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
-                this.states = response.data.filter((i: any) =>  i.iso2.includes(this.selectedCountryCode)
+    // );
+    this.dataService.getFormState().subscribe(
+      (response) => {
+        this.selectedCountryCode = this.addressForm.get('slcCountry')!.value;
+        this.states = response.data.filter((i: any) =>
+          i.iso2.includes(this.selectedCountryCode)
         );
 
         for (let i of this.states) {
