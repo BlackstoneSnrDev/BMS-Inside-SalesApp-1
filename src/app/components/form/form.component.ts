@@ -196,7 +196,7 @@ export class FormComponent implements OnInit {
     @Input() dialSessionArray: any;
     @Input() activeTemplate: any;
 
-    //public currentCall: any;
+    public currentCall: any;
 
     public formElement: any;
     //public activeTemplate: any;
@@ -233,7 +233,7 @@ export class FormComponent implements OnInit {
     constructor(private dataService: DataService, private usersService: UsersService, private messageService: MessageService) { }
 
     ngOnInit() {
-        //this.dataService.currentCall.subscribe(currentCall => this.currentCall = currentCall);
+        this.dataService.currentCall.subscribe(currentCall => this.currentCall = currentCall);
 
         this.formElement = this.activeTemplate;
         for (let i of this.formElement) {
