@@ -35,7 +35,3 @@
   transition: all .2s ease-in-out;
   box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
 }
-
-.iconbutton-neumorphism i{
-  padding-left: 0.7rem;
-}
