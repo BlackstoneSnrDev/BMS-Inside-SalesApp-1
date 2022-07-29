@@ -225,7 +225,7 @@ getActiveGroupCustomerArray(): Observable<any> {
   }
 
   getCustomerGroups(): Observable<any> {
-    console.log(this.userInfo.uid);
+    // console.log(this.userInfo.uid);
     const groupArray = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').snapshotChanges().pipe(
         map(actions => actions.map(a => a.payload.doc.data() ))
     )

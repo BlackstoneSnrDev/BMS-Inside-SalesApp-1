@@ -64,7 +64,7 @@ export class AdminUserComponent implements OnInit {
     public selectElmType: any;
     public clonedTdData: any = {};
     public tbSelectedRows: any;
-  public loading: boolean = true;
+    public loading: boolean = true;
 
     public tglUploadList: boolean = false;
     public tglAddNewUser: boolean = false;
@@ -77,7 +77,7 @@ export class AdminUserComponent implements OnInit {
     public dbObjKey: any;
     public userInfo: any;
 
-    constructor(private dataService: DataService, private confirmationService: ConfirmationService, private usersService: UsersService) { }
+    constructor(private dataService: DataService, private confirmationService: ConfirmationService, private usersService: UsersService, private messageService: MessageService) { }
 
     ngOnInit() {
 

@@ -12,8 +12,7 @@ export class AppComponent {
     title = 'inside_sales_app';
 
     constructor() {
-
-        console.log("Constructor Executed");
+        // console.log("Constructor Executed");
     }
 
 }

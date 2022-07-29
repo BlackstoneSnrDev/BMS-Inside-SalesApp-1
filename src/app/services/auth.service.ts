@@ -104,7 +104,7 @@ export class UsersService {
             })
         })
       } else {
-          console.log('no uid');
+          // console.log('no uid');
       }
   }
 
