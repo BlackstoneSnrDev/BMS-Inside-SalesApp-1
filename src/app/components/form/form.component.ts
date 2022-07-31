@@ -314,13 +314,9 @@ export class FormComponent implements OnInit {
    
     this.formElement = this.activeTemplate;
 
-        console.log(this.formElement)
         this.dataService.currentCall.subscribe(
           (currentCall) => {
             this.currentCall = currentCall
-          
-            console.log(this.currentCall)
-    
           for (let fieldName in this.currentCall) {
             for (let fieldValue of this.formElement) {
 
@@ -338,15 +334,40 @@ export class FormComponent implements OnInit {
         }
         );
 
-    this.dataService.getCustomerGroups().subscribe((data) => {
-      this.tbGroups = data;
-    });
+      this.dataService.getCustomerGroups().subscribe((data) => {
+          this.tbGroups = data;
+          
+          this.usersService.userInfo.subscribe((userInfo: any) => {
+              if (userInfo) {
+
+                this.tbGroupActive = []
+                  userInfo.activeGroup.forEach((group: any) => {
+                      console.log(group);
+                      let groupSelected = data.filter(
+                          (v: any) => v.group_id === group
+                      )
+                      let groupId = '';
+                      let groupName = '';
+                      groupSelected.forEach((e: any) => {
+                        groupId = e.group_id;
+                        groupName = e.group_name;
+                      });
+                      this.tbGroupActive.push({ group_id: groupId, group_name: groupName });
+                  })
+              }
+          })
+      });
+
+
   }
 
   getGroupSelected() {
     let groupSelected = this.tbGroups.filter(
       (v: any) => v.group_id === this.groupSelected.value
     );
+
+    console.log(this.groupSelected.value);
+    this.dataService.selectActiveGroup(this.groupSelected.value);
 
     this.defaultGroup = false;
     // Show only one group
@@ -373,6 +394,9 @@ export class FormComponent implements OnInit {
     this.tbGroupActive = this.tbGroupActive.filter(
       (v: any) => v.group_id !== groupId
     );
+
+    console.log(groupId);
+    this.dataService.removeActiveGroup(groupId);
 
     this.tbGroupActive.length > 0
       ? (this.defaultGroup = false)
@@ -523,8 +547,9 @@ export class FormComponent implements OnInit {
   }
 
   saveEditFields() {
-    console.log(this.callDataForm.value);
+    this.callDataForm.value.uid = this.currentCall.uid
     this.tgleditField = false;
+    this.dataService.editCustomer(this.callDataForm.value);
   }
 
   groupFilter(array: any, searching: any): void {

@@ -16,26 +16,47 @@ export class PhoneComponent implements OnInit {
   public xferStatus: boolean = false;
   public tglEditLayout: boolean = false;
 
-  constructor(private DataService: DataService) {}
+  public dialSessionArray: any = [];
+  public currentCall: any;
+  public currentCallPhoneNumber: any;
+
+  constructor(public DataService: DataService) {}
 
   ngOnInit() {
-    this.DataService.getFormElementsData().subscribe(
-      (response) => {
-        this.componentPhone = response.componentPhone;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
 
-    this.DataService.getCallHistoryData().subscribe(
-      (response) => {
-        this.phoneHistory = response.callHistory;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+      this.DataService.getFormElementsData().subscribe(
+          (response) => {
+              this.componentPhone = response.componentPhone;
+              console.log(response.componentPhone);
+          },
+          (error) => {
+              console.error(error);
+          }
+      );
+
+      this.DataService.dialSessionArray.subscribe((dialSessionArray: any) => {
+          this.dialSessionArray = dialSessionArray;
+      })
+
+      this.DataService.currentCall.subscribe((currentCall: any) => {
+          if (currentCall) {
+              this.currentCall = currentCall;
+              this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
+          } else {
+              console.log('no current call');
+          }
+
+      })
+
+  }
+
+  nextCall() {
+    let currentCallIndex = this.dialSessionArray.findIndex((x: { uid: any; }) => x.uid === this.currentCall.uid)
+    this.DataService.setActiveCall(this.dialSessionArray[currentCallIndex + 1].uid);
+  }
+
+  selectCustomer(uid: string){
+    this.DataService.setActiveCall(uid);
   }
 
   showTimeHandle(event: Event) {
@@ -85,4 +106,9 @@ export class PhoneComponent implements OnInit {
   createNewField() {
     console.log('elementId');
   }
+
+  log(event: Event) {
+    console.log(event);
+  }
+
 }

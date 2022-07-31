@@ -5,9 +5,9 @@ import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
 import {
     AngularFirestore,
-    AngularFirestoreDocument,
+    AngularFirestoreDocument
   } from '@angular/fire/compat/firestore'; 
-import { arrayUnion, arrayRemove } from '@angular/fire/firestore'
+import { arrayUnion, arrayRemove, Timestamp } from '@angular/fire/firestore'
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import firebase from 'firebase/compat';
@@ -40,16 +40,18 @@ export class DataService {
 
   private activeDialSessionArray = new BehaviorSubject<any>(null);
   private activeCall = new BehaviorSubject<any>(null);
+  private activeCallNotes = new BehaviorSubject<any>(null);
 
-  dialSessionArray = this.activeDialSessionArray.asObservable();
+  public dialSessionArray = this.activeDialSessionArray.asObservable();
   public currentCall = this.activeCall.asObservable();
+  public currentCallNotes = this.activeCallNotes.asObservable();
 
   constructor(
 
     private _http: HttpClient,
     private afs: AngularFirestore,
     private usersService: UsersService,
-    private fns: AngularFireFunctions
+    private fns: AngularFireFunctions,
 
   ){
 
@@ -73,13 +75,22 @@ export class DataService {
 
   }
 
-  setActiveCall(customerId: string) {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).ref
-    data.get().then((doc: any) => {
-        this.activeCall.next(doc.data());
-    })
-  }
+  formatPhoneNumber(phoneNumberString: string) {
+    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        var intlCode = (match[1] ? '+1 ' : '');
+        return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+    }
+    return null;
+}
 
+  setActiveCall(customerId: string) {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).snapshotChanges().subscribe(t => {
+        this.activeCall.next(t.payload.data()) 
+      })
+    return data;
+  }
 
 
 getDialingSessionTemplate() {
@@ -95,23 +106,62 @@ getDialingSessionTemplate() {
     })
 }
 
-getActiveGroupCustomerArray(): Observable<any> {
+getActiveGroupCustomerArray() {
+
+        let activeGroupCustomerArray: any[] = [];
     
         let withGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-            map( actions => actions.filter(a => a.payload.doc.data()['group'].includes(this.userInfo.activeGroup)).map(a => a.payload.doc.data()))
+            map( actions => 
+                actions.filter(
+                    a => this.userInfo.activeGroup.some((r: any) => a.payload.doc.data()['group'].includes(r))
+                ).map(b => activeGroupCustomerArray.push(b.payload.doc.data())))
         )
 
         let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-            map( actions => actions.map(a => a.payload.doc.data() ))
+            map( actions => actions.map(a => activeGroupCustomerArray.push(a.payload.doc.data()))) 
         )
     
-        if (this.userInfo.activeGroup) {
-            return withGroup;
+        if (this.userInfo.activeGroup.length > 0) {
+            console.log('withGroup');
+            withGroup.subscribe(data => {
+                this.activeDialSessionArray.next(activeGroupCustomerArray);
+                // this.activeCall.next(activeGroupCustomerArray[0]);
+                this.setActiveCall(activeGroupCustomerArray[0].uid)
+            })
         } else {
-            return noGroup;
+            console.log('no group');
+            noGroup.subscribe(data => {
+                this.activeDialSessionArray.next(activeGroupCustomerArray);
+                // this.activeCall.next(activeGroupCustomerArray[0]);
+                this.setActiveCall(activeGroupCustomerArray[0].uid)
+            })
         }
 
 }
+
+selectActiveGroup(group: string) {
+    this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({
+        activeGroup: arrayUnion(group),
+    })
+}
+removeActiveGroup(group: string) {
+    this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({
+        activeGroup: arrayRemove(group),
+    })
+}
+
+
+    addNewNote(customerId: string, note: string, ) {
+        const customer = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).update({ 
+            notes: arrayUnion({
+                date: Timestamp.fromDate(new Date()),
+                data: note,
+                enteredBy: this.userInfo.name,
+                enteredByUid: this.userInfo.uid,
+            }),
+        });
+        //this.getNoteData(customerId);
+    }
 
   createUser(data: any) {
     console.log(data);
@@ -358,13 +408,27 @@ getActiveGroupCustomerArray(): Observable<any> {
     }
 
     async editCustomer(data: any) {
-        delete data.slIndex;
+        console.log(data);
+        data.slIndex ? delete data.slIndex : null;
         this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(data.uid).update(data);
     }
 
     async deleteCustomer(uid: any) {
         this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).delete();
     }
+
+// fixCustomers() {
+//     this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
+//         snapshot.forEach((doc: any) => {
+//             this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(doc.id).update({
+//                 lastContact: {
+//                     date:  Timestamp.fromDate(new Date()),
+//                     result: 'Voice Message Left'
+//                 }
+//             })
+//         })
+//     })
+// }
 
 // populateTemplateWithCustomers() {
 

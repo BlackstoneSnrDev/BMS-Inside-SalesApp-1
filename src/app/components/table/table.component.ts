@@ -639,6 +639,7 @@ export class TableComponent {
       detail: 'Address was added successfully. Please save changes.',
     });
   }
+
 }
 
 function subscribe(arg0: (data: any) => void) {

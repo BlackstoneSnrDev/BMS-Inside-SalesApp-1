@@ -5,7 +5,7 @@
         class="button-neumorphism default"
         matTooltip="Active group."
         matTooltipPosition="above"
-        [ngClass]="defaultGroup ? 'show' : 'hide'"
+        [ngClass]="tbGroupActive.length < 1 ? 'show' : 'hide'"
       >
         All
       </button>
