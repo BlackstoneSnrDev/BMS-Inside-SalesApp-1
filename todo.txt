@@ -1,8 +1,8 @@
 DONE!!  Create admin component
 DONE!!  Create admin (admin-conditional) menu item 
-    Create, Read, Edit, Delete INFO TEMPLATE (check that no users have deleted template as active)
 DONE!!  Chooses between info templets
 DONE!!  If an element is shownWhileCalling, and the element_type is boolean, it should display as a checkbox
+    add unsubscribe to all components as necessary
 
 
 -- queueTable --
@@ -22,24 +22,30 @@ DONE!!   change 'filter' to 'search'
 DONE!!   debug addNewRecord so it doesn't show validation errors after submitting
 DONE!!  phone number and balance not showing up when editing a single record (this is a formatting problem - needs to be strictly numbers, no () or $)
     when a new group is created, check that the name is not alredy used 
+    make sure phone numbers use RegEx to remove all non-number characters
 
 
 -- adminPage --
+    create, read, edit, delete INFO TEMPLATE (check that no users have deleted template as active)
     change userName to email
     admin user to create and add roles to users
     roles need to be an array 
     add 'activeTemplate' to createUser options
     remove deactiveate feature from activeTemplate 
-    
     add templateName to any group that a user creates 
-
 DONE!!  Active template needs to be attached to a user, not the whole account
     get rid of getActiveTemplate service function
     user to change templates
-
     Data leak on forms.component.ts - init database call is fired on every page load
 
 
+-- call information page -- 
+DONE!!    update dialSessionArray as groups are added or subtracted
+DONE!!    resolve phone number parsing issue
+DONE!!    ability to edit curret call information in database
+DONE!!    ability to add notes
+DONE!!    populate autoDialer child component with current call phone number 
+DONE!!    populate autoDialer child component with dialSessionArray
 
 
 

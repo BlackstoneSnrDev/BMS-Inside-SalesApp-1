@@ -33,16 +33,13 @@ export class CallInfoComponent implements OnInit {
                 this.DataService.getDialingSessionTemplate()
                     .then(activeTemplate => this.activeTemplate = activeTemplate.sort((a, b) => a.element_order - b.element_order))
                     .then(() => {
-                        this.DataService.getActiveGroupCustomerArray().subscribe(dialSessionArray =>
-                            this.dialSessionArray = dialSessionArray &&
-                            this.DataService.setActiveCall(dialSessionArray[0].uid)
-                        )
+                        this.DataService.getActiveGroupCustomerArray()
                     })
                 : null);
     }
 
     ngOnDestroy() {
-        console.log(this.dialSessionArray);
+
         this._customerSubscription.unsubscribe();
     }
 

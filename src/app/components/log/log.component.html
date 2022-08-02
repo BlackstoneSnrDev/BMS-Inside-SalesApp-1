@@ -6,28 +6,35 @@
 </button>
 </div>
 <div *ngIf="show" class="addlog-container">
-  <form>
+  <form (ngSubmit)="onSubmitNote()" [formGroup]="addNewNoteForm">
     <div class="form-row">
       <div class="col-10 txtlog-container">
-        <textarea class="input-neumorphism" placeholder="Add log" id="txtlog" appTextareaAutoresize></textarea>
+        <textarea 
+            class="input-neumorphism" 
+            placeholder="Add Note" 
+            id="note" 
+            formControlName="note"
+            appTextareaAutoresize
+        >
+        </textarea>
       </div>
       <div class="col-2 btnsave-container">
-        <button class="button-neumorphism width-100">Save</button>
+        <button type="submit" class="button-neumorphism width-100">Save</button>
       </div>
     </div>
   </form>
   <hr>
 </div>
 
-<div *ngFor="let log of log">
+<div *ngFor="let note of currentCallNotes">
   <div class="log-container">
     <div class="form-check form-check-inline width-100">
-      <h6>{{ log.patient }} | <small>{{ log.date }}</small> </h6>
+      <h6>{{ currentCall.fullname }} | <small>{{note.date.toMillis() | date:'yyyy/MM/dd h:mm a'}}</small> </h6>
     </div>
     <div class="log-content-container">
-      {{ log.content }}
+      {{ note.data }}
     </div>
-    <small>{{ log.rep }}</small>
+    <small>{{ note.enteredBy }}</small>
     <hr>
   </div>
 </div>

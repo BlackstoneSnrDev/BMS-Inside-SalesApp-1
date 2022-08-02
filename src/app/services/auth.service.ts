@@ -96,12 +96,11 @@ export class UsersService {
               this.tenantName.next(doc.id)
           })
         }).then((res) => {
-            const localUserData = this.afs.collection('Tenant').doc(localTenantName).collection('users').doc(uid).ref;
-            localUserData.get().then((res) => {
-                let localUserInfo: any = res.data();
+            this.afs.collection('Tenant').doc(localTenantName).collection('users').doc(uid).snapshotChanges().subscribe(t => {
+                let localUserInfo: any = t.payload.data();
                 this.template.next(localUserInfo.activeTemplate) 
                 this.user.next(localUserInfo);
-            })
+              })
         })
       } else {
           // console.log('no uid');
