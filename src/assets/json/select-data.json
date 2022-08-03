@@ -24,5 +24,20 @@
             "typeName": "Password",
             "typeCode": "password"
         }
+    ],
+    
+    "selectLogStatus": [
+        {
+            "statusId": "pending",
+            "statusName": "Pending"
+        },
+        {
+            "statusId": "handled",
+            "statusName": "Handled"
+        },
+        {
+            "statusId": "noAttention",
+            "statusName": "No attention required"
+        }
     ]
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'phone-component',
@@ -18,7 +19,12 @@ export class PhoneComponent implements OnInit {
 
   public dialSessionArray: any = [];
   public currentCall: any;
+  public dupDialSessionArray: any;
+
   public currentCallPhoneNumber: any;
+
+  public searchCall = new FormControl();
+
 
   constructor(public DataService: DataService) {}
 
@@ -36,6 +42,8 @@ export class PhoneComponent implements OnInit {
 
       this.DataService.dialSessionArray.subscribe((dialSessionArray: any) => {
           this.dialSessionArray = dialSessionArray;
+          this.dupDialSessionArray = this.dialSessionArray 
+
       })
 
       this.DataService.currentCall.subscribe((currentCall: any) => {
@@ -66,6 +74,24 @@ export class PhoneComponent implements OnInit {
       'hide'
     );
   }
+
+  filterCall() {
+
+    let value = this.searchCall.value.toLowerCase()
+    console.log(value)
+    if (value) {
+        this.dialSessionArray = this.dupDialSessionArray
+        this.dialSessionArray = this.dialSessionArray.filter((a: any, g: any) =>
+            a.MRN.toLowerCase().includes(value) || a.fullname.toLowerCase().includes(value) || a.phonenumber.toLowerCase().replace(/[()-\s]/g, '').includes(value.replace(/[()-\s]/g, '')))
+
+    } else {
+        this.dialSessionArray = this.dupDialSessionArray
+
+    }
+
+
+    console.log(this.dialSessionArray)
+}
 
   toggleAutoDialer() {
     this.tglAutoDialer = !this.tglAutoDialer;

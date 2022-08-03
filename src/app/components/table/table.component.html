@@ -365,7 +365,7 @@
             (click)="toggleTableMenu()"
           ></p-tableHeaderCheckbox>
         </th>
-        <th *ngIf="tdData" class="sticky-column sticky-main">Actions</th>
+        <th  *ngIf="userInfo.admin" class="sticky-column sticky-main">Actions</th>
         <th
           *ngFor="let col of columns"
           pSortableColumn="{{ col.field }}"

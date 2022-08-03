@@ -1088,3 +1088,13 @@ textarea:focus-visible {
 ::ng-deep .mat-slide-toggle-ripple.mat-ripple {
   display: none;
 }
+
+::ng-deep .p-inputtext:enabled:hover{
+  border-color: #d1d9e6;
+
+}
+
+::ng-deep .p-inputtext:enabled:focus {
+  border-color: #d1d9e6;
+
+}

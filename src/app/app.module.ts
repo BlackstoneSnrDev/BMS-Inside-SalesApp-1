@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routing, appRoutingProviders } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 
 ///// My components
 // HTML
@@ -76,6 +78,9 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { FileUploadModule } from 'primeng/fileupload';
 import { PasswordModule } from 'primeng/password';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {SkeletonModule} from 'primeng/skeleton';
+import {BadgeModule} from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -148,6 +153,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     FileUploadModule,
     PasswordModule,
     InputSwitchModule,
+    InputTextareaModule,
+    SkeletonModule,
+    BadgeModule,
   ],
 
   providers: [
@@ -156,6 +164,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     ConfirmationService,
     MessageService,
     AuthGuard,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

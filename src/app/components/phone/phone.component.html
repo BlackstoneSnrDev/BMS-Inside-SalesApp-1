@@ -12,15 +12,6 @@
           (change)="toggleAutoDialer()"
         >
         </mat-slide-toggle>
-        <button
-          class="iconbutton-neumorphism trash-icon btnEditLayout"
-          matTooltip="Remove {{ element.element_placeholder }}"
-          matTooltipPosition="above"
-          (click)="editLayout(i)"
-          *ngIf="tglEditLayout"
-        >
-          <i class="bi bi-trash-fill"></i>
-        </button>
       </div>
     </div>
     <div *ngIf="element.element == 'inputIcon' && currentCall">
@@ -162,22 +153,33 @@
 <!-- In PhoneHistory below, I commented out the 'click to show call duration feature' 
 For now, I'd like the data shown.  But, clicking a div makes that customer the activeCall (or next call if autoDialer is true). -->
 
-<div class="phone-history">
+<div class="phone-history" *ngIf="dialSessionArray">
+  <div class="filter-notes-container">
+    <mat-form-field appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" [formControl]="searchCall" (keyup)="filterCall()"
+        placeholder="MRN, Full name, Phone number" />
+    </mat-form-field>
+  </div>
+  <div class="txt-center margin-tp" *ngIf="dialSessionArray.length == 0">
+    No data found.
+  </div>
     <div *ngFor="let log of dialSessionArray; let i = index" id="list">
         <div class="phone-log"
-            [ngStyle]="{'backgroundColor': currentCall && log.uid === currentCall.uid ? 'lightGreen' : null}">
+            [ngStyle]="{'backgroundColor': currentCall && log.uid === currentCall.uid ? '#d1d9e6' : null}">
             <!-- <div class="width-100" (click)="showTimeHandle($event)" id="{{ i }}"> -->
             <div class="width-100" (click)="selectCustomer(log.uid )" id="{{ i }}">
                 <div class="form-check form-check-inline width-100" id="{{ i }}">
                     <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
-                    <small id="{{ i }}">{{ log.caller_in_date }}</small>
+                    <small  class="width-100 txt-rt" id="{{ i }}">{{ log.lastContact.date.toMillis() |
+                      date:'yyyy/MM/dd'}}</small>
                 </div>
                 <div class="form-check form-check-inline width-100" id="{{ i }}">
                     <p class="width-100" id="{{ i }}">{{ this.DataService.formatPhoneNumber(log.phonenumber) }}</p>
-                    <small id="{{ i }}" [ngStyle]="{'textAlign': 'right'}">{{ log.lastContact.date.toMillis() |
-                        date:'yyyy/MM/dd h:mm a'}}</small>
+                    <small class="width-100 txt-rt" id="{{ i }}">{{ log.lastContact.date.toMillis() |
+                        date:'h:mm a'}}</small>
                 </div>
-                <div class="!hide" pTooltip="Call duration" tooltipPosition="left" [ngStyle]="{'textAlign': 'right'}">
+                <div class="!hide txt-rt" pTooltip="Call duration" tooltipPosition="above">
                     <small>{{ log.lastContact.result }}</small>
                 </div>
                 <hr />

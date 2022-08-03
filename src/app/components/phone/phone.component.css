@@ -16,7 +16,7 @@
 }
 
 .phone-history{
-  height: 35.7rem;
+  height: 45rem;
   overflow-y: scroll;
 }
 
@@ -24,6 +24,8 @@
   padding: .55rem 2rem 0 2rem;
   border: .0625rem solid transparent;
   border-radius: .55rem;
+  margin-top: .22rem;
+  margin-left: .4rem;
 }
 
 .phone-log:hover {
@@ -62,4 +64,21 @@ h6, p {
 .change-on-hold{
   background-color: rgba(38, 40, 51, 0.03);
   color: #c5c6cb;
+}
+
+.filter-notes-container{
+  padding: 0rem 2rem 0rem 2rem;
+}
+
+.filter-notes-container ::ng-deep .mat-form-field{
+  width: 100%;
+
+}
+
+.filter-notes-container{
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: #e6e7ee;
+  box-shadow: inset 0px -3px 0px -2px #d1d9e6;
 }

@@ -490,7 +490,7 @@ form {
   background-color: #e6e7ee !important;
   z-index: 1;
   left: 0 !important;
-  box-shadow: inset 5px 0 5px -4px #b8b9be;
+  box-shadow: inset 5px 0 5px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
 
 }
 
@@ -509,7 +509,7 @@ form {
   position: sticky;
   z-index: 2;
 
-  box-shadow: inset 9px 9px 9px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6, inset 0px 0px 0px -26px transparent !important;
+  box-shadow: inset 9px 9px 9px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6, inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6 !important;
   border-top-left-radius: 1rem;
 }
   
@@ -545,12 +545,12 @@ form {
 
 } 
 
-::ng-deep .p-datatable .p-datatable-tbody > tr:last-child >td:first-child {
-  box-shadow: inset 24px -17px 8px -24px #b8b9be, inset 0px -13px 9px -11px #fff, inset 0px 0px 0px -26px transparent;
+::ng-deep .p-datatable .p-datatable-tbody > tr:last-child >td.sticky-column-checkboxes:first-child {
+  box-shadow: inset 24px -17px 8px -24px #b8b9be, inset 0px -13px 9px -11px #fff, inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6 ;
   border-bottom-left-radius: 1rem;
 } 
 
-::ng-deep .p-datatable .p-datatable-tbody > tr:last-child >td:nth-child(2){
+::ng-deep .p-datatable .p-datatable-tbody > tr:last-child >td.sticky-column:nth-child(2){
   box-shadow: inset 0px -26px 16px -24px #fff, inset -4px 0px 0px -2px #d1d9e6, inset 0px 0px 0px -26px transparent;
 } 
 

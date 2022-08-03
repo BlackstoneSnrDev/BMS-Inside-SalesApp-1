@@ -1,40 +1,93 @@
-<div class="iconbutton-container">
-  <button class="iconbutton-neumorphism" (click)="toggleAddLog()" id="add-log" matTooltip="Add log"
-    matTooltipPosition="above">
-    <i class="bi bi-plus-circle-fill " *ngIf="!addlog"></i>
-    <i class="bi bi-x-circle-fill " *ngIf="addlog"></i>
-</button>
-</div>
-<div *ngIf="show" class="addlog-container">
-  <form (ngSubmit)="onSubmitNote()" [formGroup]="addNewNoteForm">
-    <div class="form-row">
-      <div class="col-10 txtlog-container">
-        <textarea 
-            class="input-neumorphism" 
-            placeholder="Add Note" 
-            id="note" 
-            formControlName="note"
-            appTextareaAutoresize
-        >
-        </textarea>
-      </div>
-      <div class="col-2 btnsave-container">
-        <button type="submit" class="button-neumorphism width-100">Save</button>
-      </div>
-    </div>
-  </form>
-  <hr>
-</div>
+<div class="log-main-container">
 
-<div *ngFor="let note of currentCallNotes">
-  <div class="log-container">
-    <div class="form-check form-check-inline width-100">
-      <h6>{{ currentCall.fullname }} | <small>{{note.date.toMillis() | date:'yyyy/MM/dd h:mm a'}}</small> </h6>
+<div class="notes-menu">
+  <div class="form-check form-check-inline width-100">
+    <div class="width-100 filter-notes-container">
+      <mat-form-field appearance="standard">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" [formControl]="searchNote" (keyup)="filterNotes()"
+          placeholder="Ex. ium" />
+      </mat-form-field>
     </div>
-    <div class="log-content-container">
-      {{ note.data }}
+
+    <div class="iconbutton-container">
+      <button class="iconbutton-neumorphism" (click)="toggleAddLog()" matTooltip="Add note"
+        matTooltipPosition="above">
+        <i class="bi bi-plus-circle-fill " *ngIf="!tglAddNote"></i>
+        <i class="bi bi-x-circle-fill " *ngIf="tglAddNote"></i>
+      </button>
     </div>
-    <small>{{ note.enteredBy }}</small>
+  </div>
+
+  <div *ngIf="tglAddNote" class="addlog-container">
+    <form (ngSubmit)="onSubmitNote()" [formGroup]="addNewNoteForm">
+      
+      <div class="row">
+        <div class="p-inputgroup col-10">
+          <textarea rows="1" pInputTextarea [autoResize]="true" class="input-neumorphism txtlog"
+          placeholder="Add note" id="note" formControlName="note"></textarea>
+            <span class="p-inputgroup-addon" matTooltip="Note status"
+            matTooltipPosition="above"> <p-dropdown [options]="optLogStatus" formControlName="noteStatus" optionValue="statusId"
+              optionLabel="statusName"></p-dropdown></span>    
+        </div>
+        <div class="col-2 btnsave-container">
+          <button type="submit" class="width-100" [disabled]="!addNewNoteForm.valid"
+          [ngClass]="
+            !addNewNoteForm.valid
+              ? 'button-neumorphism-disabled'
+              : 'button-neumorphism'
+          ">Save</button>
+        </div>
+      </div>
+      <div class="col-12">
+        <small *ngIf="addNewNoteForm.invalid" class="color-rd">*1500 characters maximum.</small>  
+      </div>
+
+    </form>
     <hr>
   </div>
+
+</div>
+    
+<div class="txt-center margin-tp" *ngIf="currentCallNotes.length == 0">
+  No data found.
+</div>
+
+<div *ngFor="let note of currentCallNotes; let noteIndex = index" >
+  <div class="log-container" *ngIf="currentCallNotes.length > 0">
+    <div class="form-check form-check-inline width-100 col-12 no-padding-lt no-padding-rt">
+
+      <div class="col-6  no-padding-rt no-padding-lt">
+        <h6>Note code: {{ note.slIndex }} | 
+          <p-badge [class]="'status-' + note.noteStatus.toLowerCase()" value="{{note.noteStatus}}"></p-badge>
+          </h6>
+      </div>
+      <div class="col-5 no-padding-rt no-padding-lt">
+
+         
+        <span matTooltip="Note status" id="noteSl{{note.slIndex}}" class="float-rt hide"
+            matTooltipPosition="above"> <p-dropdown [options]="optLogStatus" [formControl]="noteNewStatus" optionValue="statusName"
+              optionLabel="statusName"              placeholder="Change status"
+              (onChange)="changeNoteStatus(note.slIndex, note.noteStatus)"></p-dropdown></span>   
+              
+          </div>
+          <div class="col-auto no-padding-lt no-padding-rt">
+            <button class="button-neumorphism float-rt" (click)="toggleNoteStatus(note.slIndex)">
+              <i class="bi bi-plus-circle-fill " matTooltip="Change status"
+              matTooltipPosition="above" *ngIf="!tglChangeNoteStatus"></i>
+              <i class="bi bi-x-circle-fill " matTooltip="Change status"
+              matTooltipPosition="above" *ngIf="tglChangeNoteStatus"></i>
+            </button>
+          </div>
+
+    </div>
+    <h6>{{currentCall.fullname}}</h6> 
+    <div class="log-content-container">
+      <p>{{ note.data }}{{ note.data }}{{ note.data }}{{ note.data }}{{ note.data }}{{ note.data }}{{ note.data }}{{ note.data }}</p>
+    </div>
+    <small>{{ note.enteredBy }} | {{note.date.toMillis() | date:'yyyy/MM/dd h:mm a'}}</small>
+    <hr>
+  </div>
+  
+</div>
 </div>
