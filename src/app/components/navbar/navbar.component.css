@@ -3,18 +3,19 @@
   height: 100%;
   width: 7rem;
   position: fixed;
-  z-index: 1;
+  z-index: 5;
   top: 0;
   left: 0;
   background-color: #e6e7ee;
   box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #fff;
+  padding-bottom: 7rem;
+
 }
 
 .partialsContainer {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 76%;
-  padding-bottom: 7rem;
+  height: 100%;
 }
 
 .my-navbar-header {

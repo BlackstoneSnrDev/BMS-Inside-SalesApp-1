@@ -190,6 +190,10 @@ textarea{
   text-align: left;
 }
 
+.txt-rt {
+  text-align: right;
+}
+
 .txt-center {
   text-align: center;
 }
@@ -210,4 +214,12 @@ textarea{
 .input-disabled-neumorphism {
   outline: 0 !important;
   box-shadow: none !important;
+}
+
+.no-padding-rt{
+  padding-right: 0 !important;
+}
+
+.no-padding-lt{
+  padding-left: 0 !important;
 }

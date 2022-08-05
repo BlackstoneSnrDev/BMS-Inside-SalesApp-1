@@ -12,15 +12,6 @@
           (change)="toggleAutoDialer()"
         >
         </mat-slide-toggle>
-        <button
-          class="iconbutton-neumorphism trash-icon btnEditLayout"
-          matTooltip="Remove {{ element.element_placeholder }}"
-          matTooltipPosition="above"
-          (click)="editLayout(i)"
-          *ngIf="tglEditLayout"
-        >
-          <i class="bi bi-trash-fill"></i>
-        </button>
       </div>
     </div>
     <div *ngIf="element.element == 'inputIcon' && currentCall">
@@ -57,17 +48,17 @@
   >
     <div class="form-check form-check-inline width-100 border-bottom">
       <small class="margin-rt width-100">Call established</small>
-      <small class="margin-rt">00:01:30</small>
+      <small class="margin-rt" id="onCallTime">00:01:30</small>
     </div>
     <div class="form-check form-check-inline width-100">
-      <h6 class="margin-rt width-100">Calling at Name</h6>
+      <h6 class="margin-rt width-100">{{currentCall.fullname}}</h6>
     </div>
     <div class="form-check form-check-inline width-100">
-      <small class="margin-rt width-100">6126163731</small>
+      <small class="margin-rt width-100">{{currentCallPhoneNumber}}</small>
       <button
         class="mini-iconbutton-neumorphism mute-toggle"
-        pTooltip="Mute"
-        tooltipPosition="above"
+        matTooltip="Mute"
+        matTooltipPosition="above"
         (click)="btnMuteCall()"
         [ngClass]="xferStatus ? 'hide' : 'show'"
       >
@@ -82,8 +73,8 @@
       </button>
       <button
         class="mini-iconbutton-neumorphism hold-toggle"
-        pTooltip="Hold"
-        tooltipPosition="above"
+        matTooltip="Hold"
+        matTooltipPosition="above"
         (click)="btnHoldCall()"
         [ngClass]="xferStatus ? 'hide' : 'show'"
       >
@@ -104,8 +95,8 @@
       />
       <button
         class="mini-iconbutton-neumorphism"
-        pTooltip="Transfer to"
-        tooltipPosition="above"
+        matTooltip="Transfer to"
+        matTooltipPosition="above"
         (click)="btnXferCall()"
       >
         <i
@@ -119,70 +110,112 @@
       </button>
       <button
         class="mini-iconbutton-neumorphism"
-        pTooltip="Hang up"
-        tooltipPosition="above"
+        matTooltip="Hang up"
+        matTooltipPosition="above"
         (click)="btnHangUpCall()"
       >
         <i class="bi bi-telephone-x-fill"></i>
       </button>
     </div>
   </div>
-  <div class="row">
+  <div class="form-row">
     <div class="col-4 button-inline">
-      <button class="button-neumorphism width-100">VM</button>
+      <p-dropdown
+      [options]="optVoiceMail"
+      class="button-neumorphism"
+      (onChange)="leaveVoiceMail()"
+      optionLabel="voiceMailName"
+      optionValue="voiceMailId"
+      placeholder="VM"
+      [formControl]="voiceMailLeft"
+    ></p-dropdown>
     </div>
     <div class="col-4 button-inline">
-      <button class="button-neumorphism width-100">SMS</button>
+      <p-dropdown
+      [options]="optSMS"
+      class="button-neumorphism"
+      (onChange)="sendSMSMessage()"
+      optionLabel="smsName"
+      optionValue="smsId"
+      placeholder="SMS"
+      [formControl]="smsMessageSent"
+    ></p-dropdown>
     </div>
     <div class="col-4 button-inline">
-      <button class="button-neumorphism width-100">Email</button>
-    </div>
+        <p-dropdown
+        [options]="optEmail"
+        class="button-neumorphism"
+        (onChange)="sendEmail()"
+        optionLabel="emailName"
+        optionValue="emailId"
+        placeholder="Email"
+        [formControl]="emailSent"
+      ></p-dropdown>
   </div>
-  <div class="row">
-    <div class="col-6 button-inline">
-      <button class="button-neumorphism width-100">Pending</button>
-    </div>
-    <div class="col-6 button-inline">
-      <button class="button-neumorphism width-100">Payments</button>
-    </div>
-  </div>
-  <div class="row">
-    <div
-      class="col-12 button-inline"
-      [ngClass]="tglAutoDialer ? 'hide' : 'show'"
-    >
-      <button class="button-neumorphism float-right" (click)="nextCall()">
-        Next call <i class="bi bi-arrow-right-circle-fill"></i>
-      </button>
-    </div>
-  </div>
-  <hr />
+  
 </div>
+<div class="form-row">
+  <div class="col-6 button-inline">
+    <button class="button-neumorphism width-100">Pending</button>
+  </div>
+  <div class="col-6 button-inline">
+    <button class="button-neumorphism width-100">Payments</button>
+  </div>
+</div>
+<div class="form-row">
+  <div
+    class="col-12 button-inline"
+    [ngClass]="tglAutoDialer ? 'hide' : 'show'"
+  >
+    <button class="button-neumorphism float-right" (click)="nextCall()">
+      Next call <i class="bi bi-arrow-right-circle-fill"></i>
+    </button>
+  </div>
+</div>
+<hr />
 
 <!-- In PhoneHistory below, I commented out the 'click to show call duration feature' 
 For now, I'd like the data shown.  But, clicking a div makes that customer the activeCall (or next call if autoDialer is true). -->
 
-<div class="phone-history">
+<div class="phone-history" *ngIf="dialSessionArray">
+  <div class="filter-notes-container">
+    <mat-form-field appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" [formControl]="searchCall" (keyup)="filterCall()"
+        placeholder="MRN, Full name, Phone number" />
+    </mat-form-field>
+  </div>
+  <div class="txt-center margin-tp" *ngIf="dialSessionArray.length == 0">
+    No data found.
+  </div>
     <div *ngFor="let log of dialSessionArray; let i = index" id="list">
         <div class="phone-log"
-            [ngStyle]="{'backgroundColor': currentCall && log.uid === currentCall.uid ? 'lightGreen' : null}">
-            <!-- <div class="width-100" (click)="showTimeHandle($event)" id="{{ i }}"> -->
+        [ngClass]="currentCall && log.uid === currentCall.uid ? 'button-neumorphism-active' : ''"
+           >
+            
             <div class="width-100" (click)="selectCustomer(log.uid )" id="{{ i }}">
                 <div class="form-check form-check-inline width-100" id="{{ i }}">
                     <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
-                    <small id="{{ i }}">{{ log.caller_in_date }}</small>
+                    <small  class="width-100 txt-rt" id="{{ i }}">{{ log.lastContact.date.toMillis() |
+                      date:'MM/dd/yyyy'}}</small>
                 </div>
                 <div class="form-check form-check-inline width-100" id="{{ i }}">
                     <p class="width-100" id="{{ i }}">{{ this.DataService.formatPhoneNumber(log.phonenumber) }}</p>
-                    <small id="{{ i }}" [ngStyle]="{'textAlign': 'right'}">{{ log.lastContact.date.toMillis() |
-                        date:'yyyy/MM/dd h:mm a'}}</small>
+                    <small class="width-100 txt-rt" id="{{ i }}">{{ log.lastContact.date.toMillis() |
+                        date:'h:mm a'}}</small>
                 </div>
-                <div class="!hide" pTooltip="Call duration" tooltipPosition="left" [ngStyle]="{'textAlign': 'right'}">
-                    <small>{{ log.lastContact.result }}</small>
-                </div>
+                <div class="form-check form-check-inline width-100" id="{{ i }}">
+                  <small class="width-100">{{ log.lastContact.result }}</small>
+                  <small class="width-100 txt-rt hide" id="call{{i}}">2min</small>
+              </div>
+              </div>
+
+                <button class="iconbutton-neumorphism float-right" (click)="showTimeHandled(i)"  matTooltip="Time handled"
+                matTooltipPosition="left">
+                  <i class="bi bi-hourglass-split"></i>
+                </button>
                 <hr />
+           
             </div>
-            <!-- </div> -->
-        </div>
     </div>
 </div>

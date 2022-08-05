@@ -1,9 +1,12 @@
 <div spellcheck="true">
+  <h1>Call information</h1>
+  <h3 *ngIf="currentCall">{{currentCall.fullname}}</h3>
+    <hr><br>
   <div class="form-row list-container">
     <div class="col-md-auto group-row btn-group-col">
       <button
         class="button-neumorphism default"
-        matTooltip="Active group."
+        matTooltip="Active group"
         matTooltipPosition="above"
         [ngClass]="tbGroupActive.length < 1 ? 'show' : 'hide'"
       >
@@ -14,7 +17,7 @@
         class="button-neumorphism"
         *ngFor="let gp of tbGroupActive"
         (click)="removeGroupSelected(gp.group_id)"
-        matTooltip="Active group."
+        matTooltip="Delete active group"
         matTooltipPosition="above"
       >
         {{ gp.group_name | formatLabel }}

@@ -24,5 +24,64 @@
             "typeName": "Password",
             "typeCode": "password"
         }
+    ],
+    
+    "selectLogStatus": [
+        {
+            "statusId": "pending",
+            "statusName": "Pending"
+        },
+        {
+            "statusId": "handled",
+            "statusName": "Handled"
+        },
+        {
+            "statusId": "noAttention",
+            "statusName": "No attention required"
+        }
+    ],
+
+    "selectVoiceMail": [
+        {
+            "voiceMailId": "01voiceMailId",
+            "voiceMailName": "No response"
+        },
+        {
+            "voiceMailId": "02voiceMailId",
+            "voiceMailName": "Balance due"
+        },
+        {
+            "voiceMailId": "03voiceMailId",
+            "voiceMailName": "Call back"
+        }
+    ],
+    "selectEmail": [
+        {
+            "emailId": "01emailId",
+            "emailName": "Issue solved"
+        },
+        {
+            "emailId": "02emailId",
+            "emailName": "Balance due"
+        },
+        {
+            "emailId": "03emailId",
+            "emailName": "Call back"
+        }
+    ],
+    
+    "selectSMSMessage": [
+        {
+            "smsId": "01smsId",
+            "smsName": "Wrong address"
+        },
+        {
+            "smsId": "02smsId",
+            "smsName": "PQR email"
+        },
+        {
+            "smsId": "03smsId",
+            "smsName": "Call back"
+        }
     ]
 }
