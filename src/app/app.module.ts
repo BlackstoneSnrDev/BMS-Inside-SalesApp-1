@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routing, appRoutingProviders } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { DatePipe } from '@angular/common';
 
 
@@ -81,6 +82,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {SkeletonModule} from 'primeng/skeleton';
 import {BadgeModule} from 'primeng/badge';
+import {ScrollTopModule} from 'primeng/scrolltop';
 
 @NgModule({
   declarations: [
@@ -156,6 +158,7 @@ import {BadgeModule} from 'primeng/badge';
     InputTextareaModule,
     SkeletonModule,
     BadgeModule,
+    ScrollTopModule,
   ],
 
   providers: [

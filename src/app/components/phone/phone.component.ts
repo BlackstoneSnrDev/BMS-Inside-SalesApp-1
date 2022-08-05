@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/services.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { FormControl } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'phone-component',
   templateUrl: './phone.component.html',
@@ -25,8 +26,17 @@ export class PhoneComponent implements OnInit {
 
   public searchCall = new FormControl();
 
+  public optVoiceMail: any;
+  public voiceMailLeft = new FormControl();
 
-  constructor(public DataService: DataService) {}
+  public optSMS: any;
+  public smsMessageSent = new FormControl();
+
+  public optEmail: any;
+  public emailSent = new FormControl();
+
+
+  constructor(public DataService: DataService,private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
 
@@ -56,6 +66,18 @@ export class PhoneComponent implements OnInit {
 
       })
 
+      this.DataService.getSelectData().subscribe(
+        (response) => {
+          this.optVoiceMail = response.selectVoiceMail;
+          this.optSMS = response.selectSMSMessage;
+          this.optEmail = response.selectEmail;
+        },
+
+        (error) => {
+          console.error(error);
+        }
+      );
+
   }
 
   nextCall() {
@@ -67,12 +89,10 @@ export class PhoneComponent implements OnInit {
     this.DataService.setActiveCall(uid);
   }
 
-  showTimeHandle(event: Event) {
-    return (
-      event.target as HTMLInputElement
-    ).parentElement?.parentElement?.lastElementChild?.previousElementSibling?.classList.toggle(
+  showTimeHandled(callId:any) {
+    document.getElementById('call' + callId)?.classList.toggle(
       'hide'
-    );
+  );
   }
 
   filterCall() {
@@ -102,10 +122,65 @@ export class PhoneComponent implements OnInit {
     this.holdStatus = false;
     this.muteStatus = false;
     this.xferStatus = false;
+
+  }
+
+  leaveVoiceMail(){
+    this.confirmationService.confirm({
+      message:
+          'Are you sure you want leave this voice mail?',
+      header: 'Warning',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        console.log(this.voiceMailLeft.value) 
+          this.messageService.add({
+              severity: 'success',
+              summary: 'Service Message',
+              detail: 'Voice mail left.s',
+          });
+      }
+  });
+  }
+
+  sendSMSMessage(){
+    this.confirmationService.confirm({
+      message:
+          'Are you sure you want send this message?',
+      header: 'Warning',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        console.log(this.smsMessageSent.value) 
+        this.messageService.add({
+              severity: 'success',
+              summary: 'Service Message',
+              detail: 'SMS Message sent.',
+          });
+      }
+  });
+
+  }
+
+  sendEmail(){
+    this.confirmationService.confirm({
+      message:
+          'Are you sure you want send this email?',
+      header: 'Warning',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        console.log(this.emailSent.value) 
+        this.messageService.add({
+              severity: 'success',
+              summary: 'Service Message',
+              detail: 'Email sent.',
+          });
+      }
+  });
+
   }
 
   btnHangUpCall() {
     this.containerCallStatus = false;
+
   }
 
   btnHoldCall() {
@@ -119,18 +194,6 @@ export class PhoneComponent implements OnInit {
   btnXferCall() {
     this.xferStatus = !this.xferStatus;
     this.holdStatus = true;
-  }
-
-  toggleEditLayout() {
-    this.tglEditLayout = !this.tglEditLayout;
-  }
-
-  editLayout(elementId: number) {
-    console.log(elementId);
-  }
-
-  createNewField() {
-    console.log('elementId');
   }
 
   log(event: Event) {

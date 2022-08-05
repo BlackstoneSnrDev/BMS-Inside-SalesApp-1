@@ -1,7 +1,5 @@
 <div class="row main-row">
   <div class="col-lg-8 ">
-    <h1>Call information</h1>
-    <hr><br>
     <div class="form-col">
       <form-component 
         *ngIf="activeTemplate" 
@@ -20,3 +18,5 @@
     </div>
   </div>
 </div>
+<p-scrollTop [threshold]="200"></p-scrollTop>
+<p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>

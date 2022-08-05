@@ -1,100 +1,147 @@
-<div class="row main-row">
-  <div class="col-sm-12 ">
+<div class="row main-row settings-component">
+  <div class="col-lg-12">
     <h1>Settings</h1>
-    <hr><br>
-    <div class="row">
-      <div class="col-4 ">
-        <div class="caller-information-col">
+    <hr />
+  </div>
+  <div class="col-lg-4">
+    <div class="col-container">
+      <div class="form-check form-check-inline width-100">
+        <div class="width-100">
           <h4>Voice mails</h4>
-          <div class="form-check form-check-inline width-100">
-            <label class="margin-right width-100">VM (Name)</label>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Listen" matTooltipPosition="above">
-              <i class="bi bi-headset i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Record" matTooltipPosition="above">
-              <i class="bi bi-mic-fill i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Delete" matTooltipPosition="above">
-              <i class="bi bi-trash-fill i-neumorphism"></i>
-            </button>
-          </div>
-          <hr>
         </div>
+        <button
+          class="mini-iconbutton-neumorphism add-icon"
+          (click)="toggleVM()"
+          matTooltip="Record new voice mail"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-plus-circle-fill" *ngIf="!tglVM"></i>
+          <i class="bi bi-x-circle-fill" *ngIf="tglVM"></i>
+        </button>
       </div>
-      <div class="col-4 ">
-        <div class="caller-information-col">
-          <h4>Text Messages</h4>
-          <div class="form-check form-check-inline width-100">
-            <label class="margin-right width-100">SMS (Name)</label>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Preview" matTooltipPosition="above">
-              <i class="bi bi-chat-left-text i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Edit" matTooltipPosition="above">
-              <i class="bi bi-pencil-square i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Delete" matTooltipPosition="above">
-              <i class="bi bi-trash-fill i-neumorphism"></i>
-            </button>
-          </div>
-          <hr>
-          <div class="form-check form-check-inline width-100">
-            <label class="margin-right width-100">SMS (Name)</label>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Preview" matTooltipPosition="above">
-              <i class="bi bi-chat-left-text i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Edit" matTooltipPosition="above">
-              <i class="bi bi-pencil-square i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Delete" matTooltipPosition="above">
-              <i class="bi bi-trash-fill i-neumorphism"></i>
-            </button>
-          </div>
-          <hr>
-          <div class="form-check form-check-inline width-100">
-            <label class="margin-right width-100">SMS (Name)</label>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Preview" matTooltipPosition="above">
-              <i class="bi bi-chat-left-text i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Edit" matTooltipPosition="above">
-              <i class="bi bi-pencil-square i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Delete" matTooltipPosition="above">
-              <i class="bi bi-trash-fill i-neumorphism"></i>
-            </button>
-          </div>
-          <hr>
+      <div
+        class="form-check form-check-inline width-100 option-container"
+        *ngFor="let vm of optVoiceMail"
+        id="{{ vm.voiceMailId }}"
+      >
+        <label class="margin-right width-100">{{ vm.voiceMailName }}</label>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Listen"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-headset i-neumorphism"></i>
+        </button>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Record"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-mic-fill i-neumorphism"></i>
+        </button>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Delete"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-trash-fill i-neumorphism"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="col-container">
+      <div class="form-check form-check-inline width-100">
+        <div class="width-100">
+          <h4>SMS Messages</h4>
         </div>
+        <button
+          class="mini-iconbutton-neumorphism add-icon"
+          (click)="toggleSMS()"
+          matTooltip="Create new SMS message template"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-plus-circle-fill" *ngIf="!tglSMS"></i>
+          <i class="bi bi-x-circle-fill" *ngIf="tglSMS"></i>
+        </button>
       </div>
-      <div class="col-4 ">
-        <div class="caller-information-col">
+
+      <div
+        class="form-check form-check-inline width-100 option-container"
+        *ngFor="let sms of optSMS"
+        id="{{ sms.smsId }}"
+      >
+        <label class="margin-right width-100">{{ sms.smsName }}</label>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Preview"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-chat-left-text i-neumorphism"></i>
+        </button>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Edit"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-pencil-square i-neumorphism"></i>
+        </button>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Delete"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-trash-fill i-neumorphism"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="col-container">
+      <div class="form-check form-check-inline width-100">
+        <div class="width-100">
           <h4>Emails</h4>
-          <div class="form-check form-check-inline width-100">
-            <label class="margin-right width-100">Email (Name)</label>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Preview" matTooltipPosition="above">
-              <i class="bi bi-card-text i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Edit" matTooltipPosition="above">
-              <i class="bi bi-pencil-square i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Delete" matTooltipPosition="above">
-              <i class="bi bi-trash-fill i-neumorphism"></i>
-            </button>
-          </div>
-          <hr>
-          <div class="form-check form-check-inline width-100">
-            <label class="margin-right width-100">Email (Name)</label>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Preview" matTooltipPosition="above">
-              <i class="bi bi-card-text i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Edit" matTooltipPosition="above">
-              <i class="bi bi-pencil-square i-neumorphism"></i>
-            </button>
-            <button class="mini-iconbutton-neumorphism" matTooltip="Delete" matTooltipPosition="above">
-              <i class="bi bi-trash-fill i-neumorphism"></i>
-            </button>
-          </div>
         </div>
+        <button
+          class="mini-iconbutton-neumorphism add-icon"
+          (click)="toggleEmail()"
+          matTooltip="Create new email template"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-plus-circle-fill" *ngIf="!tglEmail"></i>
+          <i class="bi bi-x-circle-fill" *ngIf="tglEmail"></i>
+        </button>
+      </div>
+      <div
+        class="form-check form-check-inline width-100 option-container"
+        *ngFor="let email of optEmail"
+        id="{{ email.emailId }}"
+      >
+        <label class="margin-right width-100">{{ email.emailName }}</label>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Preview"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-card-text i-neumorphism"></i>
+        </button>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Edit"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-pencil-square i-neumorphism"></i>
+        </button>
+        <button
+          class="mini-iconbutton-neumorphism"
+          matTooltip="Delete"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-trash-fill i-neumorphism"></i>
+        </button>
       </div>
     </div>
   </div>
 </div>
+<p-scrollTop [threshold]="200"></p-scrollTop>
