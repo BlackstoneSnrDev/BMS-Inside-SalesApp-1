@@ -23,13 +23,11 @@ textarea {
 ::ng-deep .call-info-form .txtFormComponent .mat-input-element {
   box-sizing: content-box;
   width: 100%;
-
 }
 
 ::ng-deep .txtFormComponent .mat-input-element {
   box-sizing: border-box;
   width: 100%;
-
 }
 
 ::ng-deep .txtFormComponen t.mat-form-field-wrapper {
@@ -233,12 +231,22 @@ textarea {
   border-top-left-radius: 0;
 }
 
-.call-info-form .col-md-auto{
+.call-info-form .col-md-auto {
   padding-right: 1.5rem;
-    padding-left: 0.5rem;
+  padding-left: 0.5rem;
 }
 
-.address-col{
+.address-col {
   padding-right: 0rem !important;
+}
 
+.btnChangeStatus .iconbutton-container {
+  padding-top: 0 !important;
+  padding-right: 0.5rem;
+}
+
+::ng-deep.form-component .p-badge.p-component {
+  margin-left: 0.5rem;
+  position: absolute;
+  top: 0.3rem;
 }

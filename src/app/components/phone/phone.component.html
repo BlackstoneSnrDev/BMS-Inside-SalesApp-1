@@ -51,10 +51,10 @@
       <small class="margin-rt" id="onCallTime">00:01:30</small>
     </div>
     <div class="form-check form-check-inline width-100">
-      <h6 class="margin-rt width-100">{{currentCall.fullname}}</h6>
+      <h6 class="margin-rt width-100">{{ currentCall.fullname }}</h6>
     </div>
     <div class="form-check form-check-inline width-100">
-      <small class="margin-rt width-100">{{currentCallPhoneNumber}}</small>
+      <small class="margin-rt width-100">{{ currentCallPhoneNumber }}</small>
       <button
         class="mini-iconbutton-neumorphism mute-toggle"
         matTooltip="Mute"
@@ -121,101 +121,117 @@
   <div class="form-row">
     <div class="col-4 button-inline">
       <p-dropdown
-      [options]="optVoiceMail"
-      class="button-neumorphism"
-      (onChange)="leaveVoiceMail()"
-      optionLabel="voiceMailName"
-      optionValue="voiceMailId"
-      placeholder="VM"
-      [formControl]="voiceMailLeft"
-    ></p-dropdown>
+        [options]="optVoiceMail"
+        class="button-neumorphism"
+        (onChange)="leaveVoiceMail()"
+        optionLabel="templateName"
+        optionValue="templateId"
+        placeholder="VM"
+        [formControl]="voiceMailLeft"
+      ></p-dropdown>
     </div>
     <div class="col-4 button-inline">
       <p-dropdown
-      [options]="optSMS"
-      class="button-neumorphism"
-      (onChange)="sendSMSMessage()"
-      optionLabel="smsName"
-      optionValue="smsId"
-      placeholder="SMS"
-      [formControl]="smsMessageSent"
-    ></p-dropdown>
+        [options]="optSMS"
+        class="button-neumorphism"
+        (onChange)="sendSMSMessage()"
+        optionLabel="templateName"
+        optionValue="templateId"
+        placeholder="SMS"
+        [formControl]="smsMessageSent"
+      ></p-dropdown>
     </div>
     <div class="col-4 button-inline">
-        <p-dropdown
+      <p-dropdown
         [options]="optEmail"
         class="button-neumorphism"
         (onChange)="sendEmail()"
-        optionLabel="emailName"
-        optionValue="emailId"
+        optionLabel="templateName"
+        optionValue="templateId"
         placeholder="Email"
         [formControl]="emailSent"
       ></p-dropdown>
+    </div>
   </div>
-  
-</div>
-<div class="form-row">
-  <div class="col-6 button-inline">
-    <button class="button-neumorphism width-100">Pending</button>
+  <div class="form-row">
+    <div class="col-6 button-inline">
+      <button class="button-neumorphism width-100">Pending</button>
+    </div>
+    <div class="col-6 button-inline">
+      <button class="button-neumorphism width-100">Payments</button>
+    </div>
   </div>
-  <div class="col-6 button-inline">
-    <button class="button-neumorphism width-100">Payments</button>
+  <div class="form-row">
+    <div
+      class="col-12 button-inline"
+      [ngClass]="tglAutoDialer ? 'hide' : 'show'"
+    >
+      <button class="button-neumorphism float-right" (click)="nextCall()">
+        Next call <i class="bi bi-arrow-right-circle-fill"></i>
+      </button>
+    </div>
   </div>
-</div>
-<div class="form-row">
-  <div
-    class="col-12 button-inline"
-    [ngClass]="tglAutoDialer ? 'hide' : 'show'"
-  >
-    <button class="button-neumorphism float-right" (click)="nextCall()">
-      Next call <i class="bi bi-arrow-right-circle-fill"></i>
-    </button>
-  </div>
-</div>
-<hr />
+  <hr />
 
-<!-- In PhoneHistory below, I commented out the 'click to show call duration feature' 
+  <!-- In PhoneHistory below, I commented out the 'click to show call duration feature' 
 For now, I'd like the data shown.  But, clicking a div makes that customer the activeCall (or next call if autoDialer is true). -->
 
-<div class="phone-history" *ngIf="dialSessionArray">
-  <div class="filter-notes-container">
-    <mat-form-field appearance="standard">
-      <mat-label>Search</mat-label>
-      <input matInput type="text" [formControl]="searchCall" (keyup)="filterCall()"
-        placeholder="MRN, Full name, Phone number" />
-    </mat-form-field>
-  </div>
-  <div class="txt-center margin-tp" *ngIf="dialSessionArray.length == 0">
-    No data found.
-  </div>
-    <div *ngFor="let log of dialSessionArray; let i = index" id="list">
-        <div class="phone-log"
-        [ngClass]="currentCall && log.uid === currentCall.uid ? 'button-neumorphism-active' : ''"
-           >
-            
-            <div class="width-100" (click)="selectCustomer(log.uid )" id="{{ i }}">
-                <div class="form-check form-check-inline width-100" id="{{ i }}">
-                    <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
-                    <small  class="width-100 txt-rt" id="{{ i }}">{{ log.lastContact.date.toMillis() |
-                      date:'MM/dd/yyyy'}}</small>
-                </div>
-                <div class="form-check form-check-inline width-100" id="{{ i }}">
-                    <p class="width-100" id="{{ i }}">{{ this.DataService.formatPhoneNumber(log.phonenumber) }}</p>
-                    <small class="width-100 txt-rt" id="{{ i }}">{{ log.lastContact.date.toMillis() |
-                        date:'h:mm a'}}</small>
-                </div>
-                <div class="form-check form-check-inline width-100" id="{{ i }}">
-                  <small class="width-100">{{ log.lastContact.result }}</small>
-                  <small class="width-100 txt-rt hide" id="call{{i}}">2min</small>
-              </div>
-              </div>
-
-                <button class="iconbutton-neumorphism float-right" (click)="showTimeHandled(i)"  matTooltip="Time handled"
-                matTooltipPosition="left">
-                  <i class="bi bi-hourglass-split"></i>
-                </button>
-                <hr />
-           
-            </div>
+  <div class="phone-history" *ngIf="dialSessionArray">
+    <div class="filter-notes-container">
+      <mat-form-field appearance="standard">
+        <mat-label>Search</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="searchCall"
+          (keyup)="filterCall()"
+          placeholder="MRN, Full name, Phone number"
+        />
+      </mat-form-field>
     </div>
+    <div class="txt-center margin-tp" *ngIf="dialSessionArray.length == 0">
+      No data found.
+    </div>
+    <div *ngFor="let log of dialSessionArray; let i = index" id="list">
+      <div
+        class="phone-log"
+        [ngClass]="
+          currentCall && log.uid === currentCall.uid
+            ? 'button-neumorphism-active'
+            : ''
+        "
+      >
+        <div class="width-100" (click)="selectCustomer(log.uid)" id="{{ i }}">
+          <div class="form-check form-check-inline width-100" id="{{ i }}">
+            <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
+            <small class="width-100 txt-rt" id="{{ i }}">{{
+              log.lastContact.date.toMillis() | date: "MM/dd/yyyy"
+            }}</small>
+          </div>
+          <div class="form-check form-check-inline width-100" id="{{ i }}">
+            <p class="width-100" id="{{ i }}">
+              {{ this.DataService.formatPhoneNumber(log.phonenumber) }}
+            </p>
+            <small class="width-100 txt-rt" id="{{ i }}">{{
+              log.lastContact.date.toMillis() | date: "h:mm a"
+            }}</small>
+          </div>
+          <div class="form-check form-check-inline width-100" id="{{ i }}">
+            <small class="width-100">{{ log.lastContact.result }}</small>
+            <small class="width-100 txt-rt hide" id="call{{ i }}">2min</small>
+          </div>
+        </div>
+
+        <button
+          class="iconbutton-neumorphism float-right"
+          (click)="showTimeHandled(i)"
+          matTooltip="Time handled"
+          matTooltipPosition="left"
+        >
+          <i class="bi bi-hourglass-split"></i>
+        </button>
+        <hr />
+      </div>
+    </div>
+  </div>
 </div>
