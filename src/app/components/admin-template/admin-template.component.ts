@@ -19,21 +19,20 @@ export class AdminTemplateComponent implements OnInit {
   public thData: any;
   public tdData: any;
   public clonedTdData: any = {};
-  public tdFields: any;
   public selectElmType!: string[];
 
   public tbSelectedRows: any;
   public loading: boolean = true;
 
   public tglTemplate: boolean = false;
-  public tglAddNewTemplate: boolean = false;
+  public tglCreateNewTemplate: boolean = false;
   public tglAddNewField: boolean = false;
   public tglEditField: boolean = false;
   public tglAddUsers: boolean = false;
 
-  public addNewTemplateForm!: FormGroup;
+  public createNewTemplateForm!: FormGroup;
   public editFieldForm!: FormGroup;
-  public addField!: string[];
+  public addField!: any;
 
   public userList: any;
   public filterUserList: any;
@@ -42,7 +41,11 @@ export class AdminTemplateComponent implements OnInit {
   public onValidationMsg: string = '';
   public onValidationError: string = '';
   items: number[] = [1];
+  itemsStatus: number[] = [1];
+
   public newFormControl: any = {};
+  public thCustomerStatus: any;
+  public tdCustomerStatus: any;
 
   constructor(
     private dataService: DataService,
@@ -56,10 +59,21 @@ export class AdminTemplateComponent implements OnInit {
         this.dataService.getMyTableData().subscribe(
           (response) => {
             this.thData = response.tableTemplate_th;
+            this.thCustomerStatus = response.tableTemplateStatutes_th;
+            console.log(this.thCustomerStatus);
 
-            this.addNewTemplateForm = new FormGroup({
+            this.createNewTemplateForm = new FormGroup({
               templateName: new FormControl('', [
                 Validators.required,
+                Validators.minLength(1),
+              ]),
+
+              statusLabel0: new FormControl('', [Validators.minLength(1)]),
+              statusBackground0: new FormControl('#44476a', [
+                Validators.minLength(1),
+              ]),
+
+              statusColor0: new FormControl('#44476a', [
                 Validators.minLength(1),
               ]),
 
@@ -92,16 +106,24 @@ export class AdminTemplateComponent implements OnInit {
             templateFields: [],
           });
 
+          tdData.push({
+            templateName: 'Just testing',
+            templateStatus: false,
+            templateFields: ['helo'],
+          });
+
           for (const templateData in value) {
             if (value[templateData]['element_placeholder'] !== undefined) {
               slIndex += 1;
 
-              tdData[index]['templateFields'].push({
+              let data = {
                 name: value[templateData]['element_placeholder'],
                 type: value[templateData]['element_type'],
                 visible: value[templateData]['showWhileCalling'],
                 slIndex: slIndex - 1,
-              });
+              };
+
+              tdData[index]['templateFields'].push(data);
             }
           }
         }
@@ -111,6 +133,8 @@ export class AdminTemplateComponent implements OnInit {
         this.dataService.getSelectData().subscribe(
           (response) => {
             this.selectElmType = response.selectInputType;
+            this.tdCustomerStatus = response.selectCXStatus;
+            console.log(this.tdCustomerStatus);
           },
 
           (error) => {
@@ -127,25 +151,55 @@ export class AdminTemplateComponent implements OnInit {
 
   cloneAddField() {
     let id = this.items.length;
-    this.addNewTemplateForm.addControl(
+    this.createNewTemplateForm.addControl(
       'fieldName' + id,
       new FormControl('', [Validators.required, Validators.minLength(1)])
     );
-    this.addNewTemplateForm.addControl(
+    this.createNewTemplateForm.addControl(
       'fieldType' + id,
       new FormControl('', [Validators.required, Validators.minLength(1)])
     );
 
     this.items.push(id);
+    console.log(this.createNewTemplateForm);
   }
 
   removeClonedAddField() {
     let id = this.items.length;
 
     if (id > 1) {
-      this.addNewTemplateForm.removeControl('fieldName' + id);
-      this.addNewTemplateForm.removeControl('fieldType' + id);
+      this.createNewTemplateForm.removeControl('fieldName' + id);
+      this.createNewTemplateForm.removeControl('fieldType' + id);
       this.items.pop();
+    }
+  }
+
+  cloneAddStatus() {
+    let id = this.itemsStatus.length;
+    this.createNewTemplateForm.addControl(
+      'statusLabel' + id,
+      new FormControl('', [Validators.minLength(1)])
+    );
+    this.createNewTemplateForm.addControl(
+      'statusBackground' + id,
+      new FormControl('#44476a', [Validators.minLength(1)])
+    );
+    this.createNewTemplateForm.addControl(
+      'statusColor' + id,
+      new FormControl('#44476a', [Validators.minLength(1)])
+    );
+    this.itemsStatus.push(id);
+    console.log(this.createNewTemplateForm);
+  }
+
+  removeClonedAddStatus() {
+    let id = this.itemsStatus.length;
+
+    if (id > 1) {
+      this.createNewTemplateForm.removeControl('statusLabel' + id);
+      this.createNewTemplateForm.removeControl('statusBackground' + id);
+      this.createNewTemplateForm.removeControl('statusColor' + id);
+      this.itemsStatus.pop();
     }
   }
 
@@ -216,47 +270,131 @@ export class AdminTemplateComponent implements OnInit {
     }
   }
 
-  toggleAddNewTemplate() {
-    this.tglAddNewTemplate = !this.tglAddNewTemplate;
+  toggleCreateNewTemplate() {
+    this.tglCreateNewTemplate = !this.tglCreateNewTemplate;
   }
 
-  saveAddNewTemplate() {
-    let value = this.addNewTemplateForm.value;
+  saveCreateNewTemplate() {
+    let value = this.createNewTemplateForm.value;
 
-    this.addNewTemplateForm.reset();
-    this.tglAddNewTemplate = false;
+    this.createNewTemplateForm.reset();
+    this.tglCreateNewTemplate = false;
 
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
-      detail: 'New template was added successfully.',
+      detail: 'New template was created successfully.',
     });
 
     console.log(value);
   }
 
-  cancelAddNewTemplate() {
-    this.tglAddNewTemplate = false;
-    this.addNewTemplateForm.reset();
+  cancelCreateNewTemplate() {
+    this.tglCreateNewTemplate = false;
+    this.items = this.items.filter((a: any, i: any) => i == 0);
+    this.createNewTemplateForm.reset();
+
+    let itemsCreated = this.items.length;
+    let id = 1;
+
+    for (let index = 0; index < itemsCreated - 1; index++) {
+      this.createNewTemplateForm.removeControl('fieldName' + id);
+      this.createNewTemplateForm.removeControl('fieldType' + id);
+      id += 1;
+    }
   }
 
-  toggleTemplateStatus(id: any, initValue: any, event: any) {
-    event.checked = initValue;
+  activateTemplate(id: any, templateName: any) {
+    this.confirmationService.confirm({
+      message:
+        'Are you sure you want to <b>activate</b> this template? This will be applied in the <b>whole app.</b>',
+      header: 'Warning',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        if (this.tdData[id]['templateFields'].length > 0) {
+          this.tdData.forEach((i: any) => (i.templateStatus = false));
+          this.tdData[id]['templateStatus'] = true;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Service Message',
+            detail:
+              'Template "' + templateName + '" was activated successfully.',
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Service Message',
+            detail:
+              'Template "' +
+              templateName +
+              '" cannot be activated. It must have at least <b>one field.</b>',
+          });
+        }
+      },
+    });
+  }
 
-    if (!event.checked) {
-      this.tdData.forEach((i: any) => (i.templateStatus = false));
-      this.tdData[id]['templateStatus'] = true;
-      event.checked = true;
-    } else {
-      this.confirmationService.confirm({
-        message:
-          'Please activate another template, so this will overwrite the current one.',
-        header: 'Warning',
-        icon: 'pi pi-exclamation-triangle',
-      });
+  deleteTemplate(id: any, currentStatus: any, templateName: any) {
+    this.confirmationService.confirm({
+      message:
+        'Are you sure you want to <b>delete</b> this template? This will be applied in the <b>whole app.</b>',
+      header: 'Warning',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let newTdData = this.tdData.filter((array: any, i: any) => i !== id);
 
-      this.tdData[id]['templateStatus'] = initValue;
-      event.checked = initValue;
-    }
+        if (newTdData.length > 0) {
+          let remainingTemplateFields = newTdData[0]['templateFields'].length;
+
+          if (remainingTemplateFields <= 0 && this.tdData.length == 2) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Service Message',
+              detail:
+                'Template "' +
+                templateName +
+                '" cannot be deleted. The remaining template must have fields added and currently it has (' +
+                remainingTemplateFields +
+                '). Please create a new template. ',
+              sticky: true,
+            });
+          } else {
+            this.tdData = newTdData;
+            if (currentStatus) {
+              this.tdData.forEach((i: any) => (i.templateStatus = false));
+              this.tdData[0]['templateStatus'] = true;
+
+              let newActiveTemplate = this.tdData[0]['templateName'];
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Service Message',
+                detail:
+                  'Template "' +
+                  newActiveTemplate +
+                  '" was activated automatically.',
+              });
+            }
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Service Message',
+              detail:
+                'Template "' + templateName + '" was deleted successfully.',
+            });
+          }
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Service Message',
+            detail:
+              'Template "' +
+              templateName +
+              '" cannot be deleted. At least one template must exists.',
+          });
+        }
+      },
+    });
+  }
+  changeColor() {
+    console.log('hpta');
   }
 }

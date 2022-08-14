@@ -257,7 +257,6 @@
             "dept": "Inside Sales",
             "role": "Lead",
             "password": "bae1637"
-
         },
         {
             "name": "Daniel , Moreno",
@@ -328,7 +327,6 @@
             "field": "password",
             "element_type": "password"
         }
-        
     ],
     "tableTemplate_th": [
         {
@@ -345,6 +343,23 @@
             "title": "Visible",
             "field": "visible",
             "element_type": "boolean"
+        }
+    ],
+    "tableTemplateStatutes_th": [
+        {
+            "title": "Name",
+            "field": "label",
+            "element_type": "text"
+        },
+        {
+            "title": "Background color",
+            "field": "background",
+            "element_type": "color"
+        },
+        {
+            "title": "Text color",
+            "field": "color",
+            "element_type": "color"
         }
     ]
 }

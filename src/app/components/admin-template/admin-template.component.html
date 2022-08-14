@@ -7,20 +7,23 @@
     <ng-container>
       <button
         class="button-neumorphism margin-lt"
-        (click)="toggleAddNewTemplate()"
+        (click)="toggleCreateNewTemplate()"
       >
         <i class="bi bi-plus-square-fill"></i> Add new template
       </button>
 
-      <div [ngClass]="tglAddNewTemplate ? 'show' : 'hide'">
+      <div
+        [ngClass]="tglCreateNewTemplate ? 'show' : 'hide'"
+        class="create-template"
+      >
         <div spellcheck="true">
           <form
-            [formGroup]="addNewTemplateForm"
-            *ngIf="addNewTemplateForm"
+            [formGroup]="createNewTemplateForm"
+            *ngIf="createNewTemplateForm"
             novalidate
           >
             <h5>Add new template</h5>
-            <div [ngClass]="!addNewTemplateForm.valid ? 'show' : 'hide'">
+            <div [ngClass]="!createNewTemplateForm.valid ? 'show' : 'hide'">
               *All fields must be filled out.
             </div>
             <hr />
@@ -40,6 +43,7 @@
                 </mat-form-field>
               </div>
             </div>
+
             <div
               class="form-row"
               *ngFor="let item of items; let indexSection = index"
@@ -85,6 +89,75 @@
                 Add another field <i class="bi bi-node-plus-fill i-bigger"></i>
               </button>
             </div>
+            <div
+              class="form-row"
+              *ngFor="let item of itemsStatus; let indexSection = index"
+              matTooltip="This section is optional"
+              matTooltipPosition="above"
+            >
+              <div class="col-lg-4">
+                <mat-form-field appearance="standard">
+                  <mat-label>Status name</mat-label>
+                  <input
+                    matInput
+                    class="input-neumorphism"
+                    type="text"
+                    placeholder="Status name"
+                    autocomplete="off"
+                    id="statusLabel"
+                    formControlName="statusLabel{{ indexSection }}"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-lg-3 no-padding-rt no-padding-lt">
+                <div
+                  class="badge-status"
+                  [style]="{ 'background-color': backgroundin.value }"
+                >
+                  <span class="badge-val">{{ backgroundin.value }}</span>
+                  <input
+                    #backgroundin
+                    matTooltip="Change background color"
+                    matTooltipPosition="above"
+                    type="color"
+                    placeholder="Background color"
+                    formControlName="statusBackground{{ indexSection }}"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-3 no-padding-rt no-padding-lt">
+                <div
+                  class="badge-status"
+                  [style]="{ 'background-color': colorin.value }"
+                >
+                  <span class="badge-val">{{ colorin.value }}</span>
+                  <input
+                    #colorin
+                    matTooltip="Change name color"
+                    matTooltipPosition="above"
+                    type="color"
+                    placeholder="Name color"
+                    formControlName="statusColor{{ indexSection }}"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-2 width-100 remove-btn-container">
+                <button
+                  class="iconbutton-neumorphism"
+                  (click)="removeClonedAddStatus()"
+                >
+                  <i class="bi bi-node-minus-fill i-bigger"></i>
+                </button>
+              </div>
+            </div>
+            <div class="form-row width-100">
+              <button
+                class="button-neumorphism width-100"
+                (click)="cloneAddStatus()"
+              >
+                Add another status <i class="bi bi-node-plus-fill i-bigger"></i>
+              </button>
+            </div>
             <hr />
             <div class="form-row">
               <div class="col">
@@ -92,10 +165,10 @@
                   type="submit"
                   class="width-50 show-line-b txt-center"
                   value="save"
-                  (click)="saveAddNewTemplate()"
-                  [disabled]="!addNewTemplateForm.valid"
+                  (click)="saveCreateNewTemplate()"
+                  [disabled]="!createNewTemplateForm.valid"
                   [ngClass]="
-                    !addNewTemplateForm.valid
+                    !createNewTemplateForm.valid
                       ? 'button-neumorphism-disabled'
                       : 'button-neumorphism'
                   "
@@ -104,7 +177,7 @@
                 </button>
                 <div
                   class="button-neumorphism width-50 show-line-b txt-center"
-                  (click)="cancelAddNewTemplate()"
+                  (click)="cancelCreateNewTemplate()"
                 >
                   Cancel
                 </div>
@@ -119,19 +192,23 @@
   <div class="row">
     <div
       *ngFor="let td of tdData; let indexTemplate = index"
-      class="template-container"
-      [ngClass]="[
-        !tglTemplate ? 'col-lg-4' : 'col-lg-12',
-        td.templateStatus ? 'template-div-active' : ''
-      ]"
+      class="template-container col-lg-12"
+      [ngClass]="td.templateStatus ? 'template-div-active' : ''"
       (click)="toggleTemplate()"
     >
       <p-accordion>
         <p-accordionTab
           class="admin-template-table-container"
-          header="{{ td.templateName }}"
           [ngClass]="td.templateStatus ? 'template-active' : ''"
         >
+          <ng-template pTemplate="header">
+            {{ td.templateName }}
+            <p-badge
+              *ngIf="td.templateStatus"
+              class="status-active margin-lt"
+              value="Active"
+            ></p-badge>
+          </ng-template>
           <p-table
             #dataTable
             [columns]="thData"
@@ -145,7 +222,6 @@
             editMode="row"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true"
-            [ngClass]="!tglTemplate ? 'hide ' : 'show'"
             [loading]="loading"
             styleClass="p-datatable-gridlines"
             scrollHeight="42.857rem"
@@ -156,21 +232,30 @@
             <ng-template pTemplate="header" let-columns>
               <tr>
                 <th class="sticky-column-checkboxes sticky-checkboxes-main">
-                  <mat-slide-toggle
-                    class="example-margin"
-                    [checked]="td.templateStatus"
-                    #templateStatus
-                    (change)="
-                      toggleTemplateStatus(
+                  <button
+                    class="button-neumorphism activate-template-btn"
+                    *ngIf="!td.templateStatus"
+                    matTooltip="Activate this template"
+                    matTooltipPosition="above"
+                    (click)="activateTemplate(indexTemplate, td.templateName)"
+                  >
+                    Activate
+                  </button>
+                  <button
+                    class="button-neumorphism"
+                    [ngClass]="!td.templateStatus ? 'delete-template-btn' : ''"
+                    matTooltip="Delete this template"
+                    matTooltipPosition="above"
+                    (click)="
+                      deleteTemplate(
                         indexTemplate,
                         td.templateStatus,
-                        templateStatus
+                        td.templateName
                       )
                     "
                   >
-                    <div *ngIf="!td.templateStatus">Activate</div>
-                    <div *ngIf="td.templateStatus">Active</div>
-                  </mat-slide-toggle>
+                    Delete
+                  </button>
                 </th>
                 <th
                   *ngFor="let col of columns"
@@ -302,6 +387,175 @@
                             [readonly]="true"
                           >
                           </p-checkbox>
+                        </ng-container>
+
+                        <ng-container *ngSwitchDefault>
+                          {{ rowData[col.field] }}
+                        </ng-container>
+                      </ng-container>
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+              <p-button
+                type="button"
+                icon="pi pi-plus"
+                styleClass="p-button-text"
+              ></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+              <p-button
+                type="button"
+                icon="pi pi-cloud"
+                styleClass="p-button-text"
+              ></p-button>
+            </ng-template>
+          </p-table>
+          <p-table
+            #dataTable
+            [columns]="thCustomerStatus"
+            [value]="tdCustomerStatus"
+            [rows]="5"
+            [paginator]="true"
+            [rowsPerPageOptions]="[5, 10, 25, 50]"
+            [(selection)]="tbSelectedRows"
+            [rowHover]="true"
+            dataKey="slStatusId"
+            editMode="row"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
+            [loading]="loading"
+            styleClass="p-datatable-gridlines"
+            scrollHeight="42.857rem"
+            scrollDirection="horizontal"
+            responsiveLayout="scroll"
+            [tableStyle]="{ width: '100%' }"
+          >
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th class="sticky-column-checkboxes sticky-checkboxes-main">
+                  Actions
+                </th>
+                <th
+                  *ngFor="let col of columns"
+                  pSortableColumn="{{ col.field }}"
+                  class="stck-head"
+                >
+                  {{ col.title
+                  }}<p-sortIcon field="{{ col.field }}"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="{{ col.field }}"
+                    display="menu"
+                  ></p-columnFilter>
+                </th>
+              </tr>
+            </ng-template>
+
+            <ng-template
+              pTemplate="body"
+              let-rowData
+              let-columns="columns"
+              let-rowIndex="rowIndex"
+              let-editing="editing"
+            >
+              <tr [pEditableRow]="rowData" id="tr{{ rowIndex }}">
+                <td class="sticky-column-checkboxes">
+                  <button
+                    pRipple
+                    *ngIf="!editing"
+                    type="button"
+                    pInitEditableRow
+                    (click)="onRowEditInit(rowData, rowIndex)"
+                    class="iconbutton-neumorphism edit-icon margin-rt"
+                  >
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  <button
+                    pRipple
+                    *ngIf="!editing"
+                    type="button"
+                    (click)="onRowDeleteRow(rowIndex, indexTemplate)"
+                    class="iconbutton-neumorphism trash-icon"
+                  >
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                  <button
+                    pRipple
+                    *ngIf="editing"
+                    type="button"
+                    pSaveEditableRow
+                    (click)="onRowEditSave(rowData, rowIndex, indexTemplate)"
+                    class="iconbutton-neumorphism margin-rt"
+                  >
+                    <i class="pi pi-check"></i>
+                  </button>
+                  <button
+                    pRipple
+                    *ngIf="editing"
+                    type="button"
+                    pCancelEditableRow
+                    (click)="onRowEditCancel(rowData, rowIndex)"
+                    class="iconbutton-neumorphism"
+                  >
+                    <i class="pi pi-times"></i>
+                  </button>
+                </td>
+                <td *ngFor="let col of columns">
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <ng-container
+                        [ngSwitch]="col.element_type === 'color' ? 'color' : -1"
+                      >
+                        <ng-container *ngSwitchCase="'color'">
+                          <div
+                            class="badge-status"
+                            [style]="{ 'background-color': colorin.value }"
+                          >
+                            <span class="badge-val">{{ colorin.value }}</span>
+                            <input
+                              #colorin
+                              matTooltip="Change color"
+                              matTooltipPosition="above"
+                              type="{{ col.element_type }}"
+                              placeholder="New {{ col.field }}"
+                              [(ngModel)]="rowData[col.field]"
+                              required
+                            />
+                          </div>
+                        </ng-container>
+
+                        <ng-container *ngSwitchDefault>
+                          <mat-form-field appearance="standard">
+                            <mat-label>{{ col.title }}</mat-label>
+                            <input
+                              matInput
+                              type="{{ col.element_type }}"
+                              placeholder="New {{ col.field }}"
+                              [(ngModel)]="rowData[col.field]"
+                              required
+                            />
+                          </mat-form-field>
+                        </ng-container>
+
+                        <br />
+                        <small *ngIf="onValidationError" class="color-rd">
+                          {{ col.title }} must be filled out.
+                        </small>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      <ng-container
+                        [ngSwitch]="col.element_type === 'color' ? 'color' : -1"
+                      >
+                        <ng-container *ngSwitchCase="'color'">
+                          <div
+                            class="circle"
+                            [style]="{ 'background-color': rowData[col.field] }"
+                          ></div>
+                          <span>{{ rowData[col.field] }}</span>
                         </ng-container>
 
                         <ng-container *ngSwitchDefault>

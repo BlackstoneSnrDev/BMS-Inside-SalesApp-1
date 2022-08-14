@@ -1,191 +1,243 @@
-<div spellcheck="true">
-  <h1>Call information</h1>
-  <h3 *ngIf="currentCall">{{currentCall.fullname}}</h3>
-    <hr><br>
-  <div class="form-row list-container">
-    <div class="col-md-auto group-row btn-group-col">
-      <button
-        class="button-neumorphism default"
-        matTooltip="Active group"
+<h1>Call information</h1>
+<div
+  class="form-check form-check-inline width-100 col-12 no-padding-lt no-padding-rt"
+  *ngFor="let status of customerStatus"
+>
+  <div class="col-7 no-padding-lt no-padding-rt form-component">
+    <h3 *ngIf="currentCall">
+      {{ currentCall.fullname }}
+      <p-badge
+        [style]="{ background: status.background, color: status.color }"
+        value="{{ status.label }}"
+      ></p-badge>
+    </h3>
+  </div>
+  <div class="col-5 no-padding-lt btnChangeStatus">
+    <div class="iconbutton-container">
+      <span
+        matTooltip="{{ currentCall.fullname }} status"
+        id="customerStatus"
+        class="float-rt hide-line"
         matTooltipPosition="above"
-        [ngClass]="tbGroupActive.length < 1 ? 'show' : 'hide'"
       >
-        All
-      </button>
-
-      <button
-        class="button-neumorphism"
-        *ngFor="let gp of tbGroupActive"
-        (click)="removeGroupSelected(gp.group_id)"
-        matTooltip="Delete active group"
-        matTooltipPosition="above"
-      >
-        {{ gp.group_name | formatLabel }}
-        <span class="iconBtn">
-          <i class="bi bi-x-circle-fill"></i>
-        </span>
-      </button>
-    </div>
-    <div
-      class="col-md-1 group-row select-group-col"
-      matTooltip="Select group to call"
-      matTooltipPosition="above"
-    >
-      <span>
         <p-dropdown
-          [options]="tbGroups"
-          [formControl]="groupSelected"
-          optionValue="group_id"
-          optionLabel="group_name"
-          (onChange)="getGroupSelected()"
-        ></p-dropdown>
-      </span>
+          [options]="optCustomerStatus"
+          [formControl]="customerNewStatus"
+          optionValue="slStatusId"
+          optionLabel="label"
+          placeholder="Change status"
+          (onChange)="
+            changeCustomerStatus(status.slStatusId, currentCall.fullname)
+          "
+        ></p-dropdown
+      ></span>
+      <button
+        class="iconbutton-neumorphism small-edit-icon float-rt"
+        id="btnCustomerStatus"
+        (click)="toggleCustomerStatus()"
+      >
+        <i
+          class="bi bi-pencil-square"
+          matTooltip="Change {{ currentCall.fullname }} status"
+          matTooltipPosition="above"
+        ></i>
+      </button>
+      <button
+        class="iconbutton-neumorphism cancel-icon float-rt hide-line"
+        (click)="toggleCustomerStatus()"
+        id="btnCancelStatus"
+      >
+        <i
+          class="bi bi-x-circle-fill"
+          matTooltip="Cancel"
+          matTooltipPosition="above"
+        ></i>
+      </button>
     </div>
   </div>
-  <form
-    [formGroup]="callDataForm"
-    *ngIf="callDataForm"
-    novalidate
-    class="call-info-form"
-  >
-    <div class="iconbutton-container">
-      <div class="btnsave-container margin-rt">
-        <button
-          [disabled]="!callDataForm.valid"
-          [ngClass]="
-            !callDataForm.valid
-              ? 'button-neumorphism-disabled'
-              : 'button-neumorphism'
-          "
-          *ngIf="tgleditField"
-          (click)="saveEditFields()"
-        >
-          Save
-        </button>
-      </div>
-      <button
-        class="iconbutton-neumorphism edit-icon"
-        matTooltip="Edit fields"
-        matTooltipPosition="above"
-        (click)="toggleEditFields()"
-        *ngIf="!tgleditField"
-      >
-        <i class="bi bi-pencil-square"></i>
-      </button>
-      <button
-        class="iconbutton-neumorphism"
-        matTooltip="Edit fields"
-        matTooltipPosition="above"
-        (click)="cancelEditFields()"
-        *ngIf="tgleditField"
-      >
+</div>
+<hr />
+<br />
+<div class="form-row list-container">
+  <div class="col-md-auto group-row btn-group-col">
+    <button
+      class="button-neumorphism default"
+      matTooltip="Active group"
+      matTooltipPosition="above"
+      [ngClass]="tbGroupActive.length < 1 ? 'show' : 'hide'"
+    >
+      All
+    </button>
+
+    <button
+      class="button-neumorphism"
+      *ngFor="let gp of tbGroupActive"
+      (click)="removeGroupSelected(gp.group_id)"
+      matTooltip="Delete active group"
+      matTooltipPosition="above"
+    >
+      {{ gp.group_name | formatLabel }}
+      <span class="iconBtn">
         <i class="bi bi-x-circle-fill"></i>
+      </span>
+    </button>
+  </div>
+  <div
+    class="col-md-1 group-row select-group-col"
+    matTooltip="Select group to call"
+    matTooltipPosition="above"
+  >
+    <span>
+      <p-dropdown
+        [options]="tbGroups"
+        [formControl]="groupSelected"
+        optionValue="group_id"
+        optionLabel="group_name"
+        (onChange)="getGroupSelected()"
+      ></p-dropdown>
+    </span>
+  </div>
+</div>
+<form
+  [formGroup]="callDataForm"
+  *ngIf="callDataForm"
+  novalidate
+  class="call-info-form"
+>
+  <div class="iconbutton-container">
+    <div class="btnsave-container margin-rt">
+      <button
+        [disabled]="!callDataForm.valid"
+        [ngClass]="
+          !callDataForm.valid
+            ? 'button-neumorphism-disabled'
+            : 'button-neumorphism'
+        "
+        *ngIf="tgleditField"
+        (click)="saveEditFields()"
+      >
+        Save
       </button>
     </div>
-    <div class="onValidationContainer" *ngIf="onValidationMsg">
-      {{ onValidationMsg }}
-    </div>
-    <div class="form-row">
-      <div *ngFor="let callData of formElement; let callDataIndex = index">
-        <!--  callData.element_placeholder === 'Address', line 31, needs to be modified for callData.element_type === 'Address' -->
-        <ng-container
-          [ngSwitch]="
-            callData.element_type === 'boolean'
-              ? 'checkbox'
-              : callData.element_placeholder === 'Address'
-              ? 'address'
-              : callData.element_type === 'email'
-              ? 'email'
-              : -1
-          "
-        >
-          <ng-container *ngSwitchCase="'checkbox'">
-            <div class="col-md-auto">
-              <p-checkbox
-                class="checkFormComponent"
-                [binary]="true"
-                [readonly]="!tgleditField"
-                label="{{ callData.element_placeholder }}"
-                inputId="{{ callDataIndex }}"
-                value="{{ callData.element_value }}"
-                formControlName="{{ callData.element_table_value }}"
-              ></p-checkbox>
-            </div>
-          </ng-container>
-          <ng-container *ngSwitchCase="'address'">
-            <div class="col-md-auto address-col">
-              <label for="{{ callDataIndex }}" class="lblFormComponent"
-                >{{ callData.element_placeholder }} *</label
-              >
-              <textarea
-                pInputTextarea cols="100" rows="1"
-                class="input-neumorphism txtFormComponent"
-                (click)="
-                  !tgleditField ||
-                    toggleModifyAddressForm(
-                      callDataIndex,
-                      callData.element_table_value
-                    )
-                "
+    <button
+      class="iconbutton-neumorphism edit-icon"
+      matTooltip="Edit fields"
+      matTooltipPosition="above"
+      (click)="toggleEditFields()"
+      *ngIf="!tgleditField"
+    >
+      <i class="bi bi-pencil-square"></i>
+    </button>
+    <button
+      class="iconbutton-neumorphism"
+      matTooltip="Edit fields"
+      matTooltipPosition="above"
+      (click)="cancelEditFields()"
+      *ngIf="tgleditField"
+    >
+      <i class="bi bi-x-circle-fill"></i>
+    </button>
+  </div>
+  <div class="onValidationContainer" *ngIf="onValidationMsg">
+    {{ onValidationMsg }}
+  </div>
+  <div class="form-row">
+    <div *ngFor="let callData of formElement; let callDataIndex = index">
+      <!--  callData.element_placeholder === 'Address', line 31, needs to be modified for callData.element_type === 'Address' -->
+      <ng-container
+        [ngSwitch]="
+          callData.element_type === 'boolean'
+            ? 'checkbox'
+            : callData.element_placeholder === 'Address'
+            ? 'address'
+            : callData.element_type === 'email'
+            ? 'email'
+            : -1
+        "
+      >
+        <ng-container *ngSwitchCase="'checkbox'">
+          <div class="col-md-auto">
+            <p-checkbox
+              class="checkFormComponent"
+              [binary]="true"
+              [readonly]="!tgleditField"
+              label="{{ callData.element_placeholder }}"
+              inputId="{{ callDataIndex }}"
+              value="{{ callData.element_value }}"
+              formControlName="{{ callData.element_table_value }}"
+            ></p-checkbox>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'address'">
+          <div class="col-md-auto address-col">
+            <label for="{{ callDataIndex }}" class="lblFormComponent"
+              >{{ callData.element_placeholder }} *</label
+            >
+            <textarea
+              pInputTextarea
+              cols="100"
+              rows="1"
+              class="input-neumorphism txtFormComponent"
+              (click)="
+                !tgleditField ||
+                  toggleModifyAddressForm(
+                    callDataIndex,
+                    callData.element_table_value
+                  )
+              "
+              [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+              [readonly]="true"
+              placeholder="New {{ callData.element_placeholder | lowercase }}"
+              autocomplete="off"
+              value="{{ callData.element_value }}"
+              id="{{ callDataIndex }}"
+              formControlName="{{ callData.element_table_value }}"
+            ></textarea>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'email'">
+          <div class="col-md-auto">
+            <mat-form-field appearance="standard" class="txtFormComponent">
+              <mat-label>{{ callData.element_placeholder }}</mat-label>
+              <input
+                matInput
+                class="input-neumorphism"
                 [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
-                [readonly]="true"
+                pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                [readonly]="!tgleditField"
+                type="{{ callData.element_type }}"
                 placeholder="New {{ callData.element_placeholder | lowercase }}"
                 autocomplete="off"
                 value="{{ callData.element_value }}"
                 id="{{ callDataIndex }}"
                 formControlName="{{ callData.element_table_value }}"
-              ></textarea>
-            </div>
-          </ng-container>
-          <ng-container *ngSwitchCase="'email'">
-            <div class="col-md-auto">
-              <mat-form-field appearance="standard" class="txtFormComponent">
-                <mat-label>{{ callData.element_placeholder }}</mat-label>
-                <input
-                  matInput
-                  class="input-neumorphism"
-                  [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
-                  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                  [readonly]="!tgleditField"
-                  type="{{ callData.element_type }}"
-                  placeholder="New {{
-                    callData.element_placeholder | lowercase
-                  }}"
-                  autocomplete="off"
-                  value="{{ callData.element_value }}"
-                  id="{{ callDataIndex }}"
-                  formControlName="{{ callData.element_table_value }}"
-                />
-              </mat-form-field>
-            </div>
-          </ng-container>
-          <ng-container *ngSwitchDefault>
-            <div class="col-md-auto">
-              <mat-form-field appearance="standard" class="txtFormComponent">
-                <mat-label>{{ callData.element_placeholder }}</mat-label>
-                <input
-                  matInput
-                  class="input-neumorphism"
-                  [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
-                  [readonly]="!tgleditField"
-                  type="{{ callData.element_type }}"
-                  placeholder="New {{
-                    callData.element_placeholder | lowercase
-                  }}"
-                  autocomplete="off"
-                  value="{{ callData.element_value }}"
-                  id="{{ callDataIndex }}"
-                  formControlName="{{ callData.element_table_value }}"
-                />
-              </mat-form-field>
-            </div>
-          </ng-container>
+              />
+            </mat-form-field>
+          </div>
         </ng-container>
-      </div>
+        <ng-container *ngSwitchDefault>
+          <div class="col-md-auto">
+            <mat-form-field appearance="standard" class="txtFormComponent">
+              <mat-label>{{ callData.element_placeholder }}</mat-label>
+              <input
+                matInput
+                class="input-neumorphism"
+                [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+                [readonly]="!tgleditField"
+                type="{{ callData.element_type }}"
+                placeholder="New {{ callData.element_placeholder | lowercase }}"
+                autocomplete="off"
+                value="{{ callData.element_value }}"
+                id="{{ callDataIndex }}"
+                formControlName="{{ callData.element_table_value }}"
+              />
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
-  </form>
-</div>
-
+  </div>
+</form>
 <p-dialog
   header="Add new address"
   [(visible)]="tglModifyAddressForm"

@@ -84,60 +84,6 @@
 
   <div *ngFor="let note of currentCallNotes; let noteIndex = index">
     <div class="log-container" *ngIf="currentCallNotes.length > 0">
-      <div
-        class="form-check form-check-inline width-100 col-12 no-padding-lt no-padding-rt"
-      >
-        <div class="col-6 no-padding-rt no-padding-lt">
-          <h6>
-            Note code: {{ note.slIndex }} |
-            <p-badge
-              [class]="'status-' + note.noteStatus.toLowerCase()"
-              value="{{ note.noteStatus }}"
-            ></p-badge>
-          </h6>
-        </div>
-        <div class="col-5 no-padding-rt no-padding-lt">
-          <span
-            matTooltip="Note status"
-            id="noteSl{{ note.slIndex }}"
-            class="float-rt hide"
-            matTooltipPosition="above"
-          >
-            <p-dropdown
-              [options]="optLogStatus"
-              [formControl]="noteNewStatus"
-              optionValue="statusName"
-              optionLabel="statusName"
-              placeholder="Change status"
-              (onChange)="changeNoteStatus(note.slIndex, note.noteStatus)"
-            ></p-dropdown
-          ></span>
-        </div>
-        <div class="col-auto no-padding-lt no-padding-rt btnChangeStatus">
-          <button
-            class="iconbutton-neumorphism small-edit-icon float-rt"
-            id="btnStatus{{ note.slIndex }}"
-            (click)="toggleNoteStatus(note.slIndex)"
-          >
-            <i
-              class="bi bi-pencil-square"
-              matTooltip="Change note status"
-              matTooltipPosition="above"
-            ></i>
-          </button>
-          <button
-            class="iconbutton-neumorphism cancel-icon float-rt hide"
-            (click)="toggleNoteStatus(note.slIndex)"
-            id="btnCancel{{ note.slIndex }}"
-          >
-            <i
-              class="bi bi-x-circle-fill"
-              matTooltip="Cancel"
-              matTooltipPosition="above"
-            ></i>
-          </button>
-        </div>
-      </div>
       <h6>{{ currentCall.fullname }}</h6>
       <div class="log-content-container">
         <p>{{ note.data }}</p>

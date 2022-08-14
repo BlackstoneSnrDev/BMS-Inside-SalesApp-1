@@ -25,63 +25,78 @@
             "typeCode": "password"
         }
     ],
-    
-    "selectLogStatus": [
+    "selectCXStatus": [
         {
-            "statusId": "pending",
-            "statusName": "Pending"
+            "slStatusId": "0",
+            "label": "No attention required",
+            "background": "#e6e7ee",
+            "color": "#333333",
+            "function": ""
         },
         {
-            "statusId": "handled",
-            "statusName": "Handled"
+            "slStatusId": "1",
+            "label": "Pending",
+            "background": "#a91e2c",
+            "color": "#ffffff",
+            "function": "notify"
         },
         {
-            "statusId": "noAttention",
-            "statusName": "No attention required"
+            "slStatusId": "2",
+            "label": "Handled",
+            "background": "#296e58",
+            "color": "#ffffff",
+            "function": "notify"
         }
     ],
-
     "selectVoiceMail": [
         {
-            "voiceMailId": "01voiceMailId",
-            "voiceMailName": "No response"
+            "templateId": "01voictemplateId",
+            "templateName": "No response",
+            "templateContent": "Recording goes here."
         },
         {
-            "voiceMailId": "02voiceMailId",
-            "voiceMailName": "Balance due"
+            "templateId": "02voictemplateId",
+            "templateName": "Balance due",
+            "templateContent": "Recording two goes here."
         },
         {
-            "voiceMailId": "03voiceMailId",
-            "voiceMailName": "Call back"
+            "templateId": "03voictemplateId",
+            "templateName": "Call back",
+            "templateContent": "Recording three goes here."
         }
     ],
     "selectEmail": [
         {
-            "emailId": "01emailId",
-            "emailName": "Issue solved"
+            "templateId": "01templateId",
+            "templateName": "Issue solved",
+            "templateContent": "<p>Hello,</p><p><br></p><p>Please remember you have a <em>balance</em> of<strong> $45 </strong>due on<strong> August 24th 2022. </strong></p><p><br></p><p>BMS</p>"
         },
         {
-            "emailId": "02emailId",
-            "emailName": "Balance due"
+            "templateId": "02templateId",
+            "templateName": "Balance due",
+            "templateContent": "<p>Hello,</p><p><br></p><p>Please remember you have a <em>balance</em> of<strong> $45 </strong>due on<strong> August 24th 2022. </strong></p><p><br></p><p>BMS</p>"
         },
         {
-            "emailId": "03emailId",
-            "emailName": "Call back"
+            "templateId": "03templateId",
+            "templateName": "Call back",
+            "templateContent": "<p>Hello,</p><p><br></p><p>Please remember you have a <em>balance</em> of<strong> $45 </strong>due on<strong> August 24th 2022. </strong></p><p><br></p><p>BMS</p>"
         }
     ],
-    
     "selectSMSMessage": [
         {
-            "smsId": "01smsId",
-            "smsName": "Wrong address"
+            "templateId": "01smsId",
+            "templateName": "Tracking number",
+            "templateContent": "Your order #34353653645 has shipped! Track your shipment here: https://www.google.com/maps/search/maps/@6.1566875,-75.6179241,14z/data=!3m1!4b1."
         },
         {
-            "smsId": "02smsId",
-            "smsName": "PQR email"
+            "templateId": "02smsId",
+            "templateName": "Delivery status",
+            "templateContent": "Thank you for your business! Your order number is #5475756756. We will send you a tracking link once your order has shipped."
         },
         {
-            "smsId": "03smsId",
-            "smsName": "Call back"
+            "templateId": "03smsId",
+            "templateName": "Greetings",
+            "templateContent": "Welcome aboard! We are glad to have you as a part of our community."
         }
     ]
 }
