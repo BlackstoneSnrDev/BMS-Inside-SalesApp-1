@@ -565,7 +565,7 @@ input:checked + .toggle-slider-neumorphism::before {
   background-color: #e6e7ee;
   box-shadow: 2px 2px 5px #b8b9be;
   border-radius: 1rem;
-  width: 17rem !important;
+  width: 17rem;
   padding: 0.55rem;
 }
 
@@ -1119,12 +1119,8 @@ textarea:focus-visible {
   color: #44476a;
 }
 
-.status-pending ::ng-deep.p-badge.p-component {
-  background: #a91e2c;
-  color: #fff;
-}
 
-.status-handled ::ng-deep.p-badge.p-component {
+.status-active ::ng-deep.p-badge.p-component {
   background: #296e58;
   color: #fff;
 }
@@ -1133,3 +1129,13 @@ textarea:focus-visible {
   background: #e6e7ee;
   color: #333;
 }
+
+::ng-deep.p-datatable .p-datatable-loading-overlay {
+  z-index: 10 !important;
+}
+
+::ng-deep.p-ripple.p-element.p-toast-icon-close{
+  width: 7rem;
+}
+
+

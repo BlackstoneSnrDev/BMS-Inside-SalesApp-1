@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DatePipe } from '@angular/common';
 
-
 ///// My components
 // HTML
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -80,10 +79,12 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { FileUploadModule } from 'primeng/fileupload';
 import { PasswordModule } from 'primeng/password';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {SkeletonModule} from 'primeng/skeleton';
-import {BadgeModule} from 'primeng/badge';
-import {ScrollTopModule} from 'primeng/scrolltop';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { SkeletonModule } from 'primeng/skeleton';
+import { BadgeModule } from 'primeng/badge';
+import { ScrollTopModule } from 'primeng/scrolltop';
+import { EditorModule } from 'primeng/editor';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [
@@ -160,6 +161,8 @@ import {ScrollTopModule} from 'primeng/scrolltop';
     SkeletonModule,
     BadgeModule,
     ScrollTopModule,
+    EditorModule,
+    SplitButtonModule,
   ],
 
   providers: [

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../../services/services.service';
 import { UsersService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
-
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'form-component',
   templateUrl: './form.component.html',
@@ -46,62 +46,92 @@ export class FormComponent implements OnInit {
   public groupSelected = new FormControl();
   public tbGroupActive: any = [];
   public defaultGroup: boolean = true;
-
+  public tglChangeCustomerStatus: boolean = false;
+  public customerNewStatus = new FormControl('');
+  public optCustomerStatus: any;
+  public customerStatus: any;
   constructor(
     private dataService: DataService,
     private usersService: UsersService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
-   
     this.formElement = this.activeTemplate;
 
-        this.dataService.currentCall.subscribe(
-          (currentCall) => {
-            this.currentCall = currentCall
-          for (let fieldName in this.currentCall) {
-            for (let fieldValue of this.formElement) {
+    this.dataService.currentCall.subscribe((currentCall) => {
+      this.currentCall = currentCall;
+      if (this.currentCall) {
+        this.currentCall['customerStatus'] = [
+          {
+            slStatusId: '0',
+            label: 'No attention required',
+            background: '#e6e7ee',
+            color: '#333',
+            function: '',
+          },
+        ];
+        this.customerStatus = this.currentCall['customerStatus'];
+        console.log(this.customerStatus);
+      }
+      console.log(this.currentCall);
 
-              if(fieldName === fieldValue.element_table_value){
-                fieldValue.element_value = this.currentCall[ fieldName ]
+      for (let fieldName in this.currentCall) {
+        for (let fieldValue of this.formElement) {
+          if (fieldName === fieldValue.element_table_value) {
+            fieldValue.element_value = this.currentCall[fieldName];
 
-                this.newFormControl[fieldValue.element_table_value] = new FormControl(
-                  { value: fieldValue.element_value, disabled: this.tgleditField },
-                  [Validators.required, Validators.minLength(1)]
-                );
-                this.callDataForm = new FormGroup(this.newFormControl);
-              }
-            }
+            this.newFormControl[fieldValue.element_table_value] =
+              new FormControl(
+                {
+                  value: fieldValue.element_value,
+                  disabled: this.tgleditField,
+                },
+                [Validators.required, Validators.minLength(1)]
+              );
+            this.newFormControl['customerStatus'] = new FormControl('Pending', [
+              Validators.required,
+              Validators.minLength(1),
+            ]);
+            this.callDataForm = new FormGroup(this.newFormControl);
           }
         }
-        );
+      }
+    });
 
-      this.dataService.getCustomerGroups().subscribe((data) => {
-          this.tbGroups = data;
-          
-          this.usersService.userInfo.subscribe((userInfo: any) => {
-              if (userInfo) {
+    this.dataService.getCustomerGroups().subscribe((data) => {
+      this.tbGroups = data;
 
-                this.tbGroupActive = []
-                  userInfo.activeGroup.forEach((group: any) => {
-                      console.log(group);
-                      let groupSelected = data.filter(
-                          (v: any) => v.group_id === group
-                      )
-                      let groupId = '';
-                      let groupName = '';
-                      groupSelected.forEach((e: any) => {
-                        groupId = e.group_id;
-                        groupName = e.group_name;
-                      });
-                      this.tbGroupActive.push({ group_id: groupId, group_name: groupName });
-                  })
-              }
-          })
+      this.usersService.userInfo.subscribe((userInfo: any) => {
+        if (userInfo) {
+          this.tbGroupActive = [];
+          userInfo.activeGroup.forEach((group: any) => {
+            console.log(group);
+            let groupSelected = data.filter((v: any) => v.group_id === group);
+            let groupId = '';
+            let groupName = '';
+            groupSelected.forEach((e: any) => {
+              groupId = e.group_id;
+              groupName = e.group_name;
+            });
+            this.tbGroupActive.push({
+              group_id: groupId,
+              group_name: groupName,
+            });
+          });
+        }
       });
+    });
+    this.dataService.getSelectData().subscribe(
+      (response) => {
+        this.optCustomerStatus = response.selectCXStatus;
+      },
 
-
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   getGroupSelected() {
@@ -154,7 +184,7 @@ export class FormComponent implements OnInit {
 
   toggleEditFields() {
     this.tgleditField = !this.tgleditField;
-    console.log(this.callDataForm.value)
+    console.log(this.callDataForm.value);
   }
 
   toggleModifyAddressForm(addressId: any, addressName: any) {
@@ -290,7 +320,7 @@ export class FormComponent implements OnInit {
   }
 
   saveEditFields() {
-    this.callDataForm.value.uid = this.currentCall.uid
+    this.callDataForm.value.uid = this.currentCall.uid;
     this.tgleditField = false;
     this.dataService.editCustomer(this.callDataForm.value);
   }
@@ -304,5 +334,67 @@ export class FormComponent implements OnInit {
 
   log(val: any) {
     console.log(val);
+  }
+
+  toggleCustomerStatus() {
+    this.tglChangeCustomerStatus = !this.tglChangeCustomerStatus;
+
+    document.getElementById('btnCustomerStatus')?.classList.toggle('hide-line');
+    document.getElementById('btnCancelStatus')?.classList.toggle('hide-line');
+    document.getElementById('customerStatus')?.classList.toggle('hide-line');
+  }
+
+  changeCustomerStatus(oldStatus: any, customerName: any) {
+    let value = this.customerNewStatus.value;
+    let newStatus = this.optCustomerStatus.filter(
+      (a: any, i: any) => a.slStatusId == value
+    );
+    let newStatusName = newStatus[0]['label'];
+    console.log();
+    if (oldStatus !== value) {
+      this.confirmationService.confirm({
+        message:
+          'Are you sure you want to set the status of <b>' +
+          customerName +
+          '</b> as "' +
+          newStatusName +
+          '"?',
+        header: 'Warning',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.tglChangeCustomerStatus = false;
+          document
+            .getElementById('btnCustomerStatus')
+            ?.classList.toggle('hide-line');
+          document
+            .getElementById('customerStatus')
+            ?.classList.toggle('hide-line');
+          document
+            .getElementById('btnCancelStatus')
+            ?.classList.toggle('hide-line');
+          this.customerNewStatus.setValue('');
+          this.currentCall['customerStatus'] = newStatus;
+          this.customerStatus = newStatus;
+
+          console.log(this.currentCall);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Service Message',
+            detail:
+              customerName + ' status was set to "' + newStatusName + '".',
+          });
+        },
+      });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Service Message',
+        detail:
+          customerName +
+          ' status was already set to "' +
+          newStatusName +
+          '" before.',
+      });
+    }
   }
 }
