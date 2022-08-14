@@ -22,6 +22,9 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+                "papaparse"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

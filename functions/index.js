@@ -1,6 +1,11 @@
 const functions = require("firebase-functions");
 const admin = require('firebase-admin');
 
+const csvToJson = require('convert-csv-to-json');
+
+let fileInputName = 'myInputFile.csv'; 
+let fileOutputName = 'myOutputFile.json';
+
 admin.initializeApp();
 
 // // Create and Deploy Your First Cloud Functions
@@ -39,3 +44,12 @@ exports.createNewUser = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError(error);
     }
 }); 
+
+exports.csvToJson = functions.https.onCall((data, context) => { 
+    console.log("++++++++++ csvToJsonFIRED ++++++++++");
+    console.log(data);
+    let json = csvToJson.getJsonFromCsv(data);
+    for(let i=0; i<json.length;i++){
+        console.log(json[i]);
+    }
+})

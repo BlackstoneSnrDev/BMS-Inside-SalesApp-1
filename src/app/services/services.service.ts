@@ -183,6 +183,42 @@ removeActiveGroup(group: string) {
     //return "testing";
   }
 
+  async fileUpload(Parsed: any) {
+    let headers = Parsed.meta.fields
+    let templateFieldArray: any[] = [];
+    let templateFieldObj: any[] = [];
+// Get all the fields from the currently active template
+    const activeTemplateFields = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref;
+    await activeTemplateFields.get().then((doc: any) => {
+        Object.entries(doc.data()).forEach((field: any) => {
+            if (typeof field[1] === 'object') {
+                templateFieldObj.push(field);
+                templateFieldArray.push(field[0]);
+            }
+        })
+    })
+    let difference = templateFieldArray
+                 .filter(x => !headers.includes(x))
+                 .concat(headers.filter((x: any) => !templateFieldArray.includes(x)));
+    if (difference.length) {
+        return "Error: The Headers in your CSV file do not exactly match the fields in the active template. Please check the CSV file's headers and try again."  
+    } else { 
+        await Parsed.data.forEach((row: firebase.firestore.DocumentData) => {
+            Object.entries(row).forEach((field: any) => {
+// try to just add it to the db and see what Firebase does....
+                console.log(field);
+                let fieldObj = templateFieldObj.find((obj: any) => obj[0]=== field[0])
+                console.log(fieldObj[1].element_type);
+                // switch (fieldObj[1].element_type) {
+                //     case 'text': console.log(field[1]);
+                // }
+                console.log(parseFloat(field[1]));
+            })
+        })
+        return `Success! Your CSV file has been uploaded. ${Parsed.data[0].length -1} rows added.`
+    }
+  }
+
   getAllUsers(): Observable<any>{
 // get all the users for the current tenant
     return this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').snapshotChanges().pipe(
