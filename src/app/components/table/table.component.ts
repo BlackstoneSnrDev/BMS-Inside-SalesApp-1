@@ -139,8 +139,21 @@ export class TableComponent {
             let options = {
                 header: true,
                 complete: (results: any) => {
-                    this.DataService.fileUpload(results).then((responce) => {
-                        this.uploadStatus = responce;
+                    this.DataService.fileUpload(results).then((responce: any) => {
+                        if (responce.status === 'Success') {
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Service Message',
+                                detail: responce.data,
+                            });
+                        } else if (responce.status === 'Error') {
+                            this.messageService.add({
+                                severity: 'error',
+                                summary: 'Service Message',
+                                detail: responce.data,
+                            });
+                        }
+                        // this.uploadStatus = responce;
                     })
                 }
             };

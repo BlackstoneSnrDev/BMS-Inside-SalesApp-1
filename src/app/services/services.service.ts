@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, from, BehaviorSubject } from 'rxjs'
+import * as moment from 'moment';
 import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
 import {
     AngularFirestore,
     AngularFirestoreDocument
   } from '@angular/fire/compat/firestore'; 
-import { arrayUnion, arrayRemove, Timestamp } from '@angular/fire/firestore'
+import { arrayUnion, arrayRemove, Timestamp, DocumentReference, DocumentData } from '@angular/fire/firestore'
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import firebase from 'firebase/compat';
+
 
 let len = 12;    
 let pattern = 'aA0'   
@@ -203,19 +205,71 @@ removeActiveGroup(group: string) {
     if (difference.length) {
         return "Error: The Headers in your CSV file do not exactly match the fields in the active template. Please check the CSV file's headers and try again."  
     } else { 
-        await Parsed.data.forEach((row: firebase.firestore.DocumentData) => {
-            Object.entries(row).forEach((field: any) => {
-// try to just add it to the db and see what Firebase does....
-                console.log(field);
+
+        let errorArray: any = []
+        let okayRowCount = 0;
+        let sanitizedRowArray: any = []
+
+        await Parsed.data.forEach((row: firebase.firestore.DocumentData, rowIndex: number) => {
+
+            let sanitizedRow: any = {};
+            let error = false
+
+            Object.entries(row).forEach(async(field: any) => {
+                
                 let fieldObj = templateFieldObj.find((obj: any) => obj[0]=== field[0])
-                console.log(fieldObj[1].element_type);
-                // switch (fieldObj[1].element_type) {
-                //     case 'text': console.log(field[1]);
-                // }
-                console.log(parseFloat(field[1]));
+                
+                switch (fieldObj[1].element_type) {
+                    case 'number': if (parseFloat(field[1])) {
+                            sanitizedRow[field[0]] = parseFloat(field[1]);   
+                        } else {
+                            error = true;
+                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a number.`)
+                        }
+                        break;
+                    case 'date': if (moment(field[1], 'MM/DD/YYYY',true).isValid()) {
+                            sanitizedRow[field[0]] = new Date(field[1]);   
+                        } else {
+                            error = true;
+                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a properly formatted date. Please use MM/DD/YYYY.`)
+                        }
+                        break;
+                    case 'boolean': if (field[1].toUpperCase() === 'TRUE') {
+                            sanitizedRow[field[0]] = true
+                        } else if (field[1].toUpperCase() === 'FALSE') {
+                            sanitizedRow[field[0]] = false
+                        } else {
+                            error = true;
+                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a true/false.`)
+                        }
+                        break;
+                    default: null
+                }
+
             })
+            if (!error) {
+                okayRowCount++
+                sanitizedRowArray.push({...sanitizedRow, test: 'test'})
+            } 
         })
-        return `Success! Your CSV file has been uploaded. ${Parsed.data[0].length -1} rows added.`
+        if (errorArray.length > 0) {
+            return {status: 'Error', data: errorArray} 
+        } else {
+            console.log(sanitizedRowArray);
+
+            // batch committ all sanitizedRowArray to firestore database customer collection
+            const batch = this.afs.firestore.batch();
+            sanitizedRowArray.forEach((row: any, index: number) => {
+                const ref: any = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customersTEST').doc('test' + index).ref;
+                batch.set(ref, row);
+
+            })
+            return batch.commit().then(() => {
+                return {status: 'Success', data: `${okayRowCount} rows successfully uploaded.`}
+            })
+            
+            //return {status: 'Success', data: okayRowCount + ' rows from your CSV file have been added to the database' }
+        }
     }
   }
 
