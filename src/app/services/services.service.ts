@@ -220,6 +220,8 @@ removeActiveGroup(group: string) {
                 let fieldObj = templateFieldObj.find((obj: any) => obj[0]=== field[0])
                 
                 switch (fieldObj[1].element_type) {
+                    case 'text': sanitizedRow[field[0]] = field[1]; 
+                        break;
                     case 'number': if (parseFloat(field[1])) {
                             sanitizedRow[field[0]] = parseFloat(field[1]);   
                         } else {
@@ -227,11 +229,11 @@ removeActiveGroup(group: string) {
                             errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a number.`)
                         }
                         break;
-                    case 'date': if (moment(field[1], 'MM/DD/YYYY',true).isValid()) {
+                    case 'date': if (moment(field[1], 'YYYY-MM-DD',true).isValid()) {
                             sanitizedRow[field[0]] = new Date(field[1]);   
                         } else {
                             error = true;
-                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a properly formatted date. Please use MM/DD/YYYY.`)
+                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a properly formatted date. Please use YYYY-MM-DD.`)
                         }
                         break;
                     case 'boolean': if (field[1].toUpperCase() === 'TRUE') {
@@ -255,20 +257,30 @@ removeActiveGroup(group: string) {
         if (errorArray.length > 0) {
             return {status: 'Error', data: errorArray} 
         } else {
-            console.log(sanitizedRowArray);
 
             // batch committ all sanitizedRowArray to firestore database customer collection
             const batch = this.afs.firestore.batch();
             sanitizedRowArray.forEach((row: any, index: number) => {
-                const ref: any = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customersTEST').doc('test' + index).ref;
-                batch.set(ref, row);
+                let uid = RandomId(len, pattern)
+                console.log(uid);
+                const ref: any = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).ref;
+                batch.set(ref, {
+                    ...row, 
+                    dob: row.dateOfBirth,
+                    group: [],
+                    lastContact: null,
+                    notes: [],
+                    template: this.activeTemplate,
+                    uid: uid
+                });
+
+                // 1h70d8gkAQXx
+                // p5TPOipU5g5q
 
             })
             return batch.commit().then(() => {
                 return {status: 'Success', data: `${okayRowCount} rows successfully uploaded.`}
             })
-            
-            //return {status: 'Success', data: okayRowCount + ' rows from your CSV file have been added to the database' }
         }
     }
   }
@@ -507,18 +519,21 @@ removeActiveGroup(group: string) {
         this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).delete();
     }
 
-// fixCustomers() {
-//     this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
-//         snapshot.forEach((doc: any) => {
-//             this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(doc.id).update({
-//                 lastContact: {
-//                     date:  Timestamp.fromDate(new Date()),
-//                     result: 'Voice Message Left'
-//                 }
-//             })
-//         })
-//     })
-// }
+fixCustomers() {
+    this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
+        snapshot.forEach((doc: any) => {
+            if (doc.data().fullname === 'New GuyOne' || doc.data().MRN === 'New GuyTwo') {
+                console.log(doc.data());
+            }
+            // this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(doc.id).update({
+            //     lastContact: {
+            //         date:  Timestamp.fromDate(new Date()),
+            //         result: 'Voice Message Left'
+            //     }
+            // })
+        })
+    })
+}
 
 // populateTemplateWithCustomers() {
 

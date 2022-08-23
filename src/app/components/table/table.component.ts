@@ -78,6 +78,8 @@ export class TableComponent {
   ngOnInit() {
     this.primengConfig.ripple = false;
 
+    this.DataService.fixCustomers();
+
     this.UsersService.userInfo.subscribe(
       (userInfo) => (this.userInfo = userInfo)
     );
