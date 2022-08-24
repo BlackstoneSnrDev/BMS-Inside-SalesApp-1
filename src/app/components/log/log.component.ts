@@ -23,7 +23,7 @@ export class LogComponent implements OnInit {
   public currentCallNotes: any = [];
   public dupCurrentCallNotes: any;
   public optLogStatus: any;
-  
+
   public searchNote = new FormControl();
   public noteNewStatus = new FormControl('');
 
@@ -31,7 +31,7 @@ export class LogComponent implements OnInit {
     private DataService: DataService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.DataService.currentCall.subscribe((currentCall: any) => {
@@ -78,7 +78,7 @@ export class LogComponent implements OnInit {
 
   toggleAddLog() {
     this.tglAddNote = !this.tglAddNote;
-    this.addNewNoteForm.reset;
+    this.addNewNoteForm.reset();
   }
 
   saveNewNote() {
@@ -88,7 +88,7 @@ export class LogComponent implements OnInit {
     );
     console.log(this.addNewNoteForm.value);
     this.tglAddNote = !this.tglAddNote;
-    this.addNewNoteForm.reset;
+    this.addNewNoteForm.reset();
   }
 
   filterNotes() {
@@ -121,38 +121,4 @@ export class LogComponent implements OnInit {
     document.getElementById('noteSl' + elementId)?.classList.toggle('hide');
   }
 
-  changeNoteStatus(id: any, oldStatus: any) {
-    let value = this.noteNewStatus.value;
-    if (oldStatus.toLowerCase() !== value?.toLowerCase()) {
-      this.confirmationService.confirm({
-        message:
-          'Are you sure you want to set the status of "' +
-          id +
-          '" note as "' +
-          value +
-          '"?',
-        header: 'Warning',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.tglChangeNoteStatus = false;
-          document.getElementById('noteSl' + id)?.classList.toggle('hide');
-          this.noteNewStatus.setValue('');
-          this.currentCallNotes[id]['noteStatus'] = value;
-          console.log(this.currentCallNotes);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Service Message',
-            detail: 'Note "' + id + '" status was set to "' + value + '".',
-          });
-        },
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Service Message',
-        detail:
-          'Note "' + id + '" status was already set to "' + value + '" before.',
-      });
-    }
-  }
 }

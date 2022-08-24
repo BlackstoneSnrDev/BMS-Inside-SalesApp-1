@@ -361,5 +361,203 @@
             "field": "color",
             "element_type": "color"
         }
+    ],
+    "pending_chats": [
+        {
+            "slIndex": "0",
+            "fullname": "Patricio , Estrella",
+            "MRN": "89jkmaRb30apP9ma-36454554",
+            "dob": "1999-01-07",
+            "tier": 3,
+            "prior_contact": true,
+            "pending": true,
+            "phonenumber": 767876556,
+            "unreadSMS": 1,
+            "timeSMS": "8/23/2022, 7:30:14 AM",
+            "contentSMS": "This is a test.",
+            "group": []
+        },
+        {
+            "slIndex": "1",
+            "fullname": "Gloria , Trevi",
+            "MRN": "kacnlknaclknsdcsd-zCCZg",
+            "dob": "1967-08-22",
+            "tier": 3,
+            "prior_contact": true,
+            "pending": true,
+            "phonenumber": 576677987,
+            "unreadSMS": 1,
+            "timeSMS": "8/23/2022, 7:30:14 AM",
+            "contentSMS": "This is a test.",
+            "group": []
+        },
+        {
+            "slIndex": "2",
+            "fullname": "Bob , Esponja",
+            "MRN": "qeqwewrwetwtvfd-zCCZg",
+            "dob": "1890-01-22",
+            "tier": 3,
+            "prior_contact": true,
+            "pending": true,
+            "phonenumber": 342567899,
+            "unreadSMS": 2,
+            "timeSMS": "8/23/2022, 7:30:14 AM",
+            "contentSMS": "This is a test.",
+            "group": []
+        }
+    ],
+    "active_chats": [
+        {
+            "slIndex": "3",
+            "fullname": "Daniel , Moreno",
+            "MRN": "89jkmaRb30apP9ma-zCCZg",
+            "dob": "1999-01-07",
+            "tier": 3,
+            "prior_contact": true,
+            "pending": true,
+            "phonenumber": 767876556,
+            "unreadSMS": 0,
+            "timeSMS": "8/23/2022, 7:30:14 AM",
+            "contentSMS": "This is a test.",
+            "group": []
+        },
+        {
+            "slIndex": "4",
+            "fullname": "Michael , Jackson",
+            "MRN": "qeeqmpeomqpempeomeqp-zCCZg",
+            "dob": "1967-08-22",
+            "tier": 3,
+            "prior_contact": true,
+            "pending": true,
+            "phonenumber": 576677987,
+            "unreadSMS": 0,
+            "timeSMS": "8/23/2022, 7:30:14 AM",
+            "contentSMS": "This is a test.",
+            "group": []
+        },
+        {
+            "slIndex": "5",
+            "fullname": "Gustavo , Petro",
+            "MRN": "jhabjhabahbja-zCCZg",
+            "dob": "1890-01-22",
+            "tier": 3,
+            "prior_contact": true,
+            "pending": true,
+            "phonenumber": 342567899,
+            "unreadSMS": 0,
+            "timeSMS": "8/23/2022, 7:30:14 AM",
+            "contentSMS": "This is a test.",
+            "group": []
+        }
+    ],
+    "sms_content": [
+        {
+            "customerId": "0",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:30:14 AM",
+            "contentSMS": "This is a test.",
+            "senderTypeSMS": "user",
+            "senderNameSMS": "Karla Cardenas",
+            "statusSMS": true
+        },
+        {
+            "customerId": "0",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:46:14 AM",
+            "contentSMS": "Yes, I know it's a test.",
+            "senderTypeSMS": "customer",
+            "senderNameSMS": "Customer name",
+            "statusSMS": true
+        },
+        {
+            "customerId": "0",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:46:14 AM",
+            "contentSMS": "Did you receive my message about coding?",
+            "senderTypeSMS": "user",
+            "senderNameSMS": "Karla Cardenas",
+            "statusSMS": false
+        },
+        {
+            "customerId": "1",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:53:14 AM",
+            "contentSMS": "Hiii!!",
+            "senderTypeSMS": "customer",
+            "senderNameSMS": "Customer name",
+            "statusSMS": true
+        },
+        {
+            "customerId": "2",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:46:14 AM",
+            "contentSMS": "Hey!",
+            "senderTypeSMS": "customer",
+            "senderNameSMS": "Customer name",
+            "statusSMS": true
+        },
+        {
+            "customerId": "2",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:46:14 AM",
+            "contentSMS": "I'm waiting for an answer",
+            "senderTypeSMS": "customer",
+            "senderNameSMS": "Customer name",
+            "statusSMS": true
+        },
+        {
+            "customerId": "3",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:53:14 AM",
+            "contentSMS": "Hi, customer!",
+            "senderTypeSMS": "user",
+            "senderNameSMS": "Karla Cardenas",
+            "statusSMS": true
+        },
+        {
+            "customerId": "3",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:46:14 AM",
+            "contentSMS": "Hi, rep!",
+            "senderTypeSMS": "customer",
+            "senderNameSMS": "Customer name",
+            "statusSMS": true
+        },
+        {
+            "customerId": "4",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:53:14 AM",
+            "contentSMS": "Hi, customer!",
+            "senderTypeSMS": "user",
+            "senderNameSMS": "Karla Cardenas",
+            "statusSMS": true
+        },
+        {
+            "customerId": "4",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:46:14 AM",
+            "contentSMS": "Somebody there?",
+            "senderTypeSMS": "customer",
+            "senderNameSMS": "Customer name",
+            "statusSMS": true
+        },
+        {
+            "customerId": "5",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:53:14 AM",
+            "contentSMS": "Hi, customer!",
+            "senderTypeSMS": "user",
+            "senderNameSMS": "Karla Cardenas",
+            "statusSMS": true
+        },
+        {
+            "customerId": "5",
+            "dateSMS": "8/23/2022",
+            "timeSMS": "7:46:14 AM",
+            "contentSMS": "Oh, hi!! ",
+            "senderTypeSMS": "customer",
+            "senderNameSMS": "Customer name",
+            "statusSMS": true
+        }
     ]
 }

@@ -13,6 +13,11 @@
             "tab_route": "queue"
         },
         {
+            "tab_name": "Messenger",
+            "tab_icon": "bi bi-menu-up",
+            "tab_route": "messenger"
+        },
+        {
             "tab_name": "Settings",
             "tab_icon": "bi bi-gear-fill",
             "tab_route": "settings"
@@ -27,12 +32,16 @@
         {
             "label": "Templates",
             "icon": "bi bi-columns-gap",
-            "routerLink": ["admin-template"]
+            "routerLink": [
+                "admin-template"
+            ]
         },
         {
             "label": "Users",
             "icon": "bi bi-people-fill",
-            "routerLink": ["admin-user"]
+            "routerLink": [
+                "admin-user"
+            ]
         }
     ]
 }

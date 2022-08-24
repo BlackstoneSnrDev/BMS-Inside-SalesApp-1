@@ -12,6 +12,7 @@ import { LoginComponent } from './partials/login/login.component';
 import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
+import { MessengerComponent } from './partials/messenger/messenger.component';
 
 import { AuthGuard } from "./services/auth.guard";
 
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
 
     ]},
     {path: '404', component: PageNotFoundComponent, canActivate: [AuthGuard] },
+    {path: 'messenger', component: MessengerComponent, canActivate: [AuthGuard] },
     {path: '**', redirectTo: '404'},
 ];
 
