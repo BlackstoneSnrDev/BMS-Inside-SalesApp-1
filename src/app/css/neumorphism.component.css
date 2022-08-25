@@ -1119,12 +1119,15 @@ textarea:focus-visible {
   color: #44476a;
 }
 
-
 .status-active ::ng-deep.p-badge.p-component {
   background: #296e58;
   color: #fff;
 }
-
+::ng-deep .p-badge {
+  background: #e6e7ee;
+  color: #333;
+  min-width: max-content;
+}
 ::ng-deep.p-badge.p-component {
   background: #e6e7ee;
   color: #333;
@@ -1134,8 +1137,53 @@ textarea:focus-visible {
   z-index: 10 !important;
 }
 
-::ng-deep.p-ripple.p-element.p-toast-icon-close{
-  width: 7rem;
+::ng-deep
+  .p-toast
+  .p-toast-message.p-toast-message-error
+  .p-ripple.p-element.p-toast-icon-close {
+  width: 3.4rem;
 }
 
+::ng-deep .p-listbox {
+  padding: 0.55rem;
+  padding-right: 0;
+  border: none;
+  padding-top: 0;
 
+  background: #e6e7ee;
+  color: #44476a;
+  border-radius: 0;
+}
+
+::ng-deep .p-listbox .p-listbox-header {
+  background: #e6e7ee;
+  border-bottom: none;
+  padding-right: 0;
+  padding-top: 0;
+}
+
+::ng-deep.p-listbox .p-listbox-list .p-listbox-item {
+  padding-right: 0;
+}
+
+::ng-deep.p-listbox .p-listbox-list .p-listbox-item.p-highlight {
+  color: #333333;
+  background: #e6e7ee;
+}
+
+::ng-deep.p-listbox .p-listbox-list .p-listbox-item {
+  border-radius: 1rem;
+}
+
+::ng-deep.p-listbox:not(.p-disabled)
+  .p-listbox-item:not(.p-highlight):not(.p-disabled):hover {
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+  background: #e6e7ee;
+}
+
+::ng-deep.p-listbox .p-listbox-list .p-listbox-item:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+  background: #e6e7ee;
+}

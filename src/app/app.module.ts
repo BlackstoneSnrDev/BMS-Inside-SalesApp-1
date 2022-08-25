@@ -28,6 +28,8 @@ import { StatisticsComponent } from './partials/statistics/statistics.component'
 import { LoginComponent } from './partials/login/login.component';
 import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
 import { AdminSettings } from './partials/admin-settings/admin-settings.component';
+import { MessengerComponent } from './partials/messenger/messenger.component';
+
 
 ///// My directives
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
@@ -85,6 +87,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { EditorModule } from 'primeng/editor';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { ListboxModule } from 'primeng/listbox';
 
 @NgModule({
   declarations: [
@@ -108,6 +111,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     AdminTemplateComponent,
     AdminNavbarComponent,
     ReusableTableComponent,
+    MessengerComponent,
     ///// My directives
     TextareaAutoresizeDirective,
     ///// My pipes
@@ -143,6 +147,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     NgChartsModule,
     // PrimeNG
     TableModule,
+    ListboxModule,
     PaginatorModule,
     CheckboxModule,
     ToolbarModule,
@@ -176,4 +181,4 @@ import { SplitButtonModule } from 'primeng/splitbutton';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

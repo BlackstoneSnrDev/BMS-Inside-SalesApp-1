@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, } from '@angular/core';
 // Get table data
 import { DataService } from '../../services/services.service';
 // User Info
@@ -47,7 +47,6 @@ export class TableComponent {
   public onValidationError: string = '';
   public createNewGroup = new FormControl();
   public renameGroup = new FormControl();
-  public searchInTable = new FormControl();
   public groupSelect = new FormControl();
   public ungroupSelect = new FormControl();
 
@@ -65,15 +64,19 @@ export class TableComponent {
   public addressFieldName: string = '';
   public selectedCountryCode: string = 'US';
   public selectedStateCode: string = '';
+  public optSMS: any;
+  public smsMessageSent = new FormControl();
 
   constructor(
     private DataService: DataService,
     private UsersService: UsersService,
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
+    
     private messageService: MessageService,
     private papa: Papa
   ) {}
+
 
   ngOnInit() {
     this.primengConfig.ripple = false;
@@ -82,6 +85,16 @@ export class TableComponent {
 
     this.UsersService.userInfo.subscribe(
       (userInfo) => (this.userInfo = userInfo)
+    );
+
+    this.DataService.getSelectData().subscribe(
+      (response) => {
+        this.optSMS = response.selectSMSMessage;
+      },
+
+      (error) => {
+        console.error(error);
+      }
     );
 
     this.addressInputsForm = new FormGroup({});
@@ -103,7 +116,16 @@ export class TableComponent {
       .then(() => {
         this.DataService.getCustomerGroups().subscribe((data) => {
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
+
           this.loading = false;
+
+          console.log(this.tbGroups);
+          let modifyById = sessionStorage.getItem('dataTableView');
+          setTimeout(() => {
+            this.modifyTableView(modifyById as string);
+            this.loading = false;
+          }, 400)
+
         });
       })
       .then(
@@ -120,6 +142,9 @@ export class TableComponent {
           console.error(error);
         }
       );
+
+
+
   }
 
 
@@ -180,10 +205,11 @@ export class TableComponent {
   clear(table: Table) {
     table.clear();
     this.tbSelectedRows = [];
-    this.searchInTable.setValue('');
     this.renameGroup.setValue('');
     this.createNewGroup.setValue('');
     this.tglMenuTable = false;
+    table.sortField = ''
+    table.sortOrder = 0
 
     this.modifyTableView('all');
 
@@ -419,6 +445,22 @@ export class TableComponent {
     ).parentElement?.classList.toggle('hide');
     this.renameGroup.setValue('');
   }
+  sendMassiveSMS() {
+    this.confirmationService.confirm({
+      message:
+        'Are you sure you want to send this message?',
+      header: 'Warning',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        console.log(this.smsMessageSent.value)
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'SMS Message sent.',
+        });
+      }
+    });
+  }
 
   deleteGroup(groupId: any, groupName: string, event: string) {
     let records = 0;
@@ -543,11 +585,16 @@ export class TableComponent {
     this.ungroupSelect.setValue('');
   }
 
-  // Change normal view to group selected view}
+  // Change normal view to group selected view
   modifyTableView(modifyById: string) {
+    this.loading = true;
+
+
     let modifyLastElmActive = document.getElementsByClassName(
       'button-neumorphism-active'
     );
+
+    sessionStorage.setItem('dataTableView', modifyById);
 
     while (modifyLastElmActive.length > 0) {
       modifyLastElmActive[0].classList.remove('button-neumorphism-active');
@@ -558,8 +605,15 @@ export class TableComponent {
       ?.classList.add('button-neumorphism-active');
 
     this.modifyTable = modifyById;
+    this.loading = false;
 
-    console.log(document.getElementById(modifyById));
+    if (modifyById !== 'all') {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Service Message',
+        detail: 'Table was filtered by group.',
+      });
+    }
   }
 
   log = (data: any) => console.log(data);

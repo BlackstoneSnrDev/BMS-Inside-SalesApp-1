@@ -36,47 +36,46 @@ export class PhoneComponent implements OnInit {
   public emailSent = new FormControl();
 
 
-  constructor(public DataService: DataService,private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(public DataService: DataService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit() {
 
-      this.DataService.getFormElementsData().subscribe(
-          (response) => {
-              this.componentPhone = response.componentPhone;
-              console.log(response.componentPhone);
-          },
-          (error) => {
-              console.error(error);
-          }
-      );
+    this.DataService.getFormElementsData().subscribe(
+      (response) => {
+        this.componentPhone = response.componentPhone;
+        console.log(response.componentPhone);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
 
-      this.DataService.dialSessionArray.subscribe((dialSessionArray: any) => {
-          this.dialSessionArray = dialSessionArray;
-          this.dupDialSessionArray = this.dialSessionArray 
+    this.DataService.dialSessionArray.subscribe((dialSessionArray: any) => {
+      this.dialSessionArray = dialSessionArray;
+      this.dupDialSessionArray = this.dialSessionArray
+    })
 
-      })
+    this.DataService.currentCall.subscribe((currentCall: any) => {
+      if (currentCall) {
+        this.currentCall = currentCall;
+        this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
+      } else {
+        console.log('no current call');
+      }
 
-      this.DataService.currentCall.subscribe((currentCall: any) => {
-          if (currentCall) {
-              this.currentCall = currentCall;
-              this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
-          } else {
-              console.log('no current call');
-          }
+    })
 
-      })
+    this.DataService.getSelectData().subscribe(
+      (response) => {
+        this.optVoiceMail = response.selectVoiceMail;
+        this.optSMS = response.selectSMSMessage;
+        this.optEmail = response.selectEmail;
+      },
 
-      this.DataService.getSelectData().subscribe(
-        (response) => {
-          this.optVoiceMail = response.selectVoiceMail;
-          this.optSMS = response.selectSMSMessage;
-          this.optEmail = response.selectEmail;
-        },
-
-        (error) => {
-          console.error(error);
-        }
-      );
+      (error) => {
+        console.error(error);
+      }
+    );
 
   }
 
@@ -85,14 +84,14 @@ export class PhoneComponent implements OnInit {
     this.DataService.setActiveCall(this.dialSessionArray[currentCallIndex + 1].uid);
   }
 
-  selectCustomer(uid: string){
+  selectCustomer(uid: string) {
     this.DataService.setActiveCall(uid);
   }
 
-  showTimeHandled(callId:any) {
+  showTimeHandled(callId: any) {
     document.getElementById('call' + callId)?.classList.toggle(
       'hide'
-  );
+    );
   }
 
   filterCall() {
@@ -100,18 +99,18 @@ export class PhoneComponent implements OnInit {
     let value = this.searchCall.value.toLowerCase()
     console.log(value)
     if (value) {
-        this.dialSessionArray = this.dupDialSessionArray
-        this.dialSessionArray = this.dialSessionArray.filter((a: any, g: any) =>
-            a.MRN.toLowerCase().includes(value) || a.fullname.toLowerCase().includes(value) || a.phonenumber.toLowerCase().replace(/[()-\s]/g, '').includes(value.replace(/[()-\s]/g, '')))
+      this.dialSessionArray = this.dupDialSessionArray
+      this.dialSessionArray = this.dialSessionArray.filter((a: any, g: any) =>
+        a.MRN.toLowerCase().includes(value) || a.fullname.toLowerCase().includes(value) || a.phonenumber.toLowerCase().replace(/[()-\s]/g, '').includes(value.replace(/[()-\s]/g, '')))
 
     } else {
-        this.dialSessionArray = this.dupDialSessionArray
+      this.dialSessionArray = this.dupDialSessionArray
 
     }
 
 
     console.log(this.dialSessionArray)
-}
+  }
 
   toggleAutoDialer() {
     this.tglAutoDialer = !this.tglAutoDialer;
@@ -125,56 +124,56 @@ export class PhoneComponent implements OnInit {
 
   }
 
-  leaveVoiceMail(){
+  leaveVoiceMail() {
     this.confirmationService.confirm({
       message:
-          'Are you sure you want leave this voice mail?',
+        'Are you sure you want leave this voice mail?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.voiceMailLeft.value) 
-          this.messageService.add({
-              severity: 'success',
-              summary: 'Service Message',
-              detail: 'Voice mail left.s',
-          });
+        console.log(this.voiceMailLeft.value)
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Voice mail left.s',
+        });
       }
-  });
+    });
   }
 
-  sendSMSMessage(){
+  sendSMSMessage() {
     this.confirmationService.confirm({
       message:
-          'Are you sure you want send this message?',
+        'Are you sure you want to send this message?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.smsMessageSent.value) 
+        console.log(this.smsMessageSent.value)
         this.messageService.add({
-              severity: 'success',
-              summary: 'Service Message',
-              detail: 'SMS Message sent.',
-          });
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'SMS Message sent.',
+        });
       }
-  });
+    });
 
   }
 
-  sendEmail(){
+  sendEmail() {
     this.confirmationService.confirm({
       message:
-          'Are you sure you want send this email?',
+        'Are you sure you want send this email?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.emailSent.value) 
+        console.log(this.emailSent.value)
         this.messageService.add({
-              severity: 'success',
-              summary: 'Service Message',
-              detail: 'Email sent.',
-          });
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Email sent.',
+        });
       }
-  });
+    });
 
   }
 
