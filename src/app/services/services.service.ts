@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, from, BehaviorSubject } from 'rxjs'
+import { map, Observable, from, BehaviorSubject, combineLatest } from 'rxjs'
 import * as moment from 'moment';
 import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
@@ -453,6 +453,21 @@ removeActiveGroup(group: string) {
     return data;
   }
 
+  getTemplateStatuses(templateName: string): Observable<any> {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(templateName).collection('statusList').snapshotChanges().pipe(
+        map(actions => actions.map(a => a.payload.doc.data()))
+    )
+    return data;
+}
+
+  getAllTemplatesAdmin(): Observable<any> {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').snapshotChanges().pipe(
+        map(actions => actions.map(a => a.payload.doc.data()))
+      )
+
+    return data;
+  }
+
   changeSelectedTemplate(template: string) {
     const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
 // change current active template to false
@@ -496,7 +511,7 @@ removeActiveGroup(group: string) {
 }
 
 
-    async getallCustomers() {
+async getallCustomers() {
     let docArray: firebase.firestore.DocumentData[] = [];
     this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
         map(actions => actions.map(a => docArray.push(a.payload.doc.data())))
