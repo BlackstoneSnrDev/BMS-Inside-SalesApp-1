@@ -135,10 +135,34 @@
             </div>
 
             <div [ngClass]="tglUploadList ? 'show' : 'hide'">
+
+                <br />
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="file">Upload file</label>
+                            <input type="file" class="file-upload" accept="csv" id="file" (change)="onFileChange($event)" />
+                        </div>
+                        <!-- if there is a fileToUpload, show submit or cancel buttons -->
+                        <div *ngIf="fileToUpload">
+                            <div>{{ uploadStatus }}</div>
+                            <!-- <button (click)="onUpload()" class="button-neumorphism width-50 show-line-b txt-center" value="save">
+                                Upload
+                            </button>
+                            <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelUploadList()">
+                                Cancel
+                            </div> -->
+            
+                        </div>
+                    </div>
+                </div>
+
               <br />
               <p-fileUpload name="queueList[]" url="./thisNeedToBeSetUpByBackend" accept=".csv" [auto]="true"
                 (onUpload)="getFileUploaded($event)"></p-fileUpload>
+
             </div>
+
           </form>
         </div>
       </div>

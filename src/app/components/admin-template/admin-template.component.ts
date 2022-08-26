@@ -54,13 +54,13 @@ export class AdminTemplateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.dataService.getAllTemplates().subscribe(
       (response) => {
         this.dataService.getMyTableData().subscribe(
           (response) => {
             this.thData = response.tableTemplate_th;
             this.thCustomerStatus = response.tableTemplateStatutes_th;
-            console.log(this.thCustomerStatus);
 
             this.createNewTemplateForm = new FormGroup({
               templateName: new FormControl('', [
@@ -100,17 +100,15 @@ export class AdminTemplateComponent implements OnInit {
         let slIndex: number = 0;
 
         for (const [index, value] of this.allTemplates.entries()) {
+            console.log(value.templateName);
           tdData.push({
             templateName: value.templateName,
             templateStatus: value.active,
             templateFields: [],
           });
-
-          tdData.push({
-            templateName: 'Just testing',
-            templateStatus: false,
-            templateFields: ['helo'],
-          });
+          this.dataService.getTemplateStatuses(value.templateName).subscribe((data: any) => {
+            this.tdCustomerStatus = data;
+        })
 
           for (const templateData in value) {
             if (value[templateData]['element_placeholder'] !== undefined) {
@@ -130,17 +128,17 @@ export class AdminTemplateComponent implements OnInit {
         this.tdData = tdData;
         this.loading = false;
 
-        this.dataService.getSelectData().subscribe(
-          (response) => {
-            this.selectElmType = response.selectInputType;
-            this.tdCustomerStatus = response.selectCXStatus;
-            console.log(this.tdCustomerStatus);
-          },
+        // this.dataService.getSelectData().subscribe(
+        //   (response) => {
+        //     this.selectElmType = response.selectInputType;
+        //     this.tdCustomerStatus = response.selectCXStatus;
+        //   },
 
-          (error) => {
-            console.error(error);
-          }
-        );
+        //   (error) => {
+        //     console.error(error);
+        //   }
+        // );
+
       },
 
       (error) => {

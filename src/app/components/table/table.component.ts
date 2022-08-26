@@ -10,6 +10,9 @@ import { PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { Papa } from 'ngx-papaparse';
+
+
 @Component({
   selector: 'table-component',
   templateUrl: './table.component.html',
@@ -47,6 +50,10 @@ export class TableComponent {
   public groupSelect = new FormControl();
   public ungroupSelect = new FormControl();
 
+  public uploadListForm!: FormGroup;
+  public fileToUpload: File | undefined;
+  public uploadStatus: any = null;
+
   // Address type
   public tglModifyAddressForm: boolean = false;
   public addressForm!: FormGroup;
@@ -65,11 +72,16 @@ export class TableComponent {
     private UsersService: UsersService,
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
-    private messageService: MessageService
-  ) { }
+    
+    private messageService: MessageService,
+    private papa: Papa
+  ) {}
+
 
   ngOnInit() {
     this.primengConfig.ripple = false;
+
+    this.DataService.fixCustomers();
 
     this.UsersService.userInfo.subscribe(
       (userInfo) => (this.userInfo = userInfo)
@@ -89,7 +101,6 @@ export class TableComponent {
     this.DataService.getTableCustomerHeader()
       .then((data) => {
         this.thData = data.sort((a, b) => a.element_order - b.element_order);
-        console.log(this.thData);
       })
       .then(() => {
         this.DataService.getTableData().subscribe((data) => {
@@ -105,12 +116,16 @@ export class TableComponent {
       .then(() => {
         this.DataService.getCustomerGroups().subscribe((data) => {
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
+
+          this.loading = false;
+
           console.log(this.tbGroups);
           let modifyById = sessionStorage.getItem('dataTableView');
           setTimeout(() => {
             this.modifyTableView(modifyById as string);
             this.loading = false;
           }, 400)
+
         });
       })
       .then(
@@ -132,13 +147,58 @@ export class TableComponent {
 
   }
 
+
+
   toggleUploadList() {
     this.tglUploadList = !this.tglUploadList;
   }
 
-  getFileUploaded(event: Event) {
-    console.log(event);
+  onFileChange(event: any) {
+        this.fileToUpload = event.target.files[0];
+
+        //this.DataService.fileUpload(event.target.files[0]);
+
+        let reader: FileReader = new FileReader();
+        reader.readAsText(event.target.files[0]);
+        reader.onload = (e) => {
+            let csv: string = reader.result as string;
+
+            let options = {
+                header: true,
+                complete: (results: any) => {
+                    this.DataService.fileUpload(results).then((responce: any) => {
+                        if (responce.status === 'Success') {
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Service Message',
+                                detail: responce.data,
+                            });
+                        } else if (responce.status === 'Error') {
+                            this.messageService.add({
+                                severity: 'error',
+                                summary: 'Service Message',
+                                detail: responce.data,
+                            });
+                        }
+                        // this.uploadStatus = responce;
+                    })
+                }
+            };
+
+            this.papa.parse(csv, options);
+
+        }
+    }
+
+  onUpload() {
+    console.log('uploaded');
   }
+
+  cancelUploadList() {
+    console.log('cancled');
+  }
+
+
 
   @ViewChild('dataTable') table!: Table;
 

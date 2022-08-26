@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, from, BehaviorSubject } from 'rxjs'
+import { map, Observable, from, BehaviorSubject, combineLatest } from 'rxjs'
+import * as moment from 'moment';
 import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
 import {
     AngularFirestore,
     AngularFirestoreDocument
   } from '@angular/fire/compat/firestore'; 
-import { arrayUnion, arrayRemove, Timestamp } from '@angular/fire/firestore'
+import { arrayUnion, arrayRemove, Timestamp, DocumentReference, DocumentData } from '@angular/fire/firestore'
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import firebase from 'firebase/compat';
+
 
 let len = 12;    
 let pattern = 'aA0'   
@@ -183,6 +185,106 @@ removeActiveGroup(group: string) {
     //return "testing";
   }
 
+  async fileUpload(Parsed: any) {
+    let headers = Parsed.meta.fields
+    let templateFieldArray: any[] = [];
+    let templateFieldObj: any[] = [];
+// Get all the fields from the currently active template
+    const activeTemplateFields = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref;
+    await activeTemplateFields.get().then((doc: any) => {
+        Object.entries(doc.data()).forEach((field: any) => {
+            if (typeof field[1] === 'object') {
+                templateFieldObj.push(field);
+                templateFieldArray.push(field[0]);
+            }
+        })
+    })
+    let difference = templateFieldArray
+                 .filter(x => !headers.includes(x))
+                 .concat(headers.filter((x: any) => !templateFieldArray.includes(x)));
+    if (difference.length) {
+        return "Error: The Headers in your CSV file do not exactly match the fields in the active template. Please check the CSV file's headers and try again."  
+    } else { 
+
+        let errorArray: any = []
+        let okayRowCount = 0;
+        let sanitizedRowArray: any = []
+
+        await Parsed.data.forEach((row: firebase.firestore.DocumentData, rowIndex: number) => {
+
+            let sanitizedRow: any = {};
+            let error = false
+
+            Object.entries(row).forEach(async(field: any) => {
+                
+                let fieldObj = templateFieldObj.find((obj: any) => obj[0]=== field[0])
+                
+                switch (fieldObj[1].element_type) {
+                    case 'text': sanitizedRow[field[0]] = field[1]; 
+                        break;
+                    case 'number': if (parseFloat(field[1])) {
+                            sanitizedRow[field[0]] = parseFloat(field[1]);   
+                        } else {
+                            error = true;
+                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a number.`)
+                        }
+                        break;
+                    case 'date': if (moment(field[1], 'YYYY-MM-DD',true).isValid()) {
+                            sanitizedRow[field[0]] = new Date(field[1]);   
+                        } else {
+                            error = true;
+                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a properly formatted date. Please use YYYY-MM-DD.`)
+                        }
+                        break;
+                    case 'boolean': if (field[1].toUpperCase() === 'TRUE') {
+                            sanitizedRow[field[0]] = true
+                        } else if (field[1].toUpperCase() === 'FALSE') {
+                            sanitizedRow[field[0]] = false
+                        } else {
+                            error = true;
+                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a true/false.`)
+                        }
+                        break;
+                    default: null
+                }
+
+            })
+            if (!error) {
+                okayRowCount++
+                sanitizedRowArray.push({...sanitizedRow, test: 'test'})
+            } 
+        })
+        if (errorArray.length > 0) {
+            return {status: 'Error', data: errorArray} 
+        } else {
+
+            // batch committ all sanitizedRowArray to firestore database customer collection
+            const batch = this.afs.firestore.batch();
+            sanitizedRowArray.forEach((row: any, index: number) => {
+                let uid = RandomId(len, pattern)
+                console.log(uid);
+                const ref: any = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).ref;
+                batch.set(ref, {
+                    ...row, 
+                    dob: row.dateOfBirth,
+                    group: [],
+                    lastContact: null,
+                    notes: [],
+                    template: this.activeTemplate,
+                    uid: uid
+                });
+
+                // 1h70d8gkAQXx
+                // p5TPOipU5g5q
+
+            })
+            return batch.commit().then(() => {
+                return {status: 'Success', data: `${okayRowCount} rows successfully uploaded.`}
+            })
+        }
+    }
+  }
+
   getAllUsers(): Observable<any>{
 // get all the users for the current tenant
     return this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').snapshotChanges().pipe(
@@ -351,6 +453,21 @@ removeActiveGroup(group: string) {
     return data;
   }
 
+  getTemplateStatuses(templateName: string): Observable<any> {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(templateName).collection('statusList').snapshotChanges().pipe(
+        map(actions => actions.map(a => a.payload.doc.data()))
+    )
+    return data;
+}
+
+  getAllTemplatesAdmin(): Observable<any> {
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').snapshotChanges().pipe(
+        map(actions => actions.map(a => a.payload.doc.data()))
+      )
+
+    return data;
+  }
+
   changeSelectedTemplate(template: string) {
     const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
 // change current active template to false
@@ -394,7 +511,7 @@ removeActiveGroup(group: string) {
 }
 
 
-    async getallCustomers() {
+async getallCustomers() {
     let docArray: firebase.firestore.DocumentData[] = [];
     this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
         map(actions => actions.map(a => docArray.push(a.payload.doc.data())))
@@ -417,18 +534,21 @@ removeActiveGroup(group: string) {
         this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).delete();
     }
 
-// fixCustomers() {
-//     this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
-//         snapshot.forEach((doc: any) => {
-//             this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(doc.id).update({
-//                 lastContact: {
-//                     date:  Timestamp.fromDate(new Date()),
-//                     result: 'Voice Message Left'
-//                 }
-//             })
-//         })
-//     })
-// }
+fixCustomers() {
+    this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
+        snapshot.forEach((doc: any) => {
+            if (doc.data().fullname === 'New GuyOne' || doc.data().MRN === 'New GuyTwo') {
+                console.log(doc.data());
+            }
+            // this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(doc.id).update({
+            //     lastContact: {
+            //         date:  Timestamp.fromDate(new Date()),
+            //         result: 'Voice Message Left'
+            //     }
+            // })
+        })
+    })
+}
 
 // populateTemplateWithCustomers() {
 

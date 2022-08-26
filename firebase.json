@@ -10,7 +10,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/bms-inside-salesapp-1",
+    "public": "dist/inside-sales-app",
     "ignore": [
       "firebase.json",
       "**/.*",
