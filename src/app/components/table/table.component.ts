@@ -589,6 +589,7 @@ export class TableComponent {
   modifyTableView(modifyById: string) {
     this.loading = true;
 
+    console.log(modifyById);
 
     let modifyLastElmActive = document.getElementsByClassName(
       'button-neumorphism-active'

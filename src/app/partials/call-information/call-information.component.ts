@@ -39,7 +39,6 @@ export class CallInfoComponent implements OnInit {
     }
 
     ngOnDestroy() {
-
         this._customerSubscription.unsubscribe();
     }
 

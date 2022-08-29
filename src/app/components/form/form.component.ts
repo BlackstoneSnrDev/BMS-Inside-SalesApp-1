@@ -73,9 +73,7 @@ export class FormComponent implements OnInit {
           },
         ];
         this.customerStatus = this.currentCall['customerStatus'];
-        console.log(this.customerStatus);
       }
-      console.log(this.currentCall);
 
       for (let fieldName in this.currentCall) {
         for (let fieldValue of this.formElement) {
@@ -100,7 +98,7 @@ export class FormComponent implements OnInit {
       }
     });
 
-    this.dataService.getCustomerGroups().subscribe((data) => {
+    this.dataService.getCustomerGroups().subscribe((data: any[]) => {
       this.tbGroups = data;
 
       this.usersService.userInfo.subscribe((userInfo: any) => {

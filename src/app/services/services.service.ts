@@ -74,7 +74,36 @@ export class DataService {
     this.usersService.activeTemplate.subscribe(template => this.activeTemplate = template);
 
     this.currentUid = this.userInfo.uid;
+  }
 
+  
+
+  addTemplate(data: any) {
+    let newTemplateRef = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(data.templateName)
+    newTemplateRef.set({ 
+        templateName: data.templateName, 
+    });
+    data.fieldArray.forEach((item: firebase.firestore.DocumentData) => {
+        return newTemplateRef.set({
+            [item['element_table_value']] : item
+        }, { merge: true })
+    })
+
+    if (data.statusArray.length > 0) {
+        // create statusList collection and add each item from statusArray to it
+        let statusListRef = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(data.templateName).collection('statusList')
+        data.statusArray.forEach((item: firebase.firestore.DocumentData) => {
+            return statusListRef.doc(item['uid']).set(item)
+        })
+    }
+
+    this.activeDialSessionArray.next('no contacts have been added to this template');
+    // this.activeCall.next(activeGroupCustomerArray[0]);
+    this.setActiveCall('no contacts have been added to this template')
+
+  }
+  addStatuses(statuses: any) {
+    console.log(statuses);
   }
 
   formatPhoneNumber(phoneNumberString: string) {
@@ -91,6 +120,7 @@ export class DataService {
     const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).snapshotChanges().subscribe(t => {
         this.activeCall.next(t.payload.data()) 
       })
+    // console.log('setActiveCall', data);
     return data;
   }
 
@@ -108,38 +138,44 @@ getDialingSessionTemplate() {
     })
 }
 
-getActiveGroupCustomerArray() {
+    getActiveGroupCustomerArray() {
 
         let activeGroupCustomerArray: any[] = [];
-    
+
         let withGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-            map( actions => 
+            map(actions =>
                 actions.filter(
                     a => this.userInfo.activeGroup.some((r: any) => a.payload.doc.data()['group'].includes(r))
                 ).map(b => activeGroupCustomerArray.push(b.payload.doc.data())))
         )
 
         let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-            map( actions => actions.map(a => activeGroupCustomerArray.push(a.payload.doc.data()))) 
+            map(actions => actions.map(a => activeGroupCustomerArray.push(a.payload.doc.data())))
         )
-    
+
         if (this.userInfo.activeGroup.length > 0) {
-            console.log('withGroup');
+            // console.log('withGroup');
             withGroup.subscribe(data => {
                 this.activeDialSessionArray.next(activeGroupCustomerArray);
                 // this.activeCall.next(activeGroupCustomerArray[0]);
                 this.setActiveCall(activeGroupCustomerArray[0].uid)
             })
         } else {
-            console.log('no group');
+            // console.log('no group');
             noGroup.subscribe(data => {
                 this.activeDialSessionArray.next(activeGroupCustomerArray);
                 // this.activeCall.next(activeGroupCustomerArray[0]);
-                this.setActiveCall(activeGroupCustomerArray[0].uid)
+                activeGroupCustomerArray.length > 0 ?
+                    this.setActiveCall(activeGroupCustomerArray[0].uid)
+                    : 
+                    this.activeCall.next({
+                        notes: [],
+                        phonenumber: "000-000-0000"
+                    })
             })
         }
 
-}
+    }
 
 selectActiveGroup(group: string) {
     this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({
@@ -379,10 +415,12 @@ removeActiveGroup(group: string) {
   getCustomerGroups(): Observable<any> {
     // console.log(this.userInfo.uid);
     const groupArray = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').snapshotChanges().pipe(
-        map(actions => actions.map(a => a.payload.doc.data() ))
+        map( actions => actions.filter(a => a.payload.doc.data()['template'] === this.activeTemplate).map(a => a.payload.doc.data()))
     )
     return groupArray;
+  
   }
+
 
   createNewCustomerGroup(groupName: string, rowUidArray: any[]) {
     let id = RandomId(len, pattern)
@@ -479,6 +517,9 @@ removeActiveGroup(group: string) {
     }).then((res) => {  
         this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(template).update({active: true});
     })
+// update the current users activeTemplate field with the template
+    this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({activeTemplate: template});
+    sessionStorage.removeItem('dataTableView');
 
   }
 

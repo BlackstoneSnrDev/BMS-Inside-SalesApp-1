@@ -2,7 +2,6 @@ DONE!!  Create admin component
 DONE!!  Create admin (admin-conditional) menu item 
 DONE!!  Chooses between info templets
 DONE!!  If an element is shownWhileCalling, and the element_type is boolean, it should display as a checkbox
-    add unsubscribe to all components as necessary
 
 
 -- queueTable --
@@ -26,17 +25,17 @@ DONE!!  phone number and balance not showing up when editing a single record (th
 
 
 -- adminPage --
-    create, read, edit, delete INFO TEMPLATE (check that no users have deleted template as active)
+    create, read, (no editing) delete INFO TEMPLATE (check that no users have deleted template as active)
     change userName to email
-    admin user to create and add roles to users
-    roles need to be an array 
-    add 'activeTemplate' to createUser options
+    
 DONE!!    remove deactiveate feature from activeTemplate 
-    add templateName to any group that a user creates 
 DONE!!  Active template needs to be attached to a user, not the whole account
+DONE!!    user to change templates
     get rid of getActiveTemplate service function
-    user to change templates
+    add templateName to any group that a user creates 
+    add 'activeTemplate' to createUser options
     Data leak on forms.component.ts - init database call is fired on every page load
+    admin user to create and add roles to users
 
 
 -- call information page -- 
@@ -48,5 +47,40 @@ DONE!!    populate autoDialer child component with current call phone number
 DONE!!    populate autoDialer child component with dialSessionArray
 
 
+-- For VFP -- 
+
+    Connect Twilio 
+        Softphone
+        SMS Text
+    Record and store audio files for voicemails
+    Finish CSV upload feature
+    Auto create goups based on customer statuses (No Attention Required, Pending, Handled, etc...)
+    Add unsubscribe to all components as necessary
+    When deleting or editing a template status, check that no customers will be effected.  If so, throw an error.
+
+
+    Phone Form
+        In the group dropdown, it seems there is a group always in bold and they can't be selected
+
+    Phone 
+        When choosing to send a text or voicemail, no need to change the text of the button
+
+    Phone Notes (log)
+        If no notes for the caller, hide search bar and disply the '+' button and below that a message 'no notes have been enterd for this caller' 
+        When entering a note, hide Search input
+
+
+    Queue table 
+        When selecting a customer or group of customers (clicking the checkbox), have the group options appear but remove the 'Groups' button. 
+        If a group is selected AND customers are seleced (their checkbox is checked), only then show 'Delete from group' button.
+        Delete from group button does not need a dropdown.  The group is already seleced and filtered. 
+        Can we create animated transitions? 
+
+    Admin 
+        In add new template, can we create a boundry between the fields and status?  It looks a little too blended together and could be confusing for the user
+        In an existing template, a user should be able to add statuses, but not template fields.  
+        Admin user to create and add roles to users (a third top menu option - 'Roles' - where admin can create roles that are assigned in the 'Users' tab)
+        In User tab, roles should be a dropdown with the roles that are created by Admin in the Roles tab.
+        
 
     

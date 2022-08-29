@@ -3,6 +3,11 @@ import { DataService } from '../../services/services.service';
 import { ConfirmationService } from 'primeng/api';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import RandomId from 'src/app/services/services.randomId';
+import { UsersService } from 'src/app/services/auth.service';
+
+let len = 12;    
+let pattern = 'aA0'  
 
 @Component({
   selector: 'app-admin-template',
@@ -47,13 +52,18 @@ export class AdminTemplateComponent implements OnInit {
   public thCustomerStatus: any;
   public tdCustomerStatus: any;
 
+  public activeTemplate: any;
+
   constructor(
     private dataService: DataService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private usersService: UsersService,
   ) {}
 
   ngOnInit() {
+
+    this.usersService.activeTemplate.subscribe(template => this.activeTemplate = template);
 
     this.dataService.getAllTemplates().subscribe(
       (response) => {
@@ -103,12 +113,10 @@ export class AdminTemplateComponent implements OnInit {
             console.log(value.templateName);
           tdData.push({
             templateName: value.templateName,
-            templateStatus: value.active,
+            templateStatus: value.templateName === this.activeTemplate ? true : false,
             templateFields: [],
+            statuses: [],
           });
-          this.dataService.getTemplateStatuses(value.templateName).subscribe((data: any) => {
-            this.tdCustomerStatus = data;
-        })
 
           for (const templateData in value) {
             if (value[templateData]['element_placeholder'] !== undefined) {
@@ -124,20 +132,29 @@ export class AdminTemplateComponent implements OnInit {
               tdData[index]['templateFields'].push(data);
             }
           }
+        
+// attach the template's statuses to the template (tdData)
+            tdData.forEach((element: any) => {
+                this.dataService.getTemplateStatuses(element.templateName).subscribe((data: any) => {
+                    element.statuses = data;
+                })
+            })
+
+
         }
         this.tdData = tdData;
         this.loading = false;
 
-        // this.dataService.getSelectData().subscribe(
-        //   (response) => {
-        //     this.selectElmType = response.selectInputType;
-        //     this.tdCustomerStatus = response.selectCXStatus;
-        //   },
+        this.dataService.getSelectData().subscribe(
+          (response) => {
+            this.selectElmType = response.selectInputType;
+            //this.tdCustomerStatus = response.selectCXStatus;
+          },
 
-        //   (error) => {
-        //     console.error(error);
-        //   }
-        // );
+          (error) => {
+            console.error(error);
+          }
+        );
 
       },
 
@@ -272,37 +289,80 @@ export class AdminTemplateComponent implements OnInit {
     this.tglCreateNewTemplate = !this.tglCreateNewTemplate;
   }
 
-  saveCreateNewTemplate() {
-    let value = this.createNewTemplateForm.value;
+    saveCreateNewTemplate() {
+        let value = this.createNewTemplateForm.value;
 
-    this.createNewTemplateForm.reset();
-    this.tglCreateNewTemplate = false;
+        this.createNewTemplateForm.reset();
+        this.tglCreateNewTemplate = false;
 
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Service Message',
-      detail: 'New template was created successfully.',
-    });
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Service Message',
+            detail: 'New template was created successfully.',
+        });
 
-    console.log(value);
-  }
+        let fieldArray = [];
+        let statusArray = [];
+        let i = 0;
+        let ii = 0
 
-  cancelCreateNewTemplate() {
-    this.tglCreateNewTemplate = false;
-    this.items = this.items.filter((a: any, i: any) => i == 0);
-    this.createNewTemplateForm.reset();
+        for (const [index, item] of Object.entries(value)) {
 
-    let itemsCreated = this.items.length;
-    let id = 1;
+            let uid = RandomId(len, pattern)
 
-    for (let index = 0; index < itemsCreated - 1; index++) {
-      this.createNewTemplateForm.removeControl('fieldName' + id);
-      this.createNewTemplateForm.removeControl('fieldType' + id);
-      id += 1;
+            if (index.match(/fieldName/g)) {
+
+                let lastChar = index.charAt(index.length - 1);
+                let fieldType = 'fieldType' + lastChar;
+                fieldArray.push({
+                    element: 'input',
+                    element_order: i,
+                    element_placeholder: item,
+                    element_table_value: item,
+                    element_type: value[fieldType],
+                    element_value: null,
+                    showWhileCalling: true,
+                });
+                i = i + 1;
+            } else if (index.match(/statusLabel/g)) {
+
+                let lastChar = index.charAt(index.length - 1);
+                let statusBackground = 'statusBackground' + lastChar;
+                let statusColor = 'statusColor' + lastChar;
+                statusArray.push({
+                    label: item,
+                    background: value[statusBackground],
+                    color: value[statusColor],
+                    function: null,
+                    slStatusId: ii,
+                    uid: uid
+                });
+                ii = ii + 1;
+            }
+
+        }
+
+        this.dataService.addTemplate({fieldArray: fieldArray, statusArray: statusArray, templateName: value.templateName});
+
     }
-  }
+
+    cancelCreateNewTemplate() {
+        this.tglCreateNewTemplate = false;
+        this.items = this.items.filter((a: any, i: any) => i == 0);
+        this.createNewTemplateForm.reset();
+
+        let itemsCreated = this.items.length;
+        let id = 1;
+
+        for (let index = 0; index < itemsCreated - 1; index++) {
+            this.createNewTemplateForm.removeControl('fieldName' + id);
+            this.createNewTemplateForm.removeControl('fieldType' + id);
+            id += 1;
+        }
+    }
 
   activateTemplate(id: any, templateName: any) {
+    console.log(id, templateName);
     this.confirmationService.confirm({
       message:
         'Are you sure you want to <b>activate</b> this template? This will be applied in the <b>whole app.</b>',
@@ -312,6 +372,7 @@ export class AdminTemplateComponent implements OnInit {
         if (this.tdData[id]['templateFields'].length > 0) {
           this.tdData.forEach((i: any) => (i.templateStatus = false));
           this.tdData[id]['templateStatus'] = true;
+          this.dataService.changeSelectedTemplate(templateName);
           this.messageService.add({
             severity: 'success',
             summary: 'Service Message',
@@ -359,6 +420,7 @@ export class AdminTemplateComponent implements OnInit {
           } else {
             this.tdData = newTdData;
             if (currentStatus) {
+                console.log(this.activateTemplate);
               this.tdData.forEach((i: any) => (i.templateStatus = false));
               this.tdData[0]['templateStatus'] = true;
 
@@ -395,4 +457,5 @@ export class AdminTemplateComponent implements OnInit {
   changeColor() {
     console.log('hpta');
   }
+  
 }

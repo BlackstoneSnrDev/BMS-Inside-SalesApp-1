@@ -43,7 +43,7 @@ export class PhoneComponent implements OnInit {
     this.DataService.getFormElementsData().subscribe(
       (response) => {
         this.componentPhone = response.componentPhone;
-        console.log(response.componentPhone);
+        //console.log(response.componentPhone);
       },
       (error) => {
         console.error(error);
@@ -60,7 +60,7 @@ export class PhoneComponent implements OnInit {
         this.currentCall = currentCall;
         this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
       } else {
-        console.log('no current call');
+        // console.log('no current call');
       }
 
     })
