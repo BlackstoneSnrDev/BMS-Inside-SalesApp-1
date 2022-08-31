@@ -519,7 +519,7 @@ removeActiveGroup(group: string) {
     })
 // update the current users activeTemplate field with the template
     this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({activeTemplate: template});
-    sessionStorage.removeItem('dataTableView');
+    sessionStorage.setItem('dataTableView', 'all');
 
   }
 
