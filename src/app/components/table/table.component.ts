@@ -40,7 +40,7 @@ export class TableComponent {
   public tglCreateNewGroup: boolean = false;
   public tglMenuTable: boolean = false;
   public tglAddNewRecord: boolean = false;
-  public tglGroupMenu: boolean = false;
+  public tglRemoveFromGroup: boolean = false;
 
   public addNewRecordForm!: FormGroup;
   public newFormControl: any = {};
@@ -48,7 +48,6 @@ export class TableComponent {
   public createNewGroup = new FormControl();
   public renameGroup = new FormControl();
   public groupSelect = new FormControl();
-  public ungroupSelect = new FormControl();
 
   public uploadListForm!: FormGroup;
   public fileToUpload: File | undefined;
@@ -119,12 +118,12 @@ export class TableComponent {
 
           this.loading = false;
 
-          console.log(this.tbGroups);
           let modifyById = sessionStorage.getItem('dataTableView');
-          setTimeout(() => {
-            this.modifyTableView(modifyById as string);
-            this.loading = false;
-          }, 400)
+            setTimeout(() => {
+              this.modifyTableView(modifyById as string);
+              this.loading = false;
+            }, 400)
+           
 
         });
       })
@@ -205,8 +204,8 @@ export class TableComponent {
   clear(table: Table) {
     table.clear();
     this.tbSelectedRows = [];
-    this.renameGroup.setValue('');
-    this.createNewGroup.setValue('');
+    this.renameGroup.reset();
+    this.createNewGroup.reset();
     this.tglMenuTable = false;
     table.sortField = ''
     table.sortOrder = 0
@@ -230,7 +229,6 @@ export class TableComponent {
     );
 
     this.clonedtdData[index] = { ...tdData };
-    console.log(this.clonedtdData[index]);
   }
 
   onRowEditSave(tdData: any, index: number) {
@@ -244,6 +242,11 @@ export class TableComponent {
       this.onValidationError = '*All fields must be filled out.';
     } else {
       this.DataService.editCustomer(tdData);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Service Message',
+        detail: 'Record was edited successfully.',
+      });
     }
   }
 
@@ -255,7 +258,6 @@ export class TableComponent {
   }
 
   onRowDeleteRow(uid: any) {
-    console.log(uid);
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this selection?',
       header: 'Confirm',
@@ -301,7 +303,6 @@ export class TableComponent {
   cancelAddNewRecord() {
     this.tglAddNewRecord = false;
     this.addNewRecordForm.reset();
-    console.log(this.addNewRecordForm.value);
   }
 
   // Delete selection
@@ -342,10 +343,6 @@ export class TableComponent {
   }
 
   // Groups CRUD
-  toggleGroupSection() {
-    this.tglGroupMenu = !this.tglGroupMenu;
-  }
-
   // Create new group
   toggleCreateNewGroup() {
     this.tglCreateNewGroup = true;
@@ -380,12 +377,12 @@ export class TableComponent {
     }, 500);
 
     this.tglCreateNewGroup = false;
-    this.createNewGroup.setValue('');
+    this.createNewGroup.reset();
   }
 
   cancelCreateNewGroup() {
     this.tglCreateNewGroup = false;
-    this.createNewGroup.setValue('');
+    this.createNewGroup.reset();
   }
 
   // Edit group created
@@ -433,7 +430,7 @@ export class TableComponent {
       },
     });
 
-    this.renameGroup.setValue('');
+    this.renameGroup.reset();
   }
 
   cancelRenameGroup(event: Event) {
@@ -443,7 +440,7 @@ export class TableComponent {
     let tglEdit2 = (
       event.target as HTMLInputElement
     ).parentElement?.classList.toggle('hide');
-    this.renameGroup.setValue('');
+    this.renameGroup.reset();
   }
   sendMassiveSMS() {
     this.confirmationService.confirm({
@@ -452,7 +449,6 @@ export class TableComponent {
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.smsMessageSent.value)
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
@@ -500,8 +496,7 @@ export class TableComponent {
   // Add selection to group
   addToExistingGroup() {
     let groupId = this.groupSelect.value;
-    console.log(groupId);
-    this.groupSelect.setValue('');
+    this.groupSelect.reset();
 
     this.confirmationService.confirm({
       message:
@@ -521,7 +516,6 @@ export class TableComponent {
         });
         this.DataService.addToExistingCustomerGroup(groupId, rowUidArray);
 
-        console.log(this.tbSelectedRows);
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
@@ -538,7 +532,7 @@ export class TableComponent {
 
   // Delete selection from group
   ungroupSelection() {
-    let groupId = this.ungroupSelect.value;
+    let groupId = this.modifyTable;
 
     let groupIndex = this.tbGroups.findIndex(
       (i: any) => i.group_id === groupId
@@ -582,14 +576,19 @@ export class TableComponent {
         }, 500);
       },
     });
-    this.ungroupSelect.setValue('');
   }
 
   // Change normal view to group selected view
   modifyTableView(modifyById: string) {
     this.loading = true;
 
+
     console.log(modifyById);
+
+
+    if(!modifyById){
+      modifyById = 'all'
+    }
 
     let modifyLastElmActive = document.getElementsByClassName(
       'button-neumorphism-active'
@@ -607,13 +606,19 @@ export class TableComponent {
 
     this.modifyTable = modifyById;
     this.loading = false;
+ 
 
     if (modifyById !== 'all') {
+      let groupInfo = this.tbGroups.filter((a:any, i:any) => a.group_id === modifyById)
+    let group_name = groupInfo[0]['group_name']
       this.messageService.add({
         severity: 'success',
         summary: 'Service Message',
-        detail: 'Table was filtered by group.',
+        detail: 'Showing records from group '+group_name,
       });
+      this.tglRemoveFromGroup = true
+    }else{
+      this.tglRemoveFromGroup = false
     }
   }
 
@@ -670,7 +675,6 @@ export class TableComponent {
     //         for (let a of this.cities) {
     //             this.cities = a.cities.map((value: any, i: any) => ({ id: i, name: value }))
     //         }
-    //         console.log(this.cities)
 
     //     },
 
@@ -689,7 +693,6 @@ export class TableComponent {
         for (let i of this.states) {
           this.states = i.states;
         }
-        console.log(this.states);
       },
 
       (error) => {

@@ -25,7 +25,7 @@ export class LogComponent implements OnInit {
   public optLogStatus: any;
 
   public searchNote = new FormControl();
-  public noteNewStatus = new FormControl('');
+  public noteContent = new FormControl('', [Validators.minLength(1), Validators.maxLength(1500), Validators.required]);
 
   constructor(
     private DataService: DataService,
@@ -43,7 +43,6 @@ export class LogComponent implements OnInit {
         );
         this.currentCallNotes.forEach((element: any, index: number) => {
           this.currentCallNotes[index]['slIndex'] = index;
-          this.currentCallNotes[index]['noteStatus'] = 'Pending';
         });
 
         this.dupCurrentCallNotes = this.currentCallNotes;
@@ -53,16 +52,6 @@ export class LogComponent implements OnInit {
         this.loadingNotes = true;
       }
     });
-    this.newFormControl['note'] = new FormControl('', [
-      Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(1500),
-    ]);
-    this.newFormControl['noteStatus'] = new FormControl('Pending', [
-      Validators.required,
-      Validators.minLength(1),
-    ]);
-    this.addNewNoteForm = new FormGroup(this.newFormControl);
 
     this.DataService.getSelectData().subscribe(
       (response) => {
@@ -73,21 +62,33 @@ export class LogComponent implements OnInit {
         console.error(error);
       }
     );
+
   }
 
   toggleAddLog() {
-    this.tglAddNote = !this.tglAddNote;
-    this.addNewNoteForm.reset();
+    this.tglAddNote = true;
+    this.currentCallNotes = this.dupCurrentCallNotes;
+    this.noteContent.reset();
+  }
+
+  cancelAddNote() {
+    this.tglAddNote = false
+    console.log('is closing here when cancel')
+    this.noteContent.reset();
   }
 
   saveNewNote() {
     this.DataService.addNewNote(
       this.currentCall.uid,
-      this.addNewNoteForm.value.note
+      this.noteContent.value as string
     );
-    console.log(this.addNewNoteForm.value);
     this.tglAddNote = !this.tglAddNote;
-    this.addNewNoteForm.reset();
+    this.noteContent.reset();
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Note was saved successfully.',
+    });
   }
 
   filterNotes() {
@@ -100,8 +101,7 @@ export class LogComponent implements OnInit {
         (a: any, g: any) =>
           a.data.toLowerCase().includes(value) ||
           a.enteredBy.toLowerCase().includes(value) ||
-          g.toString().includes(value) ||
-          a.noteStatus.toLowerCase().includes(value)
+          g.toString().includes(value)
       );
       this.loadingNotes = false;
     } else {
@@ -109,15 +109,8 @@ export class LogComponent implements OnInit {
       this.loadingNotes = false;
     }
 
-    console.log(this.currentCallNotes);
   }
 
-  toggleNoteStatus(elementId: any) {
-    this.tglChangeNoteStatus = !this.tglChangeNoteStatus;
-
-    document.getElementById('btnStatus' + elementId)?.classList.toggle('hide');
-    document.getElementById('btnCancel' + elementId)?.classList.toggle('hide');
-    document.getElementById('noteSl' + elementId)?.classList.toggle('hide');
-  }
+  
 
 }

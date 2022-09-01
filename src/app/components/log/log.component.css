@@ -10,8 +10,6 @@
 .txtlog {
   max-height: 20rem !important;
   display: flex;
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
   margin-left: 2rem;
 }
 
@@ -62,9 +60,12 @@
 }
 
 .addlog-container {
-  margin: 0;
+  padding-bottom: 1rem;
+    padding-top: 1.4rem;
 }
-
+.add-log-maincontainer{
+  padding-top: 2.2rem
+}
 .notes-menu {
   position: sticky;
   z-index: 1;
@@ -128,4 +129,10 @@
 .log-container .cancel-icon i,
 .log-container .small-edit-icon i {
   font-size: 0.8rem;
+}
+
+.add-note-container{
+width: 100%;
+padding-top: 0.5rem;
+padding-bottom: 0.4rem;
 }

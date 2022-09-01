@@ -17,7 +17,7 @@
       <span
         matTooltip="{{ currentCall.fullname }} status"
         id="customerStatus"
-        class="float-rt hide-line"
+        class="float-rt hide"
         matTooltipPosition="above"
       >
         <p-dropdown
@@ -43,7 +43,7 @@
         ></i>
       </button>
       <button
-        class="iconbutton-neumorphism cancel-icon float-rt hide-line"
+        class="iconbutton-neumorphism cancel-icon float-rt hide"
         (click)="toggleCustomerStatus()"
         id="btnCancelStatus"
       >
@@ -89,6 +89,7 @@
   >
     <span>
       <p-dropdown
+      placeholder="Groups"
         [options]="tbGroups"
         [formControl]="groupSelected"
         optionValue="group_id"

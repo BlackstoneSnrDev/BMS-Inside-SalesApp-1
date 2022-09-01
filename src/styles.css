@@ -121,6 +121,8 @@ textarea {
   }
 }
 
+
+
 .mat-tooltip {
   color: #44476a !important;
   font-weight: bold;
@@ -131,31 +133,65 @@ textarea {
 }
 
 .show {
+  animation: fade-show 1s;
   display: inline !important;
+
 }
 
 .hide {
+  animation: fade-hide 1s;
   display: none !important;
+
 }
 
+@keyframes fade-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-hide {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
 .show-line {
+  animation: fade-show-line 1s;
   display: inline-flex !important;
+
+}
+
+@keyframes fade-show-line {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .show-line-b {
   display: inline-block !important;
-}
 
-.hide-line {
-  display: none !important;
 }
 
 .not-visible {
   visibility: hidden;
+  animation: fade-hide 1s;
 }
 
 .visible {
   visibility: visible;
+  animation: fade-show 1s;
 }
 
 .margin-right {
@@ -241,4 +277,12 @@ textarea {
 
 .no-padding-lt {
   padding-left: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.padding-tp{
+  padding-top: 1rem;
 }

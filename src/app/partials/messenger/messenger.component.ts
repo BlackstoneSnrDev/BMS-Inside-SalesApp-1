@@ -94,10 +94,8 @@ export class MessengerComponent {
       this.usersService.userInfo.subscribe((userInfo: any) => {
         if (userInfo) {
           this.userInfo = userInfo;
-          console.log(userInfo);
           this.tbGroupActive = [];
           userInfo.activeGroup.forEach((group: any) => {
-            console.log(group);
             let groupSelected = data.filter((v: any) => v.group_id === group);
             let groupId = '';
             let groupName = '';
@@ -125,23 +123,19 @@ export class MessengerComponent {
 
   selectAllContacts() {
     this.contactSelection = this.contacts;
-    console.log(this.contactSelection);
   }
 
   selectSingleContact(index: any) {
-    console.log(index);
 
     this.contactSelection = this.contacts.filter(
       (a: any, i: any) => i == index
     );
-    console.log(this.contactSelection);
   }
   getGroupSelected() {
     let groupSelected = this.tbGroups.filter(
       (v: any) => v.group_id === this.groupSelected.value
     );
 
-    console.log(this.groupSelected.value);
     this.DataService.selectActiveGroup(this.groupSelected.value);
 
     this.defaultGroup = false;
@@ -167,7 +161,6 @@ export class MessengerComponent {
       (v: any) => v.group_id !== groupId
     );
 
-    console.log(groupId);
     this.DataService.removeActiveGroup(groupId);
 
     this.tbGroupActive.length > 0
@@ -198,7 +191,6 @@ export class MessengerComponent {
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.smsMassive.value);
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
@@ -210,7 +202,6 @@ export class MessengerComponent {
 
   filterContact() {
     let value = this.searchContact.value.toLowerCase();
-    console.log(value);
     if (value) {
       this.contacts = this.dupContacts;
       this.contacts = this.contacts.filter(
@@ -226,14 +217,12 @@ export class MessengerComponent {
       this.contacts = this.dupContacts;
     }
 
-    console.log(this.contacts);
   }
 
   filterChat() {
     this.chats = this.dupChats;
 
     let value = this.searchChat.value.toLowerCase();
-    console.log(value);
     if (value) {
       this.chats = this.dupChats;
       this.chats = this.chats.filter(
@@ -245,7 +234,6 @@ export class MessengerComponent {
       this.chats = this.dupChats;
     }
 
-    console.log(this.contacts);
   }
 
   filterPendingChat() {

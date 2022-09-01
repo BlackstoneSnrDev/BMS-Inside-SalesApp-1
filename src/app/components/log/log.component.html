@@ -1,49 +1,54 @@
 <div class="log-main-container">
   <div class="notes-menu">
-    <div class="form-check form-check-inline width-100">
-      <div class="width-100 filter-notes-container">
+    <div class="form-check form-check-inline width-100" *ngIf="dupCurrentCallNotes">
+      <div class="width-100 filter-notes-container" id="notes-filter-container" *ngIf="!tglAddNote" [ngClass]="dupCurrentCallNotes.length > 0  ? '' : 'not-visible'">
         <mat-form-field appearance="standard">
           <mat-label>Search</mat-label>
           <input matInput type="text" [formControl]="searchNote" (keyup)="filterNotes()" placeholder="Ex. ium" />
         </mat-form-field>
       </div>
 
-      <div class="iconbutton-container">
-        <button class="iconbutton-neumorphism" (click)="toggleAddLog()" matTooltip="Add note"
+      <div *ngIf="tglAddNote" class="addlog-container width-100">
+        <form>
+          <div class="row">
+            <div class="p-inputgroup col-10">
+              <textarea [rows]="1" pInputTextarea [autoResize]="true" class="input-neumorphism txtlog"
+                placeholder="Add note" id="noteContent" [formControl]="noteContent"></textarea>
+            </div>
+            <div class="col-2 btnsave-container">
+              <button (click)="saveNewNote()" class="width-100" [disabled]="!noteContent.valid" [ngClass]="
+                  !noteContent.valid
+                    ? 'button-neumorphism-disabled'
+                    : 'button-neumorphism'
+                ">
+                Save
+              </button>
+            </div>
+          </div>
+          <div class="col-12">
+            <small *ngIf="noteContent.hasError('maxlength')" class="color-rd">*1500 characters maximum.</small>
+          </div>
+        </form>
+      </div>
+
+      <div >
+        <button class="iconbutton-neumorphism float-rt" *ngIf="!tglAddNote"(click)="toggleAddLog()" matTooltip="Add note"
           matTooltipPosition="above">
-          <i class="bi bi-plus-circle-fill" *ngIf="!tglAddNote"></i>
-          <i class="bi bi-x-circle-fill" *ngIf="tglAddNote"></i>
+          <i class="bi bi-plus-circle-fill" ></i>
+
+        </button>
+        <button class="iconbutton-neumorphism float-rt" *ngIf="tglAddNote" (click)="cancelAddNote()" matTooltip="Cancel add note"
+          matTooltipPosition="above">
+                    <i class="bi bi-x-circle-fill"></i>
+
         </button>
       </div>
     </div>
 
-    <div *ngIf="tglAddNote" class="addlog-container">
-      <form [formGroup]="addNewNoteForm">
-        <div class="row">
-          <div class="p-inputgroup col-10">
-            <textarea rows="1" pInputTextarea [autoResize]="true" class="input-neumorphism txtlog"
-              placeholder="Add note" id="note" formControlName="note"></textarea>
-          </div>
-          <div class="col-2 btnsave-container">
-            <button (click)="saveNewNote()" class="width-100" [disabled]="!addNewNoteForm.valid" [ngClass]="
-                !addNewNoteForm.valid
-                  ? 'button-neumorphism-disabled'
-                  : 'button-neumorphism'
-              ">
-              Save
-            </button>
-          </div>
-        </div>
-        <div class="col-12">
-          <small *ngIf="addNewNoteForm.invalid" class="color-rd">*1500 characters maximum.</small>
-        </div>
-      </form>
-      <hr />
-    </div>
   </div>
 
   <div class="txt-center margin-tp" *ngIf="currentCallNotes.length == 0">
-    No data found.
+    No notes have been entered for this caller.
   </div>
 
   <div *ngFor="let note of currentCallNotes; let noteIndex = index">

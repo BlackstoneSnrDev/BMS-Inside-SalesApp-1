@@ -48,6 +48,45 @@
             "function": "notify"
         }
     ],
+    "selectDepartment": [
+        {
+            "slIndex": "0",
+            "name": "Inside Sales",
+            "function": ""
+        },
+        {
+            "slIndex": "1",
+            "name": "Customer Service",
+            "function": ""
+        },
+        {
+            "slIndex": "2",
+            "name": "Verifications",
+            "function": ""
+        },
+        {
+            "slIndex": "3",
+            "name": "Authorizations",
+            "function": ""
+        }
+    ],
+    "selectRole": [
+        {
+            "slIndex": "0",
+            "name": "Admin",
+            "function": ""
+        },
+        {
+            "slIndex": "1",
+            "name": "Lead",
+            "function": ""
+        },
+        {
+            "slIndex": "2",
+            "name": "Trainer",
+            "function": ""
+        }
+    ],
     "selectVoiceMail": [
         {
             "templateId": "01voictemplateId",
@@ -97,6 +136,20 @@
             "templateId": "03smsId",
             "templateName": "Greetings",
             "templateContent": "Welcome aboard! We are glad to have you as a part of our community."
+        }
+    ],
+    "selectPermissions": [
+        {
+            "id": "permission0",
+            "name": "Toggle autodialer"
+        },
+        {
+            "id": "permission1",
+            "name": "Activate template"
+        },
+        {
+            "id": "permission2",
+            "name": "Create new template"
         }
     ]
 }

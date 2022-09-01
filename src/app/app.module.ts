@@ -19,6 +19,8 @@ import { AdminTemplateComponent } from './components/admin-template/admin-templa
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 import { ReusableTableComponent } from './components/reusableTable/reusableTable.component';
+import { AdminRolesComponent } from './components/admin-roles/admin-roles.component';
+import { AdminDeptsComponent } from './components/admin-depts/admin-depts.component';
 
 ///// Partials
 import { QueueComponent } from './partials/queue/queue.component';
@@ -88,7 +90,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { EditorModule } from 'primeng/editor';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ListboxModule } from 'primeng/listbox';
-
+import {MultiSelectModule} from 'primeng/multiselect';
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,6 +114,8 @@ import { ListboxModule } from 'primeng/listbox';
     AdminNavbarComponent,
     ReusableTableComponent,
     MessengerComponent,
+    AdminRolesComponent,
+    AdminDeptsComponent,
     ///// My directives
     TextareaAutoresizeDirective,
     ///// My pipes
@@ -168,6 +172,7 @@ import { ListboxModule } from 'primeng/listbox';
     ScrollTopModule,
     EditorModule,
     SplitButtonModule,
+    MultiSelectModule,
   ],
 
   providers: [

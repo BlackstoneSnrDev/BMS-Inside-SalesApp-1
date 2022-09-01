@@ -106,7 +106,6 @@ export class FormComponent implements OnInit {
           this.tbGroupActive = [];
           console.log(userInfo);
           userInfo.activeGroup.forEach((group: any) => {
-            console.log(group);
             let groupSelected = data.filter((v: any) => v.group_id === group);
             let groupId = '';
             let groupName = '';
@@ -138,12 +137,9 @@ export class FormComponent implements OnInit {
       (v: any) => v.group_id === this.groupSelected.value
     );
 
-    console.log(this.groupSelected.value);
     this.dataService.selectActiveGroup(this.groupSelected.value);
 
     this.defaultGroup = false;
-    // Show only one group
-    // this.tbGroupActive = groupSelected
 
     // Show multiples groups
     let groupId = '';
@@ -167,7 +163,6 @@ export class FormComponent implements OnInit {
       (v: any) => v.group_id !== groupId
     );
 
-    console.log(groupId);
     this.dataService.removeActiveGroup(groupId);
 
     this.tbGroupActive.length > 0
@@ -183,7 +178,6 @@ export class FormComponent implements OnInit {
 
   toggleEditFields() {
     this.tgleditField = !this.tgleditField;
-    console.log(this.callDataForm.value);
   }
 
   toggleModifyAddressForm(addressId: any, addressName: any) {
@@ -237,7 +231,6 @@ export class FormComponent implements OnInit {
     //         for (let a of this.cities) {
     //             this.cities = a.cities.map((value: any, i: any) => ({ id: i, name: value }))
     //         }
-    //         console.log(this.cities)
 
     //     },
 
@@ -256,7 +249,6 @@ export class FormComponent implements OnInit {
         for (let i of this.states) {
           this.states = i.states;
         }
-        console.log(this.states);
       },
 
       (error) => {
@@ -301,7 +293,6 @@ export class FormComponent implements OnInit {
     // this.formElement[this.addressFieldId]['element_value'] = newAddres;
 
     this.tglModifyAddressForm = false;
-    console.log(this.formElement);
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
@@ -322,13 +313,17 @@ export class FormComponent implements OnInit {
     this.callDataForm.value.uid = this.currentCall.uid;
     this.tgleditField = false;
     this.dataService.editCustomer(this.callDataForm.value);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Record was edited successfully.',
+    });
   }
 
   groupFilter(array: any, searching: any): void {
     this.filterGroupList = array.filter((i: any) =>
       i.group_name.toLowerCase().includes(searching.toLowerCase())
     );
-    console.log(this.filterGroupList);
   }
 
   log(val: any) {
@@ -338,9 +333,9 @@ export class FormComponent implements OnInit {
   toggleCustomerStatus() {
     this.tglChangeCustomerStatus = !this.tglChangeCustomerStatus;
 
-    document.getElementById('btnCustomerStatus')?.classList.toggle('hide-line');
-    document.getElementById('btnCancelStatus')?.classList.toggle('hide-line');
-    document.getElementById('customerStatus')?.classList.toggle('hide-line');
+    document.getElementById('btnCustomerStatus')?.classList.toggle('hide');
+    document.getElementById('btnCancelStatus')?.classList.toggle('hide');
+    document.getElementById('customerStatus')?.classList.toggle('hide');
   }
 
   changeCustomerStatus(oldStatus: any, customerName: any) {
@@ -349,7 +344,6 @@ export class FormComponent implements OnInit {
       (a: any, i: any) => a.slStatusId == value
     );
     let newStatusName = newStatus[0]['label'];
-    console.log();
     if (oldStatus !== value) {
       this.confirmationService.confirm({
         message:
@@ -364,18 +358,17 @@ export class FormComponent implements OnInit {
           this.tglChangeCustomerStatus = false;
           document
             .getElementById('btnCustomerStatus')
-            ?.classList.toggle('hide-line');
+            ?.classList.toggle('hide');
           document
             .getElementById('customerStatus')
-            ?.classList.toggle('hide-line');
+            ?.classList.toggle('hide');
           document
             .getElementById('btnCancelStatus')
-            ?.classList.toggle('hide-line');
+            ?.classList.toggle('hide');
           this.customerNewStatus.setValue('');
           this.currentCall['customerStatus'] = newStatus;
           this.customerStatus = newStatus;
 
-          console.log(this.currentCall);
           this.messageService.add({
             severity: 'success',
             summary: 'Service Message',
