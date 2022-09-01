@@ -581,9 +581,15 @@ export class TableComponent {
   // Change normal view to group selected view
   modifyTableView(modifyById: string) {
     this.loading = true;
+
+
+    console.log(modifyById);
+
+
     if(!modifyById){
       modifyById = 'all'
     }
+
     let modifyLastElmActive = document.getElementsByClassName(
       'button-neumorphism-active'
     );

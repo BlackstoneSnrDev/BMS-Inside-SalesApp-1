@@ -98,12 +98,13 @@ export class FormComponent implements OnInit {
       }
     });
 
-    this.dataService.getCustomerGroups().subscribe((data) => {
+    this.dataService.getCustomerGroups().subscribe((data: any[]) => {
       this.tbGroups = data;
 
       this.usersService.userInfo.subscribe((userInfo: any) => {
         if (userInfo) {
           this.tbGroupActive = [];
+          console.log(userInfo);
           userInfo.activeGroup.forEach((group: any) => {
             let groupSelected = data.filter((v: any) => v.group_id === group);
             let groupId = '';

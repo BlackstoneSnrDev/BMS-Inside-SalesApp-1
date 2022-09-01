@@ -43,6 +43,8 @@ export class PhoneComponent implements OnInit {
     this.DataService.getFormElementsData().subscribe(
       (response) => {
         this.componentPhone = response.componentPhone;
+        //console.log(response.componentPhone);
+
       },
       (error) => {
         console.error(error);
