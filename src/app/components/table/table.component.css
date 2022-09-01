@@ -395,6 +395,7 @@ form {
   max-width: 100%;
   overflow-x: hidden;
   margin-bottom: 1rem;
+  padding-bottom: 3rem;
 }
 
 ::ng-deep .pi.pi-filter-icon.pi-filter {
@@ -557,4 +558,9 @@ form {
   border-radius: 0 !important;
   background-color: transparent;
   animation: none;
+}
+
+.groups-container ::ng-deep p-dropdown > .p-dropdown {
+  border-bottom: none !important;
+  width: auto;
 }

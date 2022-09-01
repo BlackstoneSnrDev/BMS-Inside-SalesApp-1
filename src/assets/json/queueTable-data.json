@@ -328,6 +328,65 @@
             "element_type": "password"
         }
     ],
+    "tableDept_th": [
+        {
+            "title": "Name",
+            "field": "name",
+            "element_type": "text"
+        },
+        {
+            "title": "Lead",
+            "field": "lead",
+            "element_type": "text"
+        }
+    ],
+    "tableDept_td": [
+        {
+            "name": "Inside Sales",
+            "lead": "Daniel , Moreno",
+            "slIndex": 0
+        },
+        {
+            "name": "Outside Sales",
+            "lead": "Aranxa , Fiore",
+            "slIndex": 1
+        },
+        {
+            "name": "Customer Service",
+            "lead": "Nat , Castro",
+            "slIndex": 2
+        }
+    ],
+    "tableRole_th": [
+        {
+            "title": "Name",
+            "field": "name",
+            "element_type": "text"
+        },
+        {
+            "title": "Assigned permissions",
+            "field": "permissions",
+            "element_type": "text"
+        }
+    ],
+    "tableRole_td": [
+        {
+            "name": "Admin",
+            "permissions": ["Toggle autodialer", "Activate template"],
+            "slIndex": 0
+
+        },
+        {
+            "name": "Lead",
+            "permissions": ["Create new template", "Activate template"],
+            "slIndex": 1
+        },
+        {
+            "name": "Trainer",
+            "permissions": ["Activate template"],
+            "slIndex": 2
+        }
+    ],
     "tableTemplate_th": [
         {
             "title": "Name",
@@ -349,17 +408,26 @@
         {
             "title": "Name",
             "field": "label",
-            "element_type": "text"
+            "element_type": "text",
+            "slIndex": 0,
+            "templateId": 0
+
         },
         {
             "title": "Background color",
             "field": "background",
-            "element_type": "color"
+            "element_type": "color",
+            "slIndex": 1,
+            "templateId": 0
+
         },
         {
             "title": "Text color",
             "field": "color",
-            "element_type": "color"
+            "element_type": "color",
+            "slIndex": 2,
+            "templateId": 0
+
         }
     ],
     "pending_chats": [

@@ -26,13 +26,13 @@ export class AdminTemplateComponent implements OnInit {
 
   public tglTemplate: boolean = false;
   public tglCreateNewTemplate: boolean = false;
-  public tglAddNewField: boolean = false;
-  public tglEditField: boolean = false;
-  public tglAddUsers: boolean = false;
+  public tglAddStatus: boolean = false;
+  public tglStatus: boolean = false;
 
   public createNewTemplateForm!: FormGroup;
   public editFieldForm!: FormGroup;
   public addField!: any;
+  public createNewStatusForm!: FormGroup;
 
   public userList: any;
   public filterUserList: any;
@@ -62,6 +62,21 @@ export class AdminTemplateComponent implements OnInit {
             this.thData = response.tableTemplate_th;
             this.thCustomerStatus = response.tableTemplateStatutes_th;
 
+            for (let fieldName of this.thCustomerStatus) {
+            
+
+                  this.newFormControl[fieldName.field] =
+                    new FormControl(
+                      '',
+                      [Validators.required, Validators.minLength(1)]
+                    );
+                  
+                  this.createNewStatusForm = new FormGroup(this.newFormControl);
+                
+              
+            }
+            
+
             this.createNewTemplateForm = new FormGroup({
               templateName: new FormControl('', [
                 Validators.required,
@@ -69,11 +84,11 @@ export class AdminTemplateComponent implements OnInit {
               ]),
 
               statusLabel0: new FormControl('', [Validators.minLength(1)]),
-              statusBackground0: new FormControl('#44476a', [
+              statusBackground0: new FormControl('#e6e7ee', [
                 Validators.minLength(1),
               ]),
 
-              statusColor0: new FormControl('#44476a', [
+              statusColor0: new FormControl('#333333', [
                 Validators.minLength(1),
               ]),
 
@@ -100,7 +115,6 @@ export class AdminTemplateComponent implements OnInit {
         let slIndex: number = 0;
 
         for (const [index, value] of this.allTemplates.entries()) {
-            console.log(value.templateName);
           tdData.push({
             templateName: value.templateName,
             templateStatus: value.active,
@@ -128,16 +142,15 @@ export class AdminTemplateComponent implements OnInit {
         this.tdData = tdData;
         this.loading = false;
 
-        // this.dataService.getSelectData().subscribe(
-        //   (response) => {
-        //     this.selectElmType = response.selectInputType;
-        //     this.tdCustomerStatus = response.selectCXStatus;
-        //   },
+        this.dataService.getSelectData().subscribe(
+          (response) => {
+            this.selectElmType = response.selectInputType;
+          },
 
-        //   (error) => {
-        //     console.error(error);
-        //   }
-        // );
+          (error) => {
+            console.error(error);
+          }
+        );
 
       },
 
@@ -159,7 +172,6 @@ export class AdminTemplateComponent implements OnInit {
     );
 
     this.items.push(id);
-    console.log(this.createNewTemplateForm);
   }
 
   removeClonedAddField() {
@@ -187,7 +199,6 @@ export class AdminTemplateComponent implements OnInit {
       new FormControl('#44476a', [Validators.minLength(1)])
     );
     this.itemsStatus.push(id);
-    console.log(this.createNewTemplateForm);
   }
 
   removeClonedAddStatus() {
@@ -218,54 +229,63 @@ export class AdminTemplateComponent implements OnInit {
     if (modifyLastElmActive.length > 0) {
       this.onValidationError = '*All fields must be filled out.';
     } else {
-      for (const [index, value] of this.tdData.entries()) {
-        if (index == indexTemplate) {
-          value.templateFields[indexElm] = value['templateFields'][indexElm] =
-            rowTdData;
-        }
-      }
+
+      
+      this.tdCustomerStatus[indexElm] = rowTdData;
       delete this.clonedTdData[rowTdData.id];
-      console.log(this.tdData);
+
+      // for (const [index, value] of this.tdCustomerStatus) {
+      //   if (value['templateID'] == indexTemplate) {
+      //     this.tdCustomerStatus[indexElm] = rowTdData;
+      //   }
+      // }
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Service Message',
+        detail: 'Record was edited successfully.',
+      });
     }
   }
 
   onRowEditCancel(rowTdData: any, index: number) {
-    for (const tdData of this.tdData) {
-      tdData.templateFields[index] = this.clonedTdData[rowTdData.id];
-      delete tdData.templateFields[rowTdData.id];
-    }
-    console.log(this.tdData);
+   this.tdCustomerStatus[index] = this.clonedTdData[rowTdData.id];
+      delete this.tdCustomerStatus[rowTdData.id];
+    
   }
 
   onRowDeleteRow(id: any, indexTemplate: any) {
-    for (const [index, value] of this.tdData.entries()) {
-      if (index == indexTemplate) {
-        // NEEDS TO BE FIXED
-        this.confirmationService.confirm({
-          message: 'Are you sure you want to delete this field?',
-          header: 'Confirm',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-            value.templateFields = value.templateFields.filter(
-              (i: any) => ![id].includes(i.slIndex)
-            );
-          },
-        });
-      }
-    }
-    console.log(this.tdData);
+
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this status?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.tdCustomerStatus = this.tdCustomerStatus.filter(
+          (i: any) => ![id].includes(i.slStatusId)
+        );
+      },
+    });
+
+    // for (const [index, value] of this.tdCustomerStatus) {
+    //   if (value['templateID'] == indexTemplate) {
+    //     this.confirmationService.confirm({
+    //       message: 'Are you sure you want to delete this field?',
+    //       header: 'Confirm',
+    //       icon: 'pi pi-exclamation-triangle',
+    //       accept: () => {
+    //         this.tdCustomerStatus = this.tdCustomerStatus.filter(
+    //           (i: any) => ![id].includes(i.slStatusId)
+    //         );
+    //       },
+    //     });
+    //   }
+    // }
   }
 
-  toggleTemplate() {
-    let toggled = document.querySelectorAll(
-      ".p-accordion-header-link[aria-expanded='true']"
-    ).length;
+  toggleTemplate(index: any) {
+    
+    document.getElementById('buttons'+index)?.classList.toggle('not-visible')
 
-    if (toggled > 0) {
-      this.tglTemplate = true;
-    } else {
-      this.tglTemplate = false;
-    }
   }
 
   toggleCreateNewTemplate() {
@@ -284,7 +304,6 @@ export class AdminTemplateComponent implements OnInit {
       detail: 'New template was created successfully.',
     });
 
-    console.log(value);
   }
 
   cancelCreateNewTemplate() {
@@ -392,7 +411,37 @@ export class AdminTemplateComponent implements OnInit {
       },
     });
   }
+
   changeColor() {
-    console.log('hpta');
+  }
+
+  toggleCreateNewStatus(){
+    this.tglAddStatus = true
+    this.createNewStatusForm.reset()
+  }
+
+  cancelCreateNewStatus(){
+    this.tglAddStatus = false
+    this.createNewStatusForm.reset()
+
+  }
+
+  saveCreateNewStatus(){
+    this.tglAddStatus = false
+    this.tdCustomerStatus.push(this.createNewStatusForm.value)
+    let id = this.tdCustomerStatus.length -1
+    this.tdCustomerStatus[id]['slStatusId'] = id
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Status was created successfully.',
+    });
+    this.createNewStatusForm.reset()
+
+  }
+
+  toggleStatus(){
+    this.tglStatus = !this.tglStatus
   }
 }

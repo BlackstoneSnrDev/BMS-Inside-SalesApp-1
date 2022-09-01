@@ -105,7 +105,6 @@ export class SettingsComponent implements OnInit {
     this.tglPrevTemplate = '';
     this.tglTemplate = false;
 
-    console.log(this.templateForm.value);
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
@@ -141,7 +140,6 @@ export class SettingsComponent implements OnInit {
       this.tglEmail = true;
       this.tglTemplate = true;
 
-      console.log(this.optEmail.filter((array: any, i: any) => i == index));
     } else if (type === 'sms') {
       type = 'sms message';
 
@@ -152,7 +150,6 @@ export class SettingsComponent implements OnInit {
       this.tglSMS = true;
       this.tglTemplate = true;
 
-      console.log(this.optSMS.filter((array: any, i: any) => i == index));
     } else if (type === 'vm') {
       type = 'voice mail';
 
@@ -162,8 +159,6 @@ export class SettingsComponent implements OnInit {
 
       this.tglVM = true;
       this.tglTemplate = true;
-
-      console.log(this.optVoiceMail.filter((array: any, i: any) => i == index));
     }
     this.tglTitle = 'Preview ' + type + ' template';
   }

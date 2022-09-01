@@ -30,18 +30,33 @@
     ],
     "adminMenu_tabs": [
         {
-            "label": "Templates",
-            "icon": "bi bi-columns-gap",
-            "routerLink": [
-                "admin-template"
-            ]
-        },
-        {
             "label": "Users",
             "icon": "bi bi-people-fill",
             "routerLink": [
                 "admin-user"
             ]
+        },
+        {
+            "label": "Roles",
+            "icon": "bi bi-person-badge",
+            "routerLink": [
+                "admin-roles"
+            ]
+        },
+        {
+            "label": "Departments",
+            "icon": "bi bi-stack",
+            "routerLink": [
+                "admin-depts"
+            ]
+        },
+        {
+            "label": "Templates",
+            "icon": "bi bi-columns-gap",
+            "routerLink": [
+                "admin-template"
+            ]
         }
+        
     ]
 }

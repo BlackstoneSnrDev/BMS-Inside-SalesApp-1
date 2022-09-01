@@ -43,7 +43,6 @@ export class PhoneComponent implements OnInit {
     this.DataService.getFormElementsData().subscribe(
       (response) => {
         this.componentPhone = response.componentPhone;
-        console.log(response.componentPhone);
       },
       (error) => {
         console.error(error);
@@ -60,7 +59,7 @@ export class PhoneComponent implements OnInit {
         this.currentCall = currentCall;
         this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
       } else {
-        console.log('no current call');
+        console.error('No current call');
       }
 
     })
@@ -86,6 +85,7 @@ export class PhoneComponent implements OnInit {
 
   selectCustomer(uid: string) {
     this.DataService.setActiveCall(uid);
+    document.getElementById('noteContent')?.classList.add('show')
   }
 
   showTimeHandled(callId: any) {
@@ -109,7 +109,6 @@ export class PhoneComponent implements OnInit {
     }
 
 
-    console.log(this.dialSessionArray)
   }
 
   toggleAutoDialer() {
@@ -131,12 +130,13 @@ export class PhoneComponent implements OnInit {
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.voiceMailLeft.value)
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
-          detail: 'Voice mail left.s',
+          detail: 'Voice mail was left.',
         });
+
+        this.voiceMailLeft.setValue('')
       }
     });
   }
@@ -148,12 +148,13 @@ export class PhoneComponent implements OnInit {
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.smsMessageSent.value)
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
-          detail: 'SMS Message sent.',
+          detail: 'SMS Message was sent.',
         });
+        this.smsMessageSent.setValue('')
+
       }
     });
 
@@ -166,12 +167,13 @@ export class PhoneComponent implements OnInit {
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(this.emailSent.value)
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
-          detail: 'Email sent.',
+          detail: 'Email was sent.',
         });
+        this.emailSent.setValue('')
+
       }
     });
 

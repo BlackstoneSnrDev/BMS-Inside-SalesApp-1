@@ -12,7 +12,7 @@
   width: auto;
 }
 
-.table-users
+.table-roles
   ::ng-deep
   .p-datatable
   .p-datatable-tbody
@@ -21,7 +21,7 @@
   box-shadow: none !important;
 }
 
-.table-users
+.table-roles
   ::ng-deep
   .p-datatable
   .p-datatable-tbody
@@ -32,20 +32,20 @@
 
 }
 
-.table-users ::ng-deep
+.table-roles ::ng-deep
 .p-datatable
 .p-datatable-tbody .sticky-column-checkboxes {
   box-shadow: inset 5px 0 5px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
 }
 
-.table-users ::ng-deep
+.table-roles ::ng-deep
 .p-datatable
 .p-datatable-tbody .sticky-checkboxes-main {
   box-shadow: inset 9px 9px 9px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6,
     inset -4px 0px 0px -2px #d1d9e6 !important;
 }
 
-.add-user-i{
+.add-role-i{
   min-width: 3rem;
 }
 
@@ -72,15 +72,21 @@
   box-shadow: inset 0px -13px 9px -12px #fff, inset 24px -17px 8px -24px #b8b9be,  inset -4px 0px 0px -2px #d1d9e6 ;
 }
 
-.users-container ::ng-deep .p-dropdown .p-dropdown-panel, ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep .p-dropdown .p-dropdown-panel {
-  top: -83px !important;
-  background: #e6e7ee;
+
+
+.new-select-permission ::ng-deep .p-multiselect-panel .p-multiselect-header{
+  height: 3rem; 
 }
 
-.users-container ::ng-deep .p-dropdown-items-wrapper, ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep .p-dropdown-items-wrapper {
-  height: 6rem;
+.new-select-permission ::ng-deep .p-multiselect-items-wrapper{
+  height: 4rem;
 }
 
-.users-container ::ng-deep .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll), ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll) {
-  box-shadow: none !important;
+.new-select-permission ::ng-deep.p-multiselect-filter-container .p-inputtext{
+  height: 2.2rem;
+}
+
+.new-select-permission ::ng-deep.p-multiselect .p-component{
+  margin-top: 0.52rem;
+
 }

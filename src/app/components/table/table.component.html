@@ -1,58 +1,58 @@
 <div class="table-container">
   <div class="margin-bt menu-table-container">
-    <button class="iconbutton-neumorphism-disabled">
-      <i class="bi bi-menu-button-fill i-colored"></i>
-    </button>
+    
     <ng-container>
-      <button class="button-neumorphism margin-lt" (click)="toggleAddNewRecord()">
-        <i class="bi bi-plus-square-fill"></i> Add new record
-      </button>
-      <div [ngClass]="tglMenuTable ? 'show' : 'hide'">
-        <button class="button-neumorphism margin-lt" (click)="deleteSelection()">
-          <i class="bi bi-trash-fill"></i> Delete all
+      <div class="row margin-lt">
+        <button class="iconbutton-neumorphism-disabled">
+          <i class="bi bi-menu-button-fill i-colored"></i>
         </button>
-        <button class="button-neumorphism margin-lt" (click)="toggleGroupSection()">
-          <i class="bi bi-gear-wide-connected"></i> Groups
-          <i class="bi bi-caret-right-fill"></i>
+        <button class="button-neumorphism margin-lt" (click)="toggleAddNewRecord()">
+          <i class="bi bi-plus-square-fill"></i> Add new record
         </button>
-        <div class="tglGroupMenu" [ngClass]="tglGroupMenu ? 'show' : 'hide'">
-          <div class="dropdown">
-            <button class="button-neumorphism margin-lt" (click)="toggleCreateNewGroup()">
-              <i class="bi bi-bounding-box"></i> Create new group
+          
+          <div class="groups-container" *ngIf="tbSelectedRows.length > 0">
+            <button class="button-neumorphism margin-lt" (click)="deleteSelection()">
+              <i class="bi bi-trash-fill"></i> Delete all
             </button>
-            <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
-              <div class="dropdown-content create-group-container">
-                <div class="width-100 dropdown-content-container elm-rounded">
-                  <mat-form-field appearance="standard">
-                    <mat-label>Create new group</mat-label>
-                    <input matInput type="text" #newGroupName placeholder="New group name" autocomplete="off"
-                      class="not-rounded" name="newGroupName" id="newGroupName" maxlength="20"
-                      [formControl]="createNewGroup" required />
-                  </mat-form-field>
-                  <button class="button-neumorphism elm-rounded width-50 margin-tp" [disabled]="!createNewGroup.valid"
-                    [ngClass]="
-                      !createNewGroup.valid
-                        ? 'button-neumorphism-disabled'
-                        : 'button-neumorphism'
-                    " (click)="saveCreateNewGroup()">
-                    Save
-                  </button>
-                  <button class="button-neumorphism elm-rounded width-50 margin-tp" (click)="cancelCreateNewGroup()">
-                    Cancel
-                  </button>
+            <div class="dropdown">
+              <button class="button-neumorphism margin-lt" (click)="toggleCreateNewGroup()">
+                <i class="bi bi-bounding-box"></i> Create new group
+              </button>
+              <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
+                <div class="dropdown-content create-group-container">
+                  <div class="width-100 dropdown-content-container elm-rounded">
+                    <mat-form-field appearance="standard">
+                      <mat-label>Create new group</mat-label>
+                      <input matInput type="text" #newGroupName placeholder="New group name" autocomplete="off"
+                        class="not-rounded" name="newGroupName" id="newGroupName" maxlength="20"
+                        [formControl]="createNewGroup" required />
+                    </mat-form-field>
+                    <button class="button-neumorphism elm-rounded width-50 margin-tp" [disabled]="!createNewGroup.valid"
+                      [ngClass]="
+                        !createNewGroup.valid
+                          ? 'button-neumorphism-disabled'
+                          : 'button-neumorphism'
+                      " (click)="saveCreateNewGroup()">
+                      Save
+                    </button>
+                    <button class="button-neumorphism elm-rounded width-50 margin-tp" (click)="cancelCreateNewGroup()">
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
+            <p-dropdown [options]="tbGroups" class="button-neumorphism margin-lt" (onChange)="addToExistingGroup()"
+              optionLabel="group_name" optionValue="group_id" placeholder="Add to group" [formControl]="groupSelect">
+            </p-dropdown>
+  
+            <button class="button-neumorphism margin-lt" (click)="ungroupSelection()" *ngIf="tglRemoveFromGroup">
+              <i class="bi bi-trash-fill"></i> Delete from group
+            </button>
+  
           </div>
-          <p-dropdown [options]="tbGroups" class="button-neumorphism margin-lt" (onChange)="addToExistingGroup()"
-            optionLabel="group_name" optionValue="group_id" placeholder="Add to group" [formControl]="groupSelect">
-          </p-dropdown>
-
-          <p-dropdown [options]="tbGroups" class="button-neumorphism margin-lt" (onChange)="ungroupSelection()"
-            optionLabel="group_name" optionValue="group_id" placeholder="Delete from group"
-            [formControl]="ungroupSelect"></p-dropdown>
-        </div>
       </div>
+     
       <div [ngClass]="tglAddNewRecord ? 'show' : 'hide'">
         <div spellcheck="true">
           <form [formGroup]="addNewRecordForm" *ngIf="addNewRecordForm" novalidate onsubmit="">
@@ -146,20 +146,20 @@
                         <!-- if there is a fileToUpload, show submit or cancel buttons -->
                         <div *ngIf="fileToUpload">
                             <div>{{ uploadStatus }}</div>
-                            <!-- <button (click)="onUpload()" class="button-neumorphism width-50 show-line-b txt-center" value="save">
+                            <button (click)="onUpload()" class="button-neumorphism width-50 show-line-b txt-center" value="save">
                                 Upload
                             </button>
                             <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelUploadList()">
                                 Cancel
-                            </div> -->
+                            </div>
             
                         </div>
                     </div>
                 </div>
 
               <br />
-              <p-fileUpload name="queueList[]" url="./thisNeedToBeSetUpByBackend" accept=".csv" [auto]="true"
-                (onUpload)="getFileUploaded($event)"></p-fileUpload>
+              <!-- <p-fileUpload name="queueList[]" url="./thisNeedToBeSetUpByBackend" accept=".csv" [auto]="true"
+                (onUpload)="getFileUploaded($event)"></p-fileUpload> -->
 
             </div>
 
@@ -338,7 +338,7 @@
 
     <ng-template pTemplate="emptymessage" let-columns="columns">
       <tr class="txt-center">
-        <td [attr.colspan]="thDataLength + 1">No data matching the filter</td>
+        <td [attr.colspan]="thDataLength + 2">No data matching the filter.</td>
       </tr>
     </ng-template>
   </p-table>

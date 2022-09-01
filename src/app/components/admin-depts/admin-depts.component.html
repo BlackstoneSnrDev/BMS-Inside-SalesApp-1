@@ -1,6 +1,5 @@
-<div class="admin-user-container">
-
-  <div class="table-users">
+<div class="admin-dept-container">
+  <div class="table-depts">
 
   <p-table
     #dataTable
@@ -63,7 +62,7 @@
             pRipple
             *ngIf="!editing"
             type="button"
-            (click)="onRowDeleteRow(rowData.uid)"
+            (click)="onRowDeleteRow(rowIndex)"
             class="iconbutton-neumorphism trash-icon"
           >
             <i class="bi bi-trash-fill"></i>
@@ -89,66 +88,20 @@
             <i class="pi pi-times"></i>
           </button>
         </td>
-        <td *ngFor="let col of columns" class="users-container">
+        <td *ngFor="let col of columns" class="depts-container">
           <p-cellEditor>
             <ng-template pTemplate="input">
               <ng-container
                 [ngSwitch]="
-                  col.element_type === 'boolean'
-                    ? 'checkbox'
-                    : col.field === 'type'
-                    ? 'select'
-                    : col.element_type === 'password'
-                    ? 'password'
-                    : col.field === 'department'
-                    ? 'department'
-                    : col.field === 'role'
-                    ? 'role'
+                    col.field === 'lead'
+                    ? 'lead'
                     : -1
                 "
               >
-                <ng-container *ngSwitchCase="'checkbox'">
-                  <p-checkbox
-                    [(ngModel)]="rowData[col.field]"
-                    [binary]="true"
-                    inputId="binary"
-                  >
-                  </p-checkbox>
-                </ng-container>
 
-                <ng-container *ngSwitchCase="'department'">
-                  <p-dropdown
-                    [options]="selectDept"
-                    class="input-neumorphism"
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Dept"
-                    [(ngModel)]="rowData[col.field]"
-                  ></p-dropdown>
-                </ng-container>
 
-                <ng-container *ngSwitchCase="'role'">
-                  <p-dropdown
-                    [options]="selectRole"
-                    class="input-neumorphism"
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Role"
-                    [(ngModel)]="rowData[col.field]"
-                  ></p-dropdown>
-                </ng-container>
-
-                <ng-container *ngSwitchCase="'password'">
-                  <span class="p-float-label passwordContainer">
-                    <p-password
-                      [(ngModel)]="rowData[col.field]"
-                      [showClear]="true"
-                      [toggleMask]="true"
-                      [required]="true"
-                    >
-                    </p-password>
-                    <label>Password</label>
-                  </span>
+                <ng-container *ngSwitchCase="'lead'">
+                  <p-multiSelect [options]="selectLeads" [(ngModel)]="rowData[col.field]" optionLabel="name" optionValue="name" placeholder="Leads"></p-multiSelect>
                 </ng-container>
 
                 <ng-container *ngSwitchDefault>
@@ -172,25 +125,15 @@
             </ng-template>
             <ng-template pTemplate="output">
               <ng-container
-                [ngSwitch]="col.element_type === 'boolean' ? 'checkbox' : -1"
+              [ngSwitch]="
+              col.field === 'permissions'
+              ? 'permissions'
+              : -1
+          "
               >
-                <ng-container *ngSwitchCase="'checkbox'">
-                  <p-checkbox
-                    [(ngModel)]="rowData[col.field]"
-                    [binary]="true"
-                    inputId="binary"
-                    [readonly]="true"
-                  >
-                  </p-checkbox>
-                </ng-container>
 
                 <ng-container *ngSwitchDefault>
-                  <div *ngIf="col.field === 'password'">
-                    {{ rowData[col.field] | formatPassword }}
-                  </div>
-                  <div *ngIf="col.field !== 'password'">
                     {{ rowData[col.field] }}
-                  </div>
                 </ng-container>
               </ng-container>
             </ng-template>
@@ -199,71 +142,55 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="footer" let-columns>
-      <tr [formGroup]="createNewUserForm" *ngIf="createNewUserForm">
+      <tr [formGroup]="createNewDeptForm" *ngIf="createNewDeptForm">
         <td class="sticky-column-checkboxes">
-          <button *ngIf="!tglCreateUser" matTooltip="Add new user"
+          <button *ngIf="!tglAddDept" matTooltip="Add new dept"
           matTooltipPosition="above"
-            (click)="toggleCreateNewUser()"
-            class="mini-iconbutton-neumorphism add-user-i"
+            (click)="toggleCreateNewDept()"
+            class="mini-iconbutton-neumorphism add-dept-i"
           >
           <i class="bi bi-plus-lg"></i>
 
           </button>
-          <button *ngIf="tglCreateUser"
-            (click)="cancelCreateNewUser()"
+          <button *ngIf="tglAddDept"
+            (click)="cancelCreateNewDept()"
             class="iconbutton-neumorphism"
           >
             <i class="pi pi-times"></i>
           </button>
-          <button *ngIf="tglCreateUser"
-          (click)="saveCreateNewUser()"
-          [ngClass]="!createNewUserForm.invalid ? 'iconbutton-neumorphism' : 'iconbutton-neumorphism-disabled'"
+          <button *ngIf="tglAddDept"
+          (click)="saveCreateNewDept()"
+          [ngClass]="!createNewDeptForm.invalid ? 'iconbutton-neumorphism' : 'iconbutton-neumorphism-disabled'"
           >
             <i class="pi pi-check"></i>
           </button>
         </td>
         <td *ngFor="let col of columns" >
-          <ng-container *ngIf="tglCreateUser" 
-                [ngSwitch]=" col.field === 'department'
-                ? 'department'
-                : col.field === 'role'
-                ? 'role'
-                 : -1"
-              >
-              <ng-container *ngSwitchCase="'department'">
-                <p-dropdown
-                  [options]="selectDept"
-                  class="input-neumorphism"
-                  optionLabel="name"
-                  optionValue="name"
-                  placeholder="Dept"
-                  formControlName="{{ col.field }}"
-                  ></p-dropdown>
-              </ng-container>
+          <ng-container *ngIf="tglAddDept" 
+          [ngSwitch]="
+          col.field === 'lead'
+          ? 'lead'
+          : -1
+      "
+    >
 
-              <ng-container *ngSwitchCase="'role'">
-                <p-dropdown
-                  [options]="selectRole"
-                  class="input-neumorphism"
-                  optionLabel="name"
-                  optionValue="name"
-                  placeholder="Role"
-                  formControlName="{{ col.field }}"
-                  ></p-dropdown>
-              </ng-container>
+    <ng-container *ngSwitchCase="'lead'">
+      <p-multiSelect [options]="selectLeads" formControlName="{{ col.field }}" optionLabel="name" optionValue="name" placeholder="Leads"></p-multiSelect>
+    </ng-container>
 
-                <ng-container *ngSwitchDefault>
-                  <mat-form-field appearance="standard">
-                    <mat-label>{{ col.title }}</mat-label>
-                    <input
-                      matInput
-                      type="{{ col.element_type }}"
-                      placeholder="New {{ col.field }}"
-                      formControlName="{{ col.field }}"
-                      required
-                    />
-                  </mat-form-field>
-                </ng-container>
+      <ng-container *ngSwitchDefault>
+        <mat-form-field appearance="standard">
+          <mat-label>{{ col.title }}</mat-label>
+          <input
+            matInput
+            type="{{ col.element_type }}"
+            placeholder="New {{ col.field }}"
+            formControlName="{{ col.field }}"
+            required
+          />
+        </mat-form-field>
+      </ng-container>
+                
 
                 <br />
                 <small *ngIf="onValidationError" class="color-rd">

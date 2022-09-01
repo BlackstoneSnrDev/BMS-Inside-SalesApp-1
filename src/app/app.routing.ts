@@ -13,6 +13,8 @@ import { AdminTemplateComponent } from './components/admin-template/admin-templa
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
 import { MessengerComponent } from './partials/messenger/messenger.component';
+import { AdminRolesComponent } from './components/admin-roles/admin-roles.component';
+import { AdminDeptsComponent } from './components/admin-depts/admin-depts.component';
 
 import { AuthGuard } from "./services/auth.guard";
 
@@ -28,6 +30,8 @@ const appRoutes: Routes = [
     {path: 'admin-settings', component: AdminSettings, canActivate: [AuthGuard], children: [
         {path: 'admin-template', component: AdminTemplateComponent, canActivate: [AuthGuard] },
         {path: 'admin-user', component: AdminUserComponent, canActivate: [AuthGuard] },
+        {path: 'admin-roles', component: AdminRolesComponent, canActivate: [AuthGuard] },
+        {path: 'admin-depts', component: AdminDeptsComponent, canActivate: [AuthGuard] },
 
     ]},
     {path: '404', component: PageNotFoundComponent, canActivate: [AuthGuard] },
