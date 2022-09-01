@@ -1,6 +1,7 @@
 <div class="row main-row settings-component">
   <div class="col-lg-12">
     <h1>Settings</h1>
+
     <hr />
   </div>
   <div class="col-lg-4">
@@ -52,6 +53,8 @@
       </div>
     </div>
   </div>
+
+
   <div class="col-lg-4">
     <div class="col-container">
       <div class="form-check form-check-inline width-100">
@@ -178,6 +181,7 @@
           {{ initialsName }}
         </button>
       </div>
+
       <label *ngIf="tglEmail" class="margin-lt sender-container">{{
         userInfo.name
       }}</label>
@@ -217,12 +221,27 @@
               type="text"
               placeholder="Template name"
               formControlName="templateName"
+              onchange="this.value = this.templateName"
             />
           </mat-form-field>
         </div>
       </div>
       <div class="form-row width-100">
         <div class="col-md-12">
+
+      
+                <div *ngIf="tglVM" style="text-align:center; margin: 25px;">
+                    <button (click)="initiateRecording()" class="width-100 button-neumorphism" *ngIf="!recording"
+                        style="cursor: pointer" > <i class="bi bi-record-btn-fill"></i> Start Recording </button>
+                    <button (click)="stopRecording()" class="width-100 button-neumorphism" *ngIf="recording"
+                        style="cursor: pointer" > <i class="bi bi-slash-square-fill"></i>Stop Recording </button>
+                    <div class="clearfix"></div>
+                    <audio controls="" *ngIf="url"  class="width-100 button-neumorphism">
+                        <source [src]="sanitize(url)" type="audio/wav">
+                    </audio>
+                </div>
+
+
           <p-editor
             *ngIf="tglEmail && tglPrevTemplate === ''"
             formControlName="templateContent"

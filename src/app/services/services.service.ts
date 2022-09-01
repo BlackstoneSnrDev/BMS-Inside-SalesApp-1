@@ -253,8 +253,8 @@ removeActiveGroup(group: string) {
 
             Object.entries(row).forEach(async(field: any) => {
                 
-                let fieldObj = templateFieldObj.find((obj: any) => obj[0]=== field[0])
-                
+                let fieldObj = templateFieldObj.find((obj: any) => obj[0] === field[0])
+
                 switch (fieldObj[1].element_type) {
                     case 'text': sanitizedRow[field[0]] = field[1]; 
                         break;
@@ -287,7 +287,7 @@ removeActiveGroup(group: string) {
             })
             if (!error) {
                 okayRowCount++
-                sanitizedRowArray.push({...sanitizedRow, test: 'test'})
+                sanitizedRowArray.push({...sanitizedRow})
             } 
         })
         if (errorArray.length > 0) {
@@ -297,12 +297,12 @@ removeActiveGroup(group: string) {
             // batch committ all sanitizedRowArray to firestore database customer collection
             const batch = this.afs.firestore.batch();
             sanitizedRowArray.forEach((row: any, index: number) => {
+                console.log(row, index);
                 let uid = RandomId(len, pattern)
                 console.log(uid);
                 const ref: any = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).ref;
                 batch.set(ref, {
                     ...row, 
-                    dob: row.dateOfBirth,
                     group: [],
                     lastContact: null,
                     notes: [],
@@ -316,6 +316,8 @@ removeActiveGroup(group: string) {
             })
             return batch.commit().then(() => {
                 return {status: 'Success', data: `${okayRowCount} rows successfully uploaded.`}
+            }).catch((error: any) => {
+                return {status: 'Error', data: error}
             })
         }
     }

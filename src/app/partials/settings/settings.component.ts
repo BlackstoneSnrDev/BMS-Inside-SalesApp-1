@@ -3,6 +3,9 @@ import { UsersService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import * as RecordRTC from 'recordrtc';
+import { DomSanitizer } from '@angular/platform-browser';
+
 import { DataService } from '../../services/services.service';
 
 @Component({
@@ -25,16 +28,29 @@ export class SettingsComponent implements OnInit {
   public tglPrevTemplate: any;
   public tglTitle: string = '';
 
+  public templateName: string = '';
+
   public templateForm!: FormGroup;
   public userInfo: any;
   public initialsName: string = '';
   public todayDate: any;
 
+  title = 'micRecorder';
+
+  //Lets declare Record OBJ
+  record: any;
+  //Will use this flag for toggeling recording
+  recording = false;
+  //URL of Blob
+  url: any;
+  error: any;
+
   constructor(
     private usersService: UsersService,
     public DataService: DataService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private domSanitizer: DomSanitizer
   ) {
     this.usersService.dbObjKey.subscribe((dbObjKey) => console.log(dbObjKey));
   }
@@ -74,6 +90,64 @@ export class SettingsComponent implements OnInit {
     });
   }
 
+  sanitize(url: string) {
+    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  }
+  /**
+   * Start recording.
+   */
+  initiateRecording() {
+
+    this.recording = true;
+    let mediaConstraints = {
+      video: false,
+      audio: true
+    };
+    navigator.mediaDevices
+      .getUserMedia(mediaConstraints)
+      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
+  }
+  /**
+   * Will be called automatically.
+   */
+  successCallback(stream: MediaStream) {
+    var options = {
+      mimeType: "audio/wav",
+      numberOfAudioChannels: 1,
+      //sampleRate: 64000,
+    };
+    //Start Actuall Recording
+    var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    this.record = new StereoAudioRecorder(stream, options);
+    this.record.record();
+  }
+  /**
+   * Stop recording.
+   */
+  stopRecording() {
+    this.recording = false;
+    this.record.stop(this.processRecording.bind(this));
+  }
+  /**
+   * processRecording Do what ever you want with blob
+   * @param  {any} blob Blog
+   */
+  processRecording(blob: Blob | MediaSource) {
+    this.url = URL.createObjectURL(blob);
+    console.log("blob", blob);
+    console.log("url", this.url);
+  }
+
+  save() {
+    console.log('saved');
+  }
+  /**
+   * Process Error.
+   */
+  errorCallback(_error: any) {
+    this.error = 'Can not play audio in your browser';
+  }
+
   toggleTemplate(type: any) {
     this.tglPrevTemplate = '';
     this.tglEmail = false;
@@ -106,6 +180,7 @@ export class SettingsComponent implements OnInit {
     this.tglTemplate = false;
 
     console.log(this.templateForm.value);
+    
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',

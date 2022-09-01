@@ -104,6 +104,7 @@ export class FormComponent implements OnInit {
       this.usersService.userInfo.subscribe((userInfo: any) => {
         if (userInfo) {
           this.tbGroupActive = [];
+          console.log(userInfo);
           userInfo.activeGroup.forEach((group: any) => {
             console.log(group);
             let groupSelected = data.filter((v: any) => v.group_id === group);
