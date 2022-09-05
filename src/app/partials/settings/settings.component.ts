@@ -29,6 +29,7 @@ export class SettingsComponent implements OnInit {
   public tglTitle: string = '';
 
   public templateName: string = '';
+  public editUid: string = '';
 
   public templateForm!: FormGroup;
   public userInfo: any;
@@ -37,12 +38,13 @@ export class SettingsComponent implements OnInit {
 
   title = 'micRecorder';
 
-  //Lets declare Record OBJ
+  // Declare Record OBJ
   record: any;
-  //Will use this flag for toggeling recording
+  // Will use this flag for toggeling recording
   recording = false;
-  //URL of Blob
+  // URL of Blob
   url: any;
+  blobData: any;
   error: any;
 
   constructor(
@@ -56,6 +58,44 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+
+      this.DataService.getUserSettings().subscribe((response) => {
+          response.forEach((item: any) => {
+
+              if (item.docId === 'emails') {
+                  let emailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+                  Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                      emailArray.push({
+                          templateContent: email.data,
+                          templateId: email.uid,
+                          templateName: email.templateName
+                      });
+                  })
+                  this.optEmail = emailArray
+              } else if (item.docId === 'textMessage') {
+                  let textArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+                  Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                      textArray.push({
+                          templateContent: email.data,
+                          templateId: email.uid,
+                          templateName: email.templateName
+                      });
+                  })
+                  this.optSMS = textArray;
+              } else if (item.docId === 'voicemail') { 
+                let voicemailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+                Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                    voicemailArray.push({
+                        templateContent: email.url,
+                        templateId: email.uid,
+                        templateName: email.fileName
+                    });
+                })
+                this.optVoiceMail = voicemailArray;
+              }
+          })
+      })
+
     this.usersService.userInfo.subscribe(
       (userInfo) => (
         (this.userInfo = userInfo),
@@ -68,9 +108,10 @@ export class SettingsComponent implements OnInit {
 
     this.DataService.getSelectData().subscribe(
       (response) => {
-        this.optVoiceMail = response.selectVoiceMail;
-        this.optSMS = response.selectSMSMessage;
-        this.optEmail = response.selectEmail;
+        console.log(response);
+        // this.optVoiceMail = response.selectVoiceMail;
+        // this.optSMS = response.selectSMSMessage;
+        // this.optEmail = response.selectEmail;
       },
 
       (error) => {
@@ -93,9 +134,7 @@ export class SettingsComponent implements OnInit {
   sanitize(url: string) {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }
-  /**
-   * Start recording.
-   */
+
   initiateRecording() {
 
     this.recording = true;
@@ -107,9 +146,7 @@ export class SettingsComponent implements OnInit {
       .getUserMedia(mediaConstraints)
       .then(this.successCallback.bind(this), this.errorCallback.bind(this));
   }
-  /**
-   * Will be called automatically.
-   */
+ 
   successCallback(stream: MediaStream) {
     var options = {
       mimeType: "audio/wav",
@@ -121,9 +158,7 @@ export class SettingsComponent implements OnInit {
     this.record = new StereoAudioRecorder(stream, options);
     this.record.record();
   }
-  /**
-   * Stop recording.
-   */
+
   stopRecording() {
     this.recording = false;
     this.record.stop(this.processRecording.bind(this));
@@ -134,18 +169,30 @@ export class SettingsComponent implements OnInit {
    */
   processRecording(blob: Blob | MediaSource) {
     this.url = URL.createObjectURL(blob);
+    this.blobData = blob;
     console.log("blob", blob);
     console.log("url", this.url);
   }
 
-  save() {
-    console.log('saved');
+  saveVoicemail() {
+    this.templateForm.reset();
+    this.DataService.saveBlob(this.blobData, this.templateName).then((response) => {
+        this.messageService.add({
+            severity: 'success',
+            summary: 'Service Message',
+            detail: response
+        })
+    }).catch((error) => {
+        console.log(error);
+    })
   }
-  /**
-   * Process Error.
-   */
+
   errorCallback(_error: any) {
     this.error = 'Can not play audio in your browser';
+  }
+
+  templateNameChange(value: string) {
+    this.templateName = value;
   }
 
   toggleTemplate(type: any) {
@@ -171,6 +218,30 @@ export class SettingsComponent implements OnInit {
   }
 
   saveCreateTemplate() {
+    console.log(this.editUid);
+
+    if (this.tglSMS) {
+        this.DataService.saveTextMessageTemplate(this.templateForm.value, this.editUid).then((response) => {
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Service Message',
+                detail: response
+            })
+        }).catch((error) => {
+            console.log(error);
+        })
+    } else if (this.tglEmail) { 
+        this.DataService.saveEmailTemplate(this.templateForm.value, this.editUid).then((response) => {
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Service Message',
+                detail: response
+            })
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     this.templateForm.reset();
     this.tglEmail = false;
     this.tglSMS = false;
@@ -178,17 +249,8 @@ export class SettingsComponent implements OnInit {
     this.tglVM = false;
     this.tglPrevTemplate = '';
     this.tglTemplate = false;
+    this.editUid = '';
 
-    console.log(this.templateForm.value);
-    
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Service Message',
-      detail:
-        'Template "' +
-        this.templateForm.value.templateName +
-        '" has been created successfully.',
-    });
   }
 
   cancelCreateTemplate() {
@@ -239,14 +301,20 @@ export class SettingsComponent implements OnInit {
     this.tglTitle = 'Preview ' + type + ' template';
   }
 
-  editTemplate(index: any, type: any) {
+  editTemplate(index: any, uid: any, type: any) {
+
+    console.log(index);
+
     this.tglSMS = false;
     this.tglVM = false;
     this.tglEmail = false;
     this.tglPrevTemplate = '';
 
+    this.editUid = uid;
+
     let content = '';
     let name = '';
+    let id = '';
     let selected = [];
 
     if (type === 'email') {
@@ -267,6 +335,7 @@ export class SettingsComponent implements OnInit {
     selected.forEach((element: any) => {
       content = element.templateContent;
       name = element.templateName;
+      id = element.templateId;
     });
     this.templateForm.setValue({
       templateName: name,
@@ -275,32 +344,25 @@ export class SettingsComponent implements OnInit {
     this.tglTemplate = true;
   }
 
-  deleteTemplate(index: any, type: any, templateName: any) {
-    this.confirmationService.confirm({
-      message:
-        'Are you sure you want to delete the template <b>' +
-        templateName +
-        '</b>?',
-      header: 'Deleting template',
-      accept: () => {
-        if (type === 'email') {
-          this.optEmail = this.optEmail.filter(
-            (array: any, i: any) => i !== index
-          );
-        } else if (type === 'sms') {
-          this.optSMS = this.optSMS.filter((array: any, i: any) => i !== index);
-        } else if (type === 'vm') {
-          this.optVoiceMail = this.optVoiceMail.filter(
-            (array: any, i: any) => i !== index
-          );
-        }
+    deleteTemplate(index: any, type: any, templateName: any, uid: any) {
 
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Service Message',
-          detail: 'Template "' + templateName + '" was deleted successfully.',
+        console.log(type);
+
+        this.confirmationService.confirm({
+            message:
+                'Are you sure you want to delete the template <b>' +
+                templateName +
+                '</b>?',
+            header: 'Deleting template',
+            accept: () => {
+                this.DataService.deleteSettingTemplate(uid, type).then((response) => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Service Message',
+                        detail: 'Template "' + templateName + '" was deleted successfully.',
+                    });
+                })
+            },
         });
-      },
-    });
-  }
+    }
 }

@@ -182,6 +182,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     MessageService,
     AuthGuard,
     DatePipe,
+    // { provide: BUCKET, useValue: 'my-bucket-name' }
     // { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 5001] : undefined },
   ],
   bootstrap: [AppComponent],

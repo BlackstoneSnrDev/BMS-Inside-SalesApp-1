@@ -362,7 +362,7 @@ export class AdminTemplateComponent implements OnInit {
                 ii = ii + 1;
             }
 
-  }
+  
 
 
         }
@@ -370,6 +370,7 @@ export class AdminTemplateComponent implements OnInit {
         this.dataService.addTemplate({fieldArray: fieldArray, statusArray: statusArray, templateName: value.templateName});
 
     }
+
 
     cancelCreateNewTemplate() {
         this.tglCreateNewTemplate = false;
