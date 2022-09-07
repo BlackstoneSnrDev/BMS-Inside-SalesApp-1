@@ -90,9 +90,16 @@
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'address'">
-                        <textarea pInputText class="input-neumorphism txtFormComponent"
-                          (click)="toggleModifyAddressForm(newtd.field)" autocomplete="off" readonly="true"
-                          placeholder="{{ newtd.title }}" formControlName="{{ newtd.field }}"></textarea>
+                        <textarea
+                        pInputTextarea
+                        cols="92"
+                        rows="1"
+                        class="input-neumorphism txtFormComponent"
+                        (click)="toggleModifyAddressForm(newtd.field)"
+                        autocomplete="off" readonly="true"
+                        placeholder="{{ newtd.title }}" formControlName="{{ newtd.field }}"
+                      ></textarea>
+
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'email'">
@@ -137,6 +144,16 @@
             <div [ngClass]="tglUploadList ? 'show' : 'hide'">
 
                 <br />
+
+                <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="uploadRecordList($event)"
+                [multiple]="false" accept=".csv">
+                <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                </ng-template>
+        </p-fileUpload>
+
                 <div class="form-row">
                     <div class="col">
                         <div class="form-group">

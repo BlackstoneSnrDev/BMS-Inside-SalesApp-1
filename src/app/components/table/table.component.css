@@ -564,3 +564,7 @@ form {
   border-bottom: none !important;
   width: auto;
 }
+
+::ng-deep .p-fileupload .p-fileupload-buttonbar .p-button {
+  width: min-content !important;
+}

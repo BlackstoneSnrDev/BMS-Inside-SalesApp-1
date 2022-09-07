@@ -66,6 +66,8 @@ export class TableComponent {
   public optSMS: any;
   public smsMessageSent = new FormControl();
 
+  uploadedFiles: any[] = [];
+
   constructor(
     private DataService: DataService,
     private UsersService: UsersService,
@@ -136,6 +138,7 @@ export class TableComponent {
             ]);
           }
           this.addNewRecordForm = new FormGroup(this.newFormControl);
+          console.log( this.thData)
         },
         (error) => {
           console.error(error);
@@ -150,6 +153,7 @@ export class TableComponent {
 
   toggleUploadList() {
     this.tglUploadList = !this.tglUploadList;
+    this.addNewRecordForm.reset()
   }
 
   onFileChange(event: any) {
@@ -750,7 +754,17 @@ export class TableComponent {
     });
   }
 
+  uploadRecordList(event: any) {
+    for(let file of event.files) {
+        this.uploadedFiles.push(file);
+    }
+
+    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
 }
+
+}
+
+
 
 function subscribe(arg0: (data: any) => void) {
   throw new Error('Function not implemented.');

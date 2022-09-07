@@ -35,16 +35,17 @@ export class PhoneComponent implements OnInit {
   public optEmail: any;
   public emailSent = new FormControl();
 
-
-  constructor(public DataService: DataService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+  constructor(
+    public DataService: DataService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
-
     this.DataService.getFormElementsData().subscribe(
       (response) => {
         this.componentPhone = response.componentPhone;
         //console.log(response.componentPhone);
-
       },
       (error) => {
         console.error(error);
@@ -53,18 +54,19 @@ export class PhoneComponent implements OnInit {
 
     this.DataService.dialSessionArray.subscribe((dialSessionArray: any) => {
       this.dialSessionArray = dialSessionArray;
-      this.dupDialSessionArray = this.dialSessionArray
-    })
+      this.dupDialSessionArray = this.dialSessionArray;
+    });
 
     this.DataService.currentCall.subscribe((currentCall: any) => {
       if (currentCall) {
         this.currentCall = currentCall;
-        this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
+        this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(
+          currentCall.phonenumber
+        );
       } else {
         console.error('No current call');
       }
-
-    })
+    });
 
     this.DataService.getSelectData().subscribe(
       (response) => {
@@ -77,40 +79,42 @@ export class PhoneComponent implements OnInit {
         console.error(error);
       }
     );
-
   }
 
   nextCall() {
-    let currentCallIndex = this.dialSessionArray.findIndex((x: { uid: any; }) => x.uid === this.currentCall.uid)
-    this.DataService.setActiveCall(this.dialSessionArray[currentCallIndex + 1].uid);
+    let currentCallIndex = this.dialSessionArray.findIndex(
+      (x: { uid: any }) => x.uid === this.currentCall.uid
+    );
+    this.DataService.setActiveCall(
+      this.dialSessionArray[currentCallIndex + 1].uid
+    );
   }
 
   selectCustomer(uid: string) {
     this.DataService.setActiveCall(uid);
-    document.getElementById('noteContent')?.classList.add('show')
   }
 
   showTimeHandled(callId: any) {
-    document.getElementById('call' + callId)?.classList.toggle(
-      'hide'
-    );
+    document.getElementById('call' + callId)?.classList.toggle('hide');
   }
 
   filterCall() {
-
-    let value = this.searchCall.value.toLowerCase()
-    console.log(value)
+    let value = this.searchCall.value.toLowerCase();
+    console.log(value);
     if (value) {
-      this.dialSessionArray = this.dupDialSessionArray
-      this.dialSessionArray = this.dialSessionArray.filter((a: any, g: any) =>
-        a.MRN.toLowerCase().includes(value) || a.fullname.toLowerCase().includes(value) || a.phonenumber.toLowerCase().replace(/[()-\s]/g, '').includes(value.replace(/[()-\s]/g, '')))
-
+      this.dialSessionArray = this.dupDialSessionArray;
+      this.dialSessionArray = this.dialSessionArray.filter(
+        (a: any, g: any) =>
+          a.MRN.toLowerCase().includes(value) ||
+          a.fullname.toLowerCase().includes(value) ||
+          a.phonenumber
+            .toLowerCase()
+            .replace(/[()-\s]/g, '')
+            .includes(value.replace(/[()-\s]/g, ''))
+      );
     } else {
-      this.dialSessionArray = this.dupDialSessionArray
-
+      this.dialSessionArray = this.dupDialSessionArray;
     }
-
-
   }
 
   toggleAutoDialer() {
@@ -122,13 +126,11 @@ export class PhoneComponent implements OnInit {
     this.holdStatus = false;
     this.muteStatus = false;
     this.xferStatus = false;
-
   }
 
   leaveVoiceMail() {
     this.confirmationService.confirm({
-      message:
-        'Are you sure you want leave this voice mail?',
+      message: 'Are you sure you want leave this voice mail?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -138,15 +140,14 @@ export class PhoneComponent implements OnInit {
           detail: 'Voice mail was left.',
         });
 
-        this.voiceMailLeft.setValue('')
-      }
+        this.voiceMailLeft.reset();
+      },
     });
   }
 
   sendSMSMessage() {
     this.confirmationService.confirm({
-      message:
-        'Are you sure you want to send this message?',
+      message: 'Are you sure you want to send this message?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -155,17 +156,14 @@ export class PhoneComponent implements OnInit {
           summary: 'Service Message',
           detail: 'SMS Message was sent.',
         });
-        this.smsMessageSent.setValue('')
-
-      }
+        this.smsMessageSent.reset();
+      },
     });
-
   }
 
   sendEmail() {
     this.confirmationService.confirm({
-      message:
-        'Are you sure you want send this email?',
+      message: 'Are you sure you want send this email?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -174,16 +172,13 @@ export class PhoneComponent implements OnInit {
           summary: 'Service Message',
           detail: 'Email was sent.',
         });
-        this.emailSent.setValue('')
-
-      }
+        this.emailSent.reset();
+      },
     });
-
   }
 
   btnHangUpCall() {
     this.containerCallStatus = false;
-
   }
 
   btnHoldCall() {
@@ -202,5 +197,4 @@ export class PhoneComponent implements OnInit {
   log(event: Event) {
     console.log(event);
   }
-
 }

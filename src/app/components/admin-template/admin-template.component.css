@@ -46,6 +46,9 @@
 
 }
 
+::ng-deep .p-dialog {
+  width: 29rem !important;
+}
 
 .type-container .iconbutton-neumorphism {
   margin: 0 !important;
@@ -54,7 +57,7 @@
 ::ng-deep p-celleditor > p-dropdown > .p-dropdown,
 .form-row > .type-container > .form-check > ::ng-deep p-dropdown > .p-dropdown, ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep p-dropdown > .p-dropdown {
   border-bottom: none !important;
-  width: auto;
+  width: 100%;
 }
 
 .form-row > .type-container > .form-check > ::ng-deep p-dropdown {
