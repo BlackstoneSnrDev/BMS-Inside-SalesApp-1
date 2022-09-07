@@ -259,6 +259,7 @@ export class SettingsComponent implements OnInit {
     this.tglVM = false;
     this.tglPrevTemplate = '';
     this.tglTemplate = false;
+    this.url = null
     this.templateForm.reset();
   }
 
@@ -300,6 +301,11 @@ export class SettingsComponent implements OnInit {
     }
     this.tglTitle = 'Preview ' + type + ' template';
   }
+
+  setAudioPreview(content: any) {
+    this.url = content;
+  }
+
 
   editTemplate(index: any, uid: any, type: any) {
 

@@ -230,14 +230,14 @@
         <div class="col-md-12">
       
                 <div *ngIf="tglVM" style="margin: 25px;">
-                    <button (click)="initiateRecording()" class="width-100 button-neumorphism" *ngIf="!recording"
+                    <button (click)="initiateRecording()" class="width-100 button-neumorphism" *ngIf="!recording && !tglPrevTemplate"
                         style="cursor: pointer" > <i class="bi bi-record-btn-fill"></i> Start Recording </button>
-                    <button (click)="stopRecording()" class="width-100 button-neumorphism" *ngIf="recording"
+                    <button (click)="stopRecording()" class="width-100 button-neumorphism" *ngIf="recording && !tglPrevTemplate"
                         style="cursor: pointer" > <i class="bi bi-slash-square-fill"></i> Stop Recording </button>
                     <div *ngIf="url">
                         <audio controls="" *ngIf="url" class="width-100 button-neumorphism">
                             <source [src]="sanitize(url)" type="audio/wav"> 
-                        </audio> <span (click)="saveVoicemail()">save</span>
+                        </audio> <span *ngIf="!tglPrevTemplate" (click)="saveVoicemail()">save</span>
                     </div>
                 </div>
 
@@ -264,7 +264,7 @@
               *ngFor="let prev of tglPrevTemplate"
               class="template-container"
               [ngClass]="tglSMS ? 'sms-container' : ''"
-              [innerHTML]="prev.templateContent"
+              [innerHTML]="tglSMS || tglEmail ? prev.templateContent : setAudioPreview(prev.templateContent) "
             ></div>
           </div>
         </div>
