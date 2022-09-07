@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="col-lg-4">
-    <div class="phone-col">
+    <div class="phone-col" *ngIf="this.dbObjKey && this.userInfo">
       <phone-component></phone-component>
     </div>
   </div>

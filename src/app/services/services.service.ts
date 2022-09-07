@@ -5,16 +5,11 @@ import * as moment from 'moment';
 import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
 import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
-import {
-  arrayUnion,
-  arrayRemove,
-  Timestamp,
-  DocumentReference,
-  DocumentData,
-} from '@angular/fire/firestore';
+    AngularFirestore,
+    AngularFirestoreDocument
+  } from '@angular/fire/compat/firestore'; 
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { arrayUnion, arrayRemove, Timestamp, DocumentReference, DocumentData, deleteField } from '@angular/fire/firestore'
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import firebase from 'firebase/compat';
@@ -53,14 +48,14 @@ export class DataService {
     private _http: HttpClient,
     private afs: AngularFirestore,
     private usersService: UsersService,
-    private fns: AngularFireFunctions
+    private fns: AngularFireFunctions,
+    private storage: AngularFireStorage
   ) {
     this.navbarDataURL = '../../assets/json/menu-data.json';
     this.formElementsURL = '../../assets/json/form-elements.json';
     this.formCityURL = 'https://countriesnow.space/api/v0.1/countries/';
     this.formCountryURL = 'https://countriesnow.space/api/v0.1/countries/iso';
     this.formStateURL = 'https://countriesnow.space/api/v0.1/countries/states';
-
     this.callhistoryURL = '../../assets/json/call-flow.json';
     this.logURL = '../../assets/json/log-data.json';
     this.tableDataURL = '../../assets/json/queueTable-data.json';
@@ -78,6 +73,59 @@ export class DataService {
 
     this.currentUid = this.userInfo.uid;
   }
+
+    getUserSettings(): Observable<any>{
+        const ref = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings');
+        return ref.valueChanges({idField: 'docId'});
+    }
+
+    saveBlob(blob: Blob, fileName: string): Promise<any> {
+        console.log(blob, fileName);
+        const uid = RandomId(len, pattern)
+        const file = blob;
+        const filePath = `${this.userInfo.uid}/voicemail/${fileName}`;
+        const ref = this.storage.ref(filePath);
+        return ref.put(file).then(() => {
+            ref.getDownloadURL().subscribe(url => {
+                this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings').doc('voicemail').update({
+                    [uid]: {
+                        uid: uid,
+                        url: url,
+                        fileName: fileName
+                    }
+                })
+            })
+            return ('Voicemail has been added')
+        }).catch(error => {
+            return (error)
+        })
+    }
+    saveEmailTemplate(data: any, editUid: any) {
+        console.log('text', data);
+        const uid = editUid ? editUid : RandomId(len, pattern)
+        return this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings').doc('emails').update({
+            [uid]: {
+                uid: uid,
+                data: data.templateContent,
+                templateName: data.templateName
+            }
+        }).then(() => {
+            return ('Template "' + data.templateName + '" has been created successfully.')
+        })
+    }
+    saveTextMessageTemplate(data: any, editUid: any): Promise<any> {
+        console.log('text', data);
+        const uid = editUid ? editUid : RandomId(len, pattern)
+        return this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings').doc('textMessage').update({
+            [uid]: {
+                uid: uid,
+                data: data.templateContent,
+                templateName: data.templateName
+            }
+        }).then(() => {
+            return ('Template "' + data.templateName + '" has been created successfully.')
+        })
+    }
 
   addTemplate(data: any) {
     let newTemplateRef = this.afs
@@ -116,6 +164,13 @@ export class DataService {
     // this.activeCall.next(activeGroupCustomerArray[0]);
     this.setActiveCall('no contacts have been added to this template');
   }
+
+  deleteSettingTemplate(uid: any, type: any) {
+    return this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings').doc(type).update({
+        [uid]: deleteField()
+    })
+  }
+
   addStatuses(statuses: any) {
     console.log(statuses);
   }
@@ -153,74 +208,61 @@ export class DataService {
       .collection('templates')
       .doc(this.activeTemplate).ref;
     return data.get().then((doc: any) => {
-      let filteredTemplateData: any[] = [];
-      Object.values(doc.data()).forEach((item) => {
-        if (typeof item === 'object') {
-          filteredTemplateData.push(item);
+        let filteredTemplateData: any[] = [];
+        Object.values(doc.data()).forEach((item) => {
+            if (typeof item === 'object'){
+                filteredTemplateData.push(item);
+            }
+        })
+        return filteredTemplateData;
+    })
+}
+
+    getActiveGroupCustomerArray() {
+
+        let activeGroupCustomerArray: any[] = [];
+
+        if (this.userInfo.activeGroup.length > 0) {
+            let withGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref;
+            withGroup.get().then((doc: any) => {
+                doc.forEach((item: any) => {
+                    if (this.userInfo.activeGroup.some((r: any) => item.data().group.includes(r))) {
+                        activeGroupCustomerArray.push(item.data())
+                    }
+                })
+            }).then(() => {
+                if (activeGroupCustomerArray.length > 0) {
+                    this.setActiveCall(activeGroupCustomerArray[0].uid) 
+                    this.activeDialSessionArray.next(activeGroupCustomerArray);
+                } else {
+                    this.activeCall.next({
+                        notes: [],
+                        phonenumber: "000-000-0000"
+                    })
+                }
+            })
+
+        } else {
+            let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref;
+            noGroup.get().then((doc: any) => {
+                doc.forEach((item: any) => {
+                    console.log(item.data())
+                    activeGroupCustomerArray.push(item.data())
+                })
+            }).then(() => {
+                if (activeGroupCustomerArray.length > 0) {
+                    this.setActiveCall(activeGroupCustomerArray[0].uid) 
+                    this.activeDialSessionArray.next(activeGroupCustomerArray);
+                } else {
+                    this.activeCall.next({
+                        notes: [],
+                        phonenumber: "000-000-0000"
+                    })
+                }
+            })
         }
-      });
-      return filteredTemplateData;
-    });
-  }
-
-  getActiveGroupCustomerArray() {
-    let activeGroupCustomerArray: any[] = [];
-
-    let withGroup = this.afs
-      .collection('Tenant')
-      .doc(this.dbObjKey)
-      .collection('templates')
-      .doc(this.activeTemplate)
-      .collection('customers')
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions
-            .filter((a) =>
-              this.userInfo.activeGroup.some((r: any) =>
-                a.payload.doc.data()['group'].includes(r)
-              )
-            )
-            .map((b) => activeGroupCustomerArray.push(b.payload.doc.data()))
-        )
-      );
-
-    let noGroup = this.afs
-      .collection('Tenant')
-      .doc(this.dbObjKey)
-      .collection('templates')
-      .doc(this.activeTemplate)
-      .collection('customers')
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((a) =>
-            activeGroupCustomerArray.push(a.payload.doc.data())
-          )
-        )
-      );
-
-    if (this.userInfo.activeGroup.length > 0) {
-      // console.log('withGroup');
-      withGroup.subscribe((data) => {
-        this.activeDialSessionArray.next(activeGroupCustomerArray);
-        // this.activeCall.next(activeGroupCustomerArray[0]);
-        this.setActiveCall(activeGroupCustomerArray[0].uid);
-      });
-    } else {
-      // console.log('no group');
-      noGroup.subscribe((data) => {
-        this.activeDialSessionArray.next(activeGroupCustomerArray);
-        // this.activeCall.next(activeGroupCustomerArray[0]);
-        activeGroupCustomerArray.length > 0
-          ? this.setActiveCall(activeGroupCustomerArray[0].uid)
-          : this.activeCall.next({
-              notes: [],
-              phonenumber: '000-000-0000',
-            });
-      });
     }
-  }
+  
 
   selectActiveGroup(group: string) {
     this.afs

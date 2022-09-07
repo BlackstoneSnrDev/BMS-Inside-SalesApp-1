@@ -381,9 +381,9 @@ export class AdminTemplateComponent implements OnInit {
       },
     });
 
-
-
   }
+
+  
 
   cancelCreateNewTemplate() {
 
@@ -405,7 +405,6 @@ export class AdminTemplateComponent implements OnInit {
       this.createNewTemplateForm.removeControl('fieldType' + id);
       id += 1;
     }
-
   }
 
   activateTemplate(id: any, templateName: any) {
