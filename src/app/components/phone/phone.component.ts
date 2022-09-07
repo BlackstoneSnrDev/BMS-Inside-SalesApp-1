@@ -39,7 +39,7 @@ export class PhoneComponent implements OnInit {
   constructor(public DataService: DataService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit() {
-
+   
     this.DataService.getFormElementsData().subscribe(
       (response) => {
         this.componentPhone = response.componentPhone;
@@ -60,23 +60,45 @@ export class PhoneComponent implements OnInit {
       if (currentCall) {
         this.currentCall = currentCall;
         this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
-      } else {
-        console.error('No current call');
       }
 
     })
-
-    this.DataService.getSelectData().subscribe(
-      (response) => {
-        this.optVoiceMail = response.selectVoiceMail;
-        this.optSMS = response.selectSMSMessage;
-        this.optEmail = response.selectEmail;
-      },
-
-      (error) => {
-        console.error(error);
-      }
-    );
+    
+    this.DataService.getUserSettings().subscribe((response) => {
+        response.forEach((item: any) => {
+            if (item.docId === 'emails') {
+                let emailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+                Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                    emailArray.push({
+                        templateContent: email.data,
+                        templateId: email.uid,
+                        templateName: email.templateName
+                    });
+                })
+                this.optEmail = emailArray
+            } else if (item.docId === 'textMessage') {
+                let textArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+                Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                    textArray.push({
+                        templateContent: email.data,
+                        templateId: email.uid,
+                        templateName: email.templateName
+                    });
+                })
+                this.optSMS = textArray;
+            } else if (item.docId === 'voicemail') { 
+              let voicemailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+              Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                  voicemailArray.push({
+                      templateContent: email.url,
+                      templateId: email.uid,
+                      templateName: email.fileName
+                  });
+              })
+              this.optVoiceMail = voicemailArray;
+            }
+        }) 
+    })
 
   }
 

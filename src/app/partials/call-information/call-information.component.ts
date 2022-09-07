@@ -18,6 +18,7 @@ export class CallInfoComponent implements OnInit {
     private _customerSubscription: any;
     public tdData: any = [];
     public dbObjKey: any;
+    public userInfo: any;
     public activeTemplate: any;
     public dialSessionArray: any = [];
 
@@ -36,6 +37,23 @@ export class CallInfoComponent implements OnInit {
                         this.DataService.getActiveGroupCustomerArray()
                     })
                 : null);
+        this.usersService.dbObjKey.subscribe((dbObjKey:any) => {
+            if (dbObjKey) {
+                this.dbObjKey = dbObjKey;
+                console.log(dbObjKey);
+            } else {
+                console.log('missing db data');
+            }
+        })
+
+        this.usersService.userInfo.subscribe((userInfo:any) => {
+            if (userInfo && userInfo.username) {
+                this.userInfo = userInfo;
+                console.log(userInfo);
+            } else {
+                console.log('no user info');
+            }
+        });
     }
 
     ngOnDestroy() {
