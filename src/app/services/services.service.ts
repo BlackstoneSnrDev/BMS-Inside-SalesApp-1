@@ -202,39 +202,45 @@ getDialingSessionTemplate() {
 
         let activeGroupCustomerArray: any[] = [];
 
-        let withGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-            map(actions =>
-                actions.filter(
-                    a => this.userInfo.activeGroup.some((r: any) => a.payload.doc.data()['group'].includes(r))
-                ).map(b => activeGroupCustomerArray.push(b.payload.doc.data())))
-        )
-
-        let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-            map(actions => actions.map(a => activeGroupCustomerArray.push(a.payload.doc.data())))
-        )
-
         if (this.userInfo.activeGroup.length > 0) {
-            // console.log('withGroup');
-            withGroup.subscribe(data => {
-                this.activeDialSessionArray.next(activeGroupCustomerArray);
-                // this.activeCall.next(activeGroupCustomerArray[0]);
-                this.setActiveCall(activeGroupCustomerArray[0].uid)
-            })
-        } else {
-            // console.log('no group');
-            noGroup.subscribe(data => {
-                this.activeDialSessionArray.next(activeGroupCustomerArray);
-                // this.activeCall.next(activeGroupCustomerArray[0]);
-                activeGroupCustomerArray.length > 0 ?
-                    this.setActiveCall(activeGroupCustomerArray[0].uid)
-                    : 
+            let withGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref;
+            withGroup.get().then((doc: any) => {
+                doc.forEach((item: any) => {
+                    if (this.userInfo.activeGroup.some((r: any) => item.data().group.includes(r))) {
+                        activeGroupCustomerArray.push(item.data())
+                    }
+                })
+            }).then(() => {
+                if (activeGroupCustomerArray.length > 0) {
+                    this.setActiveCall(activeGroupCustomerArray[0].uid) 
+                    this.activeDialSessionArray.next(activeGroupCustomerArray);
+                } else {
                     this.activeCall.next({
                         notes: [],
                         phonenumber: "000-000-0000"
                     })
+                }
+            })
+
+        } else {
+            let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref;
+            noGroup.get().then((doc: any) => {
+                doc.forEach((item: any) => {
+                    console.log(item.data())
+                    activeGroupCustomerArray.push(item.data())
+                })
+            }).then(() => {
+                if (activeGroupCustomerArray.length > 0) {
+                    this.setActiveCall(activeGroupCustomerArray[0].uid) 
+                    this.activeDialSessionArray.next(activeGroupCustomerArray);
+                } else {
+                    this.activeCall.next({
+                        notes: [],
+                        phonenumber: "000-000-0000"
+                    })
+                }
             })
         }
-
     }
 
 selectActiveGroup(group: string) {
