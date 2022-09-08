@@ -77,6 +77,13 @@ export class DataService {
 
     this.currentUid = this.userInfo.uid;
   }
+  
+  sendText() {
+    const callable = this.fns.httpsCallable('generateToken');
+    return callable({text: 'test', page: '/dashboard'}).toPromise().then(result => {
+        return result;
+    })
+  }
 
     getUserSettings(): Observable<any>{
         const ref = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings');
@@ -226,7 +233,6 @@ getDialingSessionTemplate() {
             let noGroup = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref;
             noGroup.get().then((doc: any) => {
                 doc.forEach((item: any) => {
-                    console.log(item.data())
                     activeGroupCustomerArray.push(item.data())
                 })
             }).then(() => {

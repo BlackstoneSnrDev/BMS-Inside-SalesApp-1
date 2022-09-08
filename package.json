@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "emulators:start": "firebase emulators:start",
+    "emulators:stop": "lsof -t -i:5001 -i:5002 -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 | xargs kill -9"
   },
   "private": true,
   "dependencies": {
@@ -31,6 +33,7 @@
     "recordrtc": "^5.6.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "twilio-client": "^1.14.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
