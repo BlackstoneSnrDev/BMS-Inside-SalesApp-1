@@ -143,6 +143,10 @@ export class PhoneComponent implements OnInit {
             })
 
             this._device.on('disconnect', (conn: any) => {
+                if (this.tglAutoDialer) {
+                    this.nextCall(),
+                    this.btnAnswerCall( this.currentCallPhoneNumber )
+                }
                 console.log('Call ended');
                 this.updateCallStatus('Call Status');
                 this.containerCallStatus = false;
@@ -168,14 +172,14 @@ export class PhoneComponent implements OnInit {
   }
 
   testBtn() {
-    let params = '+17348371063'
-    console.log("Calling " + params + "...");
-    if (this._device) {
-        var outgoingConnection = this._device.connect(params);
-        outgoingConnection.on("ringing", function () {
-            console.log("Ringing...");
-        });
-    }
+    // let params = '+17348371063'
+    // console.log("Calling " + params + "...");
+    // if (this._device) {
+    //     var outgoingConnection = this._device.connect(params);
+    //     outgoingConnection.on("ringing", function () {
+    //         console.log("Ringing...");
+    //     });
+    // }
   }
 
   nextCall() {
@@ -215,7 +219,19 @@ export class PhoneComponent implements OnInit {
     this.tglAutoDialer = !this.tglAutoDialer;
   }
 
-  btnAnswerCall() {
+  btnAnswerCall(outgoingNumber: any) {
+    console.log(outgoingNumber);
+
+    var regExNumber = '+1' + ('' + outgoingNumber).replace(/\D/g, '');
+    console.log("Calling " + regExNumber + "...");
+
+    if (this._device) {
+        var outgoingConnection = this._device.connect({outgoingPhoneNumber: regExNumber});
+        outgoingConnection.on("ringing", function () {
+            console.log("Ringing...");
+        });
+    }
+
     this.containerCallStatus = !this.containerCallStatus;
     this.holdStatus = false;
     this.muteStatus = false;
@@ -280,8 +296,8 @@ export class PhoneComponent implements OnInit {
   }
 
   btnHangUpCall() {
+    this._device.disconnectAll();
     this.containerCallStatus = false;
-
   }
 
   btnHoldCall() {

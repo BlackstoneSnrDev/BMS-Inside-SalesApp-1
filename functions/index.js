@@ -57,11 +57,12 @@ exports.generateToken = functions.https.onCall((req, res) => {
 });
 
 exports.twilioCallEndpoint = functions.https.onRequest((req, res) => {
-    var phoneNumber = '+17348371063';
+  
+    var phoneNumber = req.body.outgoingPhoneNumber;
     var callerId = sendingPhoneNumber;
     var twiml = new VoiceResponse();
   
-    var dial = twiml.dial({callerId : callerId});
+    var dial = twiml.dial({callerId : callerId, machineDetection: 'Enable'});
     if (phoneNumber) {
       dial.number({}, phoneNumber);
     } else {

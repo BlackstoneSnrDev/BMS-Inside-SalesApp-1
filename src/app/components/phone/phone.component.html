@@ -13,7 +13,7 @@
     <div *ngIf="element.element == 'inputIcon' && currentCall">
       <div class="form-check form-check-inline button-inline">
         <input type="{{ element.element_type }}" class="input-neumorphism" placeholder="{{ currentCallPhoneNumber }}" />
-        <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall()">
+        <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall(currentCallPhoneNumber)">
           <i class="bi bi-telephone-fill" [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
           <i class="bi bi-x-circle-fill" [ngClass]="containerCallStatus ? 'show' : 'hide'"></i>
         </div>
@@ -61,7 +61,6 @@
     </div>
   </div>
   <div class="form-row">
-    <div (click)="testBtn()" >testBtnCall</div>
     <div class="col-4 button-inline">
       <p-dropdown [options]="optVoiceMail" class="button-neumorphism" (onChange)="leaveVoiceMail()"
         optionLabel="templateName" optionValue="templateId" placeholder="VM" [formControl]="voiceMailLeft"></p-dropdown>
