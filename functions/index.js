@@ -56,7 +56,20 @@ exports.generateToken = functions.https.onCall((req, res) => {
 
 });
 
-
+exports.twilioCallEndpoint = functions.https.onRequest((req, res) => {
+    var phoneNumber = '+17348371063';
+    var callerId = sendingPhoneNumber;
+    var twiml = new VoiceResponse();
+  
+    var dial = twiml.dial({callerId : callerId});
+    if (phoneNumber) {
+      dial.number({}, phoneNumber);
+    } else {
+      dial.client({}, "support_agent");
+    };
+    res.type('text/xml');
+    res.send(twiml.toString());
+});
 
 exports.makePhoneCall = functions.https.onCall((req, res) => {
     console.log('Phone Call');

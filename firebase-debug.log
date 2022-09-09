@@ -1,0 +1,790 @@
+[debug] [2022-09-09T01:23:06.086Z] ----------------------------------------------------------------------
+[debug] [2022-09-09T01:23:06.088Z] Command:       /usr/local/bin/node /usr/local/bin/firebase emulators:start
+[debug] [2022-09-09T01:23:06.088Z] CLI Version:   11.1.0
+[debug] [2022-09-09T01:23:06.089Z] Platform:      darwin
+[debug] [2022-09-09T01:23:06.089Z] Node Version:  v16.14.2
+[debug] [2022-09-09T01:23:06.090Z] Time:          Thu Sep 08 2022 21:23:06 GMT-0400 (Eastern Daylight Time)
+[debug] [2022-09-09T01:23:06.090Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-09-09T01:23:06.141Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-09-09T01:23:06.141Z] > authorizing via signed-in user (doubletriangle880@gmail.com)
+[debug] [2022-09-09T01:23:06.544Z] java version "12.0.2" 2019-07-16
+
+[debug] [2022-09-09T01:23:06.544Z] Java(TM) SE Runtime Environment (build 12.0.2+10)
+Java HotSpot(TM) 64-Bit Server VM (build 12.0.2+10, mixed mode, sharing)
+
+[debug] [2022-09-09T01:23:06.548Z] Parsed Java major version: 12
+[info] i  emulators: Starting emulators: auth, functions, firestore, hosting, pubsub, storage {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, hosting, pubsub, storage"}}
+[debug] [2022-09-09T01:23:06.576Z] [hub] writing locator at /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/hub-insidesalesapi.json
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: database {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mdatabase\u001b[22m"}}
+[info] ✔  functions: Using node@16 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Using node@16 from host."}}
+[debug] [2022-09-09T01:23:06.617Z] defaultcredentials: writing to file /Users/ryanrieben/.config/firebase/doubletriangle880_gmail_com_application_default_credentials.json
+[debug] [2022-09-09T01:23:06.620Z] Setting GAC to /Users/ryanrieben/.config/firebase/doubletriangle880_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /Users/ryanrieben/.config/firebase/doubletriangle880_gmail_com_application_default_credentials.json"}}
+[debug] [2022-09-09T01:23:06.622Z] > refreshing access token with scopes: []
+[debug] [2022-09-09T01:23:06.624Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-09-09T01:23:06.624Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-09-09T01:23:06.794Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-09-09T01:23:06.794Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-09-09T01:23:06.849Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/insidesalesapi/adminSdkConfig [none]
+[debug] [2022-09-09T01:23:07.195Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/insidesalesapi/adminSdkConfig 200
+[debug] [2022-09-09T01:23:07.195Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/insidesalesapi/adminSdkConfig {"projectId":"insidesalesapi","storageBucket":"insidesalesapi.appspot.com","locationId":"us-central"}
+[debug] [2022-09-09T01:23:07.278Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2022-09-09T01:23:07.278Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-09-09T01:23:07.278Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","/Users/ryanrieben/.cache/firebase/emulators/cloud-firestore-emulator-v1.14.3.jar","--host","localhost","--port",8080,"--rules","/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/firestore.rules","--functions_emulator","localhost:5001"],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"/Users/ryanrieben/.cache/firebase/emulators/cloud-firestore-emulator-v1.14.3.jar\",\"--host\",\"localhost\",\"--port\",8080,\"--rules\",\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/firestore.rules\",\"--functions_emulator\",\"localhost:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"functions_emulator\",\"seed_from_export\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[debug] [2022-09-09T01:23:08.745Z] Sep 08, 2022 9:23:08 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://localhost:63390
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:23:08 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\nINFO: Started WebSocket server on ws://localhost:63390\n"}}
+[debug] [2022-09-09T01:23:08.771Z] API endpoint: http:// {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://"}}
+[debug] [2022-09-09T01:23:08.771Z] localhost:8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:8080
+
+Dev App Server is now running.
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"localhost:8080\nIf you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\n\n   export FIRESTORE_EMULATOR_HOST=localhost:8080\n\nDev App Server is now running.\n\n"}}
+[debug] [2022-09-09T01:23:14.627Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"pubsub"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2022-09-09T01:23:14.627Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"pubsub"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-09-09T01:23:14.628Z] Starting Pub/Sub Emulator with command {"binary":"/Users/ryanrieben/.cache/firebase/emulators/pubsub-emulator-0.1.0/pubsub-emulator/bin/cloud-pubsub-emulator","args":["--host=localhost","--port=8085"],"optionalArgs":["port","host"],"joinArgs":true} {"metadata":{"emulator":{"name":"pubsub"},"message":"Starting Pub/Sub Emulator with command {\"binary\":\"/Users/ryanrieben/.cache/firebase/emulators/pubsub-emulator-0.1.0/pubsub-emulator/bin/cloud-pubsub-emulator\",\"args\":[\"--host=localhost\",\"--port=8085\"],\"optionalArgs\":[\"port\",\"host\"],\"joinArgs\":true}"}}
+[info] i  pubsub: Pub/Sub Emulator logging to pubsub-debug.log {"metadata":{"emulator":{"name":"pubsub"},"message":"Pub/Sub Emulator logging to \u001b[1mpubsub-debug.log\u001b[22m"}}
+[debug] [2022-09-09T01:23:14.816Z] This is the Google Pub/Sub fake.
+ {"metadata":{"emulator":{"name":"pubsub"},"message":"This is the Google Pub/Sub fake.\n"}}
+[debug] [2022-09-09T01:23:14.817Z] Implementation may be incomplete or differ from the real system.
+ {"metadata":{"emulator":{"name":"pubsub"},"message":"Implementation may be incomplete or differ from the real system.\n"}}
+[debug] [2022-09-09T01:23:14.848Z] Sep 08, 2022 9:23:14 PM com.google.cloud.pubsub.testing.v1.Main main
+INFO: IAM integration is disabled. IAM policy methods and ACL checks are not supported
+ {"metadata":{"emulator":{"name":"pubsub"},"message":"Sep 08, 2022 9:23:14 PM com.google.cloud.pubsub.testing.v1.Main main\nINFO: IAM integration is disabled. IAM policy methods and ACL checks are not supported\n"}}
+[debug] [2022-09-09T01:23:15.312Z] Sep 08, 2022 9:23:15 PM io.gapi.emulators.netty.NettyUtil applyJava7LongHostnameWorkaround
+INFO: Unable to apply Java 7 long hostname workaround.
+ {"metadata":{"emulator":{"name":"pubsub"},"message":"Sep 08, 2022 9:23:15 PM io.gapi.emulators.netty.NettyUtil applyJava7LongHostnameWorkaround\nINFO: Unable to apply Java 7 long hostname workaround.\n"}}
+[debug] [2022-09-09T01:23:15.395Z] Sep 08, 2022 9:23:15 PM com.google.cloud.pubsub.testing.v1.Main main
+INFO: Server started, listening on 8085
+ {"metadata":{"emulator":{"name":"pubsub"},"message":"Sep 08, 2022 9:23:15 PM com.google.cloud.pubsub.testing.v1.Main main\nINFO: Server started, listening on 8085\n"}}
+[debug] [2022-09-09T01:23:15.650Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-09-09T01:23:15.757Z] Sep 08, 2022 9:23:15 PM io.gapi.emulators.grpc.GrpcServer$3 operationComplete
+INFO: Adding handler(s) to newly registered Channel.
+ {"metadata":{"emulator":{"name":"pubsub"},"message":"Sep 08, 2022 9:23:15 PM io.gapi.emulators.grpc.GrpcServer$3 operationComplete\nINFO: Adding handler(s) to newly registered Channel.\n"}}
+[debug] [2022-09-09T01:23:16.651Z] Temp file directory for storage emulator: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/firebase/storage/blobs"}}
+[debug] [2022-09-09T01:23:16.916Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/insidesalesapi/sites 
+[debug] [2022-09-09T01:23:17.502Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/insidesalesapi/sites 200
+[debug] [2022-09-09T01:23:17.502Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/insidesalesapi/sites {"sites":[{"name":"projects/insidesalesapi/sites/insidesalesapi","defaultUrl":"https://insidesalesapi.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-09-09T01:23:17.502Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/insidesalesapi/webApps/-/config [none]
+[debug] [2022-09-09T01:23:18.002Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/insidesalesapi/webApps/-/config 200
+[debug] [2022-09-09T01:23:18.002Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/insidesalesapi/webApps/-/config {"projectId":"insidesalesapi","appId":"1:491724602022:web:9e8365a8797cf115b31267","storageBucket":"insidesalesapi.appspot.com","locationId":"us-central","apiKey":"AIzaSyBWe_LKvR_EOjbu6mjcDJKFYjohoabNyAM","authDomain":"insidesalesapi.firebaseapp.com","messagingSenderId":"491724602022","measurementId":"G-YTTCXK536R"}
+[info] i  hosting: Serving hosting files from: dist/inside_sales_app {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mdist/inside_sales_app\u001b[22m"}}
+[info] ✔  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[warn] ⚠  ui: Emulator UI unable to start on port 4000, starting on 4002 instead. {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI unable to start on port 4000, starting on 4002 instead."}}
+[debug] [2022-09-09T01:23:18.671Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-09-09T01:23:18.671Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-09-09T01:23:18.671Z] Starting Emulator UI with command {"binary":"node","args":["--dns-result-order=ipv4first","/Users/ryanrieben/.cache/firebase/emulators/ui-v1.7.0/server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"--dns-result-order=ipv4first\",\"/Users/ryanrieben/.cache/firebase/emulators/ui-v1.7.0/server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2022-09-09T01:23:18.784Z] Web / API server started at localhost:4002
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4002\n"}}
+[info] i  functions: Watching "/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\" for Cloud Functions..."}}
+[debug] [2022-09-09T01:23:18.936Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-09-09T01:23:20.344Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "convert-csv-to-json": "^1.3.3",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-09-09T01:23:20.344Z] Building nodejs source
+[debug] [2022-09-09T01:23:20.344Z] Analyzing nodejs backend spec
+[debug] [2022-09-09T01:23:20.346Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-09T01:23:20.580Z] Serving at port 9005
+
+[debug] [2022-09-09T01:23:20.813Z] Got response from /__/functions.yaml {"endpoints":{"sendText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"sendText"},"generateToken":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"generateToken"},"makePhoneCall":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"makePhoneCall"},"createNewUser":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"createNewUser"},"csvToJson":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"csvToJson"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-09T01:23:20.820Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions[us-central1-sendText]: http function initialized (http://localhost:5001/insidesalesapi/us-central1/sendText). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/insidesalesapi/us-central1/sendText)."}}
+[info] ✔  functions[us-central1-generateToken]: http function initialized (http://localhost:5001/insidesalesapi/us-central1/generateToken). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/insidesalesapi/us-central1/generateToken)."}}
+[info] ✔  functions[us-central1-makePhoneCall]: http function initialized (http://localhost:5001/insidesalesapi/us-central1/makePhoneCall). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/insidesalesapi/us-central1/makePhoneCall)."}}
+[info] ✔  functions[us-central1-createNewUser]: http function initialized (http://localhost:5001/insidesalesapi/us-central1/createNewUser). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/insidesalesapi/us-central1/createNewUser)."}}
+[info] ✔  functions[us-central1-csvToJson]: http function initialized (http://localhost:5001/insidesalesapi/us-central1/csvToJson). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/insidesalesapi/us-central1/csvToJson)."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://localhost:4002                │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Authentication │ localhost:9099 │ http://localhost:4002/auth      │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Functions      │ localhost:5001 │ http://localhost:4002/functions │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Firestore      │ localhost:8080 │ http://localhost:4002/firestore │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Hosting        │ localhost:5000 │ n/a                             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Pub/Sub        │ localhost:8085 │ n/a                             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Storage        │ localhost:9199 │ http://localhost:4002/storage   │
+└────────────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at localhost:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2022-09-09T01:23:51.490Z] Sep 08, 2022 9:23:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:23:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2022-09-09T01:23:51.568Z] Sep 08, 2022 9:23:51 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:23:51 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\nINFO: Connected to new websocket client\n"}}
+[debug] [2022-09-09T01:24:02.125Z] Sep 08, 2022 9:24:02 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:24:02 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2022-09-09T01:25:18.655Z] File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers"}}
+[debug] [2022-09-09T01:25:19.658Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-09-09T01:25:21.143Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "convert-csv-to-json": "^1.3.3",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-09-09T01:25:21.143Z] Building nodejs source
+[debug] [2022-09-09T01:25:21.143Z] Analyzing nodejs backend spec
+[debug] [2022-09-09T01:25:21.145Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-09T01:25:21.291Z] Serving at port 9005
+
+[debug] [2022-09-09T01:25:21.392Z] Got response from /__/functions.yaml {"endpoints":{"sendText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"sendText"},"generateToken":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"generateToken"},"twilioCallEndpoint":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"twilioCallEndpoint"},"makePhoneCall":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"makePhoneCall"},"createNewUser":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"createNewUser"},"csvToJson":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"csvToJson"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-09T01:25:21.396Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions[us-central1-twilioCallEndpoint]: http function initialized (http://localhost:5001/insidesalesapi/us-central1/twilioCallEndpoint). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/insidesalesapi/us-central1/twilioCallEndpoint)."}}
+[debug] [2022-09-09T01:25:30.653Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:25:30.654Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:25:30.654Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:25:30.665Z] [worker-pool] addWorker(us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:25:30.665Z] [worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1"}}
+[debug] [2022-09-09T01:25:30.666Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:25:30.666Z] [worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12023.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12023.sock"}}
+[debug] [2022-09-09T01:25:30.667Z] [worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: BUSY"}}
+[debug] [2022-09-09T01:25:31.588Z] [runtime-status] [12023] Functions runtime initialized. {"cwd":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions","node_version":"16.14.2"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Functions runtime initialized. {\"cwd\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\",\"node_version\":\"16.14.2\"}"}}
+[debug] [2022-09-09T01:25:31.589Z] [runtime-status] [12023] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Disabled runtime features: undefined"}}
+[debug] [2022-09-09T01:25:31.591Z] [runtime-status] [12023] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:25:31.592Z] [runtime-status] [12023] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:25:31.593Z] [runtime-status] [12023] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-09T01:25:31.594Z] [runtime-status] [12023] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:25:31.631Z] [runtime-status] [12023] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-09T01:25:31.631Z] [runtime-status] [12023] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:25:31.632Z] [runtime-status] [12023] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:25:31.633Z] [runtime-status] [12023] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:25:31.633Z] [runtime-status] [12023] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:25:31.633Z] [runtime-status] [12023] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:25:31.703Z] [runtime-status] [12023] initializeApp(DEFAULT) {"storageBucket":"insidesalesapi.appspot.com","projectId":"insidesalesapi"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] initializeApp(DEFAULT) {\"storageBucket\":\"insidesalesapi.appspot.com\",\"projectId\":\"insidesalesapi\"}"}}
+[debug] [2022-09-09T01:25:31.704Z] [runtime-status] [12023] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:25:31.705Z] [runtime-status] [12023] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:25:31.709Z] [runtime-status] [12023] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12023.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12023.sock"}}
+[debug] [2022-09-09T01:25:31.712Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:25:31.714Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:25:31.721Z] [runtime-status] [12023] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Ephemeral server handling GET request"}}
+[debug] [2022-09-09T01:25:31.732Z] [runtime-status] [12023] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12023] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:25:31.733Z] [worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: IDLE"}}
+[debug] [2022-09-09T01:25:31.734Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:25:31.818Z] Functions emulator received unknown request at path /favicon.ico
+[debug] [2022-09-09T01:26:03.402Z] File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers"}}
+[debug] [2022-09-09T01:26:04.406Z] [worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:26:04.406Z] [worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: FINISHING"}}
+[debug] [2022-09-09T01:26:04.408Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-09-09T01:26:05.501Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "convert-csv-to-json": "^1.3.3",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-09-09T01:26:05.502Z] Building nodejs source
+[debug] [2022-09-09T01:26:05.502Z] Analyzing nodejs backend spec
+[debug] [2022-09-09T01:26:05.502Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-09T01:26:05.504Z] [worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: exited"}}
+[debug] [2022-09-09T01:26:05.504Z] [worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5a3e5a93-6497-478e-9ac8-9c3c61a18dc0]: FINISHED"}}
+[debug] [2022-09-09T01:26:05.670Z] Serving at port 9005
+
+[debug] [2022-09-09T01:26:05.771Z] Got response from /__/functions.yaml {"endpoints":{"sendText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"sendText"},"generateToken":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"generateToken"},"twilioCallEndpoint":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"twilioCallEndpoint"},"makePhoneCall":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"makePhoneCall"},"createNewUser":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"createNewUser"},"csvToJson":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"csvToJson"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-09T01:26:05.775Z] shutdown requested via /__/quitquitquit
+
+[debug] [2022-09-09T01:26:12.164Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:26:12.164Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:26:12.164Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:26:12.165Z] [worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0"}}
+[debug] [2022-09-09T01:26:12.169Z] [worker-pool] addWorker(us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:26:12.169Z] [worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1"}}
+[debug] [2022-09-09T01:26:12.169Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:26:12.170Z] [worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12067.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12067.sock"}}
+[debug] [2022-09-09T01:26:12.170Z] [worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: BUSY"}}
+[debug] [2022-09-09T01:26:12.885Z] [runtime-status] [12067] Functions runtime initialized. {"cwd":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions","node_version":"16.14.2"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Functions runtime initialized. {\"cwd\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\",\"node_version\":\"16.14.2\"}"}}
+[debug] [2022-09-09T01:26:12.886Z] [runtime-status] [12067] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Disabled runtime features: undefined"}}
+[debug] [2022-09-09T01:26:12.888Z] [runtime-status] [12067] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:12.889Z] [runtime-status] [12067] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:12.889Z] [runtime-status] [12067] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-09T01:26:12.891Z] [runtime-status] [12067] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:12.922Z] [runtime-status] [12067] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-09T01:26:12.922Z] [runtime-status] [12067] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:26:12.923Z] [runtime-status] [12067] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:12.924Z] [runtime-status] [12067] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:12.924Z] [runtime-status] [12067] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:12.924Z] [runtime-status] [12067] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:26:12.985Z] [runtime-status] [12067] initializeApp(DEFAULT) {"storageBucket":"insidesalesapi.appspot.com","projectId":"insidesalesapi"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] initializeApp(DEFAULT) {\"storageBucket\":\"insidesalesapi.appspot.com\",\"projectId\":\"insidesalesapi\"}"}}
+[debug] [2022-09-09T01:26:12.986Z] [runtime-status] [12067] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:26:12.987Z] [runtime-status] [12067] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:26:12.989Z] [runtime-status] [12067] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12067.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12067.sock"}}
+[debug] [2022-09-09T01:26:12.993Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:26:12.993Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:26:12.998Z] [runtime-status] [12067] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Ephemeral server handling GET request"}}
+[info] >  Phone Call {"user":"Phone Call","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m Phone Call"}}
+[debug] [2022-09-09T01:26:13.004Z] [runtime-status] [12067] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12067] Ephemeral server survived."}}
+[debug] [2022-09-09T01:26:40.583Z] [work-queue] {"queueLength":1,"workRunningCount":1}
+[debug] [2022-09-09T01:26:40.583Z] [work-queue] {"queueLength":0,"workRunningCount":2}
+[debug] [2022-09-09T01:26:40.583Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:26:40.587Z] [worker-pool] addWorker(us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:26:40.588Z] [worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=2 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=2"}}
+[debug] [2022-09-09T01:26:40.588Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:26:40.589Z] [worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12083.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12083.sock"}}
+[debug] [2022-09-09T01:26:40.589Z] [worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: BUSY"}}
+[debug] [2022-09-09T01:26:41.515Z] [runtime-status] [12083] Functions runtime initialized. {"cwd":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions","node_version":"16.14.2"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Functions runtime initialized. {\"cwd\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\",\"node_version\":\"16.14.2\"}"}}
+[debug] [2022-09-09T01:26:41.516Z] [runtime-status] [12083] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Disabled runtime features: undefined"}}
+[debug] [2022-09-09T01:26:41.517Z] [runtime-status] [12083] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:41.518Z] [runtime-status] [12083] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:41.519Z] [runtime-status] [12083] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-09T01:26:41.519Z] [runtime-status] [12083] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:41.552Z] [runtime-status] [12083] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-09T01:26:41.553Z] [runtime-status] [12083] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:26:41.553Z] [runtime-status] [12083] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:41.554Z] [runtime-status] [12083] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:41.555Z] [runtime-status] [12083] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:26:41.555Z] [runtime-status] [12083] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:26:41.616Z] [runtime-status] [12083] initializeApp(DEFAULT) {"storageBucket":"insidesalesapi.appspot.com","projectId":"insidesalesapi"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] initializeApp(DEFAULT) {\"storageBucket\":\"insidesalesapi.appspot.com\",\"projectId\":\"insidesalesapi\"}"}}
+[debug] [2022-09-09T01:26:41.617Z] [runtime-status] [12083] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:26:41.617Z] [runtime-status] [12083] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:26:41.620Z] [runtime-status] [12083] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12083.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12083.sock"}}
+[debug] [2022-09-09T01:26:41.624Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:26:41.624Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:26:41.631Z] [runtime-status] [12083] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Ephemeral server handling GET request"}}
+[info] >  Phone Call {"user":"Phone Call","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m Phone Call"}}
+[debug] [2022-09-09T01:26:41.637Z] [runtime-status] [12083] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12083] Ephemeral server survived."}}
+[warn] ⚠  functions: Your function timed out after ~60s. To configure this timeout, see
+      https://firebase.google.com/docs/functions/manage-functions#set_timeout_and_memory_allocation. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Your function timed out after ~60s. To configure this timeout, see\n      https://firebase.google.com/docs/functions/manage-functions#set_timeout_and_memory_allocation."}}
+[info] >  /usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634 {"user":"/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m /usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634"}}
+[info] >              throw new Error("Function timed out."); {"user":"            throw new Error(\"Function timed out.\");","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m             throw new Error(\"Function timed out.\");"}}
+[info] >              ^ {"user":"            ^","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m             ^"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  Error: Function timed out. {"user":"Error: Function timed out.","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m Error: Function timed out."}}
+[info] >      at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634:19) {"user":"    at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634:19)","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m     at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634:19)"}}
+[info] >      at listOnTimeout (node:internal/timers:559:17) {"user":"    at listOnTimeout (node:internal/timers:559:17)","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m     at listOnTimeout (node:internal/timers:559:17)"}}
+[info] >      at processTimers (node:internal/timers:502:7) {"user":"    at processTimers (node:internal/timers:502:7)","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m     at processTimers (node:internal/timers:502:7)"}}
+[debug] [2022-09-09T01:27:13.005Z] [worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: exited"}}
+[debug] [2022-09-09T01:27:13.005Z] [worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-aa26cd7a-7a9f-4ac5-93f4-dc3ec946afa4]: FINISHED"}}
+[debug] [2022-09-09T01:27:13.005Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:27:16.807Z] Sep 08, 2022 9:27:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:27:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2022-09-09T01:27:20.771Z] Sep 08, 2022 9:27:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:27:20 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2022-09-09T01:27:22.798Z] Sep 08, 2022 9:27:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:27:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2022-09-09T01:27:24.822Z] Sep 08, 2022 9:27:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:27:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2022-09-09T01:27:27.939Z] Sep 08, 2022 9:27:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:27:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[warn] ⚠  functions: Your function timed out after ~60s. To configure this timeout, see
+      https://firebase.google.com/docs/functions/manage-functions#set_timeout_and_memory_allocation. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Your function timed out after ~60s. To configure this timeout, see\n      https://firebase.google.com/docs/functions/manage-functions#set_timeout_and_memory_allocation."}}
+[info] >  /usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634 {"user":"/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m /usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634"}}
+[info] >              throw new Error("Function timed out."); {"user":"            throw new Error(\"Function timed out.\");","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m             throw new Error(\"Function timed out.\");"}}
+[info] >              ^ {"user":"            ^","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m             ^"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  Error: Function timed out. {"user":"Error: Function timed out.","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m Error: Function timed out."}}
+[info] >      at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634:19) {"user":"    at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634:19)","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m     at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/emulator/functionsEmulatorRuntime.js:634:19)"}}
+[info] >      at listOnTimeout (node:internal/timers:559:17) {"user":"    at listOnTimeout (node:internal/timers:559:17)","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m     at listOnTimeout (node:internal/timers:559:17)"}}
+[info] >      at processTimers (node:internal/timers:502:7) {"user":"    at processTimers (node:internal/timers:502:7)","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"\u001b[90m> \u001b[39m     at processTimers (node:internal/timers:502:7)"}}
+[debug] [2022-09-09T01:27:41.635Z] [worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: exited"}}
+[debug] [2022-09-09T01:27:41.635Z] [worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-5b035228-2a6d-4c99-9afe-9a72aec210d6]: FINISHED"}}
+[debug] [2022-09-09T01:27:41.635Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:27:49.057Z] File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers"}}
+[debug] [2022-09-09T01:27:50.059Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-09-09T01:27:52.201Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "convert-csv-to-json": "^1.3.3",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-09-09T01:27:52.201Z] Building nodejs source
+[debug] [2022-09-09T01:27:52.201Z] Analyzing nodejs backend spec
+[debug] [2022-09-09T01:27:52.201Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-09T01:27:52.382Z] Serving at port 9005
+
+[debug] [2022-09-09T01:27:52.512Z] Got response from /__/functions.yaml {"endpoints":{"sendText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"sendText"},"generateToken":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"generateToken"},"twilioCallEndpoint":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"twilioCallEndpoint"},"makePhoneCall":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"makePhoneCall"},"createNewUser":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"createNewUser"},"csvToJson":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"csvToJson"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-09T01:27:52.515Z] shutdown requested via /__/quitquitquit
+
+[debug] [2022-09-09T01:27:53.606Z] Sep 08, 2022 9:27:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:27:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2022-09-09T01:28:08.131Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:28:08.131Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:28:08.131Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:28:08.131Z] [worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 2 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 2 --> 0"}}
+[debug] [2022-09-09T01:28:08.138Z] [worker-pool] addWorker(us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:28:08.139Z] [worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1"}}
+[debug] [2022-09-09T01:28:08.139Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:28:08.139Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:28:08.139Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY"}}
+[debug] [2022-09-09T01:28:09.056Z] [runtime-status] [12152] Functions runtime initialized. {"cwd":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions","node_version":"16.14.2"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Functions runtime initialized. {\"cwd\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\",\"node_version\":\"16.14.2\"}"}}
+[debug] [2022-09-09T01:28:09.057Z] [runtime-status] [12152] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Disabled runtime features: undefined"}}
+[debug] [2022-09-09T01:28:09.058Z] [runtime-status] [12152] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:28:09.059Z] [runtime-status] [12152] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:28:09.060Z] [runtime-status] [12152] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-09T01:28:09.060Z] [runtime-status] [12152] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:28:09.090Z] [runtime-status] [12152] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-09T01:28:09.091Z] [runtime-status] [12152] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:28:09.091Z] [runtime-status] [12152] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:28:09.092Z] [runtime-status] [12152] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:28:09.092Z] [runtime-status] [12152] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:28:09.093Z] [runtime-status] [12152] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:28:09.148Z] [runtime-status] [12152] initializeApp(DEFAULT) {"storageBucket":"insidesalesapi.appspot.com","projectId":"insidesalesapi"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] initializeApp(DEFAULT) {\"storageBucket\":\"insidesalesapi.appspot.com\",\"projectId\":\"insidesalesapi\"}"}}
+[debug] [2022-09-09T01:28:09.149Z] [runtime-status] [12152] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:28:09.151Z] [runtime-status] [12152] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:28:09.152Z] [runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:28:09.156Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:28:09.156Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:28:09.164Z] [runtime-status] [12152] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server handling GET request"}}
+[debug] [2022-09-09T01:28:09.173Z] [runtime-status] [12152] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:28:09.175Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE"}}
+[debug] [2022-09-09T01:28:09.176Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:29:52.085Z] Functions emulator received unknown request at path /us-central1/twilioCallEndpoint
+[debug] [2022-09-09T01:29:52.248Z] Functions emulator received unknown request at path /favicon.ico
+[debug] [2022-09-09T01:30:02.182Z] Functions emulator received unknown request at path /
+[debug] [2022-09-09T01:30:05.703Z] Functions emulator received unknown request at path /
+[debug] [2022-09-09T01:30:12.373Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:30:12.373Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:30:12.373Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:30:12.373Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:30:12.373Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:12.373Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY"}}
+[debug] [2022-09-09T01:30:12.374Z] [runtime-status] [12152] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:30:12.374Z] [runtime-status] [12152] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:30:12.376Z] [runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:12.378Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:30:12.378Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:30:12.381Z] [runtime-status] [12152] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server handling GET request"}}
+[debug] [2022-09-09T01:30:12.384Z] [runtime-status] [12152] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:30:12.385Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE"}}
+[debug] [2022-09-09T01:30:12.385Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:30:13.552Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:30:13.552Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:30:13.552Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:30:13.553Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:30:13.553Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:13.553Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY"}}
+[debug] [2022-09-09T01:30:13.553Z] [runtime-status] [12152] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:30:13.554Z] [runtime-status] [12152] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:30:13.555Z] [runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:13.556Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:30:13.556Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:30:13.558Z] [runtime-status] [12152] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server handling GET request"}}
+[debug] [2022-09-09T01:30:13.559Z] [runtime-status] [12152] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:30:13.560Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE"}}
+[debug] [2022-09-09T01:30:13.560Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:30:23.732Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:30:23.732Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:30:23.732Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:30:23.732Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:30:23.732Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:23.733Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY"}}
+[debug] [2022-09-09T01:30:23.733Z] [runtime-status] [12152] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:30:23.733Z] [runtime-status] [12152] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:30:23.734Z] [runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:23.735Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:30:23.735Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:30:23.736Z] [runtime-status] [12152] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server handling GET request"}}
+[debug] [2022-09-09T01:30:23.738Z] [runtime-status] [12152] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:30:23.739Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE"}}
+[debug] [2022-09-09T01:30:23.739Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:30:26.221Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:30:26.221Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:30:26.221Z] Accepted request GET /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:30:26.221Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:30:26.221Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:26.221Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY"}}
+[debug] [2022-09-09T01:30:26.222Z] [runtime-status] [12152] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:30:26.222Z] [runtime-status] [12152] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:30:26.223Z] [runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:30:26.224Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:30:26.225Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:30:26.226Z] [runtime-status] [12152] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server handling GET request"}}
+[debug] [2022-09-09T01:30:26.227Z] [runtime-status] [12152] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:30:26.228Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE"}}
+[debug] [2022-09-09T01:30:26.228Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:31:06.525Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:31:06.525Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:31:06.525Z] Accepted request POST /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:31:06.525Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:31:06.525Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:31:06.525Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: BUSY"}}
+[debug] [2022-09-09T01:31:06.526Z] [runtime-status] [12152] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:31:06.526Z] [runtime-status] [12152] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:31:06.526Z] [runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12152.sock"}}
+[debug] [2022-09-09T01:31:06.529Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:31:06.529Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:31:06.550Z] [runtime-status] [12152] Ephemeral server handling POST request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server handling POST request"}}
+[debug] [2022-09-09T01:31:06.551Z] [runtime-status] [12152] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12152] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:31:06.552Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: IDLE"}}
+[debug] [2022-09-09T01:31:06.553Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:31:50.148Z] File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers"}}
+[debug] [2022-09-09T01:31:51.152Z] [worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:31:51.152Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: FINISHING"}}
+[debug] [2022-09-09T01:31:51.154Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-09-09T01:31:52.302Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "convert-csv-to-json": "^1.3.3",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-09-09T01:31:52.302Z] Building nodejs source
+[debug] [2022-09-09T01:31:52.302Z] Analyzing nodejs backend spec
+[debug] [2022-09-09T01:31:52.303Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-09T01:31:52.304Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: exited"}}
+[debug] [2022-09-09T01:31:52.304Z] [worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-4fee2df1-0e1e-44d9-8899-76d8c404461a]: FINISHED"}}
+[debug] [2022-09-09T01:31:52.456Z] Serving at port 9005
+
+[debug] [2022-09-09T01:31:52.718Z] Got response from /__/functions.yaml {"endpoints":{"sendText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"sendText"},"generateToken":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"generateToken"},"twilioCallEndpoint":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"twilioCallEndpoint"},"makePhoneCall":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"makePhoneCall"},"createNewUser":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"createNewUser"},"csvToJson":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"csvToJson"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-09T01:31:52.723Z] shutdown requested via /__/quitquitquit
+
+[debug] [2022-09-09T01:32:04.136Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:32:04.136Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:32:04.137Z] Accepted request POST /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:32:04.137Z] [worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0"}}
+[debug] [2022-09-09T01:32:04.142Z] [worker-pool] addWorker(us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:32:04.143Z] [worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1"}}
+[debug] [2022-09-09T01:32:04.143Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:32:04.143Z] [worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12263.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12263.sock"}}
+[debug] [2022-09-09T01:32:04.143Z] [worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: BUSY"}}
+[debug] [2022-09-09T01:32:05.131Z] [runtime-status] [12263] Functions runtime initialized. {"cwd":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions","node_version":"16.14.2"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Functions runtime initialized. {\"cwd\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\",\"node_version\":\"16.14.2\"}"}}
+[debug] [2022-09-09T01:32:05.133Z] [runtime-status] [12263] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Disabled runtime features: undefined"}}
+[debug] [2022-09-09T01:32:05.136Z] [runtime-status] [12263] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:32:05.137Z] [runtime-status] [12263] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:32:05.138Z] [runtime-status] [12263] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-09T01:32:05.138Z] [runtime-status] [12263] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:32:05.179Z] [runtime-status] [12263] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-09T01:32:05.179Z] [runtime-status] [12263] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:32:05.180Z] [runtime-status] [12263] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:32:05.182Z] [runtime-status] [12263] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:32:05.182Z] [runtime-status] [12263] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:32:05.182Z] [runtime-status] [12263] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:32:05.261Z] [runtime-status] [12263] initializeApp(DEFAULT) {"storageBucket":"insidesalesapi.appspot.com","projectId":"insidesalesapi"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] initializeApp(DEFAULT) {\"storageBucket\":\"insidesalesapi.appspot.com\",\"projectId\":\"insidesalesapi\"}"}}
+[debug] [2022-09-09T01:32:05.262Z] [runtime-status] [12263] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:32:05.263Z] [runtime-status] [12263] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:32:05.266Z] [runtime-status] [12263] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12263.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12263.sock"}}
+[debug] [2022-09-09T01:32:05.271Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:32:05.271Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:32:05.295Z] [runtime-status] [12263] Ephemeral server handling POST request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Ephemeral server handling POST request"}}
+[debug] [2022-09-09T01:32:05.312Z] [runtime-status] [12263] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12263] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:32:05.315Z] [worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: IDLE"}}
+[debug] [2022-09-09T01:32:05.315Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:33:03.999Z] File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers"}}
+[debug] [2022-09-09T01:33:05.001Z] [worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:33:05.002Z] [worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: FINISHING"}}
+[debug] [2022-09-09T01:33:05.002Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-09-09T01:33:06.094Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "convert-csv-to-json": "^1.3.3",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-09-09T01:33:06.094Z] Building nodejs source
+[debug] [2022-09-09T01:33:06.094Z] Analyzing nodejs backend spec
+[debug] [2022-09-09T01:33:06.095Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-09T01:33:06.096Z] [worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: exited"}}
+[debug] [2022-09-09T01:33:06.096Z] [worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-8a40330b-ab7a-462b-ae5e-2cffea2e5419]: FINISHED"}}
+[debug] [2022-09-09T01:33:06.244Z] Serving at port 9005
+
+[debug] [2022-09-09T01:33:06.354Z] Got response from /__/functions.yaml {"endpoints":{"sendText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"sendText"},"generateToken":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"generateToken"},"twilioCallEndpoint":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"twilioCallEndpoint"},"makePhoneCall":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"makePhoneCall"},"createNewUser":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"createNewUser"},"csvToJson":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"csvToJson"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-09T01:33:06.358Z] shutdown requested via /__/quitquitquit
+
+[debug] [2022-09-09T01:33:19.153Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T01:33:19.153Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T01:33:19.153Z] Accepted request POST /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T01:33:19.153Z] [worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0"}}
+[debug] [2022-09-09T01:33:19.158Z] [worker-pool] addWorker(us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:33:19.159Z] [worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1"}}
+[debug] [2022-09-09T01:33:19.159Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T01:33:19.159Z] [worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12311.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12311.sock"}}
+[debug] [2022-09-09T01:33:19.159Z] [worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: BUSY"}}
+[debug] [2022-09-09T01:33:20.152Z] [runtime-status] [12311] Functions runtime initialized. {"cwd":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions","node_version":"16.14.2"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Functions runtime initialized. {\"cwd\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\",\"node_version\":\"16.14.2\"}"}}
+[debug] [2022-09-09T01:33:20.154Z] [runtime-status] [12311] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Disabled runtime features: undefined"}}
+[debug] [2022-09-09T01:33:20.156Z] [runtime-status] [12311] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:33:20.157Z] [runtime-status] [12311] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:33:20.158Z] [runtime-status] [12311] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-09T01:33:20.159Z] [runtime-status] [12311] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:33:20.200Z] [runtime-status] [12311] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-09T01:33:20.201Z] [runtime-status] [12311] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:33:20.201Z] [runtime-status] [12311] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:33:20.203Z] [runtime-status] [12311] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T01:33:20.204Z] [runtime-status] [12311] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T01:33:20.204Z] [runtime-status] [12311] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-09T01:33:20.283Z] [runtime-status] [12311] initializeApp(DEFAULT) {"storageBucket":"insidesalesapi.appspot.com","projectId":"insidesalesapi"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] initializeApp(DEFAULT) {\"storageBucket\":\"insidesalesapi.appspot.com\",\"projectId\":\"insidesalesapi\"}"}}
+[debug] [2022-09-09T01:33:20.284Z] [runtime-status] [12311] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T01:33:20.285Z] [runtime-status] [12311] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T01:33:20.288Z] [runtime-status] [12311] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12311.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12311.sock"}}
+[debug] [2022-09-09T01:33:20.294Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T01:33:20.294Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T01:33:20.315Z] [runtime-status] [12311] Ephemeral server handling POST request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Ephemeral server handling POST request"}}
+[debug] [2022-09-09T01:33:20.328Z] [runtime-status] [12311] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12311] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T01:33:20.328Z] [worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: IDLE"}}
+[debug] [2022-09-09T01:33:20.328Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2022-09-09T01:35:45.730Z] Sep 08, 2022 9:35:45 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:35:45 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed\nINFO: Websocket client disconnected\n"}}
+[debug] [2022-09-09T01:35:57.702Z] Sep 08, 2022 9:35:57 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 08, 2022 9:35:57 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\nINFO: Connected to new websocket client\n"}}
+[debug] [2022-09-09T12:37:02.717Z] Sep 09, 2022 8:37:02 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 09, 2022 8:37:02 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed\nINFO: Websocket client disconnected\n"}}
+[debug] [2022-09-09T12:37:12.904Z] Sep 09, 2022 8:37:12 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 09, 2022 8:37:12 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\nINFO: Connected to new websocket client\n"}}
+[debug] [2022-09-09T12:41:27.307Z] Sep 09, 2022 8:41:27 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 09, 2022 8:41:27 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed\nINFO: Websocket client disconnected\n"}}
+[debug] [2022-09-09T12:41:44.147Z] Sep 09, 2022 8:41:44 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Sep 09, 2022 8:41:44 AM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\nINFO: Connected to new websocket client\n"}}
+[debug] [2022-09-09T20:09:04.935Z] File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/index.js changed, reloading triggers"}}
+[debug] [2022-09-09T20:09:05.941Z] [worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T20:09:05.941Z] [worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: FINISHING"}}
+[debug] [2022-09-09T20:09:05.945Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-09-09T20:09:08.120Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "convert-csv-to-json": "^1.3.3",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
+    "twilio": "^3.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-09-09T20:09:08.120Z] Building nodejs source
+[debug] [2022-09-09T20:09:08.120Z] Analyzing nodejs backend spec
+[debug] [2022-09-09T20:09:08.125Z] [worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: exited"}}
+[debug] [2022-09-09T20:09:08.125Z] [worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-7ae36acb-f487-463d-b4a5-2d8ca2f241ec]: FINISHED"}}
+[debug] [2022-09-09T20:09:08.126Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-09T20:09:08.436Z] Serving at port 9005
+
+[debug] [2022-09-09T20:09:08.655Z] Got response from /__/functions.yaml {"endpoints":{"sendText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"sendText"},"generateToken":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"generateToken"},"twilioCallEndpoint":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"twilioCallEndpoint"},"makePhoneCall":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"makePhoneCall"},"createNewUser":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"createNewUser"},"csvToJson":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"csvToJson"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-09T20:09:08.661Z] shutdown requested via /__/quitquitquit
+
+[debug] [2022-09-09T20:09:20.175Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-09T20:09:20.175Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-09T20:09:20.175Z] Accepted request POST /insidesalesapi/us-central1/twilioCallEndpoint --> us-central1-twilioCallEndpoint
+[debug] [2022-09-09T20:09:20.175Z] [worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-twilioCallEndpoint: 1 --> 0"}}
+[debug] [2022-09-09T20:09:20.181Z] [worker-pool] addWorker(us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T20:09:20.181Z] [worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-twilioCallEndpoint, total=1"}}
+[debug] [2022-09-09T20:09:20.182Z] [worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=us-central1-twilioCallEndpoint)"}}
+[debug] [2022-09-09T20:09:20.182Z] [worker-us-central1-twilioCallEndpoint-785be0be-a452-4753-ab5f-7a6785e12e1f]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12697.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-785be0be-a452-4753-ab5f-7a6785e12e1f]: Assigning socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12697.sock"}}
+[debug] [2022-09-09T20:09:20.182Z] [worker-us-central1-twilioCallEndpoint-785be0be-a452-4753-ab5f-7a6785e12e1f]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-785be0be-a452-4753-ab5f-7a6785e12e1f]: BUSY"}}
+[debug] [2022-09-09T20:09:22.746Z] [runtime-status] [12697] Functions runtime initialized. {"cwd":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions","node_version":"16.14.2"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Functions runtime initialized. {\"cwd\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions\",\"node_version\":\"16.14.2\"}"}}
+[debug] [2022-09-09T20:09:22.749Z] [runtime-status] [12697] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Disabled runtime features: undefined"}}
+[debug] [2022-09-09T20:09:22.754Z] [runtime-status] [12697] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T20:09:22.757Z] [runtime-status] [12697] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T20:09:22.758Z] [runtime-status] [12697] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-09T20:09:22.759Z] [runtime-status] [12697] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T20:09:22.824Z] [runtime-status] [12697] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-09T20:09:22.824Z] [runtime-status] [12697] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-09T20:09:22.826Z] [runtime-status] [12697] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T20:09:22.829Z] [runtime-status] [12697] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-09T20:09:22.830Z] [runtime-status] [12697] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.22.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.22.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-09T20:09:22.831Z] [runtime-status] [12697] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ryanrieben/Desktop/BMS-Inside-SalesApp-1/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-09T20:09:22.980Z] [runtime-status] [12697] initializeApp(DEFAULT) {"storageBucket":"insidesalesapi.appspot.com","projectId":"insidesalesapi"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] initializeApp(DEFAULT) {\"storageBucket\":\"insidesalesapi.appspot.com\",\"projectId\":\"insidesalesapi\"}"}}
+[debug] [2022-09-09T20:09:22.982Z] [runtime-status] [12697] Beginning invocation function twilioCallEndpoint! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Beginning invocation function twilioCallEndpoint!"}}
+[info] i  functions: Beginning execution of "twilioCallEndpoint" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Beginning execution of \"twilioCallEndpoint\""}}
+[debug] [2022-09-09T20:09:22.984Z] [runtime-status] [12697] Running twilioCallEndpoint in signature http {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Running twilioCallEndpoint in signature http"}}
+[debug] [2022-09-09T20:09:22.988Z] [runtime-status] [12697] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12697.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Attempting to listen to socketPath: /var/folders/lq/55q0j4g50y71ygjzmvt3rtbw0000gn/T/fire_emu_12697.sock"}}
+[debug] [2022-09-09T20:09:23.000Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-09T20:09:23.002Z] [functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/insidesalesapi/us-central1/twilioCallEndpoint, mapping to path=/"}}
+[debug] [2022-09-09T20:09:23.041Z] [runtime-status] [12697] Ephemeral server handling POST request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Ephemeral server handling POST request"}}
+[debug] [2022-09-09T20:09:23.059Z] [runtime-status] [12697] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"[runtime-status] [12697] Ephemeral server survived."}}
+[info] i  functions: Finished "twilioCallEndpoint" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-twilioCallEndpoint"},"extension":{},"message":"Finished \"twilioCallEndpoint\" in ~1s"}}
+[debug] [2022-09-09T20:09:23.061Z] [worker-us-central1-twilioCallEndpoint-785be0be-a452-4753-ab5f-7a6785e12e1f]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-twilioCallEndpoint-785be0be-a452-4753-ab5f-7a6785e12e1f]: IDLE"}}
+[debug] [2022-09-09T20:09:23.061Z] [work-queue] {"queueLength":0,"workRunningCount":0}

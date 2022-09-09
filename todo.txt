@@ -49,8 +49,8 @@ DONE!!    populate autoDialer child component with dialSessionArray
 
 -- For MVP -- 
 
-    Connect Twilio 
-        Softphone
+DONE!!  Connect Twilio 
+DONE!!  Softphone
         SMS Text
 DONE!!  Record and store audio files for voicemails
 DONE!!  Finish CSV upload feature
