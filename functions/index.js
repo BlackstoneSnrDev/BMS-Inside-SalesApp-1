@@ -7,14 +7,16 @@ let fileInputName = 'myInputFile.csv';
 let fileOutputName = 'myOutputFile.json';
 
 const twilio = require('twilio');
+const VoiceResponse = twilio.twiml.VoiceResponse;
 
 const AccessToken = require('twilio').jwt.AccessToken;
 const VoiceGrant = AccessToken.VoiceGrant;
 
 let accountSID = 'ACf89f918daf03a28f51e085cb86cd642f';
 let apiSID = 'SKb186de96befa9a6322e2d08f58787183';
-let authToken = '74e54ce6939ef77e126b4039ed08fde1';
+let authToken = '165db0edc5ab2180f1446c1311a41438';
 let secret = 'IEmLyPMwNX3RWlVUNFEJfaZZY5P8BP5F';
+let twiMLSID= 'AP871e1dd557a56c71ef1a82b5dcd98ce0';
 let sendingPhoneNumber = '+12056497315';
 
 
@@ -46,25 +48,29 @@ exports.generateToken = functions.https.onCall((req, res) => {
     accessToken.identity = clientName;
   
     const grant = new VoiceGrant({
-      outgoingApplicationSid: accountSID,
+      outgoingApplicationSid: twiMLSID,
       incomingAllow: true,
     });
     accessToken.addGrant(grant);
-    return JSON.stringify({ token: accessToken.toJwt() });
+    return { token: accessToken.toJwt()};
 
 });
 
 
 
-exports.makePhoneCall = functions.https.onCall(async (data, context) => {
+exports.makePhoneCall = functions.https.onCall((req, res) => {
     console.log('Phone Call');
-    client.calls
-        .create({
-            from: sendingPhoneNumber,
-            to: '+17348371063',
-            url: 'https://demo.twilio.com/welcome/voice/',
-        })
-        .then(call => console.log(call.sid));
+    var phoneNumber = '+17348371063';
+    var callerId = sendingPhoneNumber;
+    var twiml = new VoiceResponse();
+  
+    var dial = twiml.dial({callerId : callerId});
+    if (phoneNumber) {
+      dial.number({}, phoneNumber);
+    } else {
+      dial.client({}, "support_agent");
+    };
+    return { twiml: twiml.toString() };
 });
 
 

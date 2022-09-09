@@ -3,7 +3,7 @@ import { DataService } from '../../services/services.service';
 import { FormControl } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import { Device } from 'twilio-client';
+import { Device }from 'twilio-client';
 
 @Component({
   selector: 'phone-component',
@@ -108,16 +108,8 @@ export class PhoneComponent implements OnInit {
         }) 
     })
 
-  }
-
-  updateCallStatus(status: any) {
-    this.callStatus = status;
-  }
-
-  testBtn() {
     this.DataService.sendText().then((response) => {
-        console.log(response)
-
+        console.log(response.token)
             // Setup Twilio.Device
             this._device = new Device(response.token, {
             // Set Opus as our preferred codec. Opus generally performs better, requiring less bandwidth and
@@ -136,62 +128,54 @@ export class PhoneComponent implements OnInit {
             enableRingingState: true
             });
 
-        this._device.on("ready", function () {
-            console.log("Twilio.Device Ready!");
-            updateCallStatus("Ready");
-        });
+            this._device.on('ready', (device: any) => {
+                console.log('Twilio.Device Ready!');
+            });
 
-    this._device.on("error", function(error: { message: string; }) {
-        console.log("Twilio.Device Error: " + error.message);
-        updateCallStatus("ERROR: " + error.message);
-      });
+            this._device.on('error', (error: any) => {
+                console.log('Twilio.Device Error: ' + error.message);
+            });
 
-    this._device.on("connect", function(conn: { message: { phoneNumber: string; }; }) {
-        console.log("Successfully established call!");
-        // hangUpButton.prop("disabled", false);
-        // callCustomerButtons.prop("disabled", true);
-        // callSupportButton.prop("disabled", true);
-        // answerButton.prop("disabled", true);
+            this._device.on('connect', (conn: any) => {
+                console.log('Successfully established call!');
+                this.updateCallStatus('In Call');
+                this.containerCallStatus = true;
+            })
 
-        // If phoneNumber is part of the connection, this is a call from a
-        // support agent to a customer's phone
-        if ("phoneNumber" in conn.message) {
-          updateCallStatus("In call with " + conn.message.phoneNumber);
-        } else {
-          // This is a call from a website user to a support agent
-          updateCallStatus("In call with support");
-        }
-      });
+            this._device.on('disconnect', (conn: any) => {
+                console.log('Call ended');
+                this.updateCallStatus('Call Status');
+                this.containerCallStatus = false;
+            });
 
-    this._device.on("disconnect", function(conn: { message: { phoneNumber: string; }; }) {
-        // Disable the hangup button and enable the call buttons
-        // hangUpButton.prop("disabled", true);
-        // callCustomerButtons.prop("disabled", false);
-        // callSupportButton.prop("disabled", false);
+            this._device.on('incoming', (conn: any) => {
+                console.log('Incoming connection from ' + conn.parameters.From);
+                // accept the incoming connection and start two-way audio
+                conn.accept();
+            });
 
-        updateCallStatus("Ready");
-      });
-
-      this._device.on("incoming", function(conn: { message: { phoneNumber: string; }; }) {
-        updateCallStatus("Incoming support call");
-
-        // Set a callback to be executed when the connection is accepted
-        // conn.accept(function() {
-        //   updateCallStatus("In call with customer");
-        // });
-
-        // Set a callback on the answer button and enable it
-        // answerButton.click(function() {
-        //   conn.accept();
-        // });
-        // answerButton.prop("disabled", false);
-      });
-
+            this._device.on('cancel', (conn: any) => {
+                console.log('Call canceled');
+                this.updateCallStatus('Call Status');
+                this.containerCallStatus = false;
+            })
     })
-    .catch(function(err) {
-      console.log(err);
-      console.log("Could not get a token from server!");
-    });
+
+  }
+
+  updateCallStatus(status: any) {
+    this.callStatus = status;
+  }
+
+  testBtn() {
+    let params = '+17348371063'
+    console.log("Calling " + params + "...");
+    if (this._device) {
+        var outgoingConnection = this._device.connect(params);
+        outgoingConnection.on("ringing", function () {
+            console.log("Ringing...");
+        });
+    }
   }
 
   nextCall() {

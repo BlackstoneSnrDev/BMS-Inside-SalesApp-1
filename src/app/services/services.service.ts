@@ -84,6 +84,12 @@ export class DataService {
         return result;
     })
   }
+  makeCall() {
+    const callable = this.fns.httpsCallable('makePhoneCall');
+    return callable({text: 'test', page: '/dashboard'}).toPromise().then(result => {
+        return result;
+    })
+  }
 
     getUserSettings(): Observable<any>{
         const ref = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings');
