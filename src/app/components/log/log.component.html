@@ -32,14 +32,16 @@
                 [autoResize]="autoresize"
                 class="input-neumorphism txtlog"
                 placeholder="Add note"
-                id="noteContent" (click)="autoresize = true"
+                id="noteContent"
+                (click)="autoresize = true"
                 [formControl]="noteContent"
               ></textarea>
             </div>
             <div class="col-2 btnsave-container">
               <button
-                (click)="saveNewNote()" type="button"
-                class="width-100" 
+                (click)="saveNewNote()"
+                type="button"
+                class="width-100"
                 [disabled]="!noteContent.valid"
                 [ngClass]="
                   !noteContent.valid

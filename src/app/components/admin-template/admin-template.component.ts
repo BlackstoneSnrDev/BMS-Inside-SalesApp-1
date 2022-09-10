@@ -7,7 +7,7 @@ import RandomId from 'src/app/services/services.randomId';
 import { UsersService } from 'src/app/services/auth.service';
 
 let len = 12;
-let pattern = 'aA0'
+let pattern = 'aA0';
 
 @Component({
   selector: 'app-admin-template',
@@ -45,7 +45,7 @@ export class AdminTemplateComponent implements OnInit {
 
   public onValidationMsg: string = '';
   public onValidationError: string = '';
-  items: number[] = [1];
+  items: number[] = [1, 2];
   itemsStatus: number[] = [1];
 
   public newFormControl: any = {};
@@ -58,12 +58,13 @@ export class AdminTemplateComponent implements OnInit {
     private dataService: DataService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private usersService: UsersService,
-  ) { }
+    private usersService: UsersService
+  ) {}
 
   ngOnInit() {
-
-    this.usersService.activeTemplate.subscribe(template => this.activeTemplate = template);
+    this.usersService.activeTemplate.subscribe(
+      (template) => (this.activeTemplate = template)
+    );
 
     this.dataService.getAllTemplates().subscribe(
       (response) => {
@@ -73,19 +74,13 @@ export class AdminTemplateComponent implements OnInit {
             this.thCustomerStatus = response.tableTemplateStatutes_th;
 
             for (let fieldName of this.thCustomerStatus) {
-
-
-              this.newFormControl[fieldName.field] =
-                new FormControl(
-                  '',
-                  [Validators.required, Validators.minLength(1)]
-                );
+              this.newFormControl[fieldName.field] = new FormControl('', [
+                Validators.required,
+                Validators.minLength(1),
+              ]);
 
               this.createNewStatusForm = new FormGroup(this.newFormControl);
-
-
             }
-
 
             this.createNewTemplateForm = new FormGroup({
               templateName: new FormControl('', [
@@ -93,21 +88,32 @@ export class AdminTemplateComponent implements OnInit {
                 Validators.minLength(1),
               ]),
 
-              statusLabel0: new FormControl('No action required', [Validators.minLength(1), Validators.required]),
+              statusLabel0: new FormControl('No action required', [
+                Validators.minLength(1),
+                Validators.required,
+              ]),
               statusBackground0: new FormControl('#e6e7ee', [
-                Validators.minLength(1), Validators.required
+                Validators.minLength(1),
+                Validators.required,
               ]),
 
               statusColor0: new FormControl('#333333', [
-                Validators.minLength(1), Validators.required
+                Validators.minLength(1),
+                Validators.required,
               ]),
-
-              fieldName0: new FormControl('', [
+              fieldName0: new FormControl('Phone Number'),
+              fieldType0: new FormControl('number'),
+              fieldVisible0: new FormControl(true),
+              fieldName1: new FormControl('', [
                 Validators.required,
                 Validators.minLength(1),
               ]),
 
-              fieldType0: new FormControl('', [
+              fieldType1: new FormControl('', [
+                Validators.required,
+                Validators.minLength(1),
+              ]),
+              fieldVisible1: new FormControl(true, [
                 Validators.required,
                 Validators.minLength(1),
               ]),
@@ -127,7 +133,8 @@ export class AdminTemplateComponent implements OnInit {
         for (const [index, value] of this.allTemplates.entries()) {
           tdData.push({
             templateName: value.templateName,
-            templateStatus: value.templateName === this.activeTemplate ? true : false,
+            templateStatus:
+              value.templateName === this.activeTemplate ? true : false,
             templateFields: [],
             statuses: [],
           });
@@ -149,12 +156,12 @@ export class AdminTemplateComponent implements OnInit {
 
           // attach the template's statuses to the template (tdData)
           tdData.forEach((element: any) => {
-            this.dataService.getTemplateStatuses(element.templateName).subscribe((data: any) => {
-              element.statuses = data;
-            })
-          })
-
-
+            this.dataService
+              .getTemplateStatuses(element.templateName)
+              .subscribe((data: any) => {
+                element.statuses = data;
+              });
+          });
         }
         this.tdData = tdData;
         this.loading = false;
@@ -169,7 +176,6 @@ export class AdminTemplateComponent implements OnInit {
             console.error(error);
           }
         );
-
       },
 
       (error) => {
@@ -188,6 +194,10 @@ export class AdminTemplateComponent implements OnInit {
       'fieldType' + id,
       new FormControl('', [Validators.required, Validators.minLength(1)])
     );
+    this.createNewTemplateForm.addControl(
+      'fieldVisible' + id,
+      new FormControl(true, [Validators.required, Validators.minLength(1)])
+    );
 
     this.items.push(id);
   }
@@ -195,9 +205,11 @@ export class AdminTemplateComponent implements OnInit {
   removeClonedAddField() {
     let id = this.items.length;
 
-    if (id > 1) {
+    if (id > 2) {
       this.createNewTemplateForm.removeControl('fieldName' + id);
       this.createNewTemplateForm.removeControl('fieldType' + id);
+      this.createNewTemplateForm.removeControl('fieldVisible' + id);
+
       this.items.pop();
     }
   }
@@ -236,52 +248,57 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   // Table on row CRUD
-  onRowEditInit(tdData: any, id: number) {
-    this.clonedTdData[tdData.id] = { ...tdData };
+  onRowEditInit(rowTdData: any, index: any) {
+    this.clonedTdData[index] = { ...rowTdData };
   }
 
   onRowEditSave(rowTdData: any, indexElm: number, indexTemplate: any) {
-    let modifyLastElmActive = (
-      document.getElementById('tr' + indexElm) as HTMLInputElement
-    ).getElementsByClassName('ng-invalid');
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to edit this status?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let modifyLastElmActive = (
+          document.getElementById('tr' + indexElm) as HTMLInputElement
+        ).getElementsByClassName('ng-invalid');
 
-    if (modifyLastElmActive.length > 0) {
-      this.onValidationError = '*All fields must be filled out.';
-    } else {
+        if (modifyLastElmActive.length > 0) {
+          this.onValidationError = '*All fields must be filled out.';
+        } else {
+          this.tdData[indexTemplate]['statuses'][indexElm] = rowTdData;
+          delete this.clonedTdData[rowTdData.id];
 
-
-      this.tdCustomerStatus[indexElm] = rowTdData;
-      delete this.clonedTdData[rowTdData.id];
-
-      // for (const [index, value] of this.tdCustomerStatus) {
-      //   if (value['templateID'] == indexTemplate) {
-      //     this.tdCustomerStatus[indexElm] = rowTdData;
-      //   }
-      // }
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Service Message',
-        detail: 'Status was edited successfully.',
-      });
-    }
+          // for (const [index, value] of this.tdCustomerStatus) {
+          //   if (value['templateID'] == indexTemplate) {
+          //     this.tdCustomerStatus[indexElm] = rowTdData;
+          //   }
+          // }
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Service Message',
+            detail: 'Status was edited successfully.',
+          });
+        }
+      },
+      reject: () => {
+        this.onRowEditCancel(indexElm, indexTemplate);
+      },
+    });
   }
 
-  onRowEditCancel(rowTdData: any, index: number) {
-    this.tdCustomerStatus[index] = this.clonedTdData[rowTdData.id];
-    delete this.tdCustomerStatus[rowTdData.id];
-
+  onRowEditCancel(index: number, indexTemplate: any) {
+    this.tdData[indexTemplate]['statuses'][index] = this.clonedTdData[index];
+    delete this.clonedTdData[index];
   }
-
   onRowDeleteRow(id: any, indexTemplate: any) {
-
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this status?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.tdCustomerStatus = this.tdCustomerStatus.filter(
-          (i: any) => ![id].includes(i.slStatusId)
-        );
+        this.tdData[indexTemplate]['statuses'] = this.tdData[indexTemplate][
+          'statuses'
+        ].filter((i: any) => ![id].includes(i.slStatusId));
       },
     });
 
@@ -302,9 +319,7 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   toggleTemplate(index: any) {
-
-    document.getElementById('buttons' + index)?.classList.toggle('not-visible')
-
+    document.getElementById('buttons' + index)?.classList.toggle('not-visible');
   }
 
   toggleCreateNewTemplate() {
@@ -312,43 +327,25 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   saveCreateNewTemplate() {
-
     this.confirmationService.confirm({
-      message: 'Once the template was created, the template name, as well as the template fields and field type, <b>cannot be modified</b>. You must be certain you want to create it.',
+      message:
+        'Once the template was created, the template name, as well as the template fields and field type, <b>cannot be modified</b>. You must be certain you want to create it.',
       header: 'Warning!',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         let value = this.createNewTemplateForm.value;
-
-        this.createNewTemplateForm.reset();
-        this.tglStatus = false
-        this.createNewTemplateForm.patchValue({
-          statusLabel0: 'No action required',
-          statusBackground0: '#e6e7ee',
-          statusColor0: '#333333',
-        });
-        this.tglCreateNewTemplate = false;
-
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Service Message',
-          detail: 'New template was created successfully.',
-        });
-
-
         let fieldArray = [];
         let statusArray = [];
         let i = 0;
-        let ii = 0
+        let ii = 0;
 
         for (const [index, item] of Object.entries(value)) {
-
-          let uid = RandomId(len, pattern)
+          let uid = RandomId(len, pattern);
 
           if (index.match(/fieldName/g)) {
-
             let lastChar = index.charAt(index.length - 1);
             let fieldType = 'fieldType' + lastChar;
+            let fieldVisible = 'fieldVisible' + lastChar;
             fieldArray.push({
               element: 'input',
               element_order: i,
@@ -356,11 +353,10 @@ export class AdminTemplateComponent implements OnInit {
               element_table_value: item,
               element_type: value[fieldType],
               element_value: null,
-              showWhileCalling: true,
+              showWhileCalling: value[fieldVisible],
             });
             i = i + 1;
           } else if (index.match(/statusLabel/g)) {
-
             let lastChar = index.charAt(index.length - 1);
             let statusBackground = 'statusBackground' + lastChar;
             let statusColor = 'statusColor' + lastChar;
@@ -370,28 +366,38 @@ export class AdminTemplateComponent implements OnInit {
               color: value[statusColor],
               function: null,
               slStatusId: ii,
-              uid: uid
+              uid: uid,
             });
             ii = ii + 1;
           }
-
         }
 
-        this.dataService.addTemplate({ fieldArray: fieldArray, statusArray: statusArray, templateName: value.templateName });
+        this.dataService.addTemplate({
+          fieldArray: fieldArray,
+          statusArray: statusArray,
+          templateName: value.templateName,
+        });
+        this.cancelCreateNewTemplate();
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'New template was created successfully.',
+        });
       },
     });
-
   }
 
-  
-
   cancelCreateNewTemplate() {
-
     this.tglCreateNewTemplate = false;
-    this.items = this.items.filter((a: any, i: any) => i == 0);
+    this.items = [1, 2];
     this.createNewTemplateForm.reset();
-    this.tglStatus = false
+    this.tglStatus = false;
     this.createNewTemplateForm.patchValue({
+      fieldName0: 'Phone Number',
+      fieldType0: 'number',
+      fieldVisible0: true,
+      fieldVisible1: true,
       statusLabel0: 'No action required',
       statusBackground0: '#e6e7ee',
       statusColor0: '#333333',
@@ -400,7 +406,7 @@ export class AdminTemplateComponent implements OnInit {
     let itemsCreated = this.items.length;
     let id = 1;
 
-    for (let index = 0; index < itemsCreated - 1; index++) {
+    for (let index = 0; index < itemsCreated - 2; index++) {
       this.createNewTemplateForm.removeControl('fieldName' + id);
       this.createNewTemplateForm.removeControl('fieldType' + id);
       id += 1;
@@ -502,36 +508,33 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   toggleCreateNewStatus() {
-    this.tglAddStatus = true
-    this.createNewStatusForm.reset()
+    this.tglAddStatus = true;
+    this.createNewStatusForm.reset();
   }
 
   cancelCreateNewStatus() {
-    this.tglAddStatus = false
-    this.createNewStatusForm.reset()
-
+    this.tglAddStatus = false;
+    this.createNewStatusForm.reset();
   }
 
-  saveCreateNewStatus() {
-    this.tglAddStatus = false
-    this.tdCustomerStatus.push(this.createNewStatusForm.value)
-    let id = this.tdCustomerStatus.length - 1
-    this.tdCustomerStatus[id]['slStatusId'] = id
+  saveCreateNewStatus(indexTemplate: any) {
+    this.tglAddStatus = false;
+    this.tdData[indexTemplate]['statuses'].push(this.createNewStatusForm.value);
+    let id = this.tdData[indexTemplate]['statuses'].length - 1;
+    this.tdData[indexTemplate]['statuses'][id]['slStatusId'] = id;
 
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
       detail: 'Status was created successfully.',
     });
-    this.createNewStatusForm.reset()
-
+    this.createNewStatusForm.reset();
   }
 
   toggleStatus() {
-    this.tglStatus = !this.tglStatus
+    this.tglStatus = !this.tglStatus;
     this.createNewTemplateForm.patchValue({
       statusLabel0: '',
     });
   }
-
 }

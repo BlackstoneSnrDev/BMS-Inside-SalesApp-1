@@ -1,70 +1,120 @@
 <div class="table-container">
   <div class="margin-bt menu-table-container">
-    
     <ng-container>
       <div class="row margin-lt">
         <button class="iconbutton-neumorphism-disabled">
           <i class="bi bi-menu-button-fill i-colored"></i>
         </button>
-        <button class="button-neumorphism margin-lt" (click)="toggleAddNewRecord()">
+        <button
+          class="button-neumorphism margin-lt"
+          (click)="toggleAddNewRecord()"
+        >
           <i class="bi bi-plus-square-fill"></i> Add new record
         </button>
-          
-          <div class="groups-container" *ngIf="tbSelectedRows.length > 0">
-            <button class="button-neumorphism margin-lt" (click)="deleteSelection()">
-              <i class="bi bi-trash-fill"></i> Delete all
+
+        <div class="groups-container" *ngIf="tbSelectedRows.length > 0">
+          <button
+            class="button-neumorphism margin-lt"
+            (click)="deleteSelection()"
+          >
+            <i class="bi bi-trash-fill"></i> Delete selection
+          </button>
+          <div class="dropdown">
+            <button
+              class="button-neumorphism margin-lt"
+              (click)="toggleCreateNewGroup()"
+              *ngIf="!tglRemoveFromGroup"
+            >
+              <i class="bi bi-bounding-box"></i> Create new group
             </button>
-            <div class="dropdown">
-              <button class="button-neumorphism margin-lt" (click)="toggleCreateNewGroup()">
-                <i class="bi bi-bounding-box"></i> Create new group
-              </button>
-              <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
-                <div class="dropdown-content create-group-container">
-                  <div class="width-100 dropdown-content-container elm-rounded">
-                    <mat-form-field appearance="standard">
-                      <mat-label>Create new group</mat-label>
-                      <input matInput type="text" #newGroupName placeholder="New group name" autocomplete="off"
-                        class="not-rounded" name="newGroupName" id="newGroupName" maxlength="20"
-                        [formControl]="createNewGroup" required />
-                    </mat-form-field>
-                    <button class="button-neumorphism elm-rounded width-50 margin-tp" [disabled]="!createNewGroup.valid"
-                      [ngClass]="
-                        !createNewGroup.valid
-                          ? 'button-neumorphism-disabled'
-                          : 'button-neumorphism'
-                      " (click)="saveCreateNewGroup()">
-                      Save
-                    </button>
-                    <button class="button-neumorphism elm-rounded width-50 margin-tp" (click)="cancelCreateNewGroup()">
-                      Cancel
-                    </button>
-                  </div>
+            <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
+              <div class="dropdown-content create-group-container">
+                <div class="width-100 dropdown-content-container elm-rounded">
+                  <mat-form-field appearance="standard">
+                    <mat-label>Create new group</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      #newGroupName
+                      placeholder="New group name"
+                      autocomplete="off"
+                      class="not-rounded"
+                      name="newGroupName"
+                      id="newGroupName"
+                      maxlength="20"
+                      [formControl]="createNewGroup"
+                      required
+                    />
+                  </mat-form-field>
+                  <button
+                    class="button-neumorphism elm-rounded width-50 margin-tp"
+                    [disabled]="!createNewGroup.valid"
+                    [ngClass]="
+                      !createNewGroup.valid
+                        ? 'button-neumorphism-disabled'
+                        : 'button-neumorphism'
+                    "
+                    (click)="saveCreateNewGroup()"
+                  >
+                    Save
+                  </button>
+                  <button
+                    class="button-neumorphism elm-rounded width-50 margin-tp"
+                    (click)="cancelCreateNewGroup()"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </div>
-            <p-dropdown [options]="tbGroups" class="button-neumorphism margin-lt" (onChange)="addToExistingGroup()"
-              optionLabel="group_name" optionValue="group_id" placeholder="Add to group" [formControl]="groupSelect">
-            </p-dropdown>
-  
-            <button class="button-neumorphism margin-lt" (click)="ungroupSelection()" *ngIf="tglRemoveFromGroup">
-              <i class="bi bi-trash-fill"></i> Delete from group
-            </button>
-  
           </div>
+          <p-dropdown
+            [options]="tbGroups"
+            class="button-neumorphism margin-lt"
+            (onChange)="addToExistingGroup()"
+            *ngIf="!tglRemoveFromGroup"
+            optionLabel="group_name"
+            optionValue="group_id"
+            placeholder="Add to group"
+            [formControl]="groupSelect"
+          >
+          </p-dropdown>
+
+          <button
+            class="button-neumorphism margin-lt"
+            (click)="ungroupSelection()"
+            *ngIf="tglRemoveFromGroup"
+          >
+            <i class="bi bi-trash-fill"></i> Delete from group
+          </button>
+        </div>
       </div>
-     
+
       <div [ngClass]="tglAddNewRecord ? 'show' : 'hide'">
         <div spellcheck="true">
-          <form [formGroup]="addNewRecordForm" *ngIf="addNewRecordForm" novalidate onsubmit="">
+          <form
+            [formGroup]="addNewRecordForm"
+            *ngIf="addNewRecordForm"
+            novalidate
+            onsubmit=""
+          >
             <h5 class="show">Add new record</h5>
-            <div [ngClass]="
+            <div
+              [ngClass]="
                 !addNewRecordForm.valid && !tglUploadList ? 'show' : 'hide'
-              ">
+              "
+            >
               <br />
               *All fields must be filled out.
             </div>
-            <div class="float-rt margin-bt" [ngClass]="userInfo.admin ? 'show' : 'hide'">
-              <button class="button-neumorphism margin-lt" (click)="toggleUploadList()">
+            <div
+              class="float-rt margin-bt"
+              [ngClass]="userInfo.admin ? 'show' : 'hide'"
+            >
+              <button
+                class="button-neumorphism margin-lt"
+                (click)="toggleUploadList()"
+              >
                 <i class="bi bi-plus-square-fill"></i> Upload record list
               </button>
             </div>
@@ -75,7 +125,8 @@
               <div class="form-row">
                 <div *ngFor="let newtd of thData; let newtdIndex = index">
                   <div class="form-group col-xl-auto">
-                    <ng-container [ngSwitch]="
+                    <ng-container
+                      [ngSwitch]="
                         newtd.element_type === 'boolean'
                           ? 'checkbox'
                           : newtd.field === 'address'
@@ -83,40 +134,59 @@
                           : newtd.element_type === 'email'
                           ? 'email'
                           : -1
-                      ">
+                      "
+                    >
                       <ng-container *ngSwitchCase="'checkbox'">
-                        <p-checkbox [binary]="true" label="{{ newtd.title }}" inputId="{{ newtdIndex + newtd.field }}"
-                          [(ngModel)]="newtd.value" formControlName="{{ newtd.field }}"></p-checkbox>
+                        <p-checkbox
+                          [binary]="true"
+                          label="{{ newtd.title }}"
+                          inputId="{{ newtdIndex + newtd.field }}"
+                          [(ngModel)]="newtd.value"
+                          formControlName="{{ newtd.field }}"
+                        ></p-checkbox>
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'address'">
                         <textarea
-                        pInputTextarea
-                        cols="92"
-                        rows="1"
-                        class="input-neumorphism txtFormComponent"
-                        (click)="toggleModifyAddressForm(newtd.field)"
-                        autocomplete="off" readonly="true"
-                        placeholder="{{ newtd.title }}" formControlName="{{ newtd.field }}"
-                      ></textarea>
-
+                          pInputTextarea
+                          cols="92"
+                          rows="1"
+                          class="input-neumorphism txtFormComponent"
+                          (click)="toggleModifyAddressForm(newtd.field)"
+                          autocomplete="off"
+                          readonly="true"
+                          placeholder="{{ newtd.title }}"
+                          formControlName="{{ newtd.field }}"
+                        ></textarea>
                       </ng-container>
 
                       <ng-container *ngSwitchCase="'email'">
                         <mat-form-field appearance="standard">
                           <mat-label>{{ newtd.title }}</mat-label>
-                          <input matInput pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                            class="input-neumorphism" type="{{ newtd.element_type }}"
-                            placeholder="New {{ newtd.title | lowercase }}" autocomplete="off"
-                            id="{{ newtdIndex + newtd.field }}" formControlName="{{ newtd.field }}" />
+                          <input
+                            matInput
+                            pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                            class="input-neumorphism"
+                            type="{{ newtd.element_type }}"
+                            placeholder="New {{ newtd.title | lowercase }}"
+                            autocomplete="off"
+                            id="{{ newtdIndex + newtd.field }}"
+                            formControlName="{{ newtd.field }}"
+                          />
                         </mat-form-field>
                       </ng-container>
                       <ng-container *ngSwitchDefault>
                         <mat-form-field appearance="standard">
                           <mat-label>{{ newtd.title }}</mat-label>
-                          <input matInput class="input-neumorphism" type="{{ newtd.element_type }}"
-                            placeholder="New {{ newtd.title | lowercase }}" autocomplete="off"
-                            id="{{ newtdIndex + newtd.field }}" formControlName="{{ newtd.field }}" />
+                          <input
+                            matInput
+                            class="input-neumorphism"
+                            type="{{ newtd.element_type }}"
+                            placeholder="New {{ newtd.title | lowercase }}"
+                            autocomplete="off"
+                            id="{{ newtdIndex + newtd.field }}"
+                            formControlName="{{ newtd.field }}"
+                          />
                         </mat-form-field>
                       </ng-container>
                     </ng-container>
@@ -126,15 +196,23 @@
               <hr />
               <div class="form-row">
                 <div class="col">
-                  <button (click)="saveAddNewRecord()" class="width-50 show-line-b txt-center" value="save"
-                    [disabled]="!addNewRecordForm.valid" [ngClass]="
+                  <button
+                    (click)="saveAddNewRecord()"
+                    class="width-50 show-line-b txt-center"
+                    value="save"
+                    [disabled]="!addNewRecordForm.valid"
+                    [ngClass]="
                       !addNewRecordForm.valid
                         ? 'button-neumorphism-disabled'
                         : 'button-neumorphism'
-                    ">
+                    "
+                  >
                     Save
                   </button>
-                  <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelAddNewRecord()">
+                  <div
+                    class="button-neumorphism width-50 show-line-b txt-center"
+                    (click)="cancelAddNewRecord()"
+                  >
                     Cancel
                   </div>
                 </div>
@@ -142,77 +220,132 @@
             </div>
 
             <div [ngClass]="tglUploadList ? 'show' : 'hide'">
-
-                <br />
-
-                <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="uploadRecordList($event)"
-                [multiple]="false" accept=".csv">
-                <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                    </ul>
-                </ng-template>
-        </p-fileUpload>
-
-                <div class="form-row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="file">Upload file</label>
-                            <input type="file" class="file-upload" accept="csv" id="file" (change)="onFileChange($event)" />
-                        </div>
-                        <!-- if there is a fileToUpload, show submit or cancel buttons -->
-                        <div *ngIf="fileToUpload">
-                            <div>{{ uploadStatus }}</div>
-                            <button (click)="onUpload()" class="button-neumorphism width-50 show-line-b txt-center" value="save">
-                                Upload
-                            </button>
-                            <div class="button-neumorphism width-50 show-line-b txt-center" (click)="cancelUploadList()">
-                                Cancel
-                            </div>
-            
-                        </div>
-                    </div>
-                </div>
-
               <br />
-              <!-- <p-fileUpload name="queueList[]" url="./thisNeedToBeSetUpByBackend" accept=".csv" [auto]="true"
-                (onUpload)="getFileUploaded($event)"></p-fileUpload> -->
 
+              <p-fileUpload
+                name="myfile[]"
+                [customUpload]="true"
+                #uploadFile
+                (uploadHandler)="uploadRecordList($event, uploadFile)"
+                [multiple]="false"
+                accept=".csv"
+              >
+                <ng-template pTemplate="content">
+                  <ul *ngIf="uploadedFiles.length">
+                    <li *ngFor="let file of uploadedFiles">
+                      {{ file.name }} - {{ file.size }} bytes
+                    </li>
+                  </ul>
+                </ng-template>
+              </p-fileUpload>
+
+              <!-- <div class="form-row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="file">Upload file</label>
+                    <input
+                      type="file"
+                      class="file-upload"
+                      accept="csv"
+                      id="file"
+                      (change)="onFileChange($event)"
+                    />
+                  </div>
+                  <div *ngIf="fileToUpload">
+                    <div>{{ uploadStatus }}</div>
+                    <button
+                      (click)="onUpload()"
+                      class="button-neumorphism width-50 show-line-b txt-center"
+                      value="save"
+                    >
+                      Upload
+                    </button>
+                    <div
+                      class="button-neumorphism width-50 show-line-b txt-center"
+                      (click)="cancelUploadList()"
+                    >
+                      Cancel
+                    </div>
+                  </div>
+                </div>
+              </div> -->
             </div>
-
           </form>
         </div>
       </div>
     </ng-container>
   </div>
-  <p-table #dataTable [columns]="thData" [value]="tdData | changeView: modifyTable" [rows]="10" [paginator]="true"
-    [globalFilterFields]="thData" [rowsPerPageOptions]="[10, 25, 50]" [(selection)]="tbSelectedRows" [rowHover]="true"
-    dataKey="slIndex" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true" editMode="row" [loading]="loading" styleClass="p-datatable-gridlines"
-    scrollHeight="42.857rem" scrollDirection="horizontal" responsiveLayout="scroll" [tableStyle]="{ width: '100%' }"
-    stateStorage="session" stateKey="stateDataTable">
+  <p-table
+    #dataTable
+    [columns]="thData"
+    [value]="tdData | changeView: modifyTable"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="thData"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [(selection)]="tbSelectedRows"
+    [rowHover]="true"
+    dataKey="slIndex"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+    editMode="row"
+    [loading]="loading"
+    styleClass="p-datatable-gridlines"
+    scrollHeight="42.857rem"
+    scrollDirection="horizontal"
+    responsiveLayout="scroll"
+    [tableStyle]="{ width: '100%' }"
+    stateStorage="session"
+    stateKey="stateDataTable"
+  >
     <ng-template pTemplate="caption">
-      <div class="filter-container" [ngClass]="filterInput.value ? 'filter-active' : ''">
+      <div
+        class="filter-container"
+        [ngClass]="filterInput.value ? 'filter-active' : ''"
+      >
         <mat-form-field appearance="standard">
           <mat-label>Search</mat-label>
-          <input matInput type="text" [value]="$any(dataTable).filters['global']?.value" #filterInput
-            (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')" placeholder="Ex. ium" />
+          <input
+            matInput
+            type="text"
+            [value]="$any(dataTable).filters['global']?.value"
+            #filterInput
+            (keyup)="dataTable.filterGlobal(filterInput.value, 'contains')"
+            placeholder="Ex. ium"
+          />
         </mat-form-field>
       </div>
-      <button *ngIf="tbSelectedRows.length > 0" class="button-neumorphism-disabled i-colored">
+      <button
+        *ngIf="tbSelectedRows.length > 0"
+        class="button-neumorphism-disabled i-colored"
+      >
         <b>({{ tbSelectedRows.length }})</b>
       </button>
-      <button class="button-neumorphism margin-lt margin-bt" (click)="clear(dataTable)">
+      <button
+        class="button-neumorphism margin-lt margin-bt"
+        (click)="clear(dataTable)"
+      >
         Clear filters
       </button>
-      <button pRipple id="all" (click)="modifyTableView('all')" class="button-neumorphism margin-lt margin-bt">
+      <button
+        pRipple
+        id="all"
+        (click)="modifyTableView('all')"
+        class="button-neumorphism margin-lt margin-bt"
+      >
         All
       </button>
       <div class="dropdown" *ngFor="let groupOpt of tbGroups">
-        <button id="{{ groupOpt.group_id }}" pRipple (click)="modifyTableView(groupOpt.group_id)"
-          class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt">
+        <button
+          id="{{ groupOpt.group_id }}"
+          pRipple
+          (click)="modifyTableView(groupOpt.group_id)"
+          class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt"
+        >
           {{ groupOpt.group_name | formatLabel }}
-          <span class="button-icon"><i class="bi bi-chevron-down icon-normal"></i></span>
+          <span class="button-icon"
+            ><i class="bi bi-chevron-down icon-normal"></i
+          ></span>
         </button>
         <div class="dropdown-content">
           <div class="width-100 dropdown-content-container">
@@ -223,36 +356,63 @@
             <div class="rename-group-container hide">
               <mat-form-field appearance="standard">
                 <mat-label>Rename group</mat-label>
-                <input matInput type="text" placeholder="Rename to" class="not-rounded" autocomplete="off"
-                  maxlength="20" #renamedGroup [formControl]="renameGroup" required />
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Rename to"
+                  class="not-rounded"
+                  autocomplete="off"
+                  maxlength="20"
+                  #renamedGroup
+                  [formControl]="renameGroup"
+                  required
+                />
               </mat-form-field>
 
-              <button [disabled]="!renameGroup.valid" [ngClass]="
+              <button
+                [disabled]="!renameGroup.valid"
+                [ngClass]="
                   !renameGroup.valid
                     ? 'button-neumorphism-disabled'
                     : 'button-neumorphism'
-                " class="button-neumorphism elm-rounded width-50" (click)="saveRenameGroup(groupOpt.group_id, $event)">
+                "
+                class="button-neumorphism elm-rounded width-50"
+                (click)="saveRenameGroup(groupOpt.group_id, $event)"
+              >
                 Save
               </button>
-              <button class="button-neumorphism elm-rounded width-50" (click)="cancelRenameGroup($event)">
+              <button
+                class="button-neumorphism elm-rounded width-50"
+                (click)="cancelRenameGroup($event)"
+              >
                 Cancel
               </button>
             </div>
           </div>
-          <div class="width-100 dropdown-content-container massive-sms-container">
+          <div
+            class="width-100 dropdown-content-container massive-sms-container"
+          >
             <i class="bi bi-chat-left-text"></i>
-            <p-dropdown [options]="optSMS" class="button-neumorphism" (onChange)="sendMassiveSMS()"
-              optionLabel="templateName" optionValue="templateId" placeholder="SMS" [formControl]="smsMessageSent">
+            <p-dropdown
+              [options]="optSMS"
+              class="button-neumorphism"
+              (onChange)="sendMassiveSMS()"
+              optionLabel="templateName"
+              optionValue="templateId"
+              placeholder="SMS"
+              [formControl]="smsMessageSent"
+            >
             </p-dropdown>
           </div>
           <div class="width-100 delete-container">
-            <div class="width-100 dropdown-content-container"
-              (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name, '')">
+            <div
+              class="width-100 dropdown-content-container"
+              (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name, '')"
+            >
               <i class="bi bi-trash-fill"></i>
               Delete group
             </div>
           </div>
-
         </div>
       </div>
     </ng-template>
@@ -260,44 +420,89 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th class="sticky-column-checkboxes sticky-checkboxes-main">
-          <p-tableHeaderCheckbox (click)="toggleTableMenu()"></p-tableHeaderCheckbox>
+          <p-tableHeaderCheckbox
+            (click)="toggleTableMenu()"
+          ></p-tableHeaderCheckbox>
         </th>
-        <th *ngIf="userInfo.admin" class="sticky-column sticky-main">Actions</th>
-        <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}" class="stck-head">
+        <th *ngIf="userInfo.admin" class="sticky-column sticky-main">
+          Actions
+        </th>
+        <th
+          *ngFor="let col of columns"
+          pSortableColumn="{{ col.field }}"
+          class="stck-head"
+        >
           {{ col.title }}<p-sortIcon field="{{ col.field }}"></p-sortIcon>
 
-          <p-columnFilter type="text" field="{{ col.field }}" display="menu"></p-columnFilter>
+          <p-columnFilter
+            type="text"
+            field="{{ col.field }}"
+            display="menu"
+          ></p-columnFilter>
         </th>
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex" let-editing="editing">
+    <ng-template
+      pTemplate="body"
+      let-rowData
+      let-columns="columns"
+      let-rowIndex="rowIndex"
+      let-editing="editing"
+    >
       <tr [pEditableRow]="rowData" id="tr{{ rowIndex }}">
         <td class="sticky-column-checkboxes">
-          <p-tableCheckbox [value]="rowData" (click)="toggleTableMenu()"></p-tableCheckbox>
+          <p-tableCheckbox
+            [value]="rowData"
+            (click)="toggleTableMenu()"
+          ></p-tableCheckbox>
         </td>
         <td *ngIf="userInfo.admin" class="sticky-column">
-          <button pRipple *ngIf="!editing" type="button" pInitEditableRow (click)="onRowEditInit(rowData, rowIndex)"
-            class="iconbutton-neumorphism edit-icon margin-rt">
+          <button
+            pRipple
+            *ngIf="!editing"
+            type="button"
+            pInitEditableRow
+            (click)="onRowEditInit(rowData, rowIndex)"
+            class="iconbutton-neumorphism edit-icon margin-rt"
+          >
             <i class="bi bi-pencil-square"></i>
           </button>
-          <button pRipple *ngIf="!editing" type="button" (click)="onRowDeleteRow(rowData.uid)"
-            class="iconbutton-neumorphism trash-icon">
+          <button
+            pRipple
+            *ngIf="!editing"
+            type="button"
+            (click)="onRowDeleteRow(rowData.uid)"
+            class="iconbutton-neumorphism trash-icon"
+          >
             <i class="bi bi-trash-fill"></i>
           </button>
-          <button pRipple *ngIf="editing" type="button" pSaveEditableRow (click)="onRowEditSave(rowData, rowIndex)"
-            class="iconbutton-neumorphism margin-rt">
+          <button
+            pRipple
+            *ngIf="editing"
+            type="button"
+            pSaveEditableRow
+            (click)="onRowEditSave(rowData, rowIndex)"
+            class="iconbutton-neumorphism margin-rt"
+          >
             <i class="pi pi-check"></i>
           </button>
-          <button pRipple *ngIf="editing" type="button" pCancelEditableRow (click)="onRowEditCancel(rowIndex)"
-            class="iconbutton-neumorphism">
+          <button
+            pRipple
+            *ngIf="editing"
+            type="button"
+            pCancelEditableRow
+            (click)="onRowEditCancel(rowIndex)"
+            class="iconbutton-neumorphism"
+          >
             <i class="pi pi-times"></i>
           </button>
         </td>
         <td *ngFor="let col of columns">
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <ng-container [ngSwitch]="
+              <ng-container
+                [ngSwitch]="
                   col.element_type === 'boolean'
                     ? 'checkbox'
                     : col.field === 'address'
@@ -305,38 +510,65 @@
                     : col.element_type === 'email'
                     ? 'email'
                     : -1
-                ">
+                "
+              >
                 <ng-container *ngSwitchCase="'checkbox'">
-                  <p-checkbox [(ngModel)]="rowData[col.field]" [binary]="true" inputId="binary">
+                  <p-checkbox
+                    [(ngModel)]="rowData[col.field]"
+                    [binary]="true"
+                    inputId="binary"
+                  >
                   </p-checkbox>
                 </ng-container>
 
-                <ng-container *ngSwitchCase="'address'" [formGroup]="addressInputsForm">
+                <ng-container
+                  *ngSwitchCase="'address'"
+                  [formGroup]="addressInputsForm"
+                >
                   <div class="p-field">
                     <label for="lbl-address" class="block lblAddress">{{
                       col.title
-                      }}</label>
+                    }}</label>
 
-                    <textarea id="lbl-address" pInputText class="txtFormComponent address-txt" (click)="
+                    <textarea
+                      id="lbl-address"
+                      pInputText
+                      class="txtFormComponent address-txt"
+                      (click)="
                         toggleModifyAddressForm('addressTableField' + rowIndex)
-                      " [readonly]="true" placeholder="New {{ col.title | lowercase }}" autocomplete="off"
-                      value="{{ rowData[col.field] }}" [(ngModel)]="rowData[col.field]"
-                      formControlName="addressTableField{{ rowIndex }}"></textarea>
+                      "
+                      [readonly]="true"
+                      placeholder="New {{ col.title | lowercase }}"
+                      autocomplete="off"
+                      value="{{ rowData[col.field] }}"
+                      [(ngModel)]="rowData[col.field]"
+                      formControlName="addressTableField{{ rowIndex }}"
+                    ></textarea>
                   </div>
                 </ng-container>
                 <ng-container *ngSwitchCase="'email'">
                   <mat-form-field appearance="standard">
                     <mat-label>{{ col.title }}</mat-label>
-                    <input matInput pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                      type="{{ col.element_type }}" placeholder="New {{ col.title | lowercase }}"
-                      [(ngModel)]="rowData[col.field]" required />
+                    <input
+                      matInput
+                      pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                      type="{{ col.element_type }}"
+                      placeholder="New {{ col.title | lowercase }}"
+                      [(ngModel)]="rowData[col.field]"
+                      required
+                    />
                   </mat-form-field>
                 </ng-container>
                 <ng-container *ngSwitchDefault>
                   <mat-form-field appearance="standard">
                     <mat-label>{{ col.title }}</mat-label>
-                    <input matInput type="{{ col.element_type }}" placeholder="New {{ col.title | lowercase }}"
-                      [(ngModel)]="rowData[col.field]" required />
+                    <input
+                      matInput
+                      type="{{ col.element_type }}"
+                      placeholder="New {{ col.title | lowercase }}"
+                      [(ngModel)]="rowData[col.field]"
+                      required
+                    />
                   </mat-form-field>
                 </ng-container>
                 <br />
@@ -363,24 +595,50 @@
 
 <p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
 
-<p-dialog header="Add new address" [(visible)]="tglModifyAddressForm" [breakpoints]="{ '960px': '75vw' }"
-  [style]="{ width: '50vw' }" [draggable]="true" [resizable]="false" class="modifyingAddress">
+<p-dialog
+  header="Add new address"
+  [(visible)]="tglModifyAddressForm"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="true"
+  [resizable]="false"
+  class="modifyingAddress"
+>
   <div class="address-form">
-    <form [formGroup]="addressForm" *ngIf="addressForm" novalidate class="address-form">
+    <form
+      [formGroup]="addressForm"
+      *ngIf="addressForm"
+      novalidate
+      class="address-form"
+    >
       <div class="form-row width-100">
         <div class="col-md-4">
           <mat-form-field appearance="standard" class="txtFormComponent">
             <mat-label>Street</mat-label>
-            <input matInput class="input-neumorphism" type="text" placeholder="New Street" autocomplete="off" #street
-              formControlName="txtStreet" />
+            <input
+              matInput
+              class="input-neumorphism"
+              type="text"
+              placeholder="New Street"
+              autocomplete="off"
+              #street
+              formControlName="txtStreet"
+            />
           </mat-form-field>
         </div>
 
         <div class="col-md-4">
           <mat-form-field appearance="standard" class="txtFormComponent">
             <mat-label>Apt/Suite</mat-label>
-            <input matInput class="input-neumorphism" type="text" placeholder="New apt" autocomplete="off" #apt
-              formControlName="txtApt" />
+            <input
+              matInput
+              class="input-neumorphism"
+              type="text"
+              placeholder="New apt"
+              autocomplete="off"
+              #apt
+              formControlName="txtApt"
+            />
           </mat-form-field>
         </div>
         <div class="col-md-4">
@@ -388,47 +646,82 @@
           optionValue="name" placeholder="City" formControlName="slcCity"></p-dropdown> -->
           <mat-form-field appearance="standard" class="txtFormComponent">
             <mat-label>City</mat-label>
-            <input matInput class="input-neumorphism" type="text" placeholder="New City" autocomplete="off" #city
-              formControlName="txtCity" />
+            <input
+              matInput
+              class="input-neumorphism"
+              type="text"
+              placeholder="New City"
+              autocomplete="off"
+              #city
+              formControlName="txtCity"
+            />
           </mat-form-field>
         </div>
       </div>
       <div class="form-row width-100">
         <div class="col-md-4">
-          <p-dropdown [options]="states" class="input-neumorphism" optionLabel="name" optionValue="state_code"
-            placeholder="State" formControlName="slcState"></p-dropdown>
+          <p-dropdown
+            [options]="states"
+            class="input-neumorphism"
+            optionLabel="name"
+            optionValue="state_code"
+            placeholder="State"
+            formControlName="slcState"
+          ></p-dropdown>
         </div>
         <div class="col-md-4">
           <mat-form-field appearance="standard" class="txtFormComponent">
             <mat-label>Zip/Postal code</mat-label>
-            <input matInput class="input-neumorphism" type="number" placeholder="New zip code" autocomplete="off" #zip
-              formControlName="txtZip" />
+            <input
+              matInput
+              class="input-neumorphism"
+              type="number"
+              placeholder="New zip code"
+              autocomplete="off"
+              #zip
+              formControlName="txtZip"
+            />
           </mat-form-field>
         </div>
         <div class="col-md-4">
-          <p-dropdown [options]="countries" class="input-neumorphism" (onChange)="getCountryInfo()" optionLabel="name"
-            optionValue="Iso2" placeholder="Country" formControlName="slcCountry"></p-dropdown>
+          <p-dropdown
+            [options]="countries"
+            class="input-neumorphism"
+            (onChange)="getCountryInfo()"
+            optionLabel="name"
+            optionValue="Iso2"
+            placeholder="Country"
+            formControlName="slcCountry"
+          ></p-dropdown>
         </div>
       </div>
       <div class="form-row width-100">
-        <div class="col-md-6">
-          <button class="button-neumorphism" (click)="tglModifyAddressForm = false">
+        <div class="col-md-6 closer">
+          <button
+            class="button-neumorphism"
+            (click)="tglModifyAddressForm = false"
+          >
             Cancel
           </button>
         </div>
-        <div class="col-md-6">
-          <button class="button-neumorphism" [disabled]="!addressForm.valid" [ngClass]="
+        <div class="col-md-6 closer">
+          <button
+            class="button-neumorphism"
+            [disabled]="!addressForm.valid"
+            [ngClass]="
               !addressForm.valid
                 ? 'button-neumorphism-disabled'
                 : 'button-neumorphism'
-            " (click)="
+            "
+            (click)="
               saveAddressModified(
                 city.value,
                 street.value,
                 apt.value,
                 zip.value
               )
-            ">
+            "
+          >
             Save
           </button>
         </div>

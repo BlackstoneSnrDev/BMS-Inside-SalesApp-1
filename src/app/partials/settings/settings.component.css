@@ -293,3 +293,101 @@ h4 {
   min-height: 5rem !important;
   height: 5rem;
 }
+
+.recording {
+  background-image: url("../../../assets/img/audio.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.recording-stopped {
+  background-image: url("../../../assets/img/audio.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.record-voicemail .iconbutton-neumorphism {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 100%;
+  box-shadow: none;
+  position: absolute;
+  z-index: 1 !important;
+  top: 0.27rem;
+  left: 0.56rem;
+  margin-top: 0.2rem;
+}
+
+.record-voicemail .iconbutton-neumorphism:hover {
+  animation: pulse 3s infinite;
+}
+
+.record-voicemail .iconbutton-neumorphism i {
+  font-size: 3rem;
+}
+
+.stop-recording {
+  animation: pulse 1s infinite;
+}
+
+.voice-time-spinner {
+  left: 0rem;
+  position: absolute;
+  top: 0rem;
+  z-index: 0 !important;
+}
+
+::ng-deep.mat-progress-spinner circle {
+  stroke-width: 14% !important;
+  stroke: #b8b9be;
+}
+
+::ng-deep.mat-progress-spinner svg {
+  width: 6.6rem !important;
+  height: 6rem !important;
+  margin-top: 0.2rem;
+}
+
+.btn-recorder-container {
+  width: 7rem;
+  height: 6.4rem;
+  position: relative;
+  margin-left: 43%;
+}
+
+.opacity {
+  animation: fade-show 1s infinite ease-in-out;
+}
+
+.opacity-txt {
+  color: #44476a38;
+}
+
+.timer-container {
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+.small-record-btn {
+  width: 3rem !important;
+  height: 3rem !important;
+  top: 1.6rem !important;
+}
+
+.cancel-record {
+  left: 7rem !important;
+}
+
+.save-record {
+  left: -3.6rem !important;
+}
+
+.small-record-btn i {
+  font-size: 1.2rem !important;
+}
+
+::ng-deep .txtFormComponent.mat-form-field {
+  width: 100% !important;
+}

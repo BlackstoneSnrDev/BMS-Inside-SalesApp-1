@@ -89,7 +89,7 @@
   >
     <span>
       <p-dropdown
-      placeholder="Groups"
+        placeholder="Groups"
         [options]="tbGroups"
         [formControl]="groupSelected"
         optionValue="group_id"
@@ -161,6 +161,7 @@
             <p-checkbox
               class="checkFormComponent"
               [binary]="true"
+              [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
               [readonly]="!tgleditField"
               label="{{ callData.element_placeholder }}"
               inputId="{{ callDataIndex }}"
@@ -217,7 +218,14 @@
           </div>
         </ng-container>
         <ng-container *ngSwitchDefault>
-          <div class="col-md-auto">
+          <div
+            class="col-md-auto"
+            [ngClass]="{
+              'col-smaller':
+                callData.element_table_value === 'phonenumber' ||
+                callData.element_table_value === 'dob'
+            }"
+          >
             <mat-form-field appearance="standard" class="txtFormComponent">
               <mat-label>{{ callData.element_placeholder }}</mat-label>
               <input

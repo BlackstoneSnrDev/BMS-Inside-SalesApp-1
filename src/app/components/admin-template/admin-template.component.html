@@ -57,6 +57,10 @@
                   <mat-form-field appearance="standard">
                     <mat-label>Field name</mat-label>
                     <input
+                      [readonly]="indexSection == 0"
+                      [ngClass]="{
+                        'input-disabled-neumorphism ': indexSection == 0
+                      }"
                       matInput
                       class="input-neumorphism width-100"
                       type="text"
@@ -72,6 +76,10 @@
                 >
                   <div class="form-check form-check-inline width-100">
                     <p-dropdown
+                      [readonly]="indexSection == 0"
+                      [ngClass]="{
+                        'input-disabled-neumorphism ': indexSection == 0
+                      }"
                       [options]="selectElmType"
                       class="input-neumorphism width-100 margin-rt"
                       optionLabel="typeName"
@@ -79,7 +87,19 @@
                       placeholder="Field type"
                       formControlName="fieldType{{ indexSection }}"
                     ></p-dropdown>
+                    <p-checkbox
+                      [binary]="true"
+                      label="Visible"
+                      class="margin-rt"
+                      checked="true"
+                      [readonly]="indexSection == 0"
+                      [ngClass]="{
+                        'input-disabled-neumorphism ': indexSection == 0
+                      }"
+                      formControlName="fieldVisible{{ indexSection }}"
+                    ></p-checkbox>
                     <button
+                      [ngClass]="indexSection == 0 ? 'hide' : 'show'"
                       matTooltip="Remove this section field"
                       matTooltipPosition="above"
                       class="iconbutton-neumorphism"
@@ -102,8 +122,11 @@
                 </div>
                 <div class="col-lg-1 no-padding-lt no-padding-rt margin-tp">
                   <div class="section-add-status">
-                    <div *ngIf="!tglStatus" class="status-btn"
-                      (click)="toggleStatus()">
+                    <div
+                      *ngIf="!tglStatus"
+                      class="status-btn"
+                      (click)="toggleStatus()"
+                    >
                       <button class="iconbutton-neumorphism tag-btn">
                         <i class="bi bi-bookmark-plus-fill"></i>
                       </button>
@@ -502,7 +525,7 @@
                       *ngIf="editing"
                       type="button"
                       pCancelEditableRow
-                      (click)="onRowEditCancel(rowData, rowIndex)"
+                      (click)="onRowEditCancel(rowIndex, indexTemplate)"
                       class="iconbutton-neumorphism"
                     >
                       <i class="pi pi-times"></i>
@@ -602,7 +625,7 @@
                     </button>
                     <button
                       *ngIf="tglAddStatus"
-                      (click)="saveCreateNewStatus()"
+                      (click)="saveCreateNewStatus(indexTemplate)"
                       [ngClass]="
                         !createNewStatusForm.invalid
                           ? 'iconbutton-neumorphism'

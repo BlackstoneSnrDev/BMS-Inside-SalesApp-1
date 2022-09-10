@@ -21,10 +21,6 @@
             "typeCode": "date"
         },
         {
-            "typeName": "Password",
-            "typeCode": "password"
-        },
-        {
             "typeName": "Email",
             "typeCode": "email"
         }

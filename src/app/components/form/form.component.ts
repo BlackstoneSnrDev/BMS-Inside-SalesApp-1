@@ -155,6 +155,7 @@ export class FormComponent implements OnInit {
       summary: 'Service Message',
       detail: 'Group "' + groupName + '" was added to calling.',
     });
+    this.groupSelected.reset();
   }
 
   removeGroupSelected(groupId: string) {
@@ -173,6 +174,8 @@ export class FormComponent implements OnInit {
       summary: 'Service Message',
       detail: 'Group was removed from calling.',
     });
+
+    this.groupSelected.reset();
   }
 
   toggleEditFields() {
@@ -358,12 +361,8 @@ export class FormComponent implements OnInit {
           document
             .getElementById('btnCustomerStatus')
             ?.classList.toggle('hide');
-          document
-            .getElementById('customerStatus')
-            ?.classList.toggle('hide');
-          document
-            .getElementById('btnCancelStatus')
-            ?.classList.toggle('hide');
+          document.getElementById('customerStatus')?.classList.toggle('hide');
+          document.getElementById('btnCancelStatus')?.classList.toggle('hide');
           this.customerNewStatus.setValue('');
           this.currentCall['customerStatus'] = newStatus;
           this.customerStatus = newStatus;

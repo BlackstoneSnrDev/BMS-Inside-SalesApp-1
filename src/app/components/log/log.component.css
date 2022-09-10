@@ -61,10 +61,10 @@
 
 .addlog-container {
   padding-bottom: 1rem;
-    padding-top: 1.4rem;
+  padding-top: 1.4rem;
 }
-.add-log-maincontainer{
-  padding-top: 2.2rem
+.add-log-maincontainer {
+  padding-top: 2.2rem;
 }
 .notes-menu {
   position: sticky;
@@ -131,8 +131,8 @@
   font-size: 0.8rem;
 }
 
-.add-note-container{
-width: 100%;
-padding-top: 0.5rem;
-padding-bottom: 0.4rem;
+.add-note-container {
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.4rem;
 }

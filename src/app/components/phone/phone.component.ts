@@ -60,47 +60,65 @@ export class PhoneComponent implements OnInit {
     this.DataService.currentCall.subscribe((currentCall: any) => {
       if (currentCall) {
         this.currentCall = currentCall;
-        this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
+        this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(
+          currentCall.phonenumber
+        );
       }
+    });
 
-    })
-    
     this.DataService.getUserSettings().subscribe((response) => {
-        response.forEach((item: any) => {
-            if (item.docId === 'emails') {
-                let emailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
-                Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
-                    emailArray.push({
-                        templateContent: email.data,
-                        templateId: email.uid,
-                        templateName: email.templateName
-                    });
-                })
-                this.optEmail = emailArray
-            } else if (item.docId === 'textMessage') {
-                let textArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
-                Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
-                    textArray.push({
-                        templateContent: email.data,
-                        templateId: email.uid,
-                        templateName: email.templateName
-                    });
-                })
-                this.optSMS = textArray;
-            } else if (item.docId === 'voicemail') { 
-              let voicemailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
-              Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
-                  voicemailArray.push({
-                      templateContent: email.url,
-                      templateId: email.uid,
-                      templateName: email.fileName
-                  });
-              })
-              this.optVoiceMail = voicemailArray;
-            }
-        }) 
-    })
-
+      response.forEach((item: any) => {
+        if (item.docId === 'emails') {
+          let emailArray: {
+            templateContent: any;
+            templateId: any;
+            templateName: any;
+          }[] = [];
+          Object.values(item)
+            .filter((e) => typeof e !== 'string')
+            .forEach((email: any) => {
+              emailArray.push({
+                templateContent: email.data,
+                templateId: email.uid,
+                templateName: email.templateName,
+              });
+            });
+          this.optEmail = emailArray;
+        } else if (item.docId === 'textMessage') {
+          let textArray: {
+            templateContent: any;
+            templateId: any;
+            templateName: any;
+          }[] = [];
+          Object.values(item)
+            .filter((e) => typeof e !== 'string')
+            .forEach((email: any) => {
+              textArray.push({
+                templateContent: email.data,
+                templateId: email.uid,
+                templateName: email.templateName,
+              });
+            });
+          this.optSMS = textArray;
+        } else if (item.docId === 'voicemail') {
+          let voicemailArray: {
+            templateContent: any;
+            templateId: any;
+            templateName: any;
+          }[] = [];
+          Object.values(item)
+            .filter((e) => typeof e !== 'string')
+            .forEach((email: any) => {
+              voicemailArray.push({
+                templateContent: email.url,
+                templateId: email.uid,
+                templateName: email.fileName,
+              });
+            });
+          this.optVoiceMail = voicemailArray;
+        }
+      });
+    });
   }
 
   nextCall() {

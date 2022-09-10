@@ -1,4 +1,4 @@
-import { Component, ViewChild, } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 // Get table data
 import { DataService } from '../../services/services.service';
 // User Info
@@ -11,7 +11,6 @@ import { Table } from 'primeng/table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Papa } from 'ngx-papaparse';
-
 
 @Component({
   selector: 'table-component',
@@ -73,11 +72,10 @@ export class TableComponent {
     private UsersService: UsersService,
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
-    
+
     private messageService: MessageService,
     private papa: Papa
   ) {}
-
 
   ngOnInit() {
     this.primengConfig.ripple = false;
@@ -88,15 +86,27 @@ export class TableComponent {
       (userInfo) => (this.userInfo = userInfo)
     );
 
-    this.DataService.getSelectData().subscribe(
-      (response) => {
-        this.optSMS = response.selectSMSMessage;
-      },
-
-      (error) => {
-        console.error(error);
-      }
-    );
+    this.DataService.getUserSettings().subscribe((response) => {
+      response.forEach((item: any) => {
+        if (item.docId === 'textMessage') {
+          let textArray: {
+            templateContent: any;
+            templateId: any;
+            templateName: any;
+          }[] = [];
+          Object.values(item)
+            .filter((e) => typeof e !== 'string')
+            .forEach((email: any) => {
+              textArray.push({
+                templateContent: email.data,
+                templateId: email.uid,
+                templateName: email.templateName,
+              });
+            });
+          this.optSMS = textArray;
+        }
+      });
+    });
 
     this.addressInputsForm = new FormGroup({});
     this.DataService.getTableCustomerHeader()
@@ -117,16 +127,12 @@ export class TableComponent {
       .then(() => {
         this.DataService.getCustomerGroups().subscribe((data) => {
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
-
-          this.loading = false;
-
+          console.log(this.tbGroups);
           let modifyById = sessionStorage.getItem('dataTableView');
-            setTimeout(() => {
-              this.modifyTableView(modifyById as string);
-              this.loading = false;
-            }, 400)
-           
-
+          setTimeout(() => {
+            this.modifyTableView(modifyById as string);
+            this.loading = false;
+          }, 400);
         });
       })
       .then(
@@ -138,60 +144,101 @@ export class TableComponent {
             ]);
           }
           this.addNewRecordForm = new FormGroup(this.newFormControl);
-          console.log( this.thData)
+          console.log(this.thData);
         },
         (error) => {
           console.error(error);
         }
       );
-
-
-
   }
-
-
 
   toggleUploadList() {
     this.tglUploadList = !this.tglUploadList;
-    this.addNewRecordForm.reset()
+    this.addNewRecordForm.reset();
+  }
+
+  uploadRecordList(event: any, uploadFile: any) {
+    this.uploadedFiles = event.files;
+
+    this.DataService.fileUpload(event.files[0]).catch((reason) =>
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Service Message',
+        detail:
+          "File couldn't be uploaded. Error: The Headers in your CSV file do not exactly match the fields in the active template. Please check the CSV file's headers and try again.",
+        sticky: true,
+      })
+    );
+
+    let reader: FileReader = new FileReader();
+    reader.readAsText(event.files[0]);
+    reader.onload = (e) => {
+      let csv: string = reader.result as string;
+
+      let options = {
+        header: true,
+        complete: (results: any) => {
+          this.DataService.fileUpload(results).then((responce: any) => {
+            if (responce.status === 'Success') {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Service Message',
+                detail: responce.data,
+              });
+            } else if (responce.status === 'Error') {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Service Message',
+                detail: responce.data,
+              });
+            }
+            // this.uploadStatus = responce;
+          });
+        },
+      };
+
+      this.papa.parse(csv, options);
+    };
+    uploadFile.clear();
   }
 
   onFileChange(event: any) {
-        this.fileToUpload = event.target.files[0];
+    this.fileToUpload = event.target.files[0];
+    console.log(this.fileToUpload);
 
-        //this.DataService.fileUpload(event.target.files[0]);
+    //this.DataService.fileUpload(event.target.files[0]);
 
-        let reader: FileReader = new FileReader();
-        reader.readAsText(event.target.files[0]);
-        reader.onload = (e) => {
-            let csv: string = reader.result as string;
+    // let reader: FileReader = new FileReader();
+    // reader.readAsText(event.target.files[0]);
+    // reader.onload = (e) => {
+    //     let csv: string = reader.result as string;
 
-            let options = {
-                header: true,
-                complete: (results: any) => {
-                    this.DataService.fileUpload(results).then((responce: any) => {
-                        if (responce.status === 'Success') {
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'Service Message',
-                                detail: responce.data,
-                            });
-                        } else if (responce.status === 'Error') {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'Service Message',
-                                detail: responce.data,
-                            });
-                        }
-                        // this.uploadStatus = responce;
-                    })
-                }
-            };
+    //     let options = {
+    //         header: true,
+    //         complete: (results: any) => {
+    //             this.DataService.fileUpload(results).then((responce: any) => {
+    //                 if (responce.status === 'Success') {
+    //                     this.messageService.add({
+    //                         severity: 'success',
+    //                         summary: 'Service Message',
+    //                         detail: responce.data,
+    //                     });
+    //                 } else if (responce.status === 'Error') {
+    //                     this.messageService.add({
+    //                         severity: 'error',
+    //                         summary: 'Service Message',
+    //                         detail: responce.data,
+    //                     });
+    //                 }
+    //                 // this.uploadStatus = responce;
+    //             })
+    //         }
+    //     };
 
-            this.papa.parse(csv, options);
+    //     this.papa.parse(csv, options);
 
-        }
-    }
+    // }
+  }
 
   onUpload() {
     console.log('uploaded');
@@ -201,8 +248,6 @@ export class TableComponent {
     console.log('cancled');
   }
 
-
-
   @ViewChild('dataTable') table!: Table;
 
   clear(table: Table) {
@@ -211,8 +256,8 @@ export class TableComponent {
     this.renameGroup.reset();
     this.createNewGroup.reset();
     this.tglMenuTable = false;
-    table.sortField = ''
-    table.sortOrder = 0
+    table.sortField = '';
+    table.sortOrder = 0;
 
     this.modifyTableView('all');
 
@@ -236,28 +281,41 @@ export class TableComponent {
   }
 
   onRowEditSave(tdData: any, index: number) {
-    this.addressInputsForm.removeControl('addressTableField' + index);
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to edit this record?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.addressInputsForm.removeControl('addressTableField' + index);
 
-    let modifyLastElmActive = (
-      document.getElementById('tr' + index) as HTMLInputElement
-    ).getElementsByClassName('ng-invalid');
+        let modifyLastElmActive = (
+          document.getElementById('tr' + index) as HTMLInputElement
+        ).getElementsByClassName('ng-invalid');
 
-    if (modifyLastElmActive.length > 0) {
-      this.onValidationError = '*All fields must be filled out.';
-    } else {
-      this.DataService.editCustomer(tdData);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Service Message',
-        detail: 'Record was edited successfully.',
-      });
-    }
+        if (modifyLastElmActive.length > 0) {
+          this.onValidationError = '*All fields must be filled out.';
+        } else {
+          this.DataService.editCustomer(tdData);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Service Message',
+            detail: 'Record was edited successfully.',
+          });
+        }
+      },
+      reject: () => {
+        this.onRowEditCancel(index);
+      },
+    });
   }
 
   onRowEditCancel(index: number) {
     this.addressInputsForm.removeControl('addressTableField' + index);
 
+    console.log(this.tdData[index]);
     this.tdData[index] = this.clonedtdData[index];
+    console.log(this.clonedtdData[index]);
+
     delete this.clonedtdData[index];
   }
 
@@ -382,6 +440,7 @@ export class TableComponent {
 
     this.tglCreateNewGroup = false;
     this.createNewGroup.reset();
+    this.tbSelectedRows = [];
   }
 
   cancelCreateNewGroup() {
@@ -448,8 +507,7 @@ export class TableComponent {
   }
   sendMassiveSMS() {
     this.confirmationService.confirm({
-      message:
-        'Are you sure you want to send this message?',
+      message: 'Are you sure you want to send this message?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -458,7 +516,7 @@ export class TableComponent {
           summary: 'Service Message',
           detail: 'SMS Message sent.',
         });
-      }
+      },
     });
   }
 
@@ -530,6 +588,7 @@ export class TableComponent {
             groupName +
             '" successfully.',
         });
+        this.tbSelectedRows = [];
       },
     });
   }
@@ -578,6 +637,7 @@ export class TableComponent {
             this.deleteGroup(groupId, groupName, 'noRecordsInside');
           }
         }, 500);
+        this.tbSelectedRows = [];
       },
     });
   }
@@ -586,12 +646,10 @@ export class TableComponent {
   modifyTableView(modifyById: string) {
     this.loading = true;
 
-
     console.log(modifyById);
 
-
-    if(!modifyById){
-      modifyById = 'all'
+    if (!modifyById) {
+      modifyById = 'all';
     }
 
     let modifyLastElmActive = document.getElementsByClassName(
@@ -610,20 +668,22 @@ export class TableComponent {
 
     this.modifyTable = modifyById;
     this.loading = false;
- 
 
     if (modifyById !== 'all') {
-      let groupInfo = this.tbGroups.filter((a:any, i:any) => a.group_id === modifyById)
-    let group_name = groupInfo[0]['group_name']
+      let groupInfo = this.tbGroups.filter(
+        (a: any, i: any) => a.group_id === modifyById
+      );
+      let group_name = groupInfo[0]['group_name'];
       this.messageService.add({
         severity: 'success',
         summary: 'Service Message',
-        detail: 'Showing records from group '+group_name,
+        detail: 'Showing records from "' + group_name + '" group.',
       });
-      this.tglRemoveFromGroup = true
-    }else{
-      this.tglRemoveFromGroup = false
+      this.tglRemoveFromGroup = true;
+    } else {
+      this.tglRemoveFromGroup = false;
     }
+    this.tbSelectedRows = [];
   }
 
   log = (data: any) => console.log(data);
@@ -753,18 +813,7 @@ export class TableComponent {
       detail: 'Address was added successfully. Please save changes.',
     });
   }
-
-  uploadRecordList(event: any) {
-    for(let file of event.files) {
-        this.uploadedFiles.push(file);
-    }
-
-    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
 }
-
-}
-
-
 
 function subscribe(arg0: (data: any) => void) {
   throw new Error('Function not implemented.');
