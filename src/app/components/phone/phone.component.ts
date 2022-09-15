@@ -125,13 +125,41 @@ export class PhoneComponent implements OnInit {
     let currentCallIndex = this.dialSessionArray.findIndex(
       (x: { uid: any }) => x.uid === this.currentCall.uid
     );
+
     this.DataService.setActiveCall(
       this.dialSessionArray[currentCallIndex + 1].uid
     );
+
+    let newCallName = this.dialSessionArray[currentCallIndex + 1].fullname;
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Next call: ' + newCallName,
+    });
   }
 
   selectCustomer(uid: string) {
     this.DataService.setActiveCall(uid);
+
+    let oldCall = this.currentCall.fullname;
+
+    setTimeout(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Service Message',
+        detail:
+          'Current customer has changed from "' +
+          oldCall +
+          '" to "' +
+          this.currentCall.fullname +
+          '".',
+      });
+    }, 400);
   }
 
   showTimeHandled(callId: any) {
@@ -159,9 +187,20 @@ export class PhoneComponent implements OnInit {
 
   toggleAutoDialer() {
     this.tglAutoDialer = !this.tglAutoDialer;
+    let msg = '';
+    if (this.tglAutoDialer) {
+      msg = 'Auto-dialer is now active.';
+    } else {
+      msg = 'Auto-dialer was deactivated successfully.';
+    }
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: msg,
+    });
   }
 
-  btnAnswerCall() {
+  btnCall() {
     this.containerCallStatus = !this.containerCallStatus;
     this.holdStatus = false;
     this.muteStatus = false;

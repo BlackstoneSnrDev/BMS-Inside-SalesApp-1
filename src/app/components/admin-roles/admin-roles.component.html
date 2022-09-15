@@ -143,7 +143,7 @@
       </ng-template>
       <ng-template pTemplate="footer" let-columns>
         <tr [formGroup]="createNewRoleForm" *ngIf="createNewRoleForm">
-          <td class="sticky-column-checkboxes">
+          <td>
             <button
               *ngIf="!tglAddRole"
               matTooltip="Add new role"

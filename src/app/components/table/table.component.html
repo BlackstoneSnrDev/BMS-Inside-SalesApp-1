@@ -19,55 +19,53 @@
           >
             <i class="bi bi-trash-fill"></i> Delete selection
           </button>
-          <div class="dropdown">
-            <button
-              class="button-neumorphism margin-lt"
-              (click)="toggleCreateNewGroup()"
-              *ngIf="!tglRemoveFromGroup"
-            >
-              <i class="bi bi-bounding-box"></i> Create new group
-            </button>
-            <div [ngClass]="tglCreateNewGroup ? 'show' : 'hide'">
-              <div class="dropdown-content create-group-container">
-                <div class="width-100 dropdown-content-container elm-rounded">
-                  <mat-form-field appearance="standard">
-                    <mat-label>Create new group</mat-label>
-                    <input
-                      matInput
-                      type="text"
-                      #newGroupName
-                      placeholder="New group name"
-                      autocomplete="off"
-                      class="not-rounded"
-                      name="newGroupName"
-                      id="newGroupName"
-                      maxlength="20"
-                      [formControl]="createNewGroup"
-                      required
-                    />
-                  </mat-form-field>
-                  <button
-                    class="button-neumorphism elm-rounded width-50 margin-tp"
-                    [disabled]="!createNewGroup.valid"
-                    [ngClass]="
-                      !createNewGroup.valid
-                        ? 'button-neumorphism-disabled'
-                        : 'button-neumorphism'
-                    "
-                    (click)="saveCreateNewGroup()"
-                  >
-                    Save
-                  </button>
-                  <button
-                    class="button-neumorphism elm-rounded width-50 margin-tp"
-                    (click)="cancelCreateNewGroup()"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <button
+            class="button-neumorphism margin-lt"
+            *ngIf="!tglRemoveFromGroup"
+            (click)="createGroup.toggle($event)"
+          >
+            <i class="bi bi-folder"></i> Create new group
+          </button>
+
+          <p-overlayPanel #createGroup>
+            <ng-template pTemplate>
+              <mat-form-field appearance="standard">
+                <mat-label>Create new group</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  #newGroupName
+                  placeholder="New group name"
+                  autocomplete="off"
+                  class="not-rounded"
+                  name="newGroupName"
+                  id="newGroupName"
+                  maxlength="20"
+                  [formControl]="createNewGroup"
+                  required
+                />
+              </mat-form-field>
+              <button
+                class="button-neumorphism elm-rounded width-50 margin-tp"
+                [disabled]="!createNewGroup.valid"
+                [ngClass]="
+                  !createNewGroup.valid
+                    ? 'button-neumorphism-disabled'
+                    : 'button-neumorphism'
+                "
+                (click)="saveCreateNewGroup()"
+              >
+                Save
+              </button>
+              <button
+                class="button-neumorphism elm-rounded width-50 margin-tp"
+                (click)="cancelCreateNewGroup()"
+              >
+                Cancel
+              </button>
+            </ng-template>
+          </p-overlayPanel>
+
           <p-dropdown
             [options]="tbGroups"
             class="button-neumorphism margin-lt"
@@ -85,7 +83,7 @@
             (click)="ungroupSelection()"
             *ngIf="tglRemoveFromGroup"
           >
-            <i class="bi bi-trash-fill"></i> Delete from group
+            <i class="bi bi-folder-minus"></i> Delete from group
           </button>
         </div>
       </div>
@@ -131,8 +129,10 @@
                           ? 'checkbox'
                           : newtd.field === 'address'
                           ? 'address'
-                          : newtd.element_type === 'email'
+                          : newtd.field === 'emailaddress'
                           ? 'email'
+                          : newtd.field === 'dob'
+                          ? 'date'
                           : -1
                       "
                     >
@@ -152,7 +152,13 @@
                           cols="92"
                           rows="1"
                           class="input-neumorphism txtFormComponent"
-                          (click)="toggleModifyAddressForm(newtd.field)"
+                          (click)="
+                            toggleModifyAddressForm(
+                              newtd.field,
+                              newtd.field,
+                              'new'
+                            )
+                          "
                           autocomplete="off"
                           readonly="true"
                           placeholder="{{ newtd.title }}"
@@ -167,7 +173,7 @@
                             matInput
                             pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                             class="input-neumorphism"
-                            type="{{ newtd.element_type }}"
+                            type="email"
                             placeholder="New {{ newtd.title | lowercase }}"
                             autocomplete="off"
                             id="{{ newtdIndex + newtd.field }}"
@@ -175,6 +181,23 @@
                           />
                         </mat-form-field>
                       </ng-container>
+
+                      <ng-container *ngSwitchCase="'date'">
+                        <mat-form-field appearance="standard">
+                          <mat-label>{{ newtd.title }}</mat-label>
+                          <input
+                            matInput
+                            value="2022/09/14"
+                            type="date"
+                            class="input-neumorphism"
+                            autocomplete="off"
+                            id="{{ newtdIndex + newtd.field }}"
+                            placeholder="New {{ newtd.title | lowercase }}"
+                            formControlName="{{ newtd.field }}"
+                          />
+                        </mat-form-field>
+                      </ng-container>
+
                       <ng-container *ngSwitchDefault>
                         <mat-form-field appearance="standard">
                           <mat-label>{{ newtd.title }}</mat-label>
@@ -197,9 +220,8 @@
               <div class="form-row">
                 <div class="col">
                   <button
-                    (click)="saveAddNewRecord()"
+                    (click)="saveAddNewRecord(dataTable)"
                     class="width-50 show-line-b txt-center"
-                    value="save"
                     [disabled]="!addNewRecordForm.valid"
                     [ngClass]="
                       !addNewRecordForm.valid
@@ -222,6 +244,14 @@
             <div [ngClass]="tglUploadList ? 'show' : 'hide'">
               <br />
 
+              <button
+                matTooltip="Cancel upload list"
+                matTooltipPosition="left"
+                (click)="toggleUploadList()"
+                class="iconbutton-neumorphism cancel-upload"
+              >
+                <i class="pi pi-times"></i>
+              </button>
               <p-fileUpload
                 name="myfile[]"
                 [customUpload]="true"
@@ -290,7 +320,7 @@
     [showCurrentPageReport]="true"
     editMode="row"
     [loading]="loading"
-    styleClass="p-datatable-gridlines"
+    styleClass="p-datatable-gridlines queue-table"
     scrollHeight="42.857rem"
     scrollDirection="horizontal"
     responsiveLayout="scroll"
@@ -315,104 +345,120 @@
           />
         </mat-form-field>
       </div>
-      <button
-        *ngIf="tbSelectedRows.length > 0"
-        class="button-neumorphism-disabled i-colored"
-      >
-        <b>({{ tbSelectedRows.length }})</b>
-      </button>
-      <button
-        class="button-neumorphism margin-lt margin-bt"
-        (click)="clear(dataTable)"
-      >
-        Clear filters
-      </button>
-      <button
-        pRipple
-        id="all"
-        (click)="modifyTableView('all')"
-        class="button-neumorphism margin-lt margin-bt"
-      >
-        All
-      </button>
-      <div class="dropdown" *ngFor="let groupOpt of tbGroups">
+      <div class="form-check form-check-inline width-100">
         <button
-          id="{{ groupOpt.group_id }}"
-          pRipple
-          (click)="modifyTableView(groupOpt.group_id)"
-          class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt"
+          *ngIf="tbSelectedRows.length > 0"
+          class="button-neumorphism-disabled i-colored"
         >
-          {{ groupOpt.group_name | formatLabel }}
-          <span class="button-icon"
-            ><i class="bi bi-chevron-down icon-normal"></i
-          ></span>
+          <b>({{ tbSelectedRows.length }})</b>
         </button>
-        <div class="dropdown-content">
-          <div class="width-100 dropdown-content-container">
-            <div (click)="toggleEditGroup($event)">
-              <i class="bi bi-pencil-square"></i>
-              Rename group
-            </div>
-            <div class="rename-group-container hide">
-              <mat-form-field appearance="standard">
-                <mat-label>Rename group</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  placeholder="Rename to"
-                  class="not-rounded"
-                  autocomplete="off"
-                  maxlength="20"
-                  #renamedGroup
-                  [formControl]="renameGroup"
-                  required
-                />
-              </mat-form-field>
-
-              <button
-                [disabled]="!renameGroup.valid"
-                [ngClass]="
-                  !renameGroup.valid
-                    ? 'button-neumorphism-disabled'
-                    : 'button-neumorphism'
-                "
-                class="button-neumorphism elm-rounded width-50"
-                (click)="saveRenameGroup(groupOpt.group_id, $event)"
-              >
-                Save
-              </button>
-              <button
-                class="button-neumorphism elm-rounded width-50"
-                (click)="cancelRenameGroup($event)"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-          <div
-            class="width-100 dropdown-content-container massive-sms-container"
+        <button
+          class="button-neumorphism margin-lt margin-bt"
+          (click)="clear(dataTable)"
+        >
+          Clear filters
+        </button>
+        <button
+          pRipple
+          id="all"
+          (click)="modifyTableView('all', true)"
+          class="button-neumorphism margin-lt margin-bt"
+        >
+          All
+        </button>
+        <div *ngFor="let groupOpt of tbGroups">
+          <button
+            id="{{ groupOpt.group_id }}"
+            pRipple
+            (click)="modifyTableView(groupOpt.group_id, true)"
+            (mouseover)="group.toggle($event)"
+            class="button-neumorphism margin-lt dropbtn-neumorphism margin-bt"
           >
-            <i class="bi bi-chat-left-text"></i>
-            <p-dropdown
-              [options]="optSMS"
-              class="button-neumorphism"
-              (onChange)="sendMassiveSMS()"
-              optionLabel="templateName"
-              optionValue="templateId"
-              placeholder="SMS"
-              [formControl]="smsMessageSent"
-            >
-            </p-dropdown>
-          </div>
-          <div class="width-100 delete-container">
-            <div
-              class="width-100 dropdown-content-container"
-              (click)="deleteGroup(groupOpt.group_id, groupOpt.group_name, '')"
-            >
-              <i class="bi bi-trash-fill"></i>
-              Delete group
-            </div>
-          </div>
+            {{ groupOpt.group_name | formatLabel }}
+          </button>
+
+          <p-overlayPanel #group>
+            <ng-template pTemplate>
+              <div class="width-100 btn-rename-group-container">
+                <button
+                  (click)="toggleEditGroup(groupOpt.group_id)"
+                  id="btn-rename-group-container{{ groupOpt.group_id }}"
+                  class="button-neumorphism btn-nobtn"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                  Rename group
+                </button>
+                <div
+                  class="rename-group-container hide"
+                  id="rename-group-container{{ groupOpt.group_id }}"
+                >
+                  <mat-form-field appearance="standard">
+                    <mat-label>Rename group</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Rename to"
+                      class="not-rounded"
+                      autocomplete="off"
+                      maxlength="20"
+                      #renamedGroup
+                      [formControl]="renameGroup"
+                      required
+                    />
+                  </mat-form-field>
+
+                  <button
+                    [disabled]="!renameGroup.valid"
+                    [ngClass]="
+                      !renameGroup.valid
+                        ? 'button-neumorphism-disabled'
+                        : 'button-neumorphism'
+                    "
+                    class="button-neumorphism elm-rounded width-50"
+                    (click)="saveRenameGroup(groupOpt.group_id, $event)"
+                  >
+                    Save
+                  </button>
+                  <button
+                    class="button-neumorphism elm-rounded width-50"
+                    (click)="cancelRenameGroup(groupOpt.group_id)"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <div
+                id="massive-sms-container{{ groupOpt.group_id }}"
+                class="width-100 massive-sms-container"
+              >
+                <i class="bi bi-chat-left-text"></i>
+                <p-dropdown
+                  [options]="optSMS"
+                  class="button-neumorphism width-100"
+                  (onChange)="sendMassiveSMS()"
+                  optionLabel="templateName"
+                  optionValue="templateId"
+                  placeholder="SMS"
+                  [formControl]="smsMessageSent"
+                >
+                </p-dropdown>
+              </div>
+              <div
+                class="width-100 delete-container"
+                id="delete-container{{ groupOpt.group_id }}"
+              >
+                <button
+                  class="button-neumorphism btn-nobtn"
+                  (click)="
+                    deleteGroup(groupOpt.group_id, groupOpt.group_name, '')
+                  "
+                >
+                  <i class="bi bi-folder-x"></i>
+                  Delete group
+                </button>
+              </div>
+            </ng-template>
+          </p-overlayPanel>
         </div>
       </div>
     </ng-template>
@@ -507,8 +553,10 @@
                     ? 'checkbox'
                     : col.field === 'address'
                     ? 'address'
-                    : col.element_type === 'email'
+                    : col.field === 'emailaddress'
                     ? 'email'
+                    : col.field === 'dob'
+                    ? 'date'
                     : -1
                 "
               >
@@ -535,7 +583,11 @@
                       pInputText
                       class="txtFormComponent address-txt"
                       (click)="
-                        toggleModifyAddressForm('addressTableField' + rowIndex)
+                        toggleModifyAddressForm(
+                          'addressTableField' + rowIndex,
+                          rowData[col.field],
+                          'table'
+                        )
                       "
                       [readonly]="true"
                       placeholder="New {{ col.title | lowercase }}"
@@ -552,7 +604,20 @@
                     <input
                       matInput
                       pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                      type="{{ col.element_type }}"
+                      type="email"
+                      placeholder="New {{ col.title | lowercase }}"
+                      [(ngModel)]="rowData[col.field]"
+                      required
+                    />
+                  </mat-form-field>
+                </ng-container>
+                <ng-container *ngSwitchCase="'date'">
+                  <mat-form-field appearance="standard">
+                    <mat-label>{{ col.title }}</mat-label>
+                    <input
+                      matInput
+                      value="2022/09/14"
+                      type="date"
                       placeholder="New {{ col.title | lowercase }}"
                       [(ngModel)]="rowData[col.field]"
                       required

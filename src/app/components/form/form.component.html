@@ -149,10 +149,12 @@
         [ngSwitch]="
           callData.element_type === 'boolean'
             ? 'checkbox'
-            : callData.element_placeholder === 'Address'
+            : callData.element_table_value === 'address'
             ? 'address'
-            : callData.element_type === 'email'
+            : callData.element_table_value === 'emailaddress'
             ? 'email'
+            : callData.element_table_value === 'dob'
+            ? 'date'
             : -1
         "
       >
@@ -180,19 +182,20 @@
               cols="100"
               rows="1"
               class="input-neumorphism txtFormComponent"
-              (click)="
-                !tgleditField ||
-                  toggleModifyAddressForm(
-                    callDataIndex,
-                    callData.element_table_value
-                  )
-              "
               [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
               [readonly]="true"
               placeholder="New {{ callData.element_placeholder | lowercase }}"
               autocomplete="off"
               value="{{ callData.element_value }}"
-              id="{{ callDataIndex }}"
+              #addressForm
+              (click)="
+                !tgleditField ||
+                  toggleModifyAddressForm(
+                    callDataIndex,
+                    callData.element_table_value,
+                    callData.element_table_value
+                  )
+              "
               formControlName="{{ callData.element_table_value }}"
             ></textarea>
           </div>
@@ -207,7 +210,7 @@
                 [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
                 pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                 [readonly]="!tgleditField"
-                type="{{ callData.element_type }}"
+                type="email"
                 placeholder="New {{ callData.element_placeholder | lowercase }}"
                 autocomplete="off"
                 value="{{ callData.element_value }}"
@@ -217,13 +220,30 @@
             </mat-form-field>
           </div>
         </ng-container>
+
+        <ng-container *ngSwitchCase="'date'">
+          <div class="col-md-auto col-smaller">
+            <mat-form-field appearance="standard">
+              <mat-label>{{ callData.element_placeholder }}</mat-label>
+              <input
+                matInput
+                value="2022/09/14"
+                type="date"
+                class="input-neumorphism"
+                autocomplete="off"
+                [readonly]="!tgleditField"
+                [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+                placeholder="New {{ callData.element_placeholder | lowercase }}"
+                formControlName="{{ callData.element_table_value }}"
+              />
+            </mat-form-field>
+          </div>
+        </ng-container>
         <ng-container *ngSwitchDefault>
           <div
             class="col-md-auto"
             [ngClass]="{
-              'col-smaller':
-                callData.element_table_value === 'phonenumber' ||
-                callData.element_table_value === 'dob'
+              'col-smaller': callData.element_table_value === 'phonenumber'
             }"
           >
             <mat-form-field appearance="standard" class="txtFormComponent">

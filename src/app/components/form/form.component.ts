@@ -73,6 +73,7 @@ export class FormComponent implements OnInit {
           },
         ];
         this.customerStatus = this.currentCall['customerStatus'];
+        this.filterCXStatus(this.customerStatus);
       }
 
       for (let fieldName in this.currentCall) {
@@ -120,9 +121,14 @@ export class FormComponent implements OnInit {
         }
       });
     });
+  }
+
+  filterCXStatus(status: any) {
     this.dataService.getSelectData().subscribe(
       (response) => {
-        this.optCustomerStatus = response.selectCXStatus;
+        this.optCustomerStatus = response.selectCXStatus.filter(
+          (a: any) => a.slStatusId !== status[0]['slStatusId']
+        );
       },
 
       (error) => {
@@ -130,7 +136,6 @@ export class FormComponent implements OnInit {
       }
     );
   }
-
   getGroupSelected() {
     let groupSelected = this.tbGroups.filter(
       (v: any) => v.group_id === this.groupSelected.value
@@ -153,12 +158,18 @@ export class FormComponent implements OnInit {
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
-      detail: 'Group "' + groupName + '" was added to calling.',
+      detail: 'Group "' + groupName + '" was added successfully.',
     });
     this.groupSelected.reset();
   }
 
   removeGroupSelected(groupId: string) {
+    let groupName = '';
+    this.tbGroups.forEach((e: any) => {
+      groupId = e.group_id;
+      groupName = e.group_name;
+    });
+
     this.tbGroupActive = this.tbGroupActive.filter(
       (v: any) => v.group_id !== groupId
     );
@@ -172,7 +183,7 @@ export class FormComponent implements OnInit {
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
-      detail: 'Group was removed from calling.',
+      detail: 'Group "' + groupName + '" was removed successfully.',
     });
 
     this.groupSelected.reset();
@@ -182,30 +193,54 @@ export class FormComponent implements OnInit {
     this.tgleditField = !this.tgleditField;
   }
 
-  toggleModifyAddressForm(addressId: any, addressName: any) {
+  toggleModifyAddressForm(
+    addressId: any,
+    addressName: any,
+    formControlName: any
+  ) {
+    let currentAddres = this.callDataForm.get(formControlName)?.value;
+    let count = currentAddres.split(',').length - 1;
+    let street, apt, city, state, zip, country;
+    if (count > 4) {
+      street = currentAddres.split(',')[0];
+      apt = currentAddres.split(',')[1];
+      city = currentAddres.split(',')[2];
+      state = currentAddres.split(',')[3];
+      zip = currentAddres.split(',')[4];
+      country = currentAddres.split(',')[5];
+    } else {
+      street = currentAddres.split(',')[0];
+      city = currentAddres.split(',')[1];
+      state = currentAddres.split(',')[2];
+      zip = currentAddres.split(',')[3];
+      country = currentAddres.split(',')[4];
+    }
+
     this.addressForm = new FormGroup({
-      slcCountry: new FormControl('US', [
+      slcCountry: new FormControl(country.replace(/\s/g, ''), [
         Validators.required,
         Validators.minLength(1),
       ]),
-      slcState: new FormControl('', [
+      slcState: new FormControl(state.replace(/\s/g, ''), [
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtCity: new FormControl('', [
+      txtCity: new FormControl(city, [
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtStreet: new FormControl('', [
+      txtStreet: new FormControl(street, [
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtApt: new FormControl(''),
-      txtZip: new FormControl('', [
+      txtApt: new FormControl(apt),
+      txtZip: new FormControl(zip.replace(/\s/g, ''), [
         Validators.required,
         Validators.minLength(1),
       ]),
     });
+
+    console.log(this.addressForm, 'heeeeeeeeeeeeeeere');
 
     this.addressFieldId = addressId;
     this.addressFieldName = addressName;
@@ -305,7 +340,7 @@ export class FormComponent implements OnInit {
   cancelEditFields() {
     for (let i of this.formElement) {
       this.callDataForm.patchValue({
-        [i.element_placeholder]: i.element_value,
+        [i.element_table_value]: i.element_value,
       });
     }
     this.tgleditField = false;
@@ -366,7 +401,7 @@ export class FormComponent implements OnInit {
           this.customerNewStatus.setValue('');
           this.currentCall['customerStatus'] = newStatus;
           this.customerStatus = newStatus;
-
+          this.filterCXStatus(this.customerStatus);
           this.messageService.add({
             severity: 'success',
             summary: 'Service Message',

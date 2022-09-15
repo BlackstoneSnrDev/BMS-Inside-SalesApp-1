@@ -21,15 +21,27 @@
           class="input-neumorphism"
           placeholder="{{ currentCallPhoneNumber }}"
         />
-        <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall()">
-          <i
-            class="bi bi-telephone-fill"
-            [ngClass]="containerCallStatus ? 'hide' : 'show'"
-          ></i>
+        <div
+          class="iconbutton-neumorphism btnCall"
+          (click)="btnCall()"
+          matTooltip="Call"
+          matTooltipPosition="above"
+          [ngClass]="containerCallStatus ? 'hide' : 'show'"
+        >
+          <i class="bi bi-telephone-fill"></i>
           <i
             class="bi bi-x-circle-fill"
             [ngClass]="containerCallStatus ? 'show' : 'hide'"
           ></i>
+        </div>
+        <div
+          class="iconbutton-neumorphism btnCall"
+          (click)="btnHangUpCall()"
+          matTooltip="Cancel call"
+          matTooltipPosition="above"
+          [ngClass]="containerCallStatus ? 'show' : 'hide'"
+        >
+          <i class="bi bi-x-circle-fill"></i>
         </div>
       </div>
     </div>

@@ -203,7 +203,7 @@
       </ng-template>
       <ng-template pTemplate="footer" let-columns>
         <tr [formGroup]="createNewUserForm" *ngIf="createNewUserForm">
-          <td class="sticky-column-checkboxes">
+          <td>
             <button
               *ngIf="!tglCreateUser"
               matTooltip="Add new user"

@@ -94,7 +94,6 @@ p {
 }
 
 .phone-header ::ng-deep .p-dropdown .p-dropdown-panel {
-  left: -1rem !important;
   width: 9rem;
 }
 

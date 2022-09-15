@@ -11,6 +11,7 @@ import { Table } from 'primeng/table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Papa } from 'ngx-papaparse';
+import { doc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'table-component',
@@ -127,10 +128,16 @@ export class TableComponent {
       .then(() => {
         this.DataService.getCustomerGroups().subscribe((data) => {
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
-          console.log(this.tbGroups);
           let modifyById = sessionStorage.getItem('dataTableView');
+
+          let showGroupChangeMsg = true;
+          if (this.modifyTable === modifyById) {
+            showGroupChangeMsg = false;
+          }
+          console.log(showGroupChangeMsg);
+
           setTimeout(() => {
-            this.modifyTableView(modifyById as string);
+            this.modifyTableView(modifyById as string, showGroupChangeMsg);
             this.loading = false;
           }, 400);
         });
@@ -144,12 +151,27 @@ export class TableComponent {
             ]);
           }
           this.addNewRecordForm = new FormGroup(this.newFormControl);
-          console.log(this.thData);
+          this.showTableGlobalFilter();
         },
         (error) => {
           console.error(error);
         }
       );
+  }
+
+  showTableGlobalFilter() {
+    let tableFiltered: any = sessionStorage.getItem('stateDataTable');
+    let filterT = JSON.parse(tableFiltered).filters.global;
+    if (filterT) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Service Message',
+        detail:
+          'Table was filtered by: "' +
+          filterT.value +
+          '" To see all records, please click "Clear filters" button.',
+      });
+    }
   }
 
   toggleUploadList() {
@@ -164,11 +186,14 @@ export class TableComponent {
       this.messageService.add({
         severity: 'error',
         summary: 'Service Message',
-        detail:
-          "File couldn't be uploaded. Error: The Headers in your CSV file do not exactly match the fields in the active template. Please check the CSV file's headers and try again.",
+        detail: reason,
         sticky: true,
       })
     );
+
+    setTimeout(() => {
+      this.messageService.clear();
+    }, 30000);
 
     let reader: FileReader = new FileReader();
     reader.readAsText(event.files[0]);
@@ -259,7 +284,7 @@ export class TableComponent {
     table.sortField = '';
     table.sortOrder = 0;
 
-    this.modifyTableView('all');
+    this.modifyTableView('all', true);
 
     table.filterGlobal('', 'contains');
 
@@ -310,13 +335,9 @@ export class TableComponent {
   }
 
   onRowEditCancel(index: number) {
-    this.addressInputsForm.removeControl('addressTableField' + index);
-
-    console.log(this.tdData[index]);
     this.tdData[index] = this.clonedtdData[index];
-    console.log(this.clonedtdData[index]);
-
     delete this.clonedtdData[index];
+    this.addressInputsForm.removeControl('addressTableField' + index);
   }
 
   onRowDeleteRow(uid: any) {
@@ -348,18 +369,32 @@ export class TableComponent {
     this.tglAddNewRecord = !this.tglAddNewRecord;
   }
 
-  saveAddNewRecord() {
+  saveAddNewRecord(table: Table) {
     let value = this.addNewRecordForm.value;
     value['group'] = [];
 
+    let filterNewRecord = this.addNewRecordForm.get('phonenumber')?.value;
+    table.filter(filterNewRecord, 'global', 'contains');
+
     this.DataService.addNewRecord(value);
-    this.addNewRecordForm.reset();
 
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
       detail: 'New record was added successfully.',
     });
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail:
+        'Showing new record added. To see all records, please click "Clear filters" button.',
+      sticky: true,
+    });
+    this.cancelAddNewRecord();
+
+    setTimeout(() => {
+      this.messageService.clear();
+    }, 30000);
   }
 
   cancelAddNewRecord() {
@@ -435,7 +470,7 @@ export class TableComponent {
         (i: any) => i.group_name === groupName
       );
       newGroupId = this.tbGroups[newGroupIndex].group_id;
-      this.modifyTableView(newGroupId);
+      this.modifyTableView(newGroupId, true);
     }, 500);
 
     this.tglCreateNewGroup = false;
@@ -449,11 +484,17 @@ export class TableComponent {
   }
 
   // Edit group created
-  toggleEditGroup(event: Event) {
-    (event.target as HTMLInputElement).classList.toggle('hide');
-    (event.target as HTMLInputElement).nextElementSibling?.classList.toggle(
-      'hide'
-    );
+  toggleEditGroup(id: any) {
+    document
+      .getElementById('massive-sms-container' + id)
+      ?.classList.toggle('hide');
+    document.getElementById('delete-container' + id)?.classList.toggle('hide');
+    document
+      .getElementById('rename-group-container' + id)
+      ?.classList.toggle('hide');
+    document
+      .getElementById('btn-rename-group-container' + id)
+      ?.classList.toggle('hide');
   }
 
   saveRenameGroup(groupId: number, event: Event) {
@@ -496,13 +537,8 @@ export class TableComponent {
     this.renameGroup.reset();
   }
 
-  cancelRenameGroup(event: Event) {
-    let tglEdit = (
-      event.target as HTMLInputElement
-    ).parentElement?.previousElementSibling?.classList.toggle('hide');
-    let tglEdit2 = (
-      event.target as HTMLInputElement
-    ).parentElement?.classList.toggle('hide');
+  cancelRenameGroup(id: any) {
+    this.toggleEditGroup(id);
     this.renameGroup.reset();
   }
   sendMassiveSMS() {
@@ -516,6 +552,7 @@ export class TableComponent {
           summary: 'Service Message',
           detail: 'SMS Message sent.',
         });
+        this.smsMessageSent.reset();
       },
     });
   }
@@ -541,7 +578,7 @@ export class TableComponent {
       accept: () => {
         this.DataService.deleteCustomerGroup(groupId);
 
-        this.modifyTableView('all');
+        this.modifyTableView('all', true);
 
         this.messageService.add({
           severity: 'success',
@@ -550,7 +587,7 @@ export class TableComponent {
         });
       },
       reject: () => {
-        this.modifyTableView(groupId);
+        this.modifyTableView(groupId, true);
       },
     });
   }
@@ -643,7 +680,7 @@ export class TableComponent {
   }
 
   // Change normal view to group selected view
-  modifyTableView(modifyById: string) {
+  modifyTableView(modifyById: string, showMsg: boolean) {
     this.loading = true;
 
     console.log(modifyById);
@@ -674,11 +711,15 @@ export class TableComponent {
         (a: any, i: any) => a.group_id === modifyById
       );
       let group_name = groupInfo[0]['group_name'];
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Service Message',
-        detail: 'Showing records from "' + group_name + '" group.',
-      });
+
+      if (showMsg) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Showing records from "' + group_name + '" group.',
+        });
+      }
+
       this.tglRemoveFromGroup = true;
     } else {
       this.tglRemoveFromGroup = false;
@@ -689,26 +730,60 @@ export class TableComponent {
   log = (data: any) => console.log(data);
 
   // Address type
-  toggleModifyAddressForm(addressName: any) {
+  toggleModifyAddressForm(
+    addressName: any,
+    formControlName: any,
+    typeForm: any
+  ) {
+    let currentAddres = '';
+    let street, apt, city, state, zip, country;
+
+    if (typeForm === 'new') {
+      if (formControlName) {
+        currentAddres = this.addNewRecordForm.get(formControlName)?.value;
+      }
+    } else if (typeForm === 'table') {
+      currentAddres = formControlName;
+    }
+    if (currentAddres) {
+      let count = currentAddres.split(',').length - 1;
+      if (count > 4) {
+        street = currentAddres.split(',')[0];
+        apt = currentAddres.split(',')[1];
+        city = currentAddres.split(',')[2];
+        state = currentAddres.split(',')[3];
+        zip = currentAddres.split(',')[4];
+        country = currentAddres.split(',')[5];
+      } else {
+        street = currentAddres.split(',')[0];
+        city = currentAddres.split(',')[1];
+        state = currentAddres.split(',')[2];
+        zip = currentAddres.split(',')[3];
+        country = currentAddres.split(',')[4];
+      }
+    } else {
+      country = 'US';
+    }
+
     this.addressForm = new FormGroup({
-      slcCountry: new FormControl('US', [
+      slcCountry: new FormControl(country?.replace(/\s/g, ''), [
         Validators.required,
         Validators.minLength(1),
       ]),
-      slcState: new FormControl('', [
+      slcState: new FormControl(state?.replace(/\s/g, ''), [
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtCity: new FormControl('', [
+      txtCity: new FormControl(city, [
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtStreet: new FormControl('', [
+      txtStreet: new FormControl(street, [
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtApt: new FormControl(''),
-      txtZip: new FormControl('', [
+      txtApt: new FormControl(apt),
+      txtZip: new FormControl(zip?.replace(/\s/g, ''), [
         Validators.required,
         Validators.minLength(1),
       ]),

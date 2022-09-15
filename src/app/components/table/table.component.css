@@ -22,6 +22,30 @@
   padding-top: 0 !important;
 }
 
+.rename-group-container,
+.massive-sms-container,
+.delete-container,
+.btn-rename-group-container {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.massive-sms-container {
+  padding-left: 0.6rem;
+}
+
+.massive-sms-container ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
+  white-space: break-spaces;
+}
+
+.massive-sms-container ::ng-deep .p-dropdown {
+  width: 63%;
+}
+.btn-rename-group-container .button-neumorphism.btn-nobtn,
+.delete-container .button-neumorphism.btn-nobtn {
+  box-shadow: none;
+  border: none;
+}
 .add-group-container .mat-form-field {
   width: 90%;
 }
@@ -29,7 +53,15 @@
 ::ng-deep .p-datatable table {
   color: #44476a;
   background-color: #e6e7ee;
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+  box-shadow: inset 6px 4px 6px -5px #b8b9be, inset -3px -3px 7px #fff;
+  border-radius: 1rem;
+  border: none;
+}
+
+::ng-deep .queue-table .p-datatable table {
+  color: #44476a;
+  background-color: #e6e7ee;
+  box-shadow: inset 24px 33px 8px -32px #b8b9be, inset -54px 0px 15px -52px #fff;
   border-radius: 1rem;
   border: none;
 }
@@ -53,13 +85,31 @@
   background-color: transparent;
   border: none;
   width: fit-content;
+  border-top: 1px solid #d1d9e6;
+}
+
+::ng-deep .queue-table .p-datatable .p-datatable-tbody > tr > td {
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  border-top: none;
+  box-shadow: 0px -1px 0px 0px #d1d9e6;
+}
+
+::ng-deep
+  .queue-table
+  .p-datatable-table
+  .p-datatable-tbody
+  > tr:first-child
+  > td:first-child {
+  box-shadow: inset 13px 0px 8px -12px #b8b9be, inset -4px 0px 0px -2px #d1d9e6 !important;
 }
 
 ::ng-deep .p-datatable .p-datatable-tbody > tr {
   text-align: center;
   border: none;
   background-color: transparent;
-  border-top: 0.0625rem solid #d1d9e6;
 }
 
 ::ng-deep.p-datatable .p-sortable-column:not(.p-highlight):hover {
@@ -212,12 +262,11 @@ form {
 }
 
 .address-form > form {
-  min-width: 28rem;
-  max-width: 100% !important;
   border-radius: 0;
   border: none;
-  padding: 0;
+  padding: 1rem;
   margin-top: 0;
+  min-width: 100%;
 }
 
 .address-form > .form-row > .col-md-4 {
@@ -226,9 +275,8 @@ form {
 }
 
 ::ng-deep .modifyingAddress .p-dropdown .p-dropdown-panel {
-  width: 14rem;
-  left: -11px !important;
   background: #e6e7ee;
+  width: 100%;
 }
 
 ::ng-deep .modifyingAddress .button-neumorphism {
@@ -404,13 +452,13 @@ form {
   box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
 }
 
-::ng-deep p-columnfilterformelement p-button:enabled:hover {
+::ng-deep .p-columnfilterformelement p-button:enabled:hover {
   background-color: rgba(38, 40, 51, 0.03) !important;
   color: #44476a !important;
   border-color: #d1d9e6 !important;
 }
 
-::ng-deep p-columnfilterformelement .p-inputtext:enabled:hover {
+::ng-deep .p-columnfilterformelement .p-inputtext:enabled:hover {
   outline: 0;
   box-shadow: none;
   border-color: #d1d9e6 !important;
@@ -505,12 +553,13 @@ form {
   margin-top: 0.6rem;
 }
 
-.sticky-column-checkboxes {
+::ng-deep .queue-table .p-datatable-table .sticky-column-checkboxes {
   position: sticky;
   background-color: #e6e7ee !important;
   z-index: 1;
   left: 0 !important;
-  box-shadow: inset 5px 0 5px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
+  box-shadow: inset 13px 0px 8px -12px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px 2px 0px -2px #d1d9e6 !important;
 }
 
 .sticky-column {
@@ -519,25 +568,25 @@ form {
   z-index: 1;
   background-color: #e6e7ee !important;
   white-space: nowrap;
-  box-shadow: inset -4px 0px 0px -2px #d1d9e6;
+  box-shadow: inset -4px 0px 0px -2px #d1d9e6, inset 0px 2px 0px -2px #d1d9e6 !important;
 }
 
-.sticky-checkboxes-main {
+::ng-deep .queue-table .p-datatable-table .sticky-checkboxes-main {
   top: 0 !important;
-  position: sticky;
-  z-index: 2;
-
-  box-shadow: inset 9px 9px 9px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6,
-    inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6 !important;
-  border-top-left-radius: 1rem;
+  position: sticky !important;
+  z-index: 2 !important;
+  box-shadow: inset 9px 9px 8px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6,
+    inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px 3px 0px -2px #d1d9e6 !important;
+  border-top-left-radius: 1rem !important;
 }
 
 .sticky-main {
   top: 0 !important;
   position: sticky;
   z-index: 2;
-  box-shadow: inset 0px 9px 9px -9px #b8b9be, inset -4px -3px 0px -2px #d1d9e6,
-    inset 0px 0px 0px -26px transparent !important;
+  box-shadow: inset 0px 9px 8px -9px #b8b9be, inset -4px -3px 0px -2px #d1d9e6,
+    inset 0px 0px 0px -26px transparent, inset 0px 3px 0px -2px #d1d9e6 !important;
 }
 
 .stck-head {
@@ -558,9 +607,8 @@ form {
     inset 0px -3px 0px -2px #d1d9e6 !important;
 }
 
-::ng-deep .p-datatable .p-datatable-tbody > tr:last-child {
-  box-shadow: inset -12px -12px 26px -22px #fff,
-    inset 0px 0px 0px -2px transparent, inset 0px 0px 0px -26px transparent;
+::ng-deep .queue-table .p-datatable-table .p-datatable-tbody > tr:last-child {
+  box-shadow: inset 0px -30px 8px -27px #fff !important;
   border-bottom-left-radius: 1rem;
 }
 
@@ -569,8 +617,8 @@ form {
   .p-datatable-tbody
   > tr:last-child
   > td.sticky-column-checkboxes:first-child {
-  box-shadow: inset 24px -17px 8px -24px #b8b9be, inset 0px -13px 9px -11px #fff,
-    inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6;
+  box-shadow: inset 13px 0px 8px -12px #b8b9be, inset 0px -30px 8px -27px #fff,
+    inset 0px 2px 0px -2px #d1d9e6, inset -4px 0px 0px -2px #d1d9e6 !important;
   border-bottom-left-radius: 1rem;
 }
 
@@ -579,8 +627,8 @@ form {
   .p-datatable-tbody
   > tr:last-child
   > td.sticky-column:nth-child(2) {
-  box-shadow: inset 0px -26px 16px -24px #fff, inset -4px 0px 0px -2px #d1d9e6,
-    inset 0px 0px 0px -26px transparent;
+  box-shadow: inset 0px -30px 8px -27px #fff, inset 0px 2px 0px -2px #d1d9e6,
+    inset -4px 0px 0px -2px #d1d9e6 !important;
 }
 
 ::ng-deep.p-button.p-button-text:enabled:hover {
@@ -631,4 +679,35 @@ form {
 .closer {
   padding-right: 5px !important;
   padding-left: 5px !important;
+}
+
+::ng-deep.p-fileupload-row div:first-child {
+  display: none;
+}
+
+.cancel-upload {
+  float: right;
+  margin-top: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+
+::ng-deep.p-overlaypanel .p-overlaypanel-content {
+  padding: 0.571rem 1rem;
+  background-color: #e6e7ee;
+  border-radius: 1rem;
+  box-shadow: inset 6px 4px 6px -5px #b8b9be, inset -3px -3px 7px #fff;
+  width: 12rem;
+}
+
+::ng-deep.p-overlaypanel {
+  background: #e6e7ee;
+  border-radius: 1rem;
+  box-shadow: none;
+  border: none;
+}
+
+::ng-deep.p-overlaypanel:after {
+  border: solid #e6e7ee;
+  border-color: rgb(219 219 219 / 0%);
+  border-bottom-color: #e6e7ee;
 }

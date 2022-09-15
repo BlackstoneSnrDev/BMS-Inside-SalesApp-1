@@ -90,6 +90,7 @@ import { EditorModule } from 'primeng/editor';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ListboxModule } from 'primeng/listbox';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [
@@ -173,6 +174,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     EditorModule,
     SplitButtonModule,
     MultiSelectModule,
+    OverlayPanelModule,
   ],
 
   providers: [

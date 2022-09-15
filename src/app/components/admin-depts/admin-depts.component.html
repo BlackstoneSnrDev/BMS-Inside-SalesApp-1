@@ -141,7 +141,7 @@
       </ng-template>
       <ng-template pTemplate="footer" let-columns>
         <tr [formGroup]="createNewDeptForm" *ngIf="createNewDeptForm">
-          <td class="sticky-column-checkboxes">
+          <td>
             <button
               *ngIf="!tglAddDept"
               matTooltip="Add new dept"

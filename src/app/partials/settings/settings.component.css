@@ -6,7 +6,7 @@
 
 .settings-component .col-lg-4,
 .col-lg-12 {
-  min-width: 27rem;
+  min-width: 26rem;
   color: #333333;
   padding-bottom: 2rem;
 }
@@ -286,7 +286,7 @@ h4 {
 }
 
 .sms-main-container ::ng-deep .p-dialog {
-  width: 31vw !important;
+  width: 36vw !important;
 }
 
 .txtTemplate {

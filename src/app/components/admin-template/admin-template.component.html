@@ -179,6 +179,7 @@
                         matTooltip="Change background color"
                         matTooltipPosition="above"
                         type="color"
+                        value="#e6e7ee"
                         placeholder="Background color"
                         formControlName="statusBackground{{ indexSection }}"
                       />
@@ -196,6 +197,7 @@
                           matTooltip="Change name color"
                           matTooltipPosition="above"
                           type="color"
+                          value="#333333"
                           placeholder="Name color"
                           formControlName="statusColor{{ indexSection }}"
                         />
@@ -255,12 +257,9 @@
       [ngClass]="td.templateStatus ? 'template-div-active' : ''"
     >
       <p-accordion>
-        <p-accordionTab
-          (click)="toggleTemplate(indexTemplate)"
-          [ngClass]="td.templateStatus ? 'template-active' : ''"
-        >
+        <p-accordionTab [ngClass]="td.templateStatus ? 'template-active' : ''">
           <ng-template pTemplate="header">
-            <div class="row width-100">
+            <div class="row width-100" (click)="toggleTemplate(indexTemplate)">
               <div class="col-sm-6 template-label-container">
                 {{ td.templateName }}
                 <p-badge
@@ -547,6 +546,7 @@
                               <span class="badge-val">{{ colorin.value }}</span>
                               <input
                                 #colorin
+                                value="#e6e7ee"
                                 matTooltip="Change color"
                                 matTooltipPosition="above"
                                 type="{{ col.element_type }}"
@@ -562,6 +562,7 @@
                               <mat-label>{{ col.title }}</mat-label>
                               <input
                                 matInput
+                                value="#333333"
                                 type="{{ col.element_type }}"
                                 placeholder="New {{ col.field }}"
                                 [(ngModel)]="rowData[col.field]"
@@ -606,31 +607,31 @@
                   [formGroup]="createNewStatusForm"
                   *ngIf="createNewStatusForm"
                 >
-                  <td class="sticky-column-checkboxes">
+                  <td>
                     <button
                       *ngIf="!tglAddStatus"
                       matTooltip="Add new status"
                       matTooltipPosition="above"
-                      (click)="toggleCreateNewStatus()"
+                      (click)="toggleCreateNewStatus(indexTemplate)"
                       class="mini-iconbutton-neumorphism add-status-i"
                     >
                       <i class="bi bi-plus-lg"></i>
                     </button>
                     <button
                       *ngIf="tglAddStatus"
-                      (click)="cancelCreateNewStatus()"
+                      (click)="cancelCreateNewStatus(indexTemplate)"
                       class="iconbutton-neumorphism"
                     >
                       <i class="pi pi-times"></i>
                     </button>
                     <button
                       *ngIf="tglAddStatus"
-                      (click)="saveCreateNewStatus(indexTemplate)"
                       [ngClass]="
-                        !createNewStatusForm.invalid
-                          ? 'iconbutton-neumorphism'
-                          : 'iconbutton-neumorphism-disabled'
+                        !createNewStatusForm.valid
+                          ? 'iconbutton-neumorphism-disabled'
+                          : 'iconbutton-neumorphism'
                       "
+                      (click)="saveCreateNewStatus(indexTemplate)"
                     >
                       <i class="pi pi-check"></i>
                     </button>

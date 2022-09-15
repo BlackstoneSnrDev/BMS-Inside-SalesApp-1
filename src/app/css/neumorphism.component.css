@@ -534,7 +534,10 @@ input:checked + .toggle-slider-neumorphism::before {
 
 ::ng-deep.p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll) {
   background-color: #e6e7ee;
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+}
+
+::ng-deep .p-dropdown-item.p-ripple {
+  white-space: normal;
 }
 
 ::ng-deep.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
@@ -1041,7 +1044,9 @@ input:checked + .toggle-slider-neumorphism::before {
 textarea:focus-visible {
   outline: none !important;
 }
-
+::ng-deep .p-toast .p-toast-message .p-toast-icon-close {
+  min-width: 9%;
+}
 ::ng-deep .p-toast .p-toast-message .p-toast-icon-close:focus {
   box-shadow: none;
   background-color: #e6e7ee;

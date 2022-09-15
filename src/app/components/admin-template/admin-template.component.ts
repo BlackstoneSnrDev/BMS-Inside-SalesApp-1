@@ -73,15 +73,20 @@ export class AdminTemplateComponent implements OnInit {
             this.thData = response.tableTemplate_th;
             this.thCustomerStatus = response.tableTemplateStatutes_th;
 
-            for (let fieldName of this.thCustomerStatus) {
-              this.newFormControl[fieldName.field] = new FormControl('', [
-                Validators.required,
+            this.createNewStatusForm = new FormGroup({
+              label: new FormControl('', [
                 Validators.minLength(1),
-              ]);
-
-              this.createNewStatusForm = new FormGroup(this.newFormControl);
-            }
-
+                Validators.required,
+              ]),
+              background: new FormControl('#e6e7ee', [
+                Validators.minLength(1),
+                Validators.required,
+              ]),
+              color: new FormControl('#333333', [
+                Validators.minLength(1),
+                Validators.required,
+              ]),
+            });
             this.createNewTemplateForm = new FormGroup({
               templateName: new FormControl('', [
                 Validators.required,
@@ -166,6 +171,7 @@ export class AdminTemplateComponent implements OnInit {
         this.tdData = tdData;
         this.loading = false;
 
+        console.log(this.allTemplates);
         this.dataService.getSelectData().subscribe(
           (response) => {
             this.selectElmType = response.selectInputType;
@@ -299,6 +305,11 @@ export class AdminTemplateComponent implements OnInit {
         this.tdData[indexTemplate]['statuses'] = this.tdData[indexTemplate][
           'statuses'
         ].filter((i: any) => ![id].includes(i.slStatusId));
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Status was deleted successfully.',
+        });
       },
     });
 
@@ -318,8 +329,11 @@ export class AdminTemplateComponent implements OnInit {
     // }
   }
 
-  toggleTemplate(index: any) {
-    document.getElementById('buttons' + index)?.classList.toggle('not-visible');
+  toggleTemplate(indexTemplate: any) {
+    document
+      .getElementById('buttons' + indexTemplate)
+      ?.classList.toggle('not-visible');
+    this.cancelCreateNewStatus(indexTemplate);
   }
 
   toggleCreateNewTemplate() {
@@ -507,28 +521,36 @@ export class AdminTemplateComponent implements OnInit {
     });
   }
 
-  toggleCreateNewStatus() {
+  toggleCreateNewStatus(indexTemplate: any) {
     this.tglAddStatus = true;
-    this.createNewStatusForm.reset();
+    // let modifyLastElmActive = document.getElementsByClassName('templateStatus' + indexTemplate);
+    // for (let i = 0, all = modifyLastElmActive.length; i < all; i++) {modifyLastElmActive[i].classList.toggle('hide');}
+    // document.getElementById('btnToggleStatus' + indexTemplate)?.classList.toggle('hide');
   }
 
-  cancelCreateNewStatus() {
+  cancelCreateNewStatus(indexTemplate: any) {
     this.tglAddStatus = false;
     this.createNewStatusForm.reset();
+    this.createNewStatusForm.patchValue({
+      background: '#e6e7ee',
+      color: '#333333',
+    });
   }
 
   saveCreateNewStatus(indexTemplate: any) {
     this.tglAddStatus = false;
+
     this.tdData[indexTemplate]['statuses'].push(this.createNewStatusForm.value);
     let id = this.tdData[indexTemplate]['statuses'].length - 1;
     this.tdData[indexTemplate]['statuses'][id]['slStatusId'] = id;
+    console.log(this.tdData);
 
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
       detail: 'Status was created successfully.',
     });
-    this.createNewStatusForm.reset();
+    this.cancelCreateNewStatus(indexTemplate);
   }
 
   toggleStatus() {

@@ -84,17 +84,13 @@ export class LogComponent implements OnInit {
   }
 
   saveNewNote() {
-    this.autoresize = false;
-    this.tglAddNote = false;
-
     // Page gets reload and current call sets itself to Lewis when saving the note in the database
     this.DataService.addNewNote(
       this.currentCall.uid,
       this.noteContent.value as string
     );
+    this.cancelAddNote();
 
-    this.tglAddNote = !this.tglAddNote;
-    this.noteContent.reset();
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
