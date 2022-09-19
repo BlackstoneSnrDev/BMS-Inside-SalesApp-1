@@ -47,42 +47,48 @@ DONE!!    populate autoDialer child component with current call phone number
 DONE!!    populate autoDialer child component with dialSessionArray
 
 
--- For VFP -- 
+-- For MVP -- 
 
-    Connect Twilio 
-        Softphone
+DONE!!  Connect Twilio 
+DONE!!  Softphone
         SMS Text
-    Record and store audio files for voicemails
+DONE!!  Record and store audio files for voicemails
 DONE!!  Finish CSV upload feature
     Auto create goups based on customer statuses (No Attention Required, Pending, Handled, etc...)
     Add unsubscribe to all components as necessary
     When deleting or editing a template status, check that no customers will be effected.  If so, throw an error.
     Don't allow deletion of template that is active by any user
     When creating new template, there must be a phonenumber field
+    * Fix address to look for element_type, not element_placeholder or name
 
 
     Phone Form
         In the group dropdown, it seems there is a group always in bold and they can't be selected
 
     Phone 
-        When choosing to send a text or voicemail, no need to change the text of the button
+DONE!!  When choosing to send a text or voicemail, no need to change the text of the button
 
     Phone Notes (log)
-        If no notes for the caller, hide search bar and disply the '+' button and below that a message 'no notes have been enterd for this caller' 
-        When entering a note, hide Search input
+DONE!!  If no notes for the caller, hide search bar and disply the '+' button and below that a message 'no notes have been enterd for this caller' 
+DONE!!  When entering a note, hide Search input
 
 
     Queue table 
-        When selecting a customer or group of customers (clicking the checkbox), have the group options appear but remove the 'Groups' button. 
+DONE!!  When selecting a customer or group of customers (clicking the checkbox), have the group options appear but remove the 'Groups' button. 
         If a group is selected AND customers are seleced (their checkbox is checked), only then show 'Delete from group' button.
-        Delete from group button does not need a dropdown.  The group is already seleced and filtered. 
-        Can we create animated transitions? 
+DONE!!  Delete from group button does not need a dropdown.  The group is already seleced and filtered. 
+DONE!!  Can we create animated transitions? 
 
     Admin 
-        In add new template, can we create a boundry between the fields and status?  It looks a little too blended together and could be confusing for the user
-        In an existing template, a user should be able to add statuses, but not template fields.  
-        Admin user to create and add roles to users (a third top menu option - 'Roles' - where admin can create roles that are assigned in the 'Users' tab)
-        In User tab, roles should be a dropdown with the roles that are created by Admin in the Roles tab.
+DONE!!  In add new template, can we create a boundry between the fields and status?  It looks a little too blended together and could be confusing for the user
+DONE!!  In an existing template, a user should be able to add statuses, but not template fields.  
+DONE!!  Admin user to create and add roles to users (a third top menu option - 'Roles' - where admin can create roles that are assigned in the 'Users' tab)
+DONE!!  In User tab, roles should be a dropdown with the roles that are created by Admin in the Roles tab.
+        Add isVisable to template fields (blobData and templateName needs to be true)
+        * Handle input verification for fields (email, dates, addresses, etc...)
+
+    Settings
+        For the preview of voicemails, the save button needs to appear and be active if there is a template name and audio recording (url)
         
 
     

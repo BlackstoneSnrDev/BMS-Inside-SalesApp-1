@@ -76,12 +76,15 @@
                         ></p-badge>
                       </div>
                     </ng-template>
+
                     <div class="sms-main-container">
-                      <div *ngFor="let sms of chatContent">
-                        <div *ngIf="chat.slIndex === sms.customerId">
+
+                      <div *ngFor="let sms of chat.smsText">
+                        <!-- <div *ngIf="chat.slIndex === sms.customerId"> -->
+
                           <div class="row">
                             <div class="col-lg-12 txt-center margin-tp">
-                              <small>{{ sms.dateSMS }}</small>
+                              <small>{{ sms.timestamp.toMillis() | date: "yyyy/MM/dd" }}</small>
                             </div>
                           </div>
                           <div class="row">
@@ -96,54 +99,25 @@
                                 <i class="bi bi-arrow-clockwise"></i>
                               </button>
 
-                              <p
-                                class="sms-container"
-                                [ngClass]="[
-                                  sms.senderTypeSMS == 'user'
-                                    ? 'float-rt'
-                                    : 'float-lf',
-                                  sms.senderTypeSMS == 'user'
-                                    ? 'border-bt-rt'
-                                    : 'border-bt-lt'
-                                ]"
-                                matTooltip="Message by {{ sms.senderNameSMS }}"
-                                matTooltipPosition="above"
-                              >
-                                {{ sms.contentSMS }}
-                                <br />
-                                <small
-                                  class="small-sms"
-                                  [ngClass]="
-                                    sms.senderTypeSMS == 'user'
-                                      ? 'txt-rt'
-                                      : 'txt-lf'
-                                  "
-                                >
-                                  {{ sms.timeSMS }}
-                                  <span
-                                    ><i
-                                      class="bi bi-check color-gr"
-                                      *ngIf="sms.statusSMS"
-                                    ></i>
-                                    <i
-                                      class="bi bi-exclamation-triangle-fill color-rd"
-                                      *ngIf="!sms.statusSMS"
-                                    ></i>
-                                    <br />
-                                    <small
-                                      class="color-rd"
-                                      *ngIf="!sms.statusSMS"
-                                      ><i>
-                                        Message couldn't be sent. Please try
-                                        again.</i
-                                      ></small
-                                    >
-                                  </span>
+                              <p class="sms-container"
+                                [ngClass]="[sms.method== 'sent' ? 'float-rt':'float-lf', sms.method == 'sent' ? 'border-bt-rt':'border-bt-lt'  ]"
+                                matTooltip="Message by {{ sms.userName }}" matTooltipPosition="above">{{
+                                sms.message }}
+                                <br>
+                                <small class="small-sms" [ngClass]="sms.method== 'sent' ? 'txt-rt':'txt-lf' ">
+                                  {{ sms.timestamp.toMillis() | date: "h:mm a" }}
+                                  <!-- <span><i class="bi bi-check color-gr" *ngIf="sms.statusSMS"></i>
+                                    <i class="bi bi-exclamation-triangle-fill color-rd" *ngIf="!sms.statusSMS"></i>
+                                    <br>
+                                    <small class="color-rd" *ngIf="!sms.statusSMS"><i> Message couldn't be sent. Please
+                                        try again.</i></small>
+                                  </span> -->
+
                                 </small>
                               </p>
                             </div>
                           </div>
-                        </div>
+                        <!-- </div> -->
                       </div>
                     </div>
                     <div class="row form-sms">
@@ -159,18 +133,11 @@
                         ></textarea>
                       </div>
                       <div class="col-2 btnsave-container">
-                        <button
-                          (click)="sendSMS(chat.slIndex)"
-                          class="btn-sms"
-                          [disabled]="!txtMessage.valid"
-                          [ngClass]="
-                            !txtMessage.valid
-                              ? 'button-neumorphism-disabled'
-                              : 'button-neumorphism'
-                          "
-                        >
-                          <i class="bi bi-send-fill"></i>
-                        </button>
+
+                        <button (click)="sendSMS(chat)" class="btn-sms" [disabled]="!txtMessage.valid"
+                          [ngClass]="!txtMessage.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'"><i
+                            class="bi bi-send-fill"></i></button>
+
                       </div>
                     </div>
                   </p-accordionTab>

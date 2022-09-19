@@ -309,3 +309,10 @@
   overflow-x: hidden;
   height: 100%;
 }
+
+.txt-rt {
+    float: right;
+}
+.txt-lf {
+    float: left;
+}

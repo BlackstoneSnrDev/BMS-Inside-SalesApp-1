@@ -3,6 +3,8 @@ import { DataService } from '../../services/services.service';
 import { FormControl } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { Device }from 'twilio-client';
+
 @Component({
   selector: 'phone-component',
   templateUrl: './phone.component.html',
@@ -35,11 +37,15 @@ export class PhoneComponent implements OnInit {
   public optEmail: any;
   public emailSent = new FormControl();
 
-  constructor(
-    public DataService: DataService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
-  ) {}
+  public callStatus: any = 'Call Status';
+  public _device: any;
+  public options: any = {
+    codecPreferences: ['pcmu', 'opus']
+  };
+
+
+  constructor(public DataService: DataService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+
 
   ngOnInit() {
     this.DataService.getFormElementsData().subscribe(
@@ -67,58 +73,119 @@ export class PhoneComponent implements OnInit {
     });
 
     this.DataService.getUserSettings().subscribe((response) => {
-      response.forEach((item: any) => {
-        if (item.docId === 'emails') {
-          let emailArray: {
-            templateContent: any;
-            templateId: any;
-            templateName: any;
-          }[] = [];
-          Object.values(item)
-            .filter((e) => typeof e !== 'string')
-            .forEach((email: any) => {
-              emailArray.push({
-                templateContent: email.data,
-                templateId: email.uid,
-                templateName: email.templateName,
-              });
+
+        response.forEach((item: any) => {
+            if (item.docId === 'emails') {
+                let emailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+                Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                    emailArray.push({
+                        templateContent: email.data,
+                        templateId: email.uid,
+                        templateName: email.templateName
+                    });
+                })
+                this.optEmail = emailArray
+            } else if (item.docId === 'textMessage') {
+                let textArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+                Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                    textArray.push({
+                        templateContent: email.data,
+                        templateId: email.uid,
+                        templateName: email.templateName
+                    });
+                })
+                this.optSMS = textArray;
+            } else if (item.docId === 'voicemail') { 
+              let voicemailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
+              Object.values(item).filter(e => typeof e !== 'string').forEach((email: any) => {
+                  voicemailArray.push({
+                      templateContent: email.url,
+                      templateId: email.uid,
+                      templateName: email.fileName
+                  });
+              })
+              this.optVoiceMail = voicemailArray;
+            }
+        }) 
+    })
+
+    this.DataService.sendText().then((response) => {
+        console.log(response.token)
+            // Setup Twilio.Device
+            this._device = new Device(response.token, {
+            // Set Opus as our preferred codec. Opus generally performs better, requiring less bandwidth and
+            // providing better audio quality in restrained network conditions. Opus will be default in 2.0.
+            codecPreferences: this.options.codecPreferences,
+            // Use fake DTMF tones client-side. Real tones are still sent to the other end of the call,
+            // but the client-side DTMF tones are fake. This prevents the local mic capturing the DTMF tone
+            // a second time and sending the tone twice. This will be default in 2.0.
+            fakeLocalDTMF: true,
+            // Use `enableRingingState` to enable the device to emit the `ringing`
+            // state. The TwiML backend also needs to have the attribute
+            // `answerOnBridge` also set to true in the `Dial` verb. This option
+            // changes the behavior of the SDK to consider a call `ringing` starting
+            // from the connection to the TwiML backend to when the recipient of
+            // the `Dial` verb answers.
+            enableRingingState: true
             });
-          this.optEmail = emailArray;
-        } else if (item.docId === 'textMessage') {
-          let textArray: {
-            templateContent: any;
-            templateId: any;
-            templateName: any;
-          }[] = [];
-          Object.values(item)
-            .filter((e) => typeof e !== 'string')
-            .forEach((email: any) => {
-              textArray.push({
-                templateContent: email.data,
-                templateId: email.uid,
-                templateName: email.templateName,
-              });
+
+            this._device.on('ready', (device: any) => {
+                console.log('Twilio.Device Ready!');
             });
-          this.optSMS = textArray;
-        } else if (item.docId === 'voicemail') {
-          let voicemailArray: {
-            templateContent: any;
-            templateId: any;
-            templateName: any;
-          }[] = [];
-          Object.values(item)
-            .filter((e) => typeof e !== 'string')
-            .forEach((email: any) => {
-              voicemailArray.push({
-                templateContent: email.url,
-                templateId: email.uid,
-                templateName: email.fileName,
-              });
+
+            this._device.on('error', (error: any) => {
+                console.log('Twilio.Device Error: ' + error.message);
             });
-          this.optVoiceMail = voicemailArray;
-        }
-      });
-    });
+
+            this._device.on('connect', (conn: any) => {
+                console.log('Successfully established call!');
+                this.updateCallStatus('In Call');
+                this.containerCallStatus = true;
+            })
+
+            this._device.on('disconnect', (conn: any) => {
+                if (this.tglAutoDialer) {
+                    this.nextCall(),
+                    this.btnAnswerCall( this.currentCallPhoneNumber )
+                }
+                console.log('Call ended');
+                this.updateCallStatus('Call Status');
+                this.containerCallStatus = false;
+            });
+
+            this._device.on('incoming', (conn: any) => {
+                console.log('Incoming connection from ' + conn.parameters.From);
+                // accept the incoming connection and start two-way audio
+                conn.accept();
+            });
+
+            this._device.on('cancel', (conn: any) => {
+                console.log('Call canceled');
+                this.updateCallStatus('Call Status');
+                this.containerCallStatus = false;
+            })
+    })
+
+  }
+
+  updateCallStatus(status: any) {
+    this.callStatus = status;
+  }
+
+  testBtn() {
+    // this.DataService.makeCall(message).then((response) => {
+    //     console.log(response)
+    // })  
+    
+    // let params = '+17348371063'
+    // console.log("Calling " + params + "...");
+    // if (this._device) {
+    //     var outgoingConnection = this._device.connect(params);
+    //     outgoingConnection.on("ringing", function () {
+    //         console.log("Ringing...");
+    //     });
+    // }
+
   }
 
   nextCall() {
@@ -200,7 +267,20 @@ export class PhoneComponent implements OnInit {
     });
   }
 
-  btnCall() {
+
+  btnAnswerCall(outgoingNumber: any) {
+    console.log(outgoingNumber);
+
+    var regExNumber = '+1' + ('' + outgoingNumber).replace(/\D/g, '');
+    console.log("Calling " + regExNumber + "...");
+
+    if (this._device) {
+        var outgoingConnection = this._device.connect({outgoingPhoneNumber: regExNumber});
+        outgoingConnection.on("ringing", function () {
+            console.log("Ringing...");
+        });
+    }
+
     this.containerCallStatus = !this.containerCallStatus;
     this.holdStatus = false;
     this.muteStatus = false;
@@ -224,12 +304,18 @@ export class PhoneComponent implements OnInit {
     });
   }
 
-  sendSMSMessage() {
+  sendSMSMessage(e: any) {
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to send this message?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+
+        this.DataService.makeCall('template', e.value, this.currentCall.uid, '+1' + this.currentCall.phonenumber).then((response) => {
+            console.log(response)
+        }) 
+
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
@@ -257,6 +343,7 @@ export class PhoneComponent implements OnInit {
   }
 
   btnHangUpCall() {
+    this._device.disconnectAll();
     this.containerCallStatus = false;
   }
 
@@ -277,3 +364,7 @@ export class PhoneComponent implements OnInit {
     console.log(event);
   }
 }
+function updateCallStatus(arg0: string) {
+    throw new Error('Function not implemented.');
+}
+
