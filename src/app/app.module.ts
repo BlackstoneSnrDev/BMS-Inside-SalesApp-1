@@ -32,7 +32,6 @@ import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.
 import { AdminSettings } from './partials/admin-settings/admin-settings.component';
 import { MessengerComponent } from './partials/messenger/messenger.component';
 
-
 ///// My directives
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
 import { AuthGuard } from './services/auth.guard';
@@ -91,6 +90,7 @@ import { EditorModule } from 'primeng/editor';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ListboxModule } from 'primeng/listbox';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [
@@ -174,6 +174,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     EditorModule,
     SplitButtonModule,
     MultiSelectModule,
+    OverlayPanelModule,
   ],
 
   providers: [
@@ -188,4 +189,4 @@ import { MultiSelectModule } from 'primeng/multiselect';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

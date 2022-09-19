@@ -1,10 +1,24 @@
 <div class="log-main-container">
   <div class="notes-menu">
-    <div class="form-check form-check-inline width-100" *ngIf="dupCurrentCallNotes">
-      <div class="width-100 filter-notes-container" id="notes-filter-container" *ngIf="!tglAddNote" [ngClass]="dupCurrentCallNotes.length > 0  ? '' : 'not-visible'">
+    <div
+      class="form-check form-check-inline width-100"
+      *ngIf="dupCurrentCallNotes"
+    >
+      <div
+        class="width-100 filter-notes-container"
+        id="notes-filter-container"
+        *ngIf="!tglAddNote"
+        [ngClass]="dupCurrentCallNotes.length > 0 ? '' : 'not-visible'"
+      >
         <mat-form-field appearance="standard">
           <mat-label>Search</mat-label>
-          <input matInput type="text" [formControl]="searchNote" (keyup)="filterNotes()" placeholder="Ex. ium" />
+          <input
+            matInput
+            type="text"
+            [formControl]="searchNote"
+            (keyup)="filterNotes()"
+            placeholder="Ex. ium"
+          />
         </mat-form-field>
       </div>
 
@@ -12,39 +26,62 @@
         <form>
           <div class="row">
             <div class="p-inputgroup col-10">
-              <textarea [rows]="1" pInputTextarea [autoResize]="true" class="input-neumorphism txtlog"
-                placeholder="Add note" id="noteContent" [formControl]="noteContent"></textarea>
+              <textarea
+                [rows]="1"
+                pInputTextarea
+                [autoResize]="autoresize"
+                class="input-neumorphism txtlog"
+                placeholder="Add note"
+                id="noteContent"
+                (click)="autoresize = true"
+                [formControl]="noteContent"
+              ></textarea>
             </div>
             <div class="col-2 btnsave-container">
-              <button (click)="saveNewNote()" class="width-100" [disabled]="!noteContent.valid" [ngClass]="
+              <button
+                (click)="saveNewNote()"
+                type="button"
+                class="width-100"
+                [disabled]="!noteContent.valid"
+                [ngClass]="
                   !noteContent.valid
                     ? 'button-neumorphism-disabled'
                     : 'button-neumorphism'
-                ">
+                "
+              >
                 Save
               </button>
             </div>
           </div>
           <div class="col-12">
-            <small *ngIf="noteContent.hasError('maxlength')" class="color-rd">*1500 characters maximum.</small>
+            <small *ngIf="noteContent.hasError('maxlength')" class="color-rd"
+              >*1500 characters maximum.</small
+            >
           </div>
         </form>
       </div>
 
-      <div >
-        <button class="iconbutton-neumorphism float-rt" *ngIf="!tglAddNote"(click)="toggleAddLog()" matTooltip="Add note"
-          matTooltipPosition="above">
-          <i class="bi bi-plus-circle-fill" ></i>
-
+      <div>
+        <button
+          class="iconbutton-neumorphism float-rt"
+          *ngIf="!tglAddNote"
+          (click)="toggleAddLog()"
+          matTooltip="Add note"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-plus-circle-fill"></i>
         </button>
-        <button class="iconbutton-neumorphism float-rt" *ngIf="tglAddNote" (click)="cancelAddNote()" matTooltip="Cancel add note"
-          matTooltipPosition="above">
-                    <i class="bi bi-x-circle-fill"></i>
-
+        <button
+          class="iconbutton-neumorphism float-rt"
+          *ngIf="tglAddNote"
+          (click)="cancelAddNote()"
+          matTooltip="Cancel add note"
+          matTooltipPosition="above"
+        >
+          <i class="bi bi-x-circle-fill"></i>
         </button>
       </div>
     </div>
-
   </div>
 
   <div class="txt-center margin-tp" *ngIf="currentCallNotes.length == 0">
@@ -57,8 +94,10 @@
       <div class="log-content-container">
         <p>{{ note.data }}</p>
       </div>
-      <small>{{ note.enteredBy }} |
-        {{ note.date.toMillis() | date: "yyyy/MM/dd h:mm a" }}</small>
+      <small
+        >{{ note.enteredBy }} |
+        {{ note.date.toMillis() | date: "yyyy/MM/dd h:mm a" }}</small
+      >
       <hr />
     </div>
   </div>

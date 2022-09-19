@@ -83,7 +83,7 @@ textarea {
 }
 
 ::ng-deep .modifyingAddress .p-dialog {
-  width: 44% !important;
+  width: 54% !important;
 }
 
 ::ng-deep .modifyingAddress .p-dropdown,
@@ -110,8 +110,8 @@ textarea {
 }
 
 ::ng-deep .modifyingAddress .p-dropdown .p-dropdown-panel {
-  width: 14rem;
-  left: -11px !important;
+  width: 100%;
+  background: #e6e7ee;
 }
 
 ::ng-deep .modifyingAddress .button-neumorphism {
@@ -125,7 +125,7 @@ textarea {
 }
 
 .modifyingAddress ::ng-deep.p-dropdown-items-wrapper {
-  max-height: 6rem !important;
+  max-height: 5rem !important;
 }
 
 .modifyingAddress ::ng-deep .mat-form-field-infix {
@@ -240,6 +240,10 @@ textarea {
   padding-right: 0rem !important;
 }
 
+.address-col textarea {
+  width: 96% !important;
+}
+
 .btnChangeStatus .iconbutton-container {
   padding-top: 0 !important;
   padding-right: 0.5rem;
@@ -249,4 +253,8 @@ textarea {
   margin-left: 0.5rem;
   position: absolute;
   top: 0.3rem;
+}
+
+::ng-deep .col-smaller {
+  width: 14rem !important;
 }

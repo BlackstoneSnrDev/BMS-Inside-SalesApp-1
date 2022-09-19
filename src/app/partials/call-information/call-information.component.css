@@ -10,6 +10,10 @@
   height: max-content;
 }
 
+.main-row .col-lg-8 {
+  height: 80rem;
+}
+
 .form-col {
   min-width: 28rem;
 }
@@ -20,7 +24,7 @@
   overflow-x: hidden;
   border-radius: 2rem 0rem 0rem 2rem;
   border: 0.1rem solid #d1d9e6;
-  height: 28rem;
+  height: 100%;
   padding: 0rem 0rem 1.5rem 0rem;
   min-width: 28rem;
   color: #333333;
@@ -29,6 +33,7 @@
 .inherit-row {
   margin: 1.5rem 0rem 1.5rem 0rem;
   color: #333333;
+  height: 47%;
 }
 
 .phone-col {
@@ -37,7 +42,7 @@
   border-radius: 2rem 2rem 2rem 2rem;
   border: 0.1rem solid #d1d9e6;
   padding: 24px 0px 24px 0px;
-  height: 98%;
+  height: 100%;
   min-width: 28rem;
   color: #333333;
 }

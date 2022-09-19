@@ -46,13 +46,12 @@ export class PhoneComponent implements OnInit {
 
   constructor(public DataService: DataService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
+
   ngOnInit() {
-   
     this.DataService.getFormElementsData().subscribe(
       (response) => {
         this.componentPhone = response.componentPhone;
         //console.log(response.componentPhone);
-
       },
       (error) => {
         console.error(error);
@@ -61,18 +60,20 @@ export class PhoneComponent implements OnInit {
 
     this.DataService.dialSessionArray.subscribe((dialSessionArray: any) => {
       this.dialSessionArray = dialSessionArray;
-      this.dupDialSessionArray = this.dialSessionArray
-    })
+      this.dupDialSessionArray = this.dialSessionArray;
+    });
 
     this.DataService.currentCall.subscribe((currentCall: any) => {
       if (currentCall) {
         this.currentCall = currentCall;
-        this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(currentCall.phonenumber);
+        this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(
+          currentCall.phonenumber
+        );
       }
+    });
 
-    })
-    
     this.DataService.getUserSettings().subscribe((response) => {
+
         response.forEach((item: any) => {
             if (item.docId === 'emails') {
                 let emailArray: { templateContent: any; templateId: any; templateName: any; }[] = [];
@@ -184,44 +185,88 @@ export class PhoneComponent implements OnInit {
     //         console.log("Ringing...");
     //     });
     // }
+
   }
 
   nextCall() {
-    let currentCallIndex = this.dialSessionArray.findIndex((x: { uid: any; }) => x.uid === this.currentCall.uid)
-    this.DataService.setActiveCall(this.dialSessionArray[currentCallIndex + 1].uid);
+    let currentCallIndex = this.dialSessionArray.findIndex(
+      (x: { uid: any }) => x.uid === this.currentCall.uid
+    );
+
+    this.DataService.setActiveCall(
+      this.dialSessionArray[currentCallIndex + 1].uid
+    );
+
+    let newCallName = this.dialSessionArray[currentCallIndex + 1].fullname;
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: 'Next call: ' + newCallName,
+    });
   }
 
   selectCustomer(uid: string) {
     this.DataService.setActiveCall(uid);
-    document.getElementById('noteContent')?.classList.add('show')
+
+    let oldCall = this.currentCall.fullname;
+
+    setTimeout(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Service Message',
+        detail:
+          'Current customer has changed from "' +
+          oldCall +
+          '" to "' +
+          this.currentCall.fullname +
+          '".',
+      });
+    }, 400);
   }
 
   showTimeHandled(callId: any) {
-    document.getElementById('call' + callId)?.classList.toggle(
-      'hide'
-    );
+    document.getElementById('call' + callId)?.classList.toggle('hide');
   }
 
   filterCall() {
-
-    let value = this.searchCall.value.toLowerCase()
-    console.log(value)
+    let value = this.searchCall.value.toLowerCase();
+    console.log(value);
     if (value) {
-      this.dialSessionArray = this.dupDialSessionArray
-      this.dialSessionArray = this.dialSessionArray.filter((a: any, g: any) =>
-        a.MRN.toLowerCase().includes(value) || a.fullname.toLowerCase().includes(value) || a.phonenumber.toLowerCase().replace(/[()-\s]/g, '').includes(value.replace(/[()-\s]/g, '')))
-
+      this.dialSessionArray = this.dupDialSessionArray;
+      this.dialSessionArray = this.dialSessionArray.filter(
+        (a: any, g: any) =>
+          a.MRN.toLowerCase().includes(value) ||
+          a.fullname.toLowerCase().includes(value) ||
+          a.phonenumber
+            .toLowerCase()
+            .replace(/[()-\s]/g, '')
+            .includes(value.replace(/[()-\s]/g, ''))
+      );
     } else {
-      this.dialSessionArray = this.dupDialSessionArray
-
+      this.dialSessionArray = this.dupDialSessionArray;
     }
-
-
   }
 
   toggleAutoDialer() {
     this.tglAutoDialer = !this.tglAutoDialer;
+    let msg = '';
+    if (this.tglAutoDialer) {
+      msg = 'Auto-dialer is now active.';
+    } else {
+      msg = 'Auto-dialer was deactivated successfully.';
+    }
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Service Message',
+      detail: msg,
+    });
   }
+
 
   btnAnswerCall(outgoingNumber: any) {
     console.log(outgoingNumber);
@@ -240,13 +285,11 @@ export class PhoneComponent implements OnInit {
     this.holdStatus = false;
     this.muteStatus = false;
     this.xferStatus = false;
-
   }
 
   leaveVoiceMail() {
     this.confirmationService.confirm({
-      message:
-        'Are you sure you want leave this voice mail?',
+      message: 'Are you sure you want leave this voice mail?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -256,16 +299,15 @@ export class PhoneComponent implements OnInit {
           detail: 'Voice mail was left.',
         });
 
-        this.voiceMailLeft.setValue('')
-      }
+        this.voiceMailLeft.reset();
+      },
     });
   }
 
   sendSMSMessage(e: any) {
 
     this.confirmationService.confirm({
-      message:
-        'Are you sure you want to send this message?',
+      message: 'Are you sure you want to send this message?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -279,17 +321,14 @@ export class PhoneComponent implements OnInit {
           summary: 'Service Message',
           detail: 'SMS Message was sent.',
         });
-        this.smsMessageSent.setValue('')
-
-      }
+        this.smsMessageSent.reset();
+      },
     });
-
   }
 
   sendEmail() {
     this.confirmationService.confirm({
-      message:
-        'Are you sure you want send this email?',
+      message: 'Are you sure you want send this email?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -298,11 +337,9 @@ export class PhoneComponent implements OnInit {
           summary: 'Service Message',
           detail: 'Email was sent.',
         });
-        this.emailSent.setValue('')
-
-      }
+        this.emailSent.reset();
+      },
     });
-
   }
 
   btnHangUpCall() {
@@ -326,7 +363,6 @@ export class PhoneComponent implements OnInit {
   log(event: Event) {
     console.log(event);
   }
-
 }
 function updateCallStatus(arg0: string) {
     throw new Error('Function not implemented.');

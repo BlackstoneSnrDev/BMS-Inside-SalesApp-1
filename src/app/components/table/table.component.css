@@ -2,7 +2,10 @@
   margin-top: 1.3rem;
 }
 
-.rename-group-container .mat-form-field .mat-form-field-appearance-standard .mat-form-field-flex {
+.rename-group-container
+  .mat-form-field
+  .mat-form-field-appearance-standard
+  .mat-form-field-flex {
   display: block;
   padding: 0;
   margin: 0;
@@ -12,10 +15,37 @@
   border-top: none !important;
 }
 
-.rename-group-container ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+.rename-group-container
+  ::ng-deep
+  .mat-form-field-appearance-standard
+  .mat-form-field-flex {
   padding-top: 0 !important;
 }
 
+.rename-group-container,
+.massive-sms-container,
+.delete-container,
+.btn-rename-group-container {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.massive-sms-container {
+  padding-left: 0.6rem;
+}
+
+.massive-sms-container ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
+  white-space: break-spaces;
+}
+
+.massive-sms-container ::ng-deep .p-dropdown {
+  width: 63%;
+}
+.btn-rename-group-container .button-neumorphism.btn-nobtn,
+.delete-container .button-neumorphism.btn-nobtn {
+  box-shadow: none;
+  border: none;
+}
 .add-group-container .mat-form-field {
   width: 90%;
 }
@@ -23,7 +53,15 @@
 ::ng-deep .p-datatable table {
   color: #44476a;
   background-color: #e6e7ee;
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+  box-shadow: inset 6px 4px 6px -5px #b8b9be, inset -3px -3px 7px #fff;
+  border-radius: 1rem;
+  border: none;
+}
+
+::ng-deep .queue-table .p-datatable table {
+  color: #44476a;
+  background-color: #e6e7ee;
+  box-shadow: inset 24px 33px 8px -32px #b8b9be, inset -54px 0px 15px -52px #fff;
   border-radius: 1rem;
   border: none;
 }
@@ -33,7 +71,7 @@
   border: none;
 }
 
-::ng-deep .p-datatable .p-datatable-thead>tr>th {
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
   color: #44476a;
   text-align: center;
   background-color: transparent;
@@ -42,18 +80,36 @@
   white-space: nowrap;
 }
 
-::ng-deep .p-datatable .p-datatable-tbody>tr>td {
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
   text-align: center;
   background-color: transparent;
   border: none;
   width: fit-content;
+  border-top: 1px solid #d1d9e6;
 }
 
-::ng-deep .p-datatable .p-datatable-tbody>tr {
+::ng-deep .queue-table .p-datatable .p-datatable-tbody > tr > td {
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  border-top: none;
+  box-shadow: 0px -1px 0px 0px #d1d9e6;
+}
+
+::ng-deep
+  .queue-table
+  .p-datatable-table
+  .p-datatable-tbody
+  > tr:first-child
+  > td:first-child {
+  box-shadow: inset 13px 0px 8px -12px #b8b9be, inset -4px 0px 0px -2px #d1d9e6 !important;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr {
   text-align: center;
   border: none;
   background-color: transparent;
-  border-top: 0.0625rem solid #d1d9e6;
 }
 
 ::ng-deep.p-datatable .p-sortable-column:not(.p-highlight):hover {
@@ -82,12 +138,14 @@
   border-bottom-right-radius: 1rem;
 }
 
-::ng-deep.p-datatable.p-datatable-hoverable-rows .p-datatable-tbody>tr:not(.p-highlight):hover {
+::ng-deep.p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover {
   background-color: rgba(38, 40, 51, 0.03);
   transition: 1s;
 }
 
-::ng-deep.p-datatable .p-datatable-tbody>tr:last-child>td:last-child {
+::ng-deep.p-datatable .p-datatable-tbody > tr:last-child > td:last-child {
   border-bottom-right-radius: 1rem;
 }
 
@@ -127,7 +185,9 @@
   color: #b8b9be;
 }
 
-::ng-deep.p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
+::ng-deep.p-paginator
+  .p-paginator-pages
+  .p-paginator-page:not(.p-highlight):hover {
   border: 0.0625rem solid #d1d9e6;
   color: #44476a;
   background-color: #e6e7ee;
@@ -135,10 +195,14 @@
   font-weight: 600;
 }
 
-::ng-deep.p-paginator .p-paginator-first:not(.p-disabled):not(.p-highlight):hover,
-::ng-deep.p-paginator .p-paginator-prev:not(.p-disabled):not(.p-highlight):hover,
-::ng-deep.p-paginator .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
-::ng-deep.p-paginator .p-paginator-last:not(.p-disabled):not(.p-highlight):hover {
+::ng-deep.p-paginator
+  .p-paginator-first:not(.p-disabled):not(.p-highlight):hover,
+::ng-deep.p-paginator
+  .p-paginator-prev:not(.p-disabled):not(.p-highlight):hover,
+::ng-deep.p-paginator
+  .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
+::ng-deep.p-paginator
+  .p-paginator-last:not(.p-disabled):not(.p-highlight):hover {
   border: 0.0625rem solid #d1d9e6;
   color: #44476a;
   background-color: #e6e7ee;
@@ -146,7 +210,8 @@
   font-weight: 600;
 }
 
-::ng-deep.p-paginator .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
+::ng-deep.p-paginator
+  .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
 p-paginator-icon {
   box-shadow: none;
   font-size: 1.5rem;
@@ -168,7 +233,9 @@ p-paginator-icon {
   content: "\e930";
 }
 
-::ng-deep.p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
+::ng-deep.p-datatable
+  .p-sortable-column:not(.p-highlight):hover
+  .p-sortable-column-icon {
   color: #44476a;
   transition: 0.8s;
 }
@@ -177,7 +244,9 @@ p-paginator-icon {
   color: #44476a;
 }
 
-::ng-deep.p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon {
+::ng-deep.p-datatable
+  .p-sortable-column.p-highlight:hover
+  .p-sortable-column-icon {
   color: #44476a;
 }
 
@@ -192,18 +261,26 @@ form {
   margin-top: 2rem;
 }
 
-.address-form>form {
-  min-width: 28rem;
-  max-width: 100% !important;
+.address-form > form {
   border-radius: 0;
   border: none;
-  padding: 0;
+  padding: 1rem;
   margin-top: 0;
+  min-width: 100%;
 }
 
-.address-form>.form-row>.col-md-4 {
+.address-form > .form-row > .col-md-4 {
   padding-right: 0;
   padding-left: 0.55rem;
+}
+
+::ng-deep .modifyingAddress .p-dropdown .p-dropdown-panel {
+  background: #e6e7ee;
+  width: 100%;
+}
+
+::ng-deep .modifyingAddress .button-neumorphism {
+  width: 100% !important;
 }
 
 .modifyingAddress ::ng-deep.p-dropdown,
@@ -213,18 +290,27 @@ form {
 }
 
 .modifyingAddress ::ng-deep.p-dropdown-items-wrapper {
-  max-height: 6rem !important;
+  max-height: 5rem !important;
+}
+
+.modifyingAddress ::ng-deep .mat-form-field-infix {
+  border-top: none;
 }
 
 .txtFormComponent ::ng-deep.mat-form-field-wrapper {
   padding-bottom: 0;
 }
 
-.address-form ::ng-deep.mat-form-field-appearance-standard .mat-form-field-flex {
+.txtFormComponent {
+  margin-top: 0.7rem;
+}
+.address-form
+  ::ng-deep.mat-form-field-appearance-standard
+  .mat-form-field-flex {
   padding-top: 0;
 }
 
-.modifyingAddress .p-dialog {
+::ng-deep .modifyingAddress .p-dialog {
   width: 54% !important;
 }
 
@@ -247,7 +333,10 @@ form {
   padding-bottom: 0;
 }
 
-.col-xl-auto ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+.col-xl-auto
+  ::ng-deep
+  .mat-form-field-appearance-standard
+  .mat-form-field-flex {
   padding-top: 0;
 }
 
@@ -268,7 +357,9 @@ form {
   padding: 0 !important;
 }
 
-.col-xl-auto ::ng-deep.mat-form-field-appearance-standard .mat-form-field-wrapper {
+.col-xl-auto
+  ::ng-deep.mat-form-field-appearance-standard
+  .mat-form-field-wrapper {
   padding: 0 !important;
 }
 
@@ -280,8 +371,8 @@ form {
   width: 100%;
 }
 
-.form-row>.col,
-.form-row>[class*="col-"] {
+.form-row > .col,
+.form-row > [class*="col-"] {
   padding-right: 3rem;
   padding-left: 1.5rem;
   padding-bottom: 0.44rem;
@@ -301,7 +392,10 @@ form {
   left: 17px !important;
 }
 
-.col-xl-auto ::ng-deep .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+.col-xl-auto
+  ::ng-deep
+  .mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
   transform: translateY(-1.7em) scale(0.75) !important;
 }
 
@@ -358,13 +452,13 @@ form {
   box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
 }
 
-::ng-deep p-columnfilterformelement p-button:enabled:hover {
+::ng-deep .p-columnfilterformelement p-button:enabled:hover {
   background-color: rgba(38, 40, 51, 0.03) !important;
   color: #44476a !important;
   border-color: #d1d9e6 !important;
 }
 
-::ng-deep p-columnfilterformelement .p-inputtext:enabled:hover {
+::ng-deep .p-columnfilterformelement .p-inputtext:enabled:hover {
   outline: 0;
   box-shadow: none;
   border-color: #d1d9e6 !important;
@@ -415,7 +509,8 @@ form {
 }
 
 ::ng-deep .p-column-filter-menu-button.p-column-filter-menu-button-active,
-::ng-deep .p-column-filter-menu-button.p-column-filter-menu-button-active:hover {
+::ng-deep
+  .p-column-filter-menu-button.p-column-filter-menu-button-active:hover {
   background-color: #e6e7ee;
   border: 0.0625rem solid #d1d9e6;
   box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
@@ -458,13 +553,13 @@ form {
   margin-top: 0.6rem;
 }
 
-.sticky-column-checkboxes {
+::ng-deep .queue-table .p-datatable-table .sticky-column-checkboxes {
   position: sticky;
   background-color: #e6e7ee !important;
   z-index: 1;
   left: 0 !important;
-  box-shadow: inset 5px 0 5px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
-
+  box-shadow: inset 13px 0px 8px -12px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px 2px 0px -2px #d1d9e6 !important;
 }
 
 .sticky-column {
@@ -473,26 +568,25 @@ form {
   z-index: 1;
   background-color: #e6e7ee !important;
   white-space: nowrap;
-  box-shadow: inset -4px 0px 0px -2px #d1d9e6;
-
+  box-shadow: inset -4px 0px 0px -2px #d1d9e6, inset 0px 2px 0px -2px #d1d9e6 !important;
 }
 
-.sticky-checkboxes-main {
+::ng-deep .queue-table .p-datatable-table .sticky-checkboxes-main {
   top: 0 !important;
-  position: sticky;
-  z-index: 2;
-
-  box-shadow: inset 9px 9px 9px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6, inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6 !important;
-  border-top-left-radius: 1rem;
+  position: sticky !important;
+  z-index: 2 !important;
+  box-shadow: inset 9px 9px 8px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6,
+    inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px 3px 0px -2px #d1d9e6 !important;
+  border-top-left-radius: 1rem !important;
 }
-
 
 .sticky-main {
   top: 0 !important;
   position: sticky;
   z-index: 2;
-  box-shadow: inset 0px 9px 9px -9px #b8b9be, inset -4px -3px 0px -2px #d1d9e6, inset 0px 0px 0px -26px transparent !important;
-
+  box-shadow: inset 0px 9px 8px -9px #b8b9be, inset -4px -3px 0px -2px #d1d9e6,
+    inset 0px 0px 0px -26px transparent, inset 0px 3px 0px -2px #d1d9e6 !important;
 }
 
 .stck-head {
@@ -500,31 +594,41 @@ form {
   position: sticky;
   z-index: 1;
   background-color: #e6e7ee !important;
-
 }
 
-::ng-deep .p-datatable .p-datatable-thead>tr>th {
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
   padding: 1rem !important;
-  box-shadow: inset 0px 8px 8px -7px #b8b9be, inset 0px -3px 0px -2px #d1d9e6, inset 0px 0px 0px -26px transparent;
+  box-shadow: inset 0px 8px 8px -7px #b8b9be, inset 0px -3px 0px -2px #d1d9e6,
+    inset 0px 0px 0px -26px transparent;
 }
 
-::ng-deep .p-datatable .p-datatable-thead>tr>th:last-child {
-  box-shadow: inset 24px 33px 8px -32px #b8b9be, inset -54px 0px 15px -52px #fff, inset 0px -3px 0px -2px #d1d9e6 !important;
+::ng-deep .p-datatable .p-datatable-thead > tr > th:last-child {
+  box-shadow: inset 24px 33px 8px -32px #b8b9be, inset -54px 0px 15px -52px #fff,
+    inset 0px -3px 0px -2px #d1d9e6 !important;
 }
 
-::ng-deep .p-datatable .p-datatable-tbody>tr:last-child {
-  box-shadow: inset -12px -12px 26px -22px #fff, inset 0px 0px 0px -2px transparent, inset 0px 0px 0px -26px transparent;
-  border-bottom-left-radius: 1rem;
-
-}
-
-::ng-deep .p-datatable .p-datatable-tbody>tr:last-child>td.sticky-column-checkboxes:first-child {
-  box-shadow: inset 24px -17px 8px -24px #b8b9be, inset 0px -13px 9px -11px #fff, inset 0px 0px 0px -26px transparent, inset -4px 0px 0px -2px #d1d9e6;
+::ng-deep .queue-table .p-datatable-table .p-datatable-tbody > tr:last-child {
+  box-shadow: inset 0px -30px 8px -27px #fff !important;
   border-bottom-left-radius: 1rem;
 }
 
-::ng-deep .p-datatable .p-datatable-tbody>tr:last-child>td.sticky-column:nth-child(2) {
-  box-shadow: inset 0px -26px 16px -24px #fff, inset -4px 0px 0px -2px #d1d9e6, inset 0px 0px 0px -26px transparent;
+::ng-deep
+  .p-datatable
+  .p-datatable-tbody
+  > tr:last-child
+  > td.sticky-column-checkboxes:first-child {
+  box-shadow: inset 13px 0px 8px -12px #b8b9be, inset 0px -30px 8px -27px #fff,
+    inset 0px 2px 0px -2px #d1d9e6, inset -4px 0px 0px -2px #d1d9e6 !important;
+  border-bottom-left-radius: 1rem;
+}
+
+::ng-deep
+  .p-datatable
+  .p-datatable-tbody
+  > tr:last-child
+  > td.sticky-column:nth-child(2) {
+  box-shadow: inset 0px -30px 8px -27px #fff, inset 0px 2px 0px -2px #d1d9e6,
+    inset -4px 0px 0px -2px #d1d9e6 !important;
 }
 
 ::ng-deep.p-button.p-button-text:enabled:hover {
@@ -535,18 +639,21 @@ form {
   border-radius: 2rem !important;
 }
 
-::ng-deep .tglGroupMenu>p-dropdown>.p-dropdown {
+::ng-deep .tglGroupMenu > p-dropdown > .p-dropdown {
   border-bottom: none !important;
 }
 
-::ng-deep .address-add-record.p-float-label>label {
+::ng-deep .address-add-record.p-float-label > label {
   left: 1rem;
   top: 1.2rem !important;
 }
 
-.filter-active ::ng-deep .mat-form-field-appearance-standard .mat-form-field-underline {
+.filter-active
+  ::ng-deep
+  .mat-form-field-appearance-standard
+  .mat-form-field-underline {
   background-color: #296e58;
-  height: .2rem !important;
+  height: 0.2rem !important;
 }
 
 .massive-sms-container .button-neumorphism {
@@ -563,4 +670,44 @@ form {
 .groups-container ::ng-deep p-dropdown > .p-dropdown {
   border-bottom: none !important;
   width: auto;
+}
+
+::ng-deep .p-fileupload .p-fileupload-buttonbar .p-button {
+  width: min-content !important;
+}
+
+.closer {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
+::ng-deep.p-fileupload-row div:first-child {
+  display: none;
+}
+
+.cancel-upload {
+  float: right;
+  margin-top: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+
+::ng-deep.p-overlaypanel .p-overlaypanel-content {
+  padding: 0.571rem 1rem;
+  background-color: #e6e7ee;
+  border-radius: 1rem;
+  box-shadow: inset 6px 4px 6px -5px #b8b9be, inset -3px -3px 7px #fff;
+  width: 12rem;
+}
+
+::ng-deep.p-overlaypanel {
+  background: #e6e7ee;
+  border-radius: 1rem;
+  box-shadow: none;
+  border: none;
+}
+
+::ng-deep.p-overlaypanel:after {
+  border: solid #e6e7ee;
+  border-color: rgb(219 219 219 / 0%);
+  border-bottom-color: #e6e7ee;
 }

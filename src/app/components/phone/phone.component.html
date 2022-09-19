@@ -5,17 +5,50 @@
         <h6 class="toggle-neumorphism-label">
           {{ element.element_placeholder }}
         </h6>
-        <mat-slide-toggle class="example-margin" [checked]="tglAutoDialer" #templateStatus
-          (change)="toggleAutoDialer()">
+        <mat-slide-toggle
+          class="example-margin"
+          [checked]="tglAutoDialer"
+          #templateStatus
+          (change)="toggleAutoDialer()"
+        >
         </mat-slide-toggle>
       </div>
     </div>
     <div *ngIf="element.element == 'inputIcon' && currentCall">
       <div class="form-check form-check-inline button-inline">
+
         <input type="{{ element.element_type }}" class="input-neumorphism" placeholder="{{ currentCallPhoneNumber }}" />
         <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall(currentCallPhoneNumber)">
           <i class="bi bi-telephone-fill" [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
           <i class="bi bi-x-circle-fill" [ngClass]="containerCallStatus ? 'show' : 'hide'"></i>
+
+        <input
+          type="{{ element.element_type }}"
+          class="input-neumorphism"
+          placeholder="{{ currentCallPhoneNumber }}"
+        />
+        <div
+          class="iconbutton-neumorphism btnCall"
+          (click)="btnCall()"
+          matTooltip="Call"
+          matTooltipPosition="above"
+          [ngClass]="containerCallStatus ? 'hide' : 'show'"
+        >
+          <i class="bi bi-telephone-fill"></i>
+          <i
+            class="bi bi-x-circle-fill"
+            [ngClass]="containerCallStatus ? 'show' : 'hide'"
+          ></i>
+        </div>
+        <div
+          class="iconbutton-neumorphism btnCall"
+          (click)="btnHangUpCall()"
+          matTooltip="Cancel call"
+          matTooltipPosition="above"
+          [ngClass]="containerCallStatus ? 'show' : 'hide'"
+        >
+          <i class="bi bi-x-circle-fill"></i>
+
         </div>
       </div>
     </div>
@@ -27,7 +60,11 @@
             </div>
         </div> -->
   </div>
-  <div *ngIf="containerCallStatus" class="container-neumorphism" [ngClass]="holdStatus ? 'change-on-hold' : ''">
+  <div
+    *ngIf="containerCallStatus"
+    class="container-neumorphism"
+    [ngClass]="holdStatus ? 'change-on-hold' : ''"
+  >
     <div class="form-check form-check-inline width-100 border-bottom">
       <small class="margin-rt width-100">Call established</small>
       <small class="margin-rt" id="onCallTime">00:01:30</small>
@@ -37,25 +74,65 @@
     </div>
     <div class="form-check form-check-inline width-100">
       <small class="margin-rt width-100">{{ currentCallPhoneNumber }}</small>
-      <button class="mini-iconbutton-neumorphism mute-toggle" matTooltip="Mute" matTooltipPosition="above"
-        (click)="btnMuteCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
-        <i class="bi bi-mic-fill mute-toggle-unmuted" [ngClass]="muteStatus ? 'hide' : 'show'"></i>
-        <i class="bi bi-mic-mute-fill mute-toggle-muted" [ngClass]="muteStatus ? 'show' : 'hide'"></i>
+      <button
+        class="mini-iconbutton-neumorphism mute-toggle"
+        matTooltip="Mute"
+        matTooltipPosition="above"
+        (click)="btnMuteCall()"
+        [ngClass]="xferStatus ? 'hide' : 'show'"
+      >
+        <i
+          class="bi bi-mic-fill mute-toggle-unmuted"
+          [ngClass]="muteStatus ? 'hide' : 'show'"
+        ></i>
+        <i
+          class="bi bi-mic-mute-fill mute-toggle-muted"
+          [ngClass]="muteStatus ? 'show' : 'hide'"
+        ></i>
       </button>
-      <button class="mini-iconbutton-neumorphism hold-toggle" matTooltip="Hold" matTooltipPosition="above"
-        (click)="btnHoldCall()" [ngClass]="xferStatus ? 'hide' : 'show'">
-        <i class="bi bi-pause-fill hold-toggle-onhold" [ngClass]="holdStatus ? 'hide' : 'show'"></i>
-        <i class="bi bi-play-fill hold-toggle-oncall" [ngClass]="holdStatus ? 'show' : 'hide'"></i>
+      <button
+        class="mini-iconbutton-neumorphism hold-toggle"
+        matTooltip="Hold"
+        matTooltipPosition="above"
+        (click)="btnHoldCall()"
+        [ngClass]="xferStatus ? 'hide' : 'show'"
+      >
+        <i
+          class="bi bi-pause-fill hold-toggle-onhold"
+          [ngClass]="holdStatus ? 'hide' : 'show'"
+        ></i>
+        <i
+          class="bi bi-play-fill hold-toggle-oncall"
+          [ngClass]="holdStatus ? 'show' : 'hide'"
+        ></i>
       </button>
-      <input type="number" class="mini-input-neumorphism" placeholder="Transfer to..."
-        [ngClass]="xferStatus ? 'show' : 'hide'" />
-      <button class="mini-iconbutton-neumorphism" matTooltip="Transfer to" matTooltipPosition="above"
-        (click)="btnXferCall()">
-        <i class="bi bi-telephone-forward-fill" [ngClass]="xferStatus ? 'hide' : 'show'"></i>
-        <i class="bi bi-x-circle-fill" [ngClass]="xferStatus ? 'show' : 'hide'"></i>
+      <input
+        type="number"
+        class="mini-input-neumorphism"
+        placeholder="Transfer to..."
+        [ngClass]="xferStatus ? 'show' : 'hide'"
+      />
+      <button
+        class="mini-iconbutton-neumorphism"
+        matTooltip="Transfer to"
+        matTooltipPosition="above"
+        (click)="btnXferCall()"
+      >
+        <i
+          class="bi bi-telephone-forward-fill"
+          [ngClass]="xferStatus ? 'hide' : 'show'"
+        ></i>
+        <i
+          class="bi bi-x-circle-fill"
+          [ngClass]="xferStatus ? 'show' : 'hide'"
+        ></i>
       </button>
-      <button class="mini-iconbutton-neumorphism" matTooltip="Hang up" matTooltipPosition="above"
-        (click)="btnHangUpCall()">
+      <button
+        class="mini-iconbutton-neumorphism"
+        matTooltip="Hang up"
+        matTooltipPosition="above"
+        (click)="btnHangUpCall()"
+      >
         <i class="bi bi-telephone-x-fill"></i>
       </button>
     </div>
@@ -63,16 +140,32 @@
   <div class="form-row">
     <!-- <div (click)="testBtn()" >testBtnCall</div> -->
     <div class="col-4 button-inline">
-      <p-dropdown [options]="optVoiceMail" class="button-neumorphism" (onChange)="leaveVoiceMail()"
-        optionLabel="templateName" optionValue="templateId" placeholder="VM" [formControl]="voiceMailLeft"></p-dropdown>
+      <p-dropdown
+        [options]="optVoiceMail"
+        class="button-neumorphism"
+        (onChange)="leaveVoiceMail()"
+        optionLabel="templateName"
+        optionValue="templateId"
+        placeholder="VM"
+        [formControl]="voiceMailLeft"
+      ></p-dropdown>
     </div>
     <div class="col-4 button-inline">
+
       <p-dropdown [options]="optSMS" class="button-neumorphism" (onChange)="sendSMSMessage($event)" optionLabel="templateName"
         optionValue="templateId" placeholder="SMS" [formControl]="smsMessageSent"></p-dropdown>
+
     </div>
     <div class="col-4 button-inline">
-      <p-dropdown [options]="optEmail" class="button-neumorphism" (onChange)="sendEmail()" optionLabel="templateName"
-        optionValue="templateId" placeholder="Email" [formControl]="emailSent"></p-dropdown>
+      <p-dropdown
+        [options]="optEmail"
+        class="button-neumorphism"
+        (onChange)="sendEmail()"
+        optionLabel="templateName"
+        optionValue="templateId"
+        placeholder="Email"
+        [formControl]="emailSent"
+      ></p-dropdown>
     </div>
   </div>
   <div class="form-row">
@@ -84,7 +177,10 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="col-12 button-inline" [ngClass]="tglAutoDialer ? 'hide' : 'show'">
+    <div
+      class="col-12 button-inline"
+      [ngClass]="tglAutoDialer ? 'hide' : 'show'"
+    >
       <button class="button-neumorphism float-right" (click)="nextCall()">
         Next call <i class="bi bi-arrow-right-circle-fill"></i>
       </button>
@@ -99,37 +195,52 @@ For now, I'd like the data shown.  But, clicking a div makes that customer the a
     <div class="filter-notes-container">
       <mat-form-field appearance="standard">
         <mat-label>Search</mat-label>
-        <input matInput type="text" [formControl]="searchCall" (keyup)="filterCall()"
-          placeholder="MRN, Full name, Phone number" />
+        <input
+          matInput
+          type="text"
+          [formControl]="searchCall"
+          (keyup)="filterCall()"
+          placeholder="MRN, Full name, Phone number"
+        />
       </mat-form-field>
     </div>
     <div class="txt-center margin-tp" *ngIf="dialSessionArray.length == 0">
       No data found.
     </div>
     <div *ngFor="let log of dialSessionArray; let i = index" id="list">
-      <div class="phone-log" [ngClass]="
+      <div
+        class="phone-log"
+        [ngClass]="
           currentCall && log.uid === currentCall.uid
             ? 'button-neumorphism-active'
             : ''
-        ">
+        "
+      >
         <div class="width-100" (click)="selectCustomer(log.uid)" id="{{ i }}">
           <div class="form-check form-check-inline width-100" id="{{ i }}">
             <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
-            <small *ngIf="log.lastContact" class="width-100 txt-rt" id="{{ i }}">{{
-              log.lastContact.date.toMillis() | date: "MM/dd/yyyy"
-              }}</small>
+            <small
+              *ngIf="log.lastContact"
+              class="width-100 txt-rt"
+              id="{{ i }}"
+              >{{ log.lastContact.date.toMillis() | date: "MM/dd/yyyy" }}</small
+            >
           </div>
           <div class="form-check form-check-inline width-100" id="{{ i }}">
             <p class="width-100" id="{{ i }}">
               {{ this.DataService.formatPhoneNumber(log.phonenumber) }}
             </p>
-            <small *ngIf="log.lastContact" class="width-100 txt-rt" id="{{ i }}">{{
-              log.lastContact.date.toMillis() | date: "h:mm a"
-              }}</small>
+            <small
+              *ngIf="log.lastContact"
+              class="width-100 txt-rt"
+              id="{{ i }}"
+              >{{ log.lastContact.date.toMillis() | date: "h:mm a" }}</small
+            >
           </div>
           <div class="form-check form-check-inline width-100" id="{{ i }}">
-
-            <small class="width-100" *ngIf="log.lastContact">{{ log.lastContact.result }}</small>
+            <small class="width-100" *ngIf="log.lastContact">{{
+              log.lastContact.result
+            }}</small>
             <small class="width-100 txt-rt hide" id="call{{ i }}">2min</small>
           </div>
         </div>
@@ -138,8 +249,6 @@ For now, I'd like the data shown.  But, clicking a div makes that customer the a
           matTooltipPosition="left">
           <i class="bi bi-hourglass-split"></i>
         </button>  -->
-
-
 
         <hr />
       </div>

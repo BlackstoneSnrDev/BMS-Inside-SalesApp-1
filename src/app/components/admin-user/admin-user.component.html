@@ -1,235 +1,248 @@
 <div class="admin-user-container">
-
   <div class="table-users">
-
-  <p-table
-    #dataTable
-    [columns]="thData"
-    [value]="tdData"
-    [rows]="5"
-    [paginator]="true"
-    [rowsPerPageOptions]="[5, 10, 25, 50]"
-    [(selection)]="tbSelectedRows"
-    [rowHover]="true"
-    dataKey="slIndex"
-    editMode="row"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true"
-    [loading]="loading"
-    styleClass="p-datatable-gridlines"
-    scrollHeight="42.857rem"
-    scrollDirection="horizontal"
-    responsiveLayout="scroll"
-    [tableStyle]="{ width: '100%' }"
-  >
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngIf="tdData" class="sticky-column-checkboxes sticky-checkboxes-main">Actions</th>
-        <th
-          *ngFor="let col of columns"
-          pSortableColumn="{{ col.field }}"
-          class="stck-head"
-        >
-          {{ col.title }}<p-sortIcon field="{{ col.field }}"></p-sortIcon>
-          <p-columnFilter
-            type="text"
-            field="{{ col.field }}"
-            display="menu"
-          ></p-columnFilter>
-        </th>
-      </tr>
-    </ng-template>
-
-    <ng-template
-      pTemplate="body"
-      let-rowData
-      let-columns="columns"
-      let-rowIndex="rowIndex"
-      let-editing="editing"
+    <p-table
+      #dataTable
+      [columns]="thData"
+      [value]="tdData"
+      [rows]="5"
+      [paginator]="true"
+      [rowsPerPageOptions]="[5, 10, 25, 50]"
+      [(selection)]="tbSelectedRows"
+      [rowHover]="true"
+      dataKey="slIndex"
+      editMode="row"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+      [loading]="loading"
+      styleClass="p-datatable-gridlines"
+      scrollHeight="42.857rem"
+      scrollDirection="horizontal"
+      responsiveLayout="scroll"
+      [tableStyle]="{ width: '100%' }"
     >
-      <tr [pEditableRow]="rowData" id="tr{{ rowIndex }}">
-        <td class="sticky-column-checkboxes">
-          <button
-            pRipple
-            *ngIf="!editing"
-            type="button"
-            pInitEditableRow
-            (click)="onRowEditInit(rowData, rowIndex)"
-            class="iconbutton-neumorphism edit-icon margin-rt"
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th
+            *ngIf="tdData"
+            class="sticky-column-checkboxes sticky-checkboxes-main"
           >
-            <i class="bi bi-pencil-square"></i>
-          </button>
-          <button
-            pRipple
-            *ngIf="!editing"
-            type="button"
-            (click)="onRowDeleteRow(rowData.uid)"
-            class="iconbutton-neumorphism trash-icon"
+            Actions
+          </th>
+          <th
+            *ngFor="let col of columns"
+            pSortableColumn="{{ col.field }}"
+            class="stck-head"
           >
-            <i class="bi bi-trash-fill"></i>
-          </button>
-          <button
-            pRipple
-            *ngIf="editing"
-            type="button"
-            pSaveEditableRow
-            (click)="onRowEditSave(rowData, rowIndex)"
-            class="iconbutton-neumorphism margin-rt"
-          >
-            <i class="pi pi-check"></i>
-          </button>
-          <button
-            pRipple
-            *ngIf="editing"
-            type="button"
-            pCancelEditableRow
-            (click)="onRowEditCancel(rowData, rowIndex)"
-            class="iconbutton-neumorphism"
-          >
-            <i class="pi pi-times"></i>
-          </button>
-        </td>
-        <td *ngFor="let col of columns" class="users-container">
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <ng-container
-                [ngSwitch]="
-                  col.element_type === 'boolean'
-                    ? 'checkbox'
-                    : col.field === 'type'
-                    ? 'select'
-                    : col.element_type === 'password'
-                    ? 'password'
-                    : col.field === 'department'
-                    ? 'department'
-                    : col.field === 'role'
-                    ? 'role'
-                    : -1
-                "
-              >
-                <ng-container *ngSwitchCase="'checkbox'">
-                  <p-checkbox
-                    [(ngModel)]="rowData[col.field]"
-                    [binary]="true"
-                    inputId="binary"
-                  >
-                  </p-checkbox>
-                </ng-container>
+            {{ col.title }}<p-sortIcon field="{{ col.field }}"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="{{ col.field }}"
+              display="menu"
+            ></p-columnFilter>
+          </th>
+        </tr>
+      </ng-template>
 
-                <ng-container *ngSwitchCase="'department'">
-                  <p-dropdown
-                    [options]="selectDept"
-                    class="input-neumorphism"
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Dept"
-                    [(ngModel)]="rowData[col.field]"
-                  ></p-dropdown>
-                </ng-container>
-
-                <ng-container *ngSwitchCase="'role'">
-                  <p-dropdown
-                    [options]="selectRole"
-                    class="input-neumorphism"
-                    optionLabel="name"
-                    optionValue="name"
-                    placeholder="Role"
-                    [(ngModel)]="rowData[col.field]"
-                  ></p-dropdown>
-                </ng-container>
-
-                <ng-container *ngSwitchCase="'password'">
-                  <span class="p-float-label passwordContainer">
-                    <p-password
+      <ng-template
+        pTemplate="body"
+        let-rowData
+        let-columns="columns"
+        let-rowIndex="rowIndex"
+        let-editing="editing"
+      >
+        <tr [pEditableRow]="rowData" id="tr{{ rowIndex }}">
+          <td class="sticky-column-checkboxes">
+            <button
+              pRipple
+              *ngIf="!editing"
+              type="button"
+              pInitEditableRow
+              (click)="onRowEditInit(rowData, rowIndex)"
+              class="iconbutton-neumorphism edit-icon"
+            >
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button
+              pRipple
+              *ngIf="!editing"
+              type="button"
+              (click)="onRowDeleteRow(rowData.uid)"
+              class="iconbutton-neumorphism trash-icon"
+            >
+              <i class="bi bi-trash-fill"></i>
+            </button>
+            <button
+              pRipple
+              *ngIf="editing"
+              type="button"
+              pSaveEditableRow
+              (click)="onRowEditSave(rowData, rowIndex)"
+              class="iconbutton-neumorphism margin-rt"
+            >
+              <i class="pi pi-check"></i>
+            </button>
+            <button
+              pRipple
+              *ngIf="editing"
+              type="button"
+              pCancelEditableRow
+              (click)="onRowEditCancel(rowIndex)"
+              class="iconbutton-neumorphism"
+            >
+              <i class="pi pi-times"></i>
+            </button>
+          </td>
+          <td *ngFor="let col of columns" class="users-container">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <ng-container
+                  [ngSwitch]="
+                    col.element_type === 'boolean'
+                      ? 'checkbox'
+                      : col.field === 'type'
+                      ? 'select'
+                      : col.element_type === 'password'
+                      ? 'password'
+                      : col.field === 'department'
+                      ? 'department'
+                      : col.field === 'role'
+                      ? 'role'
+                      : -1
+                  "
+                >
+                  <ng-container *ngSwitchCase="'checkbox'">
+                    <p-checkbox
                       [(ngModel)]="rowData[col.field]"
-                      [showClear]="true"
-                      [toggleMask]="true"
-                      [required]="true"
+                      [binary]="true"
+                      inputId="binary"
                     >
-                    </p-password>
-                    <label>Password</label>
-                  </span>
-                </ng-container>
+                    </p-checkbox>
+                  </ng-container>
 
-                <ng-container *ngSwitchDefault>
-                  <mat-form-field appearance="standard">
-                    <mat-label>{{ col.title }}</mat-label>
-                    <input
-                      matInput
-                      type="{{ col.element_type }}"
-                      placeholder="New {{ col.field }}"
+                  <ng-container *ngSwitchCase="'department'">
+                    <p-dropdown
+                      [options]="selectDept"
+                      class="input-neumorphism"
+                      optionLabel="name"
+                      optionValue="name"
+                      placeholder="Dept"
                       [(ngModel)]="rowData[col.field]"
-                      required
-                    />
-                  </mat-form-field>
-                </ng-container>
+                    ></p-dropdown>
+                  </ng-container>
 
-                <br />
-                <small *ngIf="onValidationError" class="color-rd">
-                  {{ col.title }} must be filled out.
-                </small>
-              </ng-container>
-            </ng-template>
-            <ng-template pTemplate="output">
-              <ng-container
-                [ngSwitch]="col.element_type === 'boolean' ? 'checkbox' : -1"
-              >
-                <ng-container *ngSwitchCase="'checkbox'">
-                  <p-checkbox
-                    [(ngModel)]="rowData[col.field]"
-                    [binary]="true"
-                    inputId="binary"
-                    [readonly]="true"
-                  >
-                  </p-checkbox>
-                </ng-container>
+                  <ng-container *ngSwitchCase="'role'">
+                    <p-dropdown
+                      [options]="selectRole"
+                      class="input-neumorphism"
+                      optionLabel="name"
+                      optionValue="name"
+                      placeholder="Role"
+                      [(ngModel)]="rowData[col.field]"
+                    ></p-dropdown>
+                  </ng-container>
 
-                <ng-container *ngSwitchDefault>
-                  <div *ngIf="col.field === 'password'">
-                    {{ rowData[col.field] | formatPassword }}
-                  </div>
-                  <div *ngIf="col.field !== 'password'">
-                    {{ rowData[col.field] }}
-                  </div>
-                </ng-container>
-              </ng-container>
-            </ng-template>
-          </p-cellEditor>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="footer" let-columns>
-      <tr [formGroup]="createNewUserForm" *ngIf="createNewUserForm">
-        <td class="sticky-column-checkboxes">
-          <button *ngIf="!tglCreateUser" matTooltip="Add new user"
-          matTooltipPosition="above"
-            (click)="toggleCreateNewUser()"
-            class="mini-iconbutton-neumorphism add-user-i"
-          >
-          <i class="bi bi-plus-lg"></i>
+                  <ng-container *ngSwitchCase="'password'">
+                    <span class="p-float-label passwordContainer">
+                      <p-password
+                        [(ngModel)]="rowData[col.field]"
+                        [showClear]="true"
+                        [toggleMask]="true"
+                        [required]="true"
+                      >
+                      </p-password>
+                      <label>Password</label>
+                    </span>
+                  </ng-container>
 
-          </button>
-          <button *ngIf="tglCreateUser"
-            (click)="cancelCreateNewUser()"
-            class="iconbutton-neumorphism"
-          >
-            <i class="pi pi-times"></i>
-          </button>
-          <button *ngIf="tglCreateUser"
-          (click)="saveCreateNewUser()"
-          [ngClass]="!createNewUserForm.invalid ? 'iconbutton-neumorphism' : 'iconbutton-neumorphism-disabled'"
-          >
-            <i class="pi pi-check"></i>
-          </button>
-        </td>
-        <td *ngFor="let col of columns" >
-          <ng-container *ngIf="tglCreateUser" 
-                [ngSwitch]=" col.field === 'department'
-                ? 'department'
-                : col.field === 'role'
-                ? 'role'
-                 : -1"
-              >
+                  <ng-container *ngSwitchDefault>
+                    <mat-form-field appearance="standard">
+                      <mat-label>{{ col.title }}</mat-label>
+                      <input
+                        matInput
+                        type="{{ col.element_type }}"
+                        placeholder="New {{ col.field }}"
+                        [(ngModel)]="rowData[col.field]"
+                        required
+                      />
+                    </mat-form-field>
+                  </ng-container>
+
+                  <br />
+                  <small *ngIf="onValidationError" class="color-rd">
+                    {{ col.title }} must be filled out.
+                  </small>
+                </ng-container>
+              </ng-template>
+              <ng-template pTemplate="output">
+                <ng-container
+                  [ngSwitch]="col.element_type === 'boolean' ? 'checkbox' : -1"
+                >
+                  <ng-container *ngSwitchCase="'checkbox'">
+                    <p-checkbox
+                      [(ngModel)]="rowData[col.field]"
+                      [binary]="true"
+                      inputId="binary"
+                      [readonly]="true"
+                    >
+                    </p-checkbox>
+                  </ng-container>
+
+                  <ng-container *ngSwitchDefault>
+                    <div *ngIf="col.field === 'password'">
+                      {{ rowData[col.field] | formatPassword }}
+                    </div>
+                    <div *ngIf="col.field !== 'password'">
+                      {{ rowData[col.field] }}
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-template>
+            </p-cellEditor>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer" let-columns>
+        <tr [formGroup]="createNewUserForm" *ngIf="createNewUserForm">
+          <td>
+            <button
+              *ngIf="!tglCreateUser"
+              matTooltip="Add new user"
+              matTooltipPosition="above"
+              (click)="toggleCreateNewUser()"
+              class="mini-iconbutton-neumorphism add-user-i"
+            >
+              <i class="bi bi-plus-lg"></i>
+            </button>
+            <button
+              *ngIf="tglCreateUser"
+              (click)="cancelCreateNewUser()"
+              class="iconbutton-neumorphism"
+            >
+              <i class="pi pi-times"></i>
+            </button>
+            <button
+              *ngIf="tglCreateUser"
+              (click)="saveCreateNewUser()"
+              [ngClass]="
+                !createNewUserForm.invalid
+                  ? 'iconbutton-neumorphism'
+                  : 'iconbutton-neumorphism-disabled'
+              "
+            >
+              <i class="pi pi-check"></i>
+            </button>
+          </td>
+          <td *ngFor="let col of columns">
+            <ng-container
+              *ngIf="tglCreateUser"
+              [ngSwitch]="
+                col.field === 'department'
+                  ? 'department'
+                  : col.field === 'role'
+                  ? 'role'
+                  : -1
+              "
+            >
               <ng-container *ngSwitchCase="'department'">
                 <p-dropdown
                   [options]="selectDept"
@@ -238,7 +251,7 @@
                   optionValue="name"
                   placeholder="Dept"
                   formControlName="{{ col.field }}"
-                  ></p-dropdown>
+                ></p-dropdown>
               </ng-container>
 
               <ng-container *ngSwitchCase="'role'">
@@ -249,47 +262,46 @@
                   optionValue="name"
                   placeholder="Role"
                   formControlName="{{ col.field }}"
-                  ></p-dropdown>
+                ></p-dropdown>
               </ng-container>
 
-                <ng-container *ngSwitchDefault>
-                  <mat-form-field appearance="standard">
-                    <mat-label>{{ col.title }}</mat-label>
-                    <input
-                      matInput
-                      type="{{ col.element_type }}"
-                      placeholder="New {{ col.field }}"
-                      formControlName="{{ col.field }}"
-                      required
-                    />
-                  </mat-form-field>
-                </ng-container>
-
-                <br />
-                <small *ngIf="onValidationError" class="color-rd">
-                  {{ col.title }} must be filled out.
-                </small>
+              <ng-container *ngSwitchDefault>
+                <mat-form-field appearance="standard">
+                  <mat-label>{{ col.title }}</mat-label>
+                  <input
+                    matInput
+                    type="{{ col.element_type }}"
+                    placeholder="New {{ col.field }}"
+                    formControlName="{{ col.field }}"
+                    required
+                  />
+                </mat-form-field>
               </ng-container>
-          
-        </td>
-      </tr>
-  </ng-template>
-    <ng-template pTemplate="paginatorleft">
-      <p-button
-        type="button"
-        icon="pi pi-plus"
-        styleClass="p-button-text"
-      ></p-button>
-    </ng-template>
-    <ng-template pTemplate="paginatorright">
-      <p-button
-        type="button"
-        icon="pi pi-cloud"
-        styleClass="p-button-text"
-      ></p-button>
-    </ng-template>
-  </p-table>
-</div>
+
+              <br />
+              <small *ngIf="onValidationError" class="color-rd">
+                {{ col.title }} must be filled out.
+              </small>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+        <p-button
+          type="button"
+          icon="pi pi-plus"
+          styleClass="p-button-text"
+        ></p-button>
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+        <p-button
+          type="button"
+          icon="pi pi-cloud"
+          styleClass="p-button-text"
+        ></p-button>
+      </ng-template>
+    </p-table>
+  </div>
 
   <p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
   <p-toast life="5000" position="top-center"></p-toast>

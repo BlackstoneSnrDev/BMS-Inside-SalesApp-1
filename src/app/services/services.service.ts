@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, from, BehaviorSubject, combineLatest } from 'rxjs'
+import { map, Observable, from, BehaviorSubject, combineLatest } from 'rxjs';
 import * as moment from 'moment';
 import { UsersService } from './auth.service';
 import { RandomId } from './services.randomId';
@@ -14,18 +14,13 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import firebase from 'firebase/compat';
 
-
-let len = 12;    
-let pattern = 'aA0'   
+let len = 12;
+let pattern = 'aA0';
 
 @Injectable({
-
-  providedIn: 'root'
-
+  providedIn: 'root',
 })
-
 export class DataService {
-
   public navbarDataURL: string;
   public formElementsURL: string;
   public formCityURL: string;
@@ -50,30 +45,31 @@ export class DataService {
   public currentCallNotes = this.activeCallNotes.asObservable();
 
   constructor(
-
     private _http: HttpClient,
     private afs: AngularFirestore,
     private usersService: UsersService,
     private fns: AngularFireFunctions,
     private storage: AngularFireStorage
+  ) {
+    this.navbarDataURL = '../../assets/json/menu-data.json';
+    this.formElementsURL = '../../assets/json/form-elements.json';
+    this.formCityURL = 'https://countriesnow.space/api/v0.1/countries/';
+    this.formCountryURL = 'https://countriesnow.space/api/v0.1/countries/iso';
+    this.formStateURL = 'https://countriesnow.space/api/v0.1/countries/states';
+    this.callhistoryURL = '../../assets/json/call-flow.json';
+    this.logURL = '../../assets/json/log-data.json';
+    this.tableDataURL = '../../assets/json/queueTable-data.json';
+    this.selectDataURL = '../../assets/json/select-data.json';
 
-  ){
-
-    this.navbarDataURL = "../../assets/json/menu-data.json";
-    this.formElementsURL = "../../assets/json/form-elements.json";
-    this.formCityURL = "https://countriesnow.space/api/v0.1/countries/";
-    this.formCountryURL = "https://countriesnow.space/api/v0.1/countries/iso";
-    this.formStateURL = "https://countriesnow.space/api/v0.1/countries/states";
-
-    this.callhistoryURL = "../../assets/json/call-flow.json";
-    this.logURL = "../../assets/json/log-data.json";
-    this.tableDataURL = "../../assets/json/queueTable-data.json";
-    this.selectDataURL = "../../assets/json/select-data.json";
-
-
-    this.usersService.dbObjKey.subscribe(dbObjKey => this.dbObjKey = dbObjKey);
-    this.usersService.userInfo.subscribe(userInfo => this.userInfo = userInfo);
-    this.usersService.activeTemplate.subscribe(template => this.activeTemplate = template);
+    this.usersService.dbObjKey.subscribe(
+      (dbObjKey) => (this.dbObjKey = dbObjKey)
+    );
+    this.usersService.userInfo.subscribe(
+      (userInfo) => (this.userInfo = userInfo)
+    );
+    this.usersService.activeTemplate.subscribe(
+      (template) => (this.activeTemplate = template)
+    );
 
     this.currentUid = this.userInfo.uid;
   }
@@ -189,28 +185,41 @@ export class DataService {
     }
 
   addTemplate(data: any) {
-    let newTemplateRef = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(data.templateName)
-    newTemplateRef.set({ 
-        templateName: data.templateName, 
+    let newTemplateRef = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(data.templateName);
+    newTemplateRef.set({
+      templateName: data.templateName,
     });
     data.fieldArray.forEach((item: firebase.firestore.DocumentData) => {
-        return newTemplateRef.set({
-            [item['element_table_value']] : item
-        }, { merge: true })
-    })
+      return newTemplateRef.set(
+        {
+          [item['element_table_value']]: item,
+        },
+        { merge: true }
+      );
+    });
 
     if (data.statusArray.length > 0) {
-        // create statusList collection and add each item from statusArray to it
-        let statusListRef = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(data.templateName).collection('statusList')
-        data.statusArray.forEach((item: firebase.firestore.DocumentData) => {
-            return statusListRef.doc(item['uid']).set(item)
-        })
+      // create statusList collection and add each item from statusArray to it
+      let statusListRef = this.afs
+        .collection('Tenant')
+        .doc(this.dbObjKey)
+        .collection('templates')
+        .doc(data.templateName)
+        .collection('statusList');
+      data.statusArray.forEach((item: firebase.firestore.DocumentData) => {
+        return statusListRef.doc(item['uid']).set(item);
+      });
     }
 
-    this.activeDialSessionArray.next('no contacts have been added to this template');
+    this.activeDialSessionArray.next(
+      'no contacts have been added to this template'
+    );
     // this.activeCall.next(activeGroupCustomerArray[0]);
-    this.setActiveCall('no contacts have been added to this template')
-
+    this.setActiveCall('no contacts have been added to this template');
   }
 
   deleteSettingTemplate(uid: any, type: any) {
@@ -227,23 +236,34 @@ export class DataService {
     var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
     var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
     if (match) {
-        var intlCode = (match[1] ? '+1 ' : '');
-        return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+      var intlCode = match[1] ? '+1 ' : '';
+      return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
     }
     return null;
-}
+  }
 
   setActiveCall(customerId: string) {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).snapshotChanges().subscribe(t => {
-        this.activeCall.next(t.payload.data()) 
-      })
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .doc(customerId)
+      .snapshotChanges()
+      .subscribe((t) => {
+        this.activeCall.next(t.payload.data());
+      });
     // console.log('setActiveCall', data);
     return data;
   }
 
-
-getDialingSessionTemplate() {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref;
+  getDialingSessionTemplate() {
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate).ref;
     return data.get().then((doc: any) => {
         let filteredTemplateData: any[] = [];
         Object.values(doc.data()).forEach((item) => {
@@ -298,258 +318,314 @@ getDialingSessionTemplate() {
             })
         }
     }
+  
 
-selectActiveGroup(group: string) {
-    this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({
+  selectActiveGroup(group: string) {
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .update({
         activeGroup: arrayUnion(group),
-    })
-}
-removeActiveGroup(group: string) {
-    this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({
+      });
+  }
+  removeActiveGroup(group: string) {
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .update({
         activeGroup: arrayRemove(group),
-    })
-}
+      });
+  }
 
-
-    addNewNote(customerId: string, note: string, ) {
-        const customer = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(customerId).update({ 
-            notes: arrayUnion({
-                date: Timestamp.fromDate(new Date()),
-                data: note,
-                enteredBy: this.userInfo.name,
-                enteredByUid: this.userInfo.uid,
-            }),
-        });
-        //this.getNoteData(customerId);
-    }
+  addNewNote(customerId: string, note: string) {
+    const customer = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .doc(customerId)
+      .update({
+        notes: arrayUnion({
+          date: Timestamp.fromDate(new Date()),
+          data: note,
+          enteredBy: this.userInfo.name,
+          enteredByUid: this.userInfo.uid,
+        }),
+      });
+    //this.getNoteData(customerId);
+  }
 
   createUser(data: any) {
     console.log(data);
     const callable = this.fns.httpsCallable('createNewUser');
     var userData = {
-        "email": "name@example.com",
-        "emailVerified": true,
-        "phoneNumber": "+15551212",
-        "password": "randomPW",
-        "displayName": "User Name",
-        "disabled": false,
-        "sponsor": "Extra Payload #1 (optional)",
-        "study": "Extra Payload #2 (optional)",
-        "department": data.department,
-        "tenant": this.activeTemplate,
-        "dbObjKey": this.dbObjKey,
-    }
-    return callable(userData)
+      email: 'name@example.com',
+      emailVerified: true,
+      phoneNumber: '+15551212',
+      password: 'randomPW',
+      displayName: 'User Name',
+      disabled: false,
+      sponsor: 'Extra Payload #1 (optional)',
+      study: 'Extra Payload #2 (optional)',
+      department: data.department,
+      tenant: this.activeTemplate,
+      dbObjKey: this.dbObjKey,
+    };
+    return callable(userData);
     //return "testing";
   }
 
   async fileUpload(Parsed: any) {
-    let headers = Parsed.meta.fields
+    let headers = Parsed.meta.fields;
     let templateFieldArray: any[] = [];
     let templateFieldObj: any[] = [];
-// Get all the fields from the currently active template
-    const activeTemplateFields = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref;
+    // Get all the fields from the currently active template
+    const activeTemplateFields = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate).ref;
     await activeTemplateFields.get().then((doc: any) => {
-        Object.entries(doc.data()).forEach((field: any) => {
-            if (typeof field[1] === 'object') {
-                templateFieldObj.push(field);
-                templateFieldArray.push(field[0]);
-            }
-        })
-    })
-    let difference = templateFieldArray
-                 .filter(x => !headers.includes(x))
-                 .concat(headers.filter((x: any) => !templateFieldArray.includes(x)));
-    if (difference.length) {
-        return "Error: The Headers in your CSV file do not exactly match the fields in the active template. Please check the CSV file's headers and try again."  
-    } else { 
-
-        let errorArray: any = []
-        let okayRowCount = 0;
-        let sanitizedRowArray: any = []
-
-        await Parsed.data.forEach((row: firebase.firestore.DocumentData, rowIndex: number) => {
-
-            let sanitizedRow: any = {};
-            let error = false
-
-            Object.entries(row).forEach(async(field: any) => {
-                
-                let fieldObj = templateFieldObj.find((obj: any) => obj[0] === field[0])
-
-                switch (fieldObj[1].element_type) {
-                    case 'text': sanitizedRow[field[0]] = field[1]; 
-                        break;
-                    case 'number': if (parseFloat(field[1])) {
-                            sanitizedRow[field[0]] = parseFloat(field[1]);   
-                        } else {
-                            error = true;
-                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a number.`)
-                        }
-                        break;
-                    case 'date': if (moment(field[1], 'YYYY-MM-DD',true).isValid()) {
-                            sanitizedRow[field[0]] = new Date(field[1]);   
-                        } else {
-                            error = true;
-                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a properly formatted date. Please use YYYY-MM-DD.`)
-                        }
-                        break;
-                    case 'boolean': if (field[1].toUpperCase() === 'TRUE') {
-                            sanitizedRow[field[0]] = true
-                        } else if (field[1].toUpperCase() === 'FALSE') {
-                            sanitizedRow[field[0]] = false
-                        } else {
-                            error = true;
-                            errorArray.push(`Error in row ${rowIndex + 2}: ${field[1]} is not a true/false.`)
-                        }
-                        break;
-                    default: null
-                }
-
-            })
-            if (!error) {
-                okayRowCount++
-                sanitizedRowArray.push({...sanitizedRow})
-            } 
-        })
-        if (errorArray.length > 0) {
-            return {status: 'Error', data: errorArray} 
-        } else {
-
-            // batch committ all sanitizedRowArray to firestore database customer collection
-            const batch = this.afs.firestore.batch();
-            sanitizedRowArray.forEach((row: any, index: number) => {
-                console.log(row, index);
-                let uid = RandomId(len, pattern)
-                console.log(uid);
-                const ref: any = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).ref;
-                batch.set(ref, {
-                    ...row, 
-                    group: [],
-                    lastContact: null,
-                    notes: [],
-                    template: this.activeTemplate,
-                    uid: uid
-                });
-
-                // 1h70d8gkAQXx
-                // p5TPOipU5g5q
-
-            })
-            return batch.commit().then(() => {
-                return {status: 'Success', data: `${okayRowCount} rows successfully uploaded.`}
-            }).catch((error: any) => {
-                return {status: 'Error', data: error}
-            })
+      Object.entries(doc.data()).forEach((field: any) => {
+        if (typeof field[1] === 'object') {
+          templateFieldObj.push(field);
+          templateFieldArray.push(field[0]);
         }
+      });
+    });
+    let difference = templateFieldArray
+      .filter((x) => !headers.includes(x))
+      .concat(headers.filter((x: any) => !templateFieldArray.includes(x)));
+    if (difference.length) {
+      return "Error: The Headers in your CSV file do not exactly match the fields in the active template. Please check the CSV file's headers and try again.";
+    } else {
+      let errorArray: any = [];
+      let okayRowCount = 0;
+      let sanitizedRowArray: any = [];
+
+      await Parsed.data.forEach(
+        (row: firebase.firestore.DocumentData, rowIndex: number) => {
+          let sanitizedRow: any = {};
+          let error = false;
+
+          Object.entries(row).forEach(async (field: any) => {
+            let fieldObj = templateFieldObj.find(
+              (obj: any) => obj[0] === field[0]
+            );
+
+            switch (fieldObj[1].element_type) {
+              case 'text':
+                sanitizedRow[field[0]] = field[1];
+                break;
+              case 'number':
+                if (parseFloat(field[1])) {
+                  sanitizedRow[field[0]] = parseFloat(field[1]);
+                } else {
+                  error = true;
+                  errorArray.push(
+                    `Error in row ${rowIndex + 2}: ${field[1]} is not a number.`
+                  );
+                }
+                break;
+              case 'date':
+                if (moment(field[1], 'YYYY-MM-DD', true).isValid()) {
+                  sanitizedRow[field[0]] = new Date(field[1]);
+                } else {
+                  error = true;
+                  errorArray.push(
+                    `Error in row ${rowIndex + 2}: ${
+                      field[1]
+                    } is not a properly formatted date. Please use YYYY-MM-DD.`
+                  );
+                }
+                break;
+              case 'boolean':
+                if (field[1].toUpperCase() === 'TRUE') {
+                  sanitizedRow[field[0]] = true;
+                } else if (field[1].toUpperCase() === 'FALSE') {
+                  sanitizedRow[field[0]] = false;
+                } else {
+                  error = true;
+                  errorArray.push(
+                    `Error in row ${rowIndex + 2}: ${
+                      field[1]
+                    } is not a true/false.`
+                  );
+                }
+                break;
+              default:
+                null;
+            }
+          });
+          if (!error) {
+            okayRowCount++;
+            sanitizedRowArray.push({ ...sanitizedRow });
+          }
+        }
+      );
+      if (errorArray.length > 0) {
+        return { status: 'Error', data: errorArray };
+      } else {
+        // batch committ all sanitizedRowArray to firestore database customer collection
+        const batch = this.afs.firestore.batch();
+        sanitizedRowArray.forEach((row: any, index: number) => {
+          console.log(row, index);
+          let uid = RandomId(len, pattern);
+          console.log(uid);
+          const ref: any = this.afs
+            .collection('Tenant')
+            .doc(this.dbObjKey)
+            .collection('templates')
+            .doc(this.activeTemplate)
+            .collection('customers')
+            .doc(uid).ref;
+          batch.set(ref, {
+            ...row,
+            group: [],
+            lastContact: null,
+            notes: [],
+            template: this.activeTemplate,
+            uid: uid,
+          });
+
+          // 1h70d8gkAQXx
+          // p5TPOipU5g5q
+        });
+        return batch
+          .commit()
+          .then(() => {
+            return {
+              status: 'Success',
+              data: `${okayRowCount} rows successfully uploaded.`,
+            };
+          })
+          .catch((error: any) => {
+            return { status: 'Error', data: error };
+          });
+      }
     }
   }
 
-  getAllUsers(): Observable<any>{
-// get all the users for the current tenant
-    return this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').snapshotChanges().pipe(
-        map(actions => actions.map(a => a.payload.doc.data() ))
-    )
+  getAllUsers(): Observable<any> {
+    // get all the users for the current tenant
+    return this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .snapshotChanges()
+      .pipe(map((actions) => actions.map((a) => a.payload.doc.data())));
   }
 
   getUserTableHeader() {
-// get userTableElements from the current tenant
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).ref
+    // get userTableElements from the current tenant
+    const data = this.afs.collection('Tenant').doc(this.dbObjKey).ref;
     return data.get().then((doc: any) => {
-        return Object.values(doc.data().usersTableElements);
-    })
+      return Object.values(doc.data().usersTableElements);
+    });
   }
 
-  getMyTableData(): Observable<any>{
+  getMyTableData(): Observable<any> {
     return this._http.get(this.tableDataURL);
-
   }
 
-
-  getSelectData(): Observable<any>{
+  getSelectData(): Observable<any> {
     return this._http.get(this.selectDataURL);
-
   }
 
-  getFormElementsData(): Observable<any>{
-
+  getFormElementsData(): Observable<any> {
     return this._http.get(this.formElementsURL);
-
   }
 
-  getFormCity(): Observable<any>{
-
+  getFormCity(): Observable<any> {
     return this._http.get(this.formCityURL);
-
   }
 
-  getFormCountry(): Observable<any>{
-
+  getFormCountry(): Observable<any> {
     return this._http.get(this.formCountryURL);
-
   }
 
-  getFormState(): Observable<any>{
-
+  getFormState(): Observable<any> {
     return this._http.get(this.formStateURL);
-
   }
 
-  getLogData(): Observable<any>{
-
+  getLogData(): Observable<any> {
     return this._http.get(this.logURL);
-
   }
 
-  getCallHistoryData(): Observable<any>{
-
+  getCallHistoryData(): Observable<any> {
     return this._http.get(this.callhistoryURL);
-
   }
 
-  getTableCustomerHeader() { 
-
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).ref
+  getTableCustomerHeader() {
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate).ref;
     return data.get().then((doc: any) => {
-        let tableHeader: any[] = [];
-        Object.values(doc.data()).forEach((item: any) => {
-
-            if (typeof item === 'object'){
-                tableHeader.push({ 
-                    title: item.element_placeholder,
-                    field: item.element_table_value, 
-                    value: item.element_value,
-                    element_type: item.element_type,
-                    element_order: item.element_order,
-                });
-            }
-        })
-        return tableHeader;
-    })
-
-  } 
+      let tableHeader: any[] = [];
+      Object.values(doc.data()).forEach((item: any) => {
+        if (typeof item === 'object') {
+          tableHeader.push({
+            title: item.element_placeholder,
+            field: item.element_table_value,
+            value: item.element_value,
+            element_type: item.element_type,
+            element_order: item.element_order,
+          });
+        }
+      });
+      return tableHeader;
+    });
+  }
 
   getTableData(): Observable<any> {
-        const customerArray = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-            map(actions => actions.map(a => a.payload.doc.data()))
-        )
-        return customerArray;
+    const customerArray = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .snapshotChanges()
+      .pipe(map((actions) => actions.map((a) => a.payload.doc.data())));
+    return customerArray;
   }
 
   getCustomerGroups(): Observable<any> {
     // console.log(this.userInfo.uid);
-    const groupArray = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').snapshotChanges().pipe(
-        map( actions => actions.filter(a => a.payload.doc.data()['template'] === this.activeTemplate).map(a => a.payload.doc.data()))
-    )
+    const groupArray = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .collection('groups')
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions
+            .filter(
+              (a) => a.payload.doc.data()['template'] === this.activeTemplate
+            )
+            .map((a) => a.payload.doc.data())
+        )
+      );
     return groupArray;
-  
   }
 
-
   createNewCustomerGroup(groupName: string, rowUidArray: any[]) {
-    let id = RandomId(len, pattern)
-// sets the group up for the current user
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').ref;
+    let id = RandomId(len, pattern);
+    // sets the group up for the current user
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .collection('groups').ref;
     data.doc(id).set({
         group_name: groupName, 
         group_id: id,
@@ -557,148 +633,276 @@ removeActiveGroup(group: string) {
         template: this.activeTemplate
     })
 // adds the group_id to each row's group array
+
     rowUidArray.forEach((rowUid: any) => {
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(rowUid).update({
-            group: arrayUnion(id)
-        })
-    })
+      this.afs
+        .collection('Tenant')
+        .doc(this.dbObjKey)
+        .collection('templates')
+        .doc(this.activeTemplate)
+        .collection('customers')
+        .doc(rowUid)
+        .update({
+          group: arrayUnion(id),
+        });
+    });
   }
 
-    deleteCustomerGroup(groupId: string) {
-// delete group from user's group collection
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').doc(groupId).delete()
-// delete group from each row's group array
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.where('group', 'array-contains', groupId).get().then((snapshot: any) => {
-            snapshot.forEach((row: any) => {
-                this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(row.id).update({
-                    group: arrayRemove(groupId)
-                })
-            })
-        })
-    }
+  deleteCustomerGroup(groupId: string) {
+    // delete group from user's group collection
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .collection('groups')
+      .doc(groupId)
+      .delete();
+    // delete group from each row's group array
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .ref.where('group', 'array-contains', groupId)
+      .get()
+      .then((snapshot: any) => {
+        snapshot.forEach((row: any) => {
+          this.afs
+            .collection('Tenant')
+            .doc(this.dbObjKey)
+            .collection('templates')
+            .doc(this.activeTemplate)
+            .collection('customers')
+            .doc(row.id)
+            .update({
+              group: arrayRemove(groupId),
+            });
+        });
+      });
+  }
 
   addToExistingCustomerGroup(groupId: string, rowUidArray: any[]) {
-// update the group up for the current user - the group array of row uids
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').doc(groupId).update({ 
-        group: arrayUnion(...rowUidArray)
-    })
-// adds the group_id to each added row's group array
+    // update the group up for the current user - the group array of row uids
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .collection('groups')
+      .doc(groupId)
+      .update({
+        group: arrayUnion(...rowUidArray),
+      });
+    // adds the group_id to each added row's group array
     rowUidArray.forEach((rowUid: any) => {
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(rowUid).update({
-            group: arrayUnion(groupId)
-        })
-    })
+      this.afs
+        .collection('Tenant')
+        .doc(this.dbObjKey)
+        .collection('templates')
+        .doc(this.activeTemplate)
+        .collection('customers')
+        .doc(rowUid)
+        .update({
+          group: arrayUnion(groupId),
+        });
+    });
   }
 
   removeFromCustomerGroup(groupId: string, rowUidArray: any[]) {
-// update the group up for the current user - the group array of row uids
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('groups').doc(groupId).update({ 
-        group: arrayRemove(...rowUidArray)
-    })
-// removes the group_id from each removed row's group array
+    // update the group up for the current user - the group array of row uids
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .collection('groups')
+      .doc(groupId)
+      .update({
+        group: arrayRemove(...rowUidArray),
+      });
+    // removes the group_id from each removed row's group array
     rowUidArray.forEach((rowUid: any) => {
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(rowUid).update({
-            group: arrayRemove(groupId)
-        })
-    })
+      this.afs
+        .collection('Tenant')
+        .doc(this.dbObjKey)
+        .collection('templates')
+        .doc(this.activeTemplate)
+        .collection('customers')
+        .doc(rowUid)
+        .update({
+          group: arrayRemove(groupId),
+        });
+    });
   }
 
-  getNavbarData(): Observable<any>{
-
+  getNavbarData(): Observable<any> {
     return this._http.get(this.navbarDataURL);
-
   }
 
   getAllTemplates(): Observable<any> {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').snapshotChanges().pipe(
-        map(actions => actions.map(a => a.payload.doc.data()))
-      );
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .snapshotChanges()
+      .pipe(map((actions) => actions.map((a) => a.payload.doc.data())));
     return data;
   }
 
   getTemplateStatuses(templateName: string): Observable<any> {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(templateName).collection('statusList').snapshotChanges().pipe(
-        map(actions => actions.map(a => a.payload.doc.data()))
-    )
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(templateName)
+      .collection('statusList')
+      .snapshotChanges()
+      .pipe(map((actions) => actions.map((a) => a.payload.doc.data())));
     return data;
-}
+  }
 
   getAllTemplatesAdmin(): Observable<any> {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').snapshotChanges().pipe(
-        map(actions => actions.map(a => a.payload.doc.data()))
-      )
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .snapshotChanges()
+      .pipe(map((actions) => actions.map((a) => a.payload.doc.data())));
 
     return data;
   }
 
   changeSelectedTemplate(template: string) {
-    const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').ref;
-// change current active template to false
-    data.where('active', '==', true).get().then((docs) => {
+    const data = this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates').ref;
+    // change current active template to false
+    data
+      .where('active', '==', true)
+      .get()
+      .then((docs) => {
         docs.forEach((doc) => {
-            this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(doc.id).update({active: false});
-        })
-// change selected template to true
-    }).then((res) => {  
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(template).update({active: true});
-    })
-// update the current users activeTemplate field with the template
-    this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).update({activeTemplate: template});
+          this.afs
+            .collection('Tenant')
+            .doc(this.dbObjKey)
+            .collection('templates')
+            .doc(doc.id)
+            .update({ active: false });
+        });
+        // change selected template to true
+      })
+      .then((res) => {
+        this.afs
+          .collection('Tenant')
+          .doc(this.dbObjKey)
+          .collection('templates')
+          .doc(template)
+          .update({ active: true });
+      });
+    // update the current users activeTemplate field with the template
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('users')
+      .doc(this.userInfo.uid)
+      .update({ activeTemplate: template });
     sessionStorage.setItem('dataTableView', 'all');
-
   }
 
   getShowWhileCallingElements(dbObjKey: string | undefined) {
     console.log('getActiveTemplate FIRED');
-    const data = this.afs.collection('Tenant').doc(dbObjKey).collection('templates').ref;
-    return data.where('active', '==', true).get().then((docs) => {
+    const data = this.afs
+      .collection('Tenant')
+      .doc(dbObjKey)
+      .collection('templates').ref;
+    return data
+      .where('active', '==', true)
+      .get()
+      .then((docs) => {
         let filteredTemplateData: any[] = [];
         Object.values(docs.docs[0].data()).forEach((item) => {
-            if (typeof item === 'object' && item.showWhileCalling === true){
-                filteredTemplateData.push(item);
-            }
-        })
+          if (typeof item === 'object' && item.showWhileCalling === true) {
+            filteredTemplateData.push(item);
+          }
+        });
         return filteredTemplateData;
-    })
-}
+      });
+  }
 
   getActiveTemplate(dbObjKey: string | undefined) {
     console.log('getActiveTemplate FIRED');
-    const data = this.afs.collection('Tenant').doc(dbObjKey).collection('templates').ref;
-    return data.where('active', '==', true).get().then((docs) => {
+    const data = this.afs
+      .collection('Tenant')
+      .doc(dbObjKey)
+      .collection('templates').ref;
+    return data
+      .where('active', '==', true)
+      .get()
+      .then((docs) => {
         let filteredTemplateData: any[] = [];
         Object.values(docs.docs[0].data()).forEach((item) => {
-            if (typeof item === 'object'){
-                filteredTemplateData.push(item);
-            }
-        })
+          if (typeof item === 'object') {
+            filteredTemplateData.push(item);
+          }
+        });
         return filteredTemplateData;
-    })
-}
+      });
+  }
 
-
-async getallCustomers() {
+  async getallCustomers() {
     let docArray: firebase.firestore.DocumentData[] = [];
-    this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
-        map(actions => actions.map(a => docArray.push(a.payload.doc.data())))
-    );
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => docArray.push(a.payload.doc.data()))
+        )
+      );
     console.log(docArray);
     return docArray;
-}
+  }
 
-    async addNewRecord(data: any) {
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').add(data);
-    }
+  async addNewRecord(data: any) {
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .add(data);
+  }
 
-    async editCustomer(data: any) {
-        console.log(data);
-        data.slIndex ? delete data.slIndex : null;
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(data.uid).update(data);
-    }
+  async editCustomer(data: any) {
+    console.log(data);
+    data.slIndex ? delete data.slIndex : null;
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .doc(data.uid)
+      .update(data);
+  }
 
-    async deleteCustomer(uid: any) {
-        this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).delete();
-    }
+  async deleteCustomer(uid: any) {
+    this.afs
+      .collection('Tenant')
+      .doc(this.dbObjKey)
+      .collection('templates')
+      .doc(this.activeTemplate)
+      .collection('customers')
+      .doc(uid)
+      .delete();
+  }
 
 // fixCustomers() {
 //     this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
@@ -716,45 +920,42 @@ async getallCustomers() {
 //     })
 // }
 
-// populateTemplateWithCustomers() {
 
-//     const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc('Template One').collection('customers').ref;
-   
-//     customers.forEach((customer) => { 
-//         let id = RandomId(len, pattern)
-//         // set documents in template collection
-//         data.doc(id).set({...customer, uid: id})
-//     })
-//   }
+  // populateTemplateWithCustomers() {
 
+  //     const data = this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc('Template One').collection('customers').ref;
+
+  //     customers.forEach((customer) => {
+  //         let id = RandomId(len, pattern)
+  //         // set documents in template collection
+  //         data.doc(id).set({...customer, uid: id})
+  //     })
+  //   }
 }
 
 // ======== FROM https://json-generator.com/ ========
-            // [
-            //     '{{repeat(25)}}',
-            //     {
-            
-                
-            //       fullname: '{{firstName()}} {{surname()}}',
-            //       phonenumber: '+1 {{phone()}}',
-            //       emailaddress: '{{email()}}',
-            //       address: '{{integer(100, 999)}} {{street()}}, {{city()}}, {{state()}}, {{integer(100, 10000)}}',
-            //       balance: '{{floating(0, 300, 2, "$0,0.00")}}',
-            //       MRN: '{{objectId()}}',
-            //       dob: '{{date(new Date(2000, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}',
-            //       priorcontact: '{{bool()}}',
-            //       pending: '{{bool()}}',
-                
-            //       group: function () {
-            //         var groups = [];
-            //         return groups;
-            //       }
-            
-            
-            //     }
-            //   ]
-// ======== FROM https://json-generator.com/ ========
+// [
+//     '{{repeat(25)}}',
+//     {
 
+//       fullname: '{{firstName()}} {{surname()}}',
+//       phonenumber: '+1 {{phone()}}',
+//       emailaddress: '{{email()}}',
+//       address: '{{integer(100, 999)}} {{street()}}, {{city()}}, {{state()}}, {{integer(100, 10000)}}',
+//       balance: '{{floating(0, 300, 2, "$0,0.00")}}',
+//       MRN: '{{objectId()}}',
+//       dob: '{{date(new Date(2000, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}',
+//       priorcontact: '{{bool()}}',
+//       pending: '{{bool()}}',
+
+//       group: function () {
+//         var groups = [];
+//         return groups;
+//       }
+
+//     }
+//   ]
+// ======== FROM https://json-generator.com/ ========
 
 // let customers = [
 //   {

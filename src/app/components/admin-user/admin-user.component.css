@@ -7,7 +7,15 @@
 }
 
 ::ng-deep p-celleditor > p-dropdown > .p-dropdown,
-.form-row > .type-container > .form-check > ::ng-deep p-dropdown > .p-dropdown, ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep p-dropdown > .p-dropdown {
+.form-row > .type-container > .form-check > ::ng-deep p-dropdown > .p-dropdown,
+::ng-deep
+  .p-datatable
+  .p-datatable-tfoot
+  > tr
+  > td
+  ::ng-deep
+  p-dropdown
+  > .p-dropdown {
   border-bottom: none !important;
   width: auto;
 }
@@ -25,33 +33,49 @@
   ::ng-deep
   .p-datatable
   .p-datatable-tbody
+  > tr:first-child
+  > td:first-child {
+  box-shadow: inset 10px -3px 7px -9px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px 3px 0px -2px #d1d9e6 !important;
+}
+
+.table-users
+  ::ng-deep
+  .p-datatable
+  .p-datatable-tbody
   > tr:last-child
   > td:first-child {
-    border-bottom-left-radius: 0 !important;
-    box-shadow: inset 24px -17px 8px -24px #b8b9be, inset -4px 0px 0px -2px #d1d9e6 !important;
-
+  border-bottom-left-radius: 0 !important;
+  box-shadow: inset 25px 0px 8px -24px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px 3px 0px -2px #d1d9e6 !important;
 }
 
-.table-users ::ng-deep
-.p-datatable
-.p-datatable-tbody .sticky-column-checkboxes {
-  box-shadow: inset 5px 0 5px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
+.table-users ::ng-deep .p-datatable-table .sticky-column-checkboxes {
+  position: sticky;
+  background-color: #e6e7ee !important;
+  z-index: 1;
+  left: 0 !important;
+  box-shadow: inset 10px -3px 7px -9px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px 3px 0px -2px #d1d9e6;
+  border-top: none;
 }
 
-.table-users ::ng-deep
-.p-datatable
-.p-datatable-tbody .sticky-checkboxes-main {
-  box-shadow: inset 9px 9px 9px -9px #b8b9be, inset 0px -3px 0px -2px #d1d9e6,
-    inset -4px 0px 0px -2px #d1d9e6 !important;
+.table-users ::ng-deep .p-datatable-table .sticky-checkboxes-main {
+  top: 0 !important;
+  position: sticky !important;
+  z-index: 2 !important;
+  box-shadow: inset 9px 9px 8px -9px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
+    inset 0px -3px 0px -2px #d1d9e6 !important;
+  border-top-left-radius: 1rem !important;
 }
 
-.add-user-i{
+.add-user-i {
   min-width: 3rem;
 }
 
-::ng-deep .p-datatable .p-datatable-tfoot > tr > td{
+::ng-deep .p-datatable .p-datatable-tfoot > tr > td {
   background-color: #e6e7ee;
-  border-width:0;
+  border-width: 0;
   border: none;
   text-align: center;
   font-weight: normal;
@@ -59,28 +83,55 @@
 }
 
 ::ng-deep .p-datatable .p-datatable-tfoot > tr {
-  border:none;
+  border: none;
   border-top: 0.0625rem solid #d1d9e6;
-  box-shadow: inset 5px 0 5px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
+  box-shadow: inset 5px 0 8px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
 }
 
-::ng-deep .p-datatable .p-datatable-tfoot > tr > td:last-child{
+::ng-deep .p-datatable .p-datatable-tfoot > tr > td:last-child {
   box-shadow: inset -16px -15px 10px -13px #fff;
 }
 
-::ng-deep .p-datatable .p-datatable-tfoot > tr > td:first-child{
-  box-shadow: inset 0px -13px 9px -12px #fff, inset 24px -17px 8px -24px #b8b9be,  inset -4px 0px 0px -2px #d1d9e6 ;
+::ng-deep .p-datatable .p-datatable-tfoot > tr > td:first-child {
+  box-shadow: inset 0px -13px 9px -12px #fff, inset 24px -17px 8px -24px #b8b9be,
+    inset -4px 0px 0px -2px #d1d9e6;
 }
 
-.users-container ::ng-deep .p-dropdown .p-dropdown-panel, ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep .p-dropdown .p-dropdown-panel {
-  top: -83px !important;
+.users-container ::ng-deep .p-dropdown .p-dropdown-panel,
+::ng-deep
+  .p-datatable
+  .p-datatable-tfoot
+  > tr
+  > td
+  ::ng-deep
+  .p-dropdown
+  .p-dropdown-panel {
+  top: -36px !important;
   background: #e6e7ee;
 }
 
-.users-container ::ng-deep .p-dropdown-items-wrapper, ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep .p-dropdown-items-wrapper {
+.users-container ::ng-deep .p-dropdown-items-wrapper,
+::ng-deep
+  .p-datatable
+  .p-datatable-tfoot
+  > tr
+  > td
+  ::ng-deep
+  .p-dropdown-items-wrapper {
   height: 6rem;
 }
 
-.users-container ::ng-deep .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll), ::ng-deep .p-datatable .p-datatable-tfoot > tr > td ::ng-deep .p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll) {
+.users-container
+  ::ng-deep
+  .p-dropdown-panel
+  .p-dropdown-items:not(.p-dropdown-virtualscroll),
+::ng-deep
+  .p-datatable
+  .p-datatable-tfoot
+  > tr
+  > td
+  ::ng-deep
+  .p-dropdown-panel
+  .p-dropdown-items:not(.p-dropdown-virtualscroll) {
   box-shadow: none !important;
 }

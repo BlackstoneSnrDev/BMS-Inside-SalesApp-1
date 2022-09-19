@@ -162,8 +162,6 @@ textarea {
   }
 }
 
-
-
 .show-line {
   animation: fade-show-line 1s;
   display: inline-flex !important;
@@ -186,12 +184,10 @@ textarea {
 
 .not-visible {
   visibility: hidden;
-  animation: fade-hide 1s;
 }
 
 .visible {
   visibility: visible;
-  animation: fade-show 1s;
 }
 
 .margin-right {
@@ -266,11 +262,6 @@ textarea {
   font-weight: normal !important;
 }
 
-.input-disabled-neumorphism {
-  outline: 0 !important;
-  box-shadow: none !important;
-}
-
 .no-padding-rt {
   padding-right: 0 !important;
 }
@@ -285,4 +276,10 @@ textarea {
 
 .padding-tp{
   padding-top: 1rem;
+}
+
+.input-disabled-neumorphism {
+  outline: 0 !important;
+  box-shadow: none !important;
+  cursor: default;
 }

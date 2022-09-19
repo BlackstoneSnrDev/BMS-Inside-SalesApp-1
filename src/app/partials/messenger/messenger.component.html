@@ -1,50 +1,84 @@
 <div class="row main-row">
-  <div class="col-lg-12 ">
+  <div class="col-lg-12">
     <div class="form-check form-check-inline width-100">
       <!-- <i class="bi bi-record2-fill online-icon" [ngClass]="tglState ? 'on' : 'off'"></i> -->
-      <h1> Text Messages
-      </h1>
+      <h1>Text Messages</h1>
     </div>
-    <hr><br>
+    <hr />
+    <br />
     <div class="row">
       <div class="col-lg-9">
         <div class="chats-col">
-
           <div class="row chats-view">
-            <div class="col-lg-6 chat-p" (click)="filterPendingChat()" id="chat-v-pending" *ngIf="pendingChats"><span
-                class="chat-tab" matTooltip="Show non-answered chats only" matTooltipPosition="above"> <i
-                  class="bi bi-exclamation-square margin-rt"></i> Pending ({{ pendingChats.length }})
-              </span></div>
-            <div class="col-lg-6 chat-a" (click)="filterActiveChat()" id="chat-v-active" *ngIf="activeChats"><span
-                class="chat-tab " matTooltip="Show active chats only" matTooltipPosition="above"> <i
-                  class="bi bi-chat-square-dots margin-rt"></i>Active ({{ activeChats.length }})
-              </span></div>
+            <div
+              class="col-lg-6 chat-p"
+              (click)="filterPendingChat()"
+              id="chat-v-pending"
+              *ngIf="pendingChats"
+            >
+              <span
+                class="chat-tab"
+                matTooltip="Show non-answered chats only"
+                matTooltipPosition="above"
+              >
+                <i class="bi bi-exclamation-square margin-rt"></i> Pending ({{
+                  pendingChats.length
+                }})
+              </span>
+            </div>
+            <div
+              class="col-lg-6 chat-a"
+              (click)="filterActiveChat()"
+              id="chat-v-active"
+              *ngIf="activeChats"
+            >
+              <span
+                class="chat-tab"
+                matTooltip="Show active chats only"
+                matTooltipPosition="above"
+              >
+                <i class="bi bi-chat-square-dots margin-rt"></i>Active ({{
+                  activeChats.length
+                }})
+              </span>
+            </div>
           </div>
           <div class="chats-container">
-
             <div class="row filter-chat-container">
               <div class="col-lg-12">
                 <mat-form-field appearance="standard" class="width-100">
                   <mat-label>Search chat</mat-label>
-                  <input matInput type="text" [formControl]="searchChat" (keyup)="filterChat()"
-                    placeholder="MRN, Full name" />
+                  <input
+                    matInput
+                    type="text"
+                    [formControl]="searchChat"
+                    (keyup)="filterChat()"
+                    placeholder="MRN, Full name"
+                  />
                 </mat-form-field>
               </div>
             </div>
             <div class="row" *ngFor="let chat of chats; let i = index">
-
               <div class="col-lg-12 margin-bt">
-                <p-accordion (onClose)="onTabClose(i)" (onOpen)="onTabOpen(i)" id="{{ chat.slIndex }}">
+                <p-accordion
+                  (onClose)="onTabClose(i)"
+                  (onOpen)="onTabOpen(i)"
+                  id="{{ chat.slIndex }}"
+                >
                   <p-accordionTab>
                     <ng-template pTemplate="header">
                       <div class="form-check form-check-inline width-100">
-                        <h6 class="width-100">{{chat.fullname}}</h6>
-                        <p-badge class="status-active float-rt" value="Unread ({{chat.unreadSMS}})"
-                          *ngIf="chat.unreadSMS > 0"></p-badge>
+                        <h6 class="width-100">{{ chat.fullname }}</h6>
+                        <p-badge
+                          class="status-active float-rt"
+                          value="Unread ({{ chat.unreadSMS }})"
+                          *ngIf="chat.unreadSMS > 0"
+                        ></p-badge>
                       </div>
                     </ng-template>
 
                     <div class="sms-main-container">
+
                       <div *ngFor="let sms of chat.smsText">
                         <!-- <div *ngIf="chat.slIndex === sms.customerId"> -->
 
@@ -55,10 +89,15 @@
                           </div>
                           <div class="row">
                             <div class="col-lg-12">
-                              <button (click)="!sms.statusSMS ? resendSMS(i) : ''" matTooltip="Resend SMS"
-                                matTooltipPosition="above" class="iconbutton-neumorphism float-rt resend-icon"
-                                [ngClass]="!sms.statusSMS ? 'show' : 'hide'"><i
-                                  class="bi bi-arrow-clockwise"></i></button>
+                              <button
+                                (click)="!sms.statusSMS ? resendSMS(i) : ''"
+                                matTooltip="Resend SMS"
+                                matTooltipPosition="above"
+                                class="iconbutton-neumorphism float-rt resend-icon"
+                                [ngClass]="!sms.statusSMS ? 'show' : 'hide'"
+                              >
+                                <i class="bi bi-arrow-clockwise"></i>
+                              </button>
 
                               <p class="sms-container"
                                 [ngClass]="[sms.method== 'sent' ? 'float-rt':'float-lf', sms.method == 'sent' ? 'border-bt-rt':'border-bt-lt'  ]"
@@ -73,24 +112,32 @@
                                     <small class="color-rd" *ngIf="!sms.statusSMS"><i> Message couldn't be sent. Please
                                         try again.</i></small>
                                   </span> -->
+
                                 </small>
                               </p>
-
                             </div>
                           </div>
                         <!-- </div> -->
                       </div>
-
                     </div>
                     <div class="row form-sms">
                       <div class="p-inputgroup col-10">
-                        <textarea rows="1" cols="100" pInputTextarea class="input-neumorphism txtMessage"
-                          [autoResize]="true" placeholder="Type a message" [formControl]="txtMessage"></textarea>
+                        <textarea
+                          rows="1"
+                          cols="100"
+                          pInputTextarea
+                          class="input-neumorphism txtMessage"
+                          [autoResize]="true"
+                          placeholder="Type a message"
+                          [formControl]="txtMessage"
+                        ></textarea>
                       </div>
                       <div class="col-2 btnsave-container">
+
                         <button (click)="sendSMS(chat)" class="btn-sms" [disabled]="!txtMessage.valid"
                           [ngClass]="!txtMessage.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'"><i
                             class="bi bi-send-fill"></i></button>
+
                       </div>
                     </div>
                   </p-accordionTab>
@@ -105,13 +152,18 @@
           <div class="row menu-container">
             <div class="col-lg-10">
               <div [ngClass]="contactSelection.value ? 'show' : 'hide'">
-
-                <p-dropdown [options]="optSMS" class="button-neumorphism width-100 margin-rt"
-                  (onChange)="sendMassiveSMS()" optionLabel="templateName" optionValue="templateId"
-                  placeholder="Send massive SMS" [formControl]="smsMassive"></p-dropdown>
+                <p-dropdown
+                  [options]="optSMS"
+                  class="button-neumorphism width-100 margin-rt"
+                  (onChange)="sendMassiveSMS()"
+                  optionLabel="templateName"
+                  optionValue="templateId"
+                  placeholder="Send massive SMS"
+                  [formControl]="smsMassive"
+                ></p-dropdown>
               </div>
             </div>
-            <div class="col-lg-2">
+            <!-- <div class="col-lg-2">
               <button class="iconbutton-neumorphism btn-contacts" (click)="toggleContacts()">
                 <span [ngClass]="tglContacts ? 'show' : 'hide'" matTooltip="Hide contacts list"
                   matTooltipPosition="above">
@@ -125,48 +177,86 @@
                 </span>
 
               </button>
-            </div>
+            </div> -->
           </div>
 
-          <div class="form-row gp-list-container" [ngClass]="tglContacts ? 'visible' : 'not-visible'">
+          <div
+            class="form-row gp-list-container"
+            [ngClass]="tglContacts ? 'visible' : 'not-visible'"
+          >
             <div class="col-md-auto group-row btn-group-col">
-              <button class="button-neumorphism default" matTooltip="Active group" matTooltipPosition="above"
-                [ngClass]="tbGroupActive.length < 1 ? 'show' : 'hide'">
+              <button
+                class="button-neumorphism default"
+                matTooltip="Active group"
+                matTooltipPosition="above"
+                [ngClass]="tbGroupActive.length < 1 ? 'show' : 'hide'"
+              >
                 All
               </button>
 
-              <button class="button-neumorphism" *ngFor="let gp of tbGroupActive"
-                (click)="removeGroupSelected(gp.group_id)" matTooltip="Delete active group" matTooltipPosition="above">
+              <button
+                class="button-neumorphism"
+                *ngFor="let gp of tbGroupActive"
+                (click)="removeGroupSelected(gp.group_id)"
+                matTooltip="Delete active group"
+                matTooltipPosition="above"
+              >
                 {{ gp.group_name | formatLabel }}
                 <span class="iconBtn">
                   <i class="bi bi-x-circle-fill"></i>
                 </span>
               </button>
             </div>
-            <div class="col-md-1 group-row select-group-col" matTooltip="Select group to call"
-              matTooltipPosition="above">
+            <div
+              class="col-md-1 group-row select-group-col"
+              matTooltip="Select group to call"
+              matTooltipPosition="above"
+            >
               <span class="padding-rt">
-                <p-dropdown [options]="tbGroups" [formControl]="groupSelected" optionValue="group_id"
-                  optionLabel="group_name" (onChange)="getGroupSelected()"></p-dropdown>
+                <p-dropdown
+                  [options]="tbGroups"
+                  [formControl]="groupSelected"
+                  optionValue="group_id"
+                  optionLabel="group_name"
+                  (onChange)="getGroupSelected()"
+                ></p-dropdown>
               </span>
             </div>
           </div>
           <div class="contacts-col" [ngClass]="tglContacts ? 'show' : 'hide'">
-
             <div class="contacts-list">
-              <p-listbox [options]="contacts" [formControl]="contactSelection" [metaKeySelection]="false"
-                [checkbox]="true" [multiple]="true" optionLabel="fullname" [listStyle]="{'max-height':'100%'}">
+              <p-listbox
+                [options]="contacts"
+                [formControl]="contactSelection"
+                [metaKeySelection]="false"
+                [checkbox]="true"
+                [multiple]="true"
+                optionLabel="fullname"
+                [listStyle]="{ 'max-height': '100%' }"
+              >
                 <ng-template pTemplate="filter" let-options="options">
                   <mat-form-field appearance="standard">
                     <mat-label>Search contact</mat-label>
-                    <input matInput type="text" [formControl]="searchContact" (keyup)="filterContact()"
-                      placeholder="MRN, Full name, Phone number" />
+                    <input
+                      matInput
+                      type="text"
+                      [formControl]="searchContact"
+                      (keyup)="filterContact()"
+                      placeholder="MRN, Full name, Phone number"
+                    />
                   </mat-form-field>
                 </ng-template>
                 <ng-template let-log pTemplate="item" let-i="index">
-                  <div class="phone-log width-100" (click)="startNewChat(i, contacts)"
-                    matTooltip="Start chat with {{ log.fullname }}" matTooltipPosition="above">
-                    <div class="form-check form-check-inline width-100" id="{{ i }}">
+                  <div
+                    class="phone-log width-100"
+                    (click)="startNewChat(i, contacts)"
+                    matTooltip="Start chat with {{ log.fullname }}"
+                    matTooltipPosition="above"
+                  >
+                    <div
+                      class="form-check form-check-inline width-100"
+                      id="{{ i }}"
+                    >
                       <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
                     </div>
                     <h6 class="width-100 not-bold" id="{{ i }}">
@@ -179,13 +269,9 @@
               </p-listbox>
             </div>
           </div>
-
         </div>
-
-
       </div>
     </div>
-
   </div>
 </div>
 <p-scrollTop [threshold]="200"></p-scrollTop>

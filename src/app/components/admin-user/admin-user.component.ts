@@ -76,31 +76,41 @@ export class AdminUserComponent implements OnInit {
   }
 
   // Table on row CRUD
-  onRowEditInit(tdData: any, id: number) {
-    this.clonedTdData[tdData.id] = { ...tdData };
+  onRowEditInit(rowTdData: any, index: any) {
+    this.clonedTdData[index] = { ...rowTdData };
   }
 
   onRowEditSave(rowTdData: any, indexElm: number) {
-    let modifyLastElmActive = (
-      document.getElementById('tr' + indexElm) as HTMLInputElement
-    ).getElementsByClassName('ng-invalid');
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to edit this user?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let modifyLastElmActive = (
+          document.getElementById('tr' + indexElm) as HTMLInputElement
+        ).getElementsByClassName('ng-invalid');
 
-    if (modifyLastElmActive.length > 0) {
-      this.onValidationError = '*All fields must be filled out.';
-    } else {
-      this.tdData[indexElm] = rowTdData;
-      delete this.clonedTdData[rowTdData.id];
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Service Message',
-        detail: 'Record was edited successfully.',
-      });
-    }
+        if (modifyLastElmActive.length > 0) {
+          this.onValidationError = '*All fields must be filled out.';
+        } else {
+          this.tdData[indexElm] = rowTdData;
+          delete this.clonedTdData[rowTdData.id];
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Service Message',
+            detail: 'User was edited successfully.',
+          });
+        }
+      },
+      reject: () => {
+        this.onRowEditCancel(indexElm);
+      },
+    });
   }
 
-  onRowEditCancel(rowTdData: any, index: number) {
-    this.tdData[index] = this.clonedTdData[rowTdData.id];
-    delete this.tdData[rowTdData.id];
+  onRowEditCancel(index: number) {
+    this.tdData[index] = this.clonedTdData[index];
+    delete this.clonedTdData[index];
   }
 
   onRowDeleteRow(id: any) {
@@ -136,13 +146,13 @@ export class AdminUserComponent implements OnInit {
   }
 
   saveCreateNewUser() {
-    this.tglCreateUser = false
+    this.tglCreateUser = false;
 
     let value = this.createNewUserForm.value;
 
-    this.tdData.push(this.createNewUserForm.value)
-    let id = this.tdData.length -1
-    this.tdData[id]['uid'] = id
+    this.tdData.push(this.createNewUserForm.value);
+    let id = this.tdData.length - 1;
+    this.tdData[id]['uid'] = id;
 
     // NOT WORKING
     // this.dataService.createUser(value).subscribe((res: any) => {

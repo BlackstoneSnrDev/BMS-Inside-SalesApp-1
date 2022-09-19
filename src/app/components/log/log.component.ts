@@ -25,18 +25,24 @@ export class LogComponent implements OnInit {
   public optLogStatus: any;
 
   public searchNote = new FormControl();
-  public noteContent = new FormControl('', [Validators.minLength(1), Validators.maxLength(1500), Validators.required]);
+  public noteContent = new FormControl('', [
+    Validators.minLength(1),
+    Validators.maxLength(1500),
+    Validators.required,
+  ]);
 
+  public autoresize: boolean = false;
   constructor(
     private DataService: DataService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.DataService.currentCall.subscribe((currentCall: any) => {
       if (currentCall) {
-        // console.log('Current Call: ', currentCall);
+        console.log(this.currentCall.uid);
+
         this.currentCall = currentCall;
         this.currentCallNotes = currentCall.notes.sort(
           (a: { date: any }, b: { date: any }) => b.date - a.date
@@ -62,28 +68,29 @@ export class LogComponent implements OnInit {
         console.error(error);
       }
     );
-
   }
 
   toggleAddLog() {
     this.tglAddNote = true;
+    this.autoresize = false;
     this.currentCallNotes = this.dupCurrentCallNotes;
     this.noteContent.reset();
   }
 
   cancelAddNote() {
-    this.tglAddNote = false
-    console.log('is closing here when cancel')
+    this.tglAddNote = false;
+    this.autoresize = false;
     this.noteContent.reset();
   }
 
   saveNewNote() {
+    // Page gets reload and current call sets itself to Lewis when saving the note in the database
     this.DataService.addNewNote(
       this.currentCall.uid,
       this.noteContent.value as string
     );
-    this.tglAddNote = !this.tglAddNote;
-    this.noteContent.reset();
+    this.cancelAddNote();
+
     this.messageService.add({
       severity: 'success',
       summary: 'Service Message',
@@ -108,9 +115,5 @@ export class LogComponent implements OnInit {
       this.currentCallNotes = this.dupCurrentCallNotes;
       this.loadingNotes = false;
     }
-
   }
-
-  
-
 }

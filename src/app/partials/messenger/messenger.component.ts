@@ -136,7 +136,6 @@ export class MessengerComponent {
   }
 
   selectSingleContact(index: any) {
-
     this.contactSelection = this.contacts.filter(
       (a: any, i: any) => i == index
     );
@@ -226,7 +225,6 @@ export class MessengerComponent {
     } else {
       this.contacts = this.dupContacts;
     }
-
   }
 
   filterChat() {
@@ -243,7 +241,6 @@ export class MessengerComponent {
     } else {
       this.chats = this.dupChats;
     }
-
   }
 
   filterPendingChat() {

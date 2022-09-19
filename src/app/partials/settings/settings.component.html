@@ -16,8 +16,7 @@
           matTooltip="Record new voice mail"
           matTooltipPosition="above"
         >
-          <i class="bi bi-plus-circle-fill" *ngIf="!tglVM"></i>
-          <i class="bi bi-x-circle-fill" *ngIf="tglVM"></i>
+          <i class="bi bi-plus-circle-fill"></i>
         </button>
       </div>
       <div
@@ -43,7 +42,9 @@
           <i class="bi bi-mic-fill i-neumorphism"></i>
         </button> -->
         <button
-          (click)="deleteTemplate(index, 'voicemail', vm.templateName, vm.templateId)"
+          (click)="
+            deleteTemplate(index, 'voicemail', vm.templateName, vm.templateId)
+          "
           class="mini-iconbutton-neumorphism"
           matTooltip="Delete"
           matTooltipPosition="above"
@@ -53,7 +54,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="col-lg-4">
     <div class="col-container">
@@ -94,7 +94,14 @@
           <i class="bi bi-pencil-square i-neumorphism"></i>
         </button>
         <button
-          (click)="deleteTemplate(index, 'textMessage', sms.templateName, sms.templateId)"
+          (click)="
+            deleteTemplate(
+              index,
+              'textMessage',
+              sms.templateName,
+              sms.templateId
+            )
+          "
           class="mini-iconbutton-neumorphism"
           matTooltip="Delete"
           matTooltipPosition="above"
@@ -143,7 +150,14 @@
           <i class="bi bi-pencil-square i-neumorphism"></i>
         </button>
         <button
-          (click)="deleteTemplate(index, 'emails', email.templateName, email.templateId)"
+          (click)="
+            deleteTemplate(
+              index,
+              'emails',
+              email.templateName,
+              email.templateId
+            )
+          "
           class="mini-iconbutton-neumorphism"
           matTooltip="Delete"
           matTooltipPosition="above"
@@ -228,18 +242,95 @@
       </div>
       <div class="form-row width-100">
         <div class="col-md-12">
-      
-                <div *ngIf="tglVM" style="margin: 25px;">
-                    <button (click)="initiateRecording()" class="width-100 button-neumorphism" *ngIf="!recording && !tglPrevTemplate"
-                        style="cursor: pointer" > <i class="bi bi-record-btn-fill"></i> Start Recording </button>
-                    <button (click)="stopRecording()" class="width-100 button-neumorphism" *ngIf="recording && !tglPrevTemplate"
-                        style="cursor: pointer" > <i class="bi bi-slash-square-fill"></i> Stop Recording </button>
-                    <div *ngIf="url">
-                        <audio controls="" *ngIf="url" class="width-100 button-neumorphism">
-                            <source [src]="sanitize(url)" type="audio/wav"> 
-                        </audio> <span *ngIf="!tglPrevTemplate" (click)="saveVoicemail()">save</span>
-                    </div>
-                </div>
+          <div *ngIf="tglVM" class="record-voicemail width-100">
+            <div
+              *ngIf="!tglPrevTemplate"
+              [ngClass]="recording ? 'recording' : 'recording-stopped'"
+            >
+              <div class="btn-recorder-container">
+                <button
+                  (click)="cancelCreateTemplate()"
+                  class="width-100 iconbutton-neumorphism small-record-btn cancel-record"
+                  type="button"
+                  matTooltip="Cancel"
+                  matTooltipPosition="right"
+                  *ngIf="url"
+                >
+                  <i _ngcontent-dck-c151="" class="pi pi-times"></i>
+                </button>
+                <button
+                  (click)="saveVoiceMail()"
+                  class="width-100 iconbutton-neumorphism small-record-btn save-record"
+                  type="button"
+                  matTooltip="Save recording"
+                  matTooltipPosition="right"
+                  *ngIf="url && blobData && templateName"
+                >
+                  <i _ngcontent-dck-c151="" class="pi pi-check"></i>
+                </button>
+                <button
+                  (click)="initiateRecording()"
+                  class="width-100 iconbutton-neumorphism start-recording"
+                  matTooltip="Start recording"
+                  matTooltipPosition="right"
+                  type="button"
+                  *ngIf="!recording && !url"
+                >
+                  <i class="bi bi-record-fill"></i>
+                </button>
+                <button
+                  (click)="rRecordVoiceMail()"
+                  type="button"
+                  class="width-100 iconbutton-neumorphism"
+                  matTooltip="R-record"
+                  matTooltipPosition="right"
+                  *ngIf="url"
+                >
+                  <i class="bi bi-arrow-repeat"></i>
+                </button>
+                <button
+                  (click)="stopRecording()"
+                  type="button"
+                  class="width-100 iconbutton-neumorphism stop-recording"
+                  matTooltip="Stop recording"
+                  matTooltipPosition="right"
+                  *ngIf="recording"
+                >
+                  <i class="bi bi-pause-fill"></i>
+                </button>
+                <mat-progress-spinner
+                  class="voice-time-spinner"
+                  mode="determinate"
+                  [value]="voiceRecorderTime"
+                >
+                </mat-progress-spinner>
+              </div>
+              <div
+                class="timer-container txt-center"
+                [ngClass]="!url ? 'visible' : 'not-visible'"
+              >
+                <span class="opacity-txt">00:</span
+                ><span [ngClass]="timeLeft < 10 ? 'show' : 'hide'">0</span
+                >{{ timeLeft }}
+                <span [ngClass]="recording ? 'show' : 'hide'" class="opacity">
+                  <i class="bi bi-record-fill"></i>
+                  Recording
+                </span>
+              </div>
+            </div>
+
+            <div class="txt-center" [ngClass]="url ? 'show' : 'hide'">
+              <small
+                class="color-rd"
+                *ngIf="url && !templateName && !tglPrevTemplate"
+                >Before saving the recording, you must name this
+                template.</small
+              >
+              <audio controls="" *ngIf="url" class="width-100">
+                <source [src]="sanitize(url)" type="audio/wav" />
+              </audio>
+            </div>
+          </div>
 
           <p-editor
             *ngIf="tglEmail && tglPrevTemplate === ''"
@@ -264,7 +355,11 @@
               *ngFor="let prev of tglPrevTemplate"
               class="template-container"
               [ngClass]="tglSMS ? 'sms-container' : ''"
-              [innerHTML]="tglSMS || tglEmail ? prev.templateContent : setAudioPreview(prev.templateContent) "
+              [innerHTML]="
+                tglSMS || tglEmail
+                  ? prev.templateContent
+                  : setAudioPreview(prev.templateContent)
+              "
             ></div>
           </div>
         </div>
@@ -284,10 +379,10 @@
           >
             Save
           </button>
-          
         </div>
         <div class="col-md-6">
           <button
+            *ngIf="!tglVM"
             (click)="cancelCreateTemplate()"
             class="width-100 button-neumorphism"
           >
