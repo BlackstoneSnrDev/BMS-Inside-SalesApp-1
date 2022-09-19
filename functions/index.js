@@ -22,7 +22,7 @@ let twiMLSID= 'AP871e1dd557a56c71ef1a82b5dcd98ce0';
 let sendingPhoneNumber = '+12056497315';
 
 let clientAccountSID = 'ACf89f918daf03a28f51e085cb86cd642f';
-let clientAuthToken = '78c3b24619ed2e553c8dfb31a9541b97';
+let clientAuthToken = 'ae6bb6d9db1a83f0167cdeb5e7906c8d';
 
 const clientForCalls = require('twilio')(clientAccountSID, clientAuthToken);
 const client = new twilio(accountSID, authToken);
@@ -40,7 +40,7 @@ exports.sendText = functions.https.onCall((data, context) => {
     console.log(data);
     const textMessage = {
         body: data.message, 
-        to: '+17348371063',
+        to: data.to,
         from: sendingPhoneNumber
     }
 

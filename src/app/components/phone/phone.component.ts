@@ -270,7 +270,7 @@ export class PhoneComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
 
-        this.DataService.makeCall('template', e.value, this.currentCall.uid).then((response) => {
+        this.DataService.makeCall('template', e.value, this.currentCall.uid, '+1' + this.currentCall.phonenumber).then((response) => {
             console.log(response)
         }) 
 

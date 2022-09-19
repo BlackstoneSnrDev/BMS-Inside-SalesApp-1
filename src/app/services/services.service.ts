@@ -106,7 +106,7 @@ export class DataService {
         return result;
     })
   }
-    makeCall(_type: string, messageUid: any, customerUid: any) {
+    makeCall(_type: string, messageUid: any, customerUid: any, to: any) {
         console.log(messageUid, customerUid);
         const callable = this.fns.httpsCallable('sendText');
         // find the textMessage that matches the messageUid
@@ -116,7 +116,7 @@ export class DataService {
             const data = doc.data();
             const textMessage = data ? data[messageUid] : 'null';
             console.log(textMessage.data)
-            return callable({ message: textMessage.data, customerUid: customerUid, activeTemplate: this.activeTemplate, dbObj: this.dbObjKey, userInfo: this.userInfo }).toPromise().then(result => {
+            return callable({ to: to, message: textMessage.data, customerUid: customerUid, activeTemplate: this.activeTemplate, dbObj: this.dbObjKey, userInfo: this.userInfo }).toPromise().then(result => {
                 console.log(result);
                 return result;
             }).catch(error => {
@@ -125,7 +125,7 @@ export class DataService {
             })
         })
         } else {
-            return callable({ message: messageUid, customerUid: customerUid, activeTemplate: this.activeTemplate, dbObj: this.dbObjKey, userInfo: this.userInfo }).toPromise().then(result => {
+            return callable({ to: to, message: messageUid, customerUid: customerUid, activeTemplate: this.activeTemplate, dbObj: this.dbObjKey, userInfo: this.userInfo }).toPromise().then(result => {
                 console.log(result);
                 return result;
             }).catch(error => {

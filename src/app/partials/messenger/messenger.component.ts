@@ -302,7 +302,7 @@ export class MessengerComponent {
 
     //this.chatContent.push(message);
 
-    this.DataService.makeCall('text', this.txtMessage.value, chat.uid).then((response) => {
+    this.DataService.makeCall('text', this.txtMessage.value, chat.uid, '+1' + chat.phonenumber).then((response) => {
         console.log(response)
     }) 
 
