@@ -172,6 +172,10 @@ export class PhoneComponent implements OnInit {
   }
 
   testBtn() {
+    // this.DataService.makeCall(message).then((response) => {
+    //     console.log(response)
+    // })  
+    
     // let params = '+17348371063'
     // console.log("Calling " + params + "...");
     // if (this._device) {
@@ -257,13 +261,19 @@ export class PhoneComponent implements OnInit {
     });
   }
 
-  sendSMSMessage() {
+  sendSMSMessage(e: any) {
+
     this.confirmationService.confirm({
       message:
         'Are you sure you want to send this message?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+
+        this.DataService.makeCall('template', e.value, this.currentCall.uid).then((response) => {
+            console.log(response)
+        }) 
+
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',

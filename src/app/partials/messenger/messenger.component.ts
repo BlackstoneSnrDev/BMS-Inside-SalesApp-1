@@ -68,13 +68,23 @@ export class MessengerComponent {
       this.dupContacts = this.contacts;
     });
 
+    this.DataService.getAllTextsForMessengerPage().subscribe(
+        (response) => {
+            console.log(response[0]['smsText'][response[0]['smsText'].length -1]);
+            this.pendingChats = response.filter((a: any) => a.smsText[a.smsText.length - 1]['method'] === 'received');
+            this.chats = this.pendingChats;
+            this.activeChats = response;
+        }
+    );
+
     this.DataService.getMyTableData().subscribe(
       (response) => {
-        this.pendingChats = response.pending_chats;
-        this.activeChats = response.active_chats;
-        this.chats = this.pendingChats;
-        this.dupChats = this.chats;
-        this.chatContent = response.sms_content;
+        console.log(response);
+        //this.pendingChats = response.pending_chats;
+        //this.activeChats = response.active_chats;
+        //this.chats = this.pendingChats;
+        //this.dupChats = this.chats;
+        //this.chatContent = response.sms_content;
 
         setTimeout(() => {
           document
@@ -264,32 +274,37 @@ export class MessengerComponent {
     });
   }
 
-  sendSMS(index: any) {
-    let timeNow = new Date();
-    let date =
-      timeNow.getMonth() +
-      '/' +
-      timeNow.getDate() +
-      '/' +
-      timeNow.getFullYear();
-    let hour =
-      timeNow.getHours() +
-      ':' +
-      timeNow.getMinutes() +
-      ':' +
-      timeNow.getSeconds();
-    let message = {
-      customerId: index,
+  sendSMS(chat: any) {
+    console.log(this.txtMessage.value, chat.uid);
+    // let timeNow = new Date();
+    // let date =
+    //   timeNow.getMonth() +
+    //   '/' +
+    //   timeNow.getDate() +
+    //   '/' +
+    //   timeNow.getFullYear();
+    // let hour =
+    //   timeNow.getHours() +
+    //   ':' +
+    //   timeNow.getMinutes() +
+    //   ':' +
+    //   timeNow.getSeconds();
+    // let message = {
+    //   customerId: index,
 
-      dateSMS: date,
-      timeSMS: hour,
-      contentSMS: this.txtMessage.value,
-      senderTypeSMS: 'user',
-      senderNameSMS: this.userInfo.name,
-      statusSMS: true,
-    };
+    //   dateSMS: date,
+    //   timeSMS: hour,
+    //   contentSMS: this.txtMessage.value,
+    //   senderTypeSMS: 'user',
+    //   senderNameSMS: this.userInfo.name,
+    //   statusSMS: true,
+    // };
 
-    this.chatContent.push(message);
+    //this.chatContent.push(message);
+
+    this.DataService.makeCall('text', this.txtMessage.value, chat.uid).then((response) => {
+        console.log(response)
+    }) 
 
     this.messageService.add({
       severity: 'success',

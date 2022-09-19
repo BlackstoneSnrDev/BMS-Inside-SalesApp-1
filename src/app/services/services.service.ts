@@ -77,6 +77,28 @@ export class DataService {
 
     this.currentUid = this.userInfo.uid;
   }
+
+  getAllTextsForMessengerPage() {
+
+    return this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').snapshotChanges().pipe(
+        map(actions => actions.filter(a => a.payload.doc.data()['smsText'].length > 0).map(a => a.payload.doc.data() ))
+    )
+
+
+
+    // return customerRef.get().then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //         if (doc.data()['smsText'].length > 0) {
+    //             return console.log(doc.data()['fullname'] +  ' DATA ' + doc.data()['smsText'].length);
+    //         } else{
+    //             return console.log( doc.data()['fullname'] +  ' no data ' + doc.data()['smsText'].length)
+    //         }
+    //     });
+
+    // })
+
+
+  }
   
   sendText() {
     const callable = this.fns.httpsCallable('generateToken');
@@ -84,12 +106,34 @@ export class DataService {
         return result;
     })
   }
-  makeCall() {
-    const callable = this.fns.httpsCallable('makePhoneCall');
-    return callable({text: 'test', page: '/dashboard'}).toPromise().then(result => {
-        return result;
-    })
-  }
+    makeCall(_type: string, messageUid: any, customerUid: any) {
+        console.log(messageUid, customerUid);
+        const callable = this.fns.httpsCallable('sendText');
+        // find the textMessage that matches the messageUid
+        if (_type === 'template') {
+        const ref = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings').doc('textMessage').ref
+        return ref.get().then(doc => {
+            const data = doc.data();
+            const textMessage = data ? data[messageUid] : 'null';
+            console.log(textMessage.data)
+            return callable({ message: textMessage.data, customerUid: customerUid, activeTemplate: this.activeTemplate, dbObj: this.dbObjKey, userInfo: this.userInfo }).toPromise().then(result => {
+                console.log(result);
+                return result;
+            }).catch(error => {
+                console.log(error);
+                return error;
+            })
+        })
+        } else {
+            return callable({ message: messageUid, customerUid: customerUid, activeTemplate: this.activeTemplate, dbObj: this.dbObjKey, userInfo: this.userInfo }).toPromise().then(result => {
+                console.log(result);
+                return result;
+            }).catch(error => {
+                console.log(error);
+                return error;
+            })
+        }
+    }
 
     getUserSettings(): Observable<any>{
         const ref = this.afs.collection('Tenant').doc(this.dbObjKey).collection('users').doc(this.userInfo.uid).collection('settings');
@@ -509,7 +553,8 @@ removeActiveGroup(group: string) {
     data.doc(id).set({
         group_name: groupName, 
         group_id: id,
-        group: rowUidArray
+        group: rowUidArray,
+        template: this.activeTemplate
     })
 // adds the group_id to each row's group array
     rowUidArray.forEach((rowUid: any) => {
@@ -655,21 +700,21 @@ async getallCustomers() {
         this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(uid).delete();
     }
 
-fixCustomers() {
-    this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
-        snapshot.forEach((doc: any) => {
-            if (doc.data().fullname === 'New GuyOne' || doc.data().MRN === 'New GuyTwo') {
-                console.log(doc.data());
-            }
-            // this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(doc.id).update({
-            //     lastContact: {
-            //         date:  Timestamp.fromDate(new Date()),
-            //         result: 'Voice Message Left'
-            //     }
-            // })
-        })
-    })
-}
+// fixCustomers() {
+//     this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').ref.get().then((snapshot: any) => {
+//         snapshot.forEach((doc: any) => {
+//             // if (doc.data().fullname === 'New GuyOne' || doc.data().MRN === 'New GuyTwo') {
+//             //     console.log(doc.data());
+//             // }
+//             this.afs.collection('Tenant').doc(this.dbObjKey).collection('templates').doc(this.activeTemplate).collection('customers').doc(doc.id).update({
+//                 lastContact: {
+//                     date:  Timestamp.fromDate(new Date()),
+//                     result: 'Voice Message Left'
+//                 }
+//             })
+//         })
+//     })
+// }
 
 // populateTemplateWithCustomers() {
 

@@ -80,7 +80,7 @@ export class TableComponent {
   ngOnInit() {
     this.primengConfig.ripple = false;
 
-    this.DataService.fixCustomers();
+    //this.DataService.fixCustomers();
 
     this.UsersService.userInfo.subscribe(
       (userInfo) => (this.userInfo = userInfo)
@@ -114,6 +114,7 @@ export class TableComponent {
       })
       .then(() => {
         this.DataService.getCustomerGroups().subscribe((data) => {
+            console.log(data);
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
 
           this.loading = false;

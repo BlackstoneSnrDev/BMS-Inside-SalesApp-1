@@ -175,13 +175,14 @@ export class SettingsComponent implements OnInit {
   }
 
   saveVoicemail() {
-    this.templateForm.reset();
+    console.log(this.templateName);
     this.DataService.saveBlob(this.blobData, this.templateName).then((response) => {
         this.messageService.add({
             severity: 'success',
             summary: 'Service Message',
             detail: response
         })
+        this.templateForm.reset();
     }).catch((error) => {
         console.log(error);
     })
