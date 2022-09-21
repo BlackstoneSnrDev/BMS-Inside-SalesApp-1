@@ -127,7 +127,7 @@ export class TableComponent {
       })
       .then(() => {
         this.DataService.getCustomerGroups().subscribe((data) => {
-            console.log(data);
+          console.log(data);
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
           let modifyById = sessionStorage.getItem('dataTableView');
 
@@ -542,6 +542,7 @@ export class TableComponent {
     this.toggleEditGroup(id);
     this.renameGroup.reset();
   }
+  
   sendMassiveSMS() {
     this.confirmationService.confirm({
       message: 'Are you sure you want to send this message?',
@@ -553,6 +554,9 @@ export class TableComponent {
           summary: 'Service Message',
           detail: 'SMS Message sent.',
         });
+        this.smsMessageSent.reset();
+      },
+      reject: () => {
         this.smsMessageSent.reset();
       },
     });

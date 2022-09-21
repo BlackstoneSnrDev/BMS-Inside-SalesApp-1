@@ -250,6 +250,10 @@ textarea {
   color: #296e58;
 }
 
+.color-pr {
+  color: #44476a;
+}
+
 .not-rounded {
   border-radius: 0 !important;
 }
@@ -277,9 +281,17 @@ textarea {
 .padding-tp{
   padding-top: 1rem;
 }
+.padding-bt{
+  padding-bottom: 1rem;
+}
+
 
 .input-disabled-neumorphism {
   outline: 0 !important;
   box-shadow: none !important;
   cursor: default;
+}
+
+button, button:focus, button:hover{
+  outline: none;
 }

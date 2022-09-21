@@ -7,7 +7,7 @@
     <hr />
     <br />
     <div class="row">
-      <div class="col-lg-9">
+      <div class="col-lg-9 margin-bt">
         <div class="chats-col">
           <div class="row chats-view">
             <div
@@ -21,9 +21,8 @@
                 matTooltip="Show non-answered chats only"
                 matTooltipPosition="above"
               >
-                <i class="bi bi-exclamation-square margin-rt"></i> Pending ({{
-                  pendingChats.length
-                }})
+                <i class="bi bi-exclamation-square margin-rt color-pr"></i>
+                Pending ({{ pendingChats.length }})
               </span>
             </div>
             <div
@@ -37,19 +36,22 @@
                 matTooltip="Show active chats only"
                 matTooltipPosition="above"
               >
-                <i class="bi bi-chat-square-dots margin-rt"></i>Active ({{
-                  activeChats.length
-                }})
+                <i class="bi bi-chat-square-dots margin-rt color-pr"></i>Active
+                ({{ activeChats.length }})
               </span>
             </div>
           </div>
           <div class="chats-container">
             <div class="row filter-chat-container">
-              <div class="col-lg-12">
+              <div
+                class="col-lg-12"
+                [ngClass]="searchChatInput.value ? 'filter-active' : ''"
+              >
                 <mat-form-field appearance="standard" class="width-100">
                   <mat-label>Search chat</mat-label>
                   <input
                     matInput
+                    #searchChatInput
                     type="text"
                     [formControl]="searchChat"
                     (keyup)="filterChat()"
@@ -58,70 +60,177 @@
                 </mat-form-field>
               </div>
             </div>
-            <div class="row" *ngFor="let chat of chats; let i = index">
-              <div class="col-lg-12 margin-bt">
-                <p-accordion
-                  (onClose)="onTabClose(i)"
-                  (onOpen)="onTabOpen(i)"
-                  id="{{ chat.slIndex }}"
-                >
+            <div
+              class="row accordion-chat"
+              *ngFor="let chat of chats; let i = index"
+            >
+              <div class="col-lg-12">
+                <p-accordion (onClose)="onTabClose(i)" (onOpen)="onTabOpen(i)">
                   <p-accordionTab>
                     <ng-template pTemplate="header">
                       <div class="form-check form-check-inline width-100">
-                        <h6 class="width-100">{{ chat.fullname }}</h6>
+                        <i
+                          class="bi bi-chat-right-text-fill margin-rt color-pr"
+                        ></i>
+                        <h6 class="width-100 chat-name">{{ chat.fullname }}</h6>
                         <p-badge
                           class="status-active float-rt"
                           value="Unread ({{ chat.unreadSMS }})"
                           *ngIf="chat.unreadSMS > 0"
                         ></p-badge>
+                        <button
+                          id="btnRemove{{ i }}"
+                          (click)="removeChat(i)"
+                          class="btn-close-simple hide"
+                          matTooltip="Remove from {{ filterTab }}"
+                          matTooltipPosition="above"
+                        >
+                          <i class="bi bi-x-circle-fill float-rt color-pr"></i>
+                        </button>
                       </div>
+
+                      <ng-container
+                        *ngFor="let chatLast of chat.smsText; let last = last"
+                      >
+                        <div
+                          id="previewLast{{ i }}"
+                          class="form-check form-check-inline width-100"
+                          *ngIf="last && chat.smsText"
+                        >
+                          <i
+                            class="bi bi-check margin-rt"
+                            *ngIf="chatLast.method == 'sent'"
+                            matTooltip="Sent"
+                            matTooltipPosition="below"
+                          ></i>
+                          <i
+                            class="bi bi-exclamation-circle margin-rt"
+                            matTooltip="Waiting answer"
+                            matTooltipPosition="below"
+                            *ngIf="chatLast.method !== 'sent'"
+                          ></i>
+
+                          <div
+                            class="form-check form-check-inline width-100"
+                            *ngIf="last"
+                          >
+                            <small class="width-100 preview-msg"
+                              >{{ chatLast.message }}
+                            </small>
+                            <small class="txt-rt width-100">{{
+                              chatLast.timestamp.toMillis()
+                                | date: "MMM dd yyyy , h:mm a"
+                            }}</small>
+                          </div>
+                        </div>
+                      </ng-container>
                     </ng-template>
 
-                    <div class="sms-main-container">
-
-                      <div *ngFor="let sms of chat.smsText">
-                        <!-- <div *ngIf="chat.slIndex === sms.customerId"> -->
-
-                          <div class="row">
-                            <div class="col-lg-12 txt-center margin-tp">
-                              <small>{{ sms.timestamp.toMillis() | date: "yyyy/MM/dd" }}</small>
-                            </div>
+                    <div class="sms-main-container" id="chat{{ i }}">
+                      <div
+                        *ngFor="
+                          let sms of chat.smsText;
+                          let i = index;
+                          let first = first
+                        "
+                      >
+                        <div class="row no-margin" *ngIf="first">
+                          <div class="col-lg-12 txt-center margin-tp margin-bt">
+                            <small class="msg-date"
+                              ><b>{{
+                                sms.timestamp.toMillis() | date: "MMMM dd, YYYY"
+                              }}</b>
+                            </small>
                           </div>
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <button
-                                (click)="!sms.statusSMS ? resendSMS(i) : ''"
-                                matTooltip="Resend SMS"
-                                matTooltipPosition="above"
-                                class="iconbutton-neumorphism float-rt resend-icon"
-                                [ngClass]="!sms.statusSMS ? 'show' : 'hide'"
+                        </div>
+                        <div
+                          class="row no-margin"
+                          *ngIf="
+                            !first &&
+                            (sms.timestamp.toMillis() | date: 'yyyy/MM/dd') !==
+                              (chat.smsText[i - 1].timestamp.toMillis()
+                                | date: 'yyyy/MM/dd')
+                          "
+                        >
+                          <div class="col-lg-12 txt-center margin-tp margin-bt">
+                            <small
+                              class="msg-date"
+                              *ngIf="
+                                (sms.timestamp.toMillis()
+                                  | date: 'yyyy/MM/dd') !==
+                                yesterdayDate.format('yyyy/MM/DD')
+                              "
+                              ><b>{{
+                                sms.timestamp.toMillis() | date: "MMMM dd, YYYY"
+                              }}</b>
+                            </small>
+                            <small
+                              class="msg-date"
+                              *ngIf="
+                                (sms.timestamp.toMillis()
+                                  | date: 'yyyy/MM/dd') ==
+                                yesterdayDate.format('yyyy/MM/DD')
+                              "
+                              ><b>Yesterday</b></small
+                            >
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <button
+                              (click)="!sms.method ? resendSMS(i) : ''"
+                              matTooltip="Resend SMS"
+                              matTooltipPosition="above"
+                              class="iconbutton-neumorphism float-rt resend-icon"
+                              [ngClass]="!sms.method ? 'show' : 'hide'"
+                            >
+                              <i class="bi bi-arrow-clockwise color-pr"></i>
+                            </button>
+
+                            <p
+                              class="sms-container"
+                              [ngClass]="[
+                                sms.method == 'sent' ? 'float-rt' : 'float-lf',
+                                sms.method == 'sent'
+                                  ? 'border-bt-rt'
+                                  : 'border-bt-lt'
+                              ]"
+                            >
+                              {{ sms.message }}
+                              <br />
+                              <small
+                                class="small-sms"
+                                [ngClass]="[
+                                  sms.method == 'sent' ? 'txt-rt' : 'txt-lf',
+                                  sms.method == 'received' ? 'padding-bt' : ''
+                                ]"
                               >
-                                <i class="bi bi-arrow-clockwise"></i>
-                              </button>
-
-                              <p class="sms-container"
-                                [ngClass]="[sms.method== 'sent' ? 'float-rt':'float-lf', sms.method == 'sent' ? 'border-bt-rt':'border-bt-lt'  ]"
-                                matTooltip="Message by {{ sms.userName }}" matTooltipPosition="above">{{
-                                sms.message }}
-                                <br>
-                                <small class="small-sms" [ngClass]="sms.method== 'sent' ? 'txt-rt':'txt-lf' ">
-                                  {{ sms.timestamp.toMillis() | date: "h:mm a" }}
-                                  <!-- <span><i class="bi bi-check color-gr" *ngIf="sms.statusSMS"></i>
-                                    <i class="bi bi-exclamation-triangle-fill color-rd" *ngIf="!sms.statusSMS"></i>
-                                    <br>
-                                    <small class="color-rd" *ngIf="!sms.statusSMS"><i> Message couldn't be sent. Please
-                                        try again.</i></small>
-                                  </span> -->
-
-                                </small>
-                              </p>
-                            </div>
+                                {{ sms.timestamp.toMillis() | date: "h:mm a" }}
+                                <span
+                                  ><i
+                                    class="bi bi-check color-gr"
+                                    *ngIf="sms.method"
+                                  ></i>
+                                  <i
+                                    class="bi bi-exclamation-triangle-fill color-rd"
+                                    *ngIf="!sms.method"
+                                  ></i>
+                                  <br />
+                                  <small class="color-rd" *ngIf="!sms.method"
+                                    ><i>
+                                      Message couldn't be sent. Please try
+                                      again.</i
+                                    ></small
+                                  >
+                                </span>
+                              </small>
+                            </p>
                           </div>
-                        <!-- </div> -->
+                        </div>
                       </div>
                     </div>
                     <div class="row form-sms">
-                      <div class="p-inputgroup col-10">
+                      <div class="p-inputgroup col-11">
                         <textarea
                           rows="1"
                           cols="100"
@@ -132,12 +241,21 @@
                           [formControl]="txtMessage"
                         ></textarea>
                       </div>
-                      <div class="col-2 btnsave-container">
-
-                        <button (click)="sendSMS(chat)" class="btn-sms" [disabled]="!txtMessage.valid"
-                          [ngClass]="!txtMessage.valid ? 'button-neumorphism-disabled' : 'button-neumorphism'"><i
-                            class="bi bi-send-fill"></i></button>
-
+                      <div class="col-1 btnsave-container">
+                        <button
+                          (click)="sendSMS(chat)"
+                          class="btn-sms"
+                          matTooltip="Send message"
+                          matTooltipPosition="above"
+                          [disabled]="!txtMessage.valid"
+                          [ngClass]="
+                            !txtMessage.valid
+                              ? 'button-neumorphism-disabled'
+                              : 'button-neumorphism'
+                          "
+                        >
+                          <i class="bi bi-telegram"></i>
+                        </button>
                       </div>
                     </div>
                   </p-accordionTab>
@@ -149,37 +267,6 @@
       </div>
       <div class="col-lg-3">
         <div class="contacts-main-col">
-          <div class="row menu-container">
-            <div class="col-lg-10">
-              <div [ngClass]="contactSelection.value ? 'show' : 'hide'">
-                <p-dropdown
-                  [options]="optSMS"
-                  class="button-neumorphism width-100 margin-rt"
-                  (onChange)="sendMassiveSMS()"
-                  optionLabel="templateName"
-                  optionValue="templateId"
-                  placeholder="Send massive SMS"
-                  [formControl]="smsMassive"
-                ></p-dropdown>
-              </div>
-            </div>
-            <!-- <div class="col-lg-2">
-              <button class="iconbutton-neumorphism btn-contacts" (click)="toggleContacts()">
-                <span [ngClass]="tglContacts ? 'show' : 'hide'" matTooltip="Hide contacts list"
-                  matTooltipPosition="above">
-                  <i class="bi bi-person-video2"></i>
-                  <i class="bi bi-eye-slash icon-over"></i>
-                </span>
-                <span [ngClass]="tglContacts ? 'hide' : 'show'" matTooltip="Show contacts list"
-                  matTooltipPosition="above">
-                  <i class="bi bi-person-video2"></i>
-                  <i class="bi bi-eye icon-over"></i>
-                </span>
-
-              </button>
-            </div> -->
-          </div>
-
           <div
             class="form-row gp-list-container"
             [ngClass]="tglContacts ? 'visible' : 'not-visible'"
@@ -203,17 +290,18 @@
               >
                 {{ gp.group_name | formatLabel }}
                 <span class="iconBtn">
-                  <i class="bi bi-x-circle-fill"></i>
+                  <i class="bi bi-x-circle-fill color-pr"></i>
                 </span>
               </button>
             </div>
             <div
-              class="col-md-1 group-row select-group-col"
+              class="col-md-1 group-row select-group-col drop-group"
               matTooltip="Select group to call"
               matTooltipPosition="above"
             >
               <span class="padding-rt">
                 <p-dropdown
+                  placeholder="Groups"
                   [options]="tbGroups"
                   [formControl]="groupSelected"
                   optionValue="group_id"
@@ -227,7 +315,7 @@
             <div class="contacts-list">
               <p-listbox
                 [options]="contacts"
-                [formControl]="contactSelection"
+                [(ngModel)]="contactSelection"
                 [metaKeySelection]="false"
                 [checkbox]="true"
                 [multiple]="true"
@@ -245,6 +333,26 @@
                       placeholder="MRN, Full name, Phone number"
                     />
                   </mat-form-field>
+                  <div
+                    [ngClass]="contactSelection ? 'show' : 'hide'"
+                    class="float-rt"
+                  >
+                    <span
+                      class="drop-msg-massive"
+                      matTooltip="Send massive SMS"
+                      matTooltipPosition="above"
+                    >
+                      <p-dropdown
+                        [options]="optSMS"
+                        class="width-100 margin-rt"
+                        (onChange)="sendMassiveSMS($event)"
+                        optionLabel="templateName"
+                        optionValue="templateId"
+                        placeholder="Massive SMS"
+                        [formControl]="smsMassive"
+                      ></p-dropdown>
+                    </span>
+                  </div>
                 </ng-template>
                 <ng-template let-log pTemplate="item" let-i="index">
                   <div
@@ -260,7 +368,6 @@
                       <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
                     </div>
                     <h6 class="width-100 not-bold" id="{{ i }}">
-                      <i class="bi bi-hash"></i>
                       {{ this.DataService.formatPhoneNumber(log.phonenumber) }}
                     </h6>
                     <hr class="margin-rt" />

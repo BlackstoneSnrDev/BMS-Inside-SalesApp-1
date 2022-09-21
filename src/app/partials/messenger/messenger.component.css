@@ -48,6 +48,7 @@
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   height: 28rem;
+  min-height: 100%;
 }
 
 .contacts-main-col {
@@ -57,8 +58,7 @@
 .chats-col {
   height: 100%;
   border-radius: 1rem;
-  border: 0.1rem solid #d1d9e6;
-  border-top: none;
+  border: none;
 }
 .menu-container .col-lg-2 {
   padding-left: 0;
@@ -200,17 +200,86 @@
 .sms-container {
   background-color: #e0e1e9;
   border: 0.0625rem solid #d1d9e6;
-  border-radius: 2rem;
-  padding: 1rem;
+  border-radius: 1.6rem;
+  padding: 1rem 2rem 1rem 2rem;
   text-align: left;
+  width: -moz-fit-content;
   width: fit-content;
-  max-width: 100%;
+  max-width: 90%;
   overflow-wrap: anywhere;
+  min-height: 4.8rem;
+  box-shadow: 2px 2px 5px #b8b9be, -1px -1px 10px #fff;
 }
 
 ::ng-deep .p-accordion .p-accordion-content {
   padding: 0 !important;
   border-bottom: none !important;
+}
+
+.accordion-chat
+  ::ng-deep
+  .p-accordion
+  .p-accordion-header
+  .p-accordion-header-link {
+  box-shadow: none;
+  border: none;
+  border-bottom: 0.0625rem solid #d1d9e6;
+  background: #e6e7ee;
+  color: #44476a;
+  flex-flow: wrap;
+  border-radius: 0rem;
+}
+
+.accordion-chat
+  ::ng-deep
+  .p-accordion
+  .p-accordion-header
+  .p-accordion-header-link
+  .p-accordion-toggle-icon {
+  display: none;
+}
+
+.accordion-chat
+  ::ng-deep.p-accordion
+  .p-accordion-header:not(.p-disabled)
+  .p-accordion-header-link:focus {
+  box-shadow: none;
+  background-color: #e6e7ee;
+  animation: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  text-decoration: none;
+}
+
+.accordion-chat
+  ::ng-deep
+  .p-accordion
+  .p-accordion-header:not(.p-highlight):not(.p-disabled):hover
+  .p-accordion-header-link {
+  animation: none;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 5px #b8b9be, 0px 0px 7px #fff;
+}
+
+.accordion-chat
+  ::ng-deep
+  .p-accordion
+  .p-accordion-header:not(.p-disabled).p-highlight:hover
+  .p-accordion-header-link {
+  background-color: #e0e1e9;
+}
+
+.accordion-chat
+  ::ng-deep
+  .p-accordion
+  .p-accordion-header:not(.p-disabled).p-highlight
+  .p-accordion-header-link {
+  box-shadow: none;
+  background-color: #e6e7ee;
+  animation: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  text-decoration: none;
 }
 
 .sms-main-container {
@@ -220,31 +289,39 @@
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center !important;
+  max-height: 24rem;
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
 }
 
 .form-sms {
   background-color: #e6e7ee;
-  border: 0.0625rem solid #d1d9e6;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   border-top: none;
 }
 
-.form-sms .col-10,
-.form-sms .col-2 {
+.form-sms .col-11,
+.form-sms .col-1 {
   padding: 0;
 }
 
 .btn-sms {
+  padding: 0 !important;
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   width: 100%;
   box-shadow: none !important;
+  border-right: none !important;
 }
 
 .btn-sms:hover {
   box-shadow: none !important;
+  background-color: #e0e1e9;
+}
+
+.btn-sms i {
+  font-size: 1.3rem;
 }
 
 .btnsave-container {
@@ -256,6 +333,8 @@
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
 }
 
 .margin-left-20 {
@@ -271,11 +350,11 @@
 }
 
 .border-bt-lt {
-  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .border-bt-rt {
-  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .menu-container ::ng-deep .p-dropdown {
@@ -311,8 +390,86 @@
 }
 
 .txt-rt {
-    float: right;
+  float: right;
 }
 .txt-lf {
-    float: left;
+  float: left;
+}
+
+.chat-name {
+  margin: 0;
+}
+
+.msg-date {
+  background: #e0e1e9;
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  border: 0.1rem solid #d1d9e6;
+}
+
+.btn-close-simple {
+  border-radius: 1rem;
+  outline: none;
+  border: none;
+  background: transparent;
+  border: 0.0625rem solid #d1d9e6;
+}
+
+.btn-close-simple:hover,
+.btn-close-simple:focus {
+  border-radius: 1rem;
+  outline: none;
+  background: #e0e1e9;
+}
+
+::ng-deep .p-dialog {
+  width: 25rem !important;
+}
+
+.preview-msg {
+  height: 1.2rem;
+  overflow: hidden;
+}
+
+.drop-group {
+  border-left: none !important;
+}
+
+.select-group-col ::ng-deep.p-dropdown-trigger-icon {
+  padding-right: 0.2rem;
+}
+
+.drop-msg-massive ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
+  color: #44476a;
+  display: none;
+}
+
+.drop-msg-massive ::ng-deep.p-dropdown-trigger {
+  padding-bottom: 0.6rem;
+}
+
+.drop-msg-massive ::ng-deep.p-dropdown {
+  border-bottom: 0.1rem solid transparent;
+}
+
+.drop-msg-massive ::ng-deep.p-dropdown .p-dropdown-panel {
+  left: -5rem !important;
+  top: 1rem !important;
+  min-width: 8rem;
+}
+
+.contacts-list ::ng-deep.mat-form-field {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  width: 100%;
+}
+
+.filter-active
+  ::ng-deep
+  .mat-form-field-appearance-standard
+  .mat-form-field-underline {
+  background-color: #296e58;
+  height: 0.2rem !important;
 }

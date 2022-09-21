@@ -16,20 +16,15 @@
     </div>
     <div *ngIf="element.element == 'inputIcon' && currentCall">
       <div class="form-check form-check-inline button-inline">
-
-        <input type="{{ element.element_type }}" class="input-neumorphism" placeholder="{{ currentCallPhoneNumber }}" />
-        <div class="iconbutton-neumorphism btnCall" (click)="btnAnswerCall(currentCallPhoneNumber)">
-          <i class="bi bi-telephone-fill" [ngClass]="containerCallStatus ? 'hide' : 'show'"></i>
-          <i class="bi bi-x-circle-fill" [ngClass]="containerCallStatus ? 'show' : 'hide'"></i>
-
         <input
           type="{{ element.element_type }}"
           class="input-neumorphism"
           placeholder="{{ currentCallPhoneNumber }}"
         />
+
         <div
           class="iconbutton-neumorphism btnCall"
-          (click)="btnCall()"
+          (click)="btnAnswerCall(8007425877)"
           matTooltip="Call"
           matTooltipPosition="above"
           [ngClass]="containerCallStatus ? 'hide' : 'show'"
@@ -48,18 +43,11 @@
           [ngClass]="containerCallStatus ? 'show' : 'hide'"
         >
           <i class="bi bi-x-circle-fill"></i>
-
         </div>
       </div>
     </div>
-    <!-- <div *ngIf="element.element == 'button'">
-            <div class="form-check form-check-inline button-inline">
-              <div class="button-inline" >
-                <button class="button-neumorphism ">{{ element.element_placeholder }}</button>
-              </div>
-            </div>
-        </div> -->
   </div>
+
   <div
     *ngIf="containerCallStatus"
     class="container-neumorphism"
@@ -138,7 +126,6 @@
     </div>
   </div>
   <div class="form-row">
-    <!-- <div (click)="testBtn()" >testBtnCall</div> -->
     <div class="col-4 button-inline">
       <p-dropdown
         [options]="optVoiceMail"
@@ -151,10 +138,15 @@
       ></p-dropdown>
     </div>
     <div class="col-4 button-inline">
-
-      <p-dropdown [options]="optSMS" class="button-neumorphism" (onChange)="sendSMSMessage($event)" optionLabel="templateName"
-        optionValue="templateId" placeholder="SMS" [formControl]="smsMessageSent"></p-dropdown>
-
+      <p-dropdown
+        [options]="optSMS"
+        class="button-neumorphism"
+        (onChange)="sendSMSMessage($event)"
+        optionLabel="templateName"
+        optionValue="templateId"
+        placeholder="SMS"
+        [formControl]="smsMessageSent"
+      ></p-dropdown>
     </div>
     <div class="col-4 button-inline">
       <p-dropdown
@@ -187,10 +179,6 @@
     </div>
   </div>
   <hr />
-
-  <!-- In PhoneHistory below, I commented out the 'click to show call duration feature' 
-For now, I'd like the data shown.  But, clicking a div makes that customer the activeCall (or next call if autoDialer is true). -->
-
   <div class="phone-history" *ngIf="dialSessionArray">
     <div class="filter-notes-container">
       <mat-form-field appearance="standard">
@@ -244,11 +232,6 @@ For now, I'd like the data shown.  But, clicking a div makes that customer the a
             <small class="width-100 txt-rt hide" id="call{{ i }}">2min</small>
           </div>
         </div>
-
-        <!-- <button class="iconbutton-neumorphism float-right" (click)="showTimeHandled(i)" matTooltip="Time handled"
-          matTooltipPosition="left">
-          <i class="bi bi-hourglass-split"></i>
-        </button>  -->
 
         <hr />
       </div>

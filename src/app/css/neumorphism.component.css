@@ -435,8 +435,8 @@ input:checked + .toggle-slider-neumorphism::before {
 }
 
 ::ng-deep.p-checkbox .p-checkbox-box {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background-color: #e6e7ee;
 }
 

@@ -5,7 +5,7 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { UsersService } from '../../services/auth.service';
 import { ListboxFilterOptions } from 'primeng/listbox';
-
+import * as moment from 'moment'; // add this 1 of 4
 @Component({
   selector: 'messenger',
   templateUrl: './messenger.component.html',
@@ -17,7 +17,6 @@ import { ListboxFilterOptions } from 'primeng/listbox';
 export class MessengerComponent {
   public activeState: boolean[] = [true, false, false];
   public tglContacts: boolean = true;
-  public tglState: boolean = false;
   public searchContact = new FormControl();
   public searchChat = new FormControl();
   public txtMessage = new FormControl('', [
@@ -29,7 +28,7 @@ export class MessengerComponent {
   public smsMassive = new FormControl();
   public contacts: any = [];
   public dupContacts: any;
-  public contactSelection = new FormControl('', Validators.minLength(1));
+  public contactSelection: any;
   public tbGroups: any;
   public groupSelected = new FormControl();
   public tbGroupActive: any = [];
@@ -40,10 +39,12 @@ export class MessengerComponent {
   public activeChats: any;
   public pendingChats: any;
 
-  public todayDate: any;
+  public yesterdayDate: any;
   public chatContent: any;
+  public tabOpen: boolean = false;
 
   public userInfo: any;
+  public filterTab: any;
 
   constructor(
     public DataService: DataService,
@@ -53,50 +54,50 @@ export class MessengerComponent {
   ) {}
 
   ngOnInit() {
-    this.DataService.getSelectData().subscribe(
-      (response) => {
-        this.optSMS = response.selectSMSMessage;
-      },
+    this.DataService.getUserSettings().subscribe((response) => {
+      response.forEach((item: any) => {
+        if (item.docId === 'textMessage') {
+          let textArray: {
+            templateContent: any;
+            templateId: any;
+            templateName: any;
+          }[] = [];
+          Object.values(item)
+            .filter((e) => typeof e !== 'string')
+            .forEach((email: any) => {
+              textArray.push({
+                templateContent: email.data,
+                templateId: email.uid,
+                templateName: email.templateName,
+              });
+            });
+          this.optSMS = textArray;
+        }
+      });
+    });
 
-      (error) => {
-        console.error(error);
-      }
-    );
+    this.yesterdayDate = moment().add(-1, 'days');
 
     this.DataService.dialSessionArray.subscribe((dialSessionArray: any) => {
       this.contacts = dialSessionArray;
       this.dupContacts = this.contacts;
     });
 
-    this.DataService.getAllTextsForMessengerPage().subscribe(
-        (response) => {
-            console.log(response[0]['smsText'][response[0]['smsText'].length -1]);
-            this.pendingChats = response.filter((a: any) => a.smsText[a.smsText.length - 1]['method'] === 'received');
-            this.chats = this.pendingChats;
-            this.activeChats = response;
-        }
-    );
+    this.DataService.getAllTextsForMessengerPage().subscribe((response) => {
+      console.log(response[0]['smsText'][response[0]['smsText'].length - 1]);
+      this.pendingChats = response.filter(
+        (a: any) => a.smsText[a.smsText.length - 1]['method'] === 'received'
+      );
 
-    this.DataService.getMyTableData().subscribe(
-      (response) => {
-        console.log(response);
-        //this.pendingChats = response.pending_chats;
-        //this.activeChats = response.active_chats;
-        //this.chats = this.pendingChats;
-        //this.dupChats = this.chats;
-        //this.chatContent = response.sms_content;
+      this.chats = this.pendingChats;
+      this.dupChats = this.chats;
+      this.activeChats = response;
 
-        setTimeout(() => {
-          document
-            .getElementById('chat-v-pending')
-            ?.classList.add('view-active');
-        }, 400);
-      },
-
-      (error) => {
-        console.error(error);
-      }
-    );
+      setTimeout(() => {
+        document.getElementById('chat-v-pending')?.classList.add('view-active');
+      }, 400);
+      this.filterTab = 'pending';
+    });
 
     this.DataService.getCustomerGroups().subscribe((data) => {
       this.tbGroups = data;
@@ -121,25 +122,8 @@ export class MessengerComponent {
         }
       });
     });
-
-    this.tglState = true;
   }
 
-  toggleContacts() {
-    this.tglContacts = !this.tglContacts;
-    this.searchContact.setValue('');
-    this.contactSelection.setValue('');
-  }
-
-  selectAllContacts() {
-    this.contactSelection = this.contacts;
-  }
-
-  selectSingleContact(index: any) {
-    this.contactSelection = this.contacts.filter(
-      (a: any, i: any) => i == index
-    );
-  }
   getGroupSelected() {
     let groupSelected = this.tbGroups.filter(
       (v: any) => v.group_id === this.groupSelected.value
@@ -163,6 +147,7 @@ export class MessengerComponent {
       summary: 'Service Message',
       detail: 'Group "' + groupName + '" was added to calling.',
     });
+    this.groupSelected.reset();
   }
 
   removeGroupSelected(groupId: string) {
@@ -187,24 +172,79 @@ export class MessengerComponent {
     this.chats = this.dupChats;
     this.searchChat.reset();
     this.txtMessage.reset();
+    this.tabOpen = false;
+    document.getElementById('btnRemove' + index)?.classList.toggle('hide');
+    document.getElementById('previewLast' + index)?.classList.toggle('hide');
   }
 
   onTabOpen(index: any) {
     this.chats[index]['unreadSMS'] = '0';
     this.txtMessage.reset();
+    this.tabOpen = true;
+    let scroll = document.getElementById('chat' + index);
+    scroll!.scrollTop = scroll!.scrollHeight;
+    document.getElementById('btnRemove' + index)?.classList.toggle('hide');
+    document.getElementById('previewLast' + index)?.classList.toggle('hide');
   }
 
-  sendMassiveSMS() {
+  removeChat(index: number) {
+    let msg: any;
+    if (this.filterTab === 'pending') {
+      msg =
+        'The status of this chat will change from "pending" to "active". You can still access it by choosing it from the contacts list or "Active Chats.';
+    } else if (this.filterTab === 'active') {
+      msg =
+        'This chat will be removed. You might want to access it by choosing it from the contacts list.';
+    }
+
+    this.confirmationService.confirm({
+      message: msg,
+      header: 'Warning',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.activeState[index] = !this.activeState[index];
+
+        if (this.filterTab === 'pending') {
+          this.pendingChats = this.pendingChats.filter(
+            (a: any, i: any) => i != index
+          );
+          this.chats = this.pendingChats;
+        } else if (this.filterTab === 'active') {
+          this.activeChats = this.activeChats.filter(
+            (a: any, i: any) => i != index
+          );
+          this.pendingChats = this.pendingChats.filter(
+            (a: any, i: any) => i != index
+          );
+          this.chats = this.activeChats;
+        }
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail: 'Chat was removed successfully.',
+        });
+      },
+    });
+  }
+
+  sendMassiveSMS(e: any) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to send this message?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        let contactsArray = this.contactSelection;
+        console.log(contactsArray);
+
         this.messageService.add({
-          severity: 'success',
+          severity: 'error',
           summary: 'Service Message',
-          detail: 'SMS Message sent.',
+          detail: 'Function not created yet.',
         });
+        this.smsMassive.reset();
+      },
+      reject: () => {
+        this.smsMassive.reset();
       },
     });
   }
@@ -247,6 +287,8 @@ export class MessengerComponent {
     this.chats = this.pendingChats;
     this.dupChats = this.pendingChats;
     this.searchChat.reset();
+    this.filterTab = 'pending';
+    console.log(this.chats);
 
     document.getElementById('chat-v-pending')?.classList.add('view-active');
     document.getElementById('chat-v-active')?.classList.remove('view-active');
@@ -258,8 +300,11 @@ export class MessengerComponent {
   }
 
   filterActiveChat() {
+    this.filterTab = 'active';
+
     this.chats = this.activeChats;
     this.dupChats = this.activeChats;
+    console.log(this.chats);
 
     this.searchChat.reset();
     document.getElementById('chat-v-pending')?.classList.remove('view-active');
@@ -273,35 +318,15 @@ export class MessengerComponent {
 
   sendSMS(chat: any) {
     console.log(this.txtMessage.value, chat.uid);
-    // let timeNow = new Date();
-    // let date =
-    //   timeNow.getMonth() +
-    //   '/' +
-    //   timeNow.getDate() +
-    //   '/' +
-    //   timeNow.getFullYear();
-    // let hour =
-    //   timeNow.getHours() +
-    //   ':' +
-    //   timeNow.getMinutes() +
-    //   ':' +
-    //   timeNow.getSeconds();
-    // let message = {
-    //   customerId: index,
 
-    //   dateSMS: date,
-    //   timeSMS: hour,
-    //   contentSMS: this.txtMessage.value,
-    //   senderTypeSMS: 'user',
-    //   senderNameSMS: this.userInfo.name,
-    //   statusSMS: true,
-    // };
-
-    //this.chatContent.push(message);
-
-    this.DataService.makeCall('text', this.txtMessage.value, chat.uid, '+1' + chat.phonenumber).then((response) => {
-        console.log(response)
-    }) 
+    this.DataService.makeCall(
+      'text',
+      this.txtMessage.value,
+      chat.uid,
+      '+1' + chat.phonenumber
+    ).then((response) => {
+      console.log(response);
+    });
 
     this.messageService.add({
       severity: 'success',
@@ -309,6 +334,7 @@ export class MessengerComponent {
       detail: 'Message was sent successfully',
     });
     this.txtMessage.reset();
+    this.tabOpen = false;
   }
 
   resendSMS(index: any) {
@@ -316,14 +342,23 @@ export class MessengerComponent {
   }
 
   startNewChat(index: any, options: ListboxFilterOptions) {
-    options.reset?.();
+    setTimeout(() => {
+      this.contactSelection = '';
+    }, 0);
 
     this.filterActiveChat();
     this.searchChat.setValue(this.contacts[index]['MRN']);
+
+    let findDuplicate = this.activeChats.filter(
+      (a: any, i: any) => a.uid == this.contacts[index]['uid']
+    ).length;
+
     this.chats = this.dupChats;
     this.chats = this.contacts.filter((a: any, g: any) =>
       a.MRN.toLowerCase().includes(this.contacts[index]['MRN'])
     );
-    this.activeChats.push(this.contacts[index]);
+    if (findDuplicate < 1) {
+      this.activeChats.push(this.contacts[index]);
+    }
   }
 }

@@ -1,631 +1,675 @@
 {
-    "table_group": [
+  "table_group": [
+    {
+      "group_id": "g1",
+      "group_name": "Pending call"
+    },
+    {
+      "group_id": "g2",
+      "group_name": "Pending insurance"
+    }
+  ],
+  "table_th": [
+    {
+      "title": "Name",
+      "field": "name",
+      "element_type": "text"
+    },
+    {
+      "title": "MRN",
+      "field": "mrn",
+      "element_type": "text"
+    },
+    {
+      "title": "DOB",
+      "field": "dob",
+      "element_type": "date"
+    },
+    {
+      "title": "Tier",
+      "field": "tier",
+      "element_type": "number"
+    },
+    {
+      "title": "Prior Contact",
+      "field": "prior_contact",
+      "element_type": "boolean"
+    },
+    {
+      "title": "Pending",
+      "field": "pending",
+      "element_type": "boolean"
+    }
+  ],
+  "table_td": [
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "qwermaRb20apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 2,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "qwermaRb20apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 2,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "qwermaRb20apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 3,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "89jkmaRb30apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "89jkmaRb30apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "89jkmaRb30apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "89jkmaRb30apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "89jkmaRb30apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9ma-zCCZg",
+      "dob": "2020-11-10",
+      "tier": 1,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9ma-zCCZg",
+      "dob": "2020-11-10",
+      "tier": 1,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9majhgggg",
+      "dob": "2020-11-10",
+      "tier": 1,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9majhgggg",
+      "dob": "2020-11-10",
+      "tier": 1,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9majhgggg",
+      "dob": "2020-11-10",
+      "tier": 1,
+      "prior_contact": true,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9majhgggg",
+      "dob": "1956-04-10",
+      "tier": 1,
+      "prior_contact": false,
+      "pending": false,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9majhgggg",
+      "dob": "1956-04-10",
+      "tier": 1,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Zoo , Tycon",
+      "mrn": "89jkmaRb10apP9majhgggg",
+      "dob": "1956-04-10",
+      "tier": 1,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Andres , Marquez",
+      "mrn": "qwermaRb10apP9ma-zCCZg",
+      "dob": "1956-04-10",
+      "tier": 1,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Andres , Marquez",
+      "mrn": "qwermaRb10apP9ma-zCCZg",
+      "dob": "1956-04-10",
+      "tier": 1,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Andres , Marquez",
+      "mrn": "qwermaRb10apP9ma-zCCZg",
+      "dob": "1956-04-10",
+      "tier": 2,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Andres , Marquez",
+      "mrn": "qwermaRb20apP9ma-zCCZg",
+      "dob": "1956-04-10",
+      "tier": 2,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Andres , Marquez",
+      "mrn": "qwermaRb20apP9ma-zCCZg",
+      "dob": "1956-04-10",
+      "tier": 2,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Andres , Marquez",
+      "mrn": "qwermaRb20apP9ma-zCCZg",
+      "dob": "1956-04-10",
+      "tier": 2,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    },
+    {
+      "name": "Daniel , Moreno",
+      "mrn": "qwermaRb20apP9ma-zCCZg",
+      "dob": "1999-01-22",
+      "tier": 2,
+      "prior_contact": false,
+      "pending": true,
+      "group": []
+    }
+  ],
+  "tableUser_td": [
+    {
+      "name": "Daniel , Moreno",
+      "username": "dmm827",
+      "dept": "Inside Sales",
+      "role": "Lead",
+      "password": "bae1637"
+    },
+    {
+      "name": "Daniel , Moreno",
+      "username": "danoM",
+      "dept": "Inside Sales",
+      "role": "Rep",
+      "password": "bae1637"
+    },
+    {
+      "name": "Daniel , Moreno",
+      "username": "danoM",
+      "dept": "Inside Sales",
+      "role": "Rep",
+      "password": "bae1637"
+    },
+    {
+      "name": "Daniel , Moreno",
+      "username": "danoM",
+      "dept": "Inside Sales",
+      "role": "Rep",
+      "password": "bae1637"
+    },
+    {
+      "name": "Daniel , Moreno",
+      "username": "danoM",
+      "dept": "Inside Sales",
+      "role": "Rep",
+      "password": "bae1637"
+    },
+    {
+      "name": "Daniel , Moreno",
+      "username": "danoM",
+      "dept": "Inside Sales",
+      "role": "Admin",
+      "password": "bae1637"
+    },
+    {
+      "username": "danoM",
+      "name": "Daniel , Moreno",
+      "dept": "Inside Sales",
+      "role": "Rep",
+      "password": "bae1637"
+    }
+  ],
+  "tableUser_th": [
+    {
+      "title": "Name",
+      "field": "name",
+      "element_type": "text"
+    },
+    {
+      "title": "Username",
+      "field": "username",
+      "element_type": "text"
+    },
+    {
+      "title": "Department",
+      "field": "dept",
+      "element_type": "text"
+    },
+    {
+      "title": "Role",
+      "field": "role",
+      "element_type": "text"
+    },
+    {
+      "title": "Password",
+      "field": "password",
+      "element_type": "password"
+    }
+  ],
+  "tableDept_th": [
+    {
+      "title": "Name",
+      "field": "name",
+      "element_type": "text"
+    },
+    {
+      "title": "Lead",
+      "field": "lead",
+      "element_type": "text"
+    }
+  ],
+  "tableDept_td": [
+    {
+      "name": "Inside Sales",
+      "lead": "Daniel , Moreno",
+      "slIndex": 0
+    },
+    {
+      "name": "Outside Sales",
+      "lead": "Aranxa , Fiore",
+      "slIndex": 1
+    },
+    {
+      "name": "Customer Service",
+      "lead": "Nat , Castro",
+      "slIndex": 2
+    }
+  ],
+  "tableRole_th": [
+    {
+      "title": "Name",
+      "field": "name",
+      "element_type": "text"
+    },
+    {
+      "title": "Assigned permissions",
+      "field": "permissions",
+      "element_type": "text"
+    }
+  ],
+  "tableRole_td": [
+    {
+      "name": "Admin",
+      "permissions": ["Toggle autodialer", "Activate template"],
+      "slIndex": 0
+    },
+    {
+      "name": "Lead",
+      "permissions": ["Create new template", "Activate template"],
+      "slIndex": 1
+    },
+    {
+      "name": "Trainer",
+      "permissions": ["Activate template"],
+      "slIndex": 2
+    }
+  ],
+  "tableTemplate_th": [
+    {
+      "title": "Name",
+      "field": "name",
+      "element_type": "text"
+    },
+    {
+      "title": "Type",
+      "field": "type",
+      "element_type": "text"
+    },
+    {
+      "title": "Visible",
+      "field": "visible",
+      "element_type": "boolean"
+    }
+  ],
+  "tableTemplateStatutes_th": [
+    {
+      "title": "Name",
+      "field": "label",
+      "element_type": "text",
+      "slIndex": 0,
+      "templateId": 0
+    },
+    {
+      "title": "Background color",
+      "field": "background",
+      "element_type": "color",
+      "slIndex": 1,
+      "templateId": 0
+    },
+    {
+      "title": "Text color",
+      "field": "color",
+      "element_type": "color",
+      "slIndex": 2,
+      "templateId": 0
+    }
+  ],
+  "pending_chats": [
+    {
+      "slIndex": "0",
+      "fullname": "Patricio , Estrella",
+      "MRN": "89jkmaRb30apP9ma-36454554",
+      "dob": "1999-01-07",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 767876556,
+      "unreadSMS": 1,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    },
+    {
+      "slIndex": "1",
+      "fullname": "Gloria , Trevi",
+      "MRN": "kacnlknaclknsdcsd-zCCZg",
+      "dob": "1967-08-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 576677987,
+      "unreadSMS": 1,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    },
+    {
+      "slIndex": "2",
+      "fullname": "Bob , Esponja",
+      "MRN": "qeqwewrwetwtvfd-zCCZg",
+      "dob": "1890-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 342567899,
+      "unreadSMS": 2,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    }
+  ],
+  "active_chats": [
+    {
+      "slIndex": "3",
+      "fullname": "Daniel , Moreno",
+      "MRN": "89jkmaRb30apP9ma-zCCZg",
+      "dob": "1999-01-07",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 767876556,
+      "unreadSMS": 0,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    },
+    {
+      "slIndex": "4",
+      "fullname": "Michael , Jackson",
+      "MRN": "qeeqmpeomqpempeomeqp-zCCZg",
+      "dob": "1967-08-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 576677987,
+      "unreadSMS": 0,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    },
+    {
+      "slIndex": "5",
+      "fullname": "Gustavo , Petro",
+      "MRN": "jhabjhabahbja-zCCZg",
+      "dob": "1890-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 342567899,
+      "unreadSMS": 0,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    }
+  ],
+  "pending_chats": [
+    {
+      "slIndex": "0",
+      "fullname": "Patricio , Estrella",
+      "MRN": "89jkmaRb30apP9ma-36454554",
+      "dob": "1999-01-07",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 767876556,
+      "unreadSMS": 1,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    },
+    {
+      "slIndex": "1",
+      "fullname": "Gloria , Trevi",
+      "MRN": "kacnlknaclknsdcsd-zCCZg",
+      "dob": "1967-08-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 576677987,
+      "unreadSMS": 1,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    },
+    {
+      "slIndex": "2",
+      "fullname": "Bob , Esponja",
+      "MRN": "qeqwewrwetwtvfd-zCCZg",
+      "dob": "1890-01-22",
+      "tier": 3,
+      "prior_contact": true,
+      "pending": true,
+      "phonenumber": 342567899,
+      "unreadSMS": 2,
+      "timeSMS": "8/23/2022, 7:30:14 AM",
+      "contentSMS": "This is a test.",
+      "group": []
+    }
+  ],
+  "sms_content": [
+    {
+      "MRN": "62c8d4d990a425b2ec081e8a",
+      "address": "409 Monroe Place, Shindler, Guam, 8012",
+      "balance": 134.62,
+      "dob": "2006-07-14",
+      "emailaddress": "lillyharding@accuprint.com",
+      "fullname": "Lilly Harding",
+      "group": [],
+      "lastContact": {
+        "date": { "seconds": 1659227284, "nanoseconds": 236000000 },
+        "result": "Voice Message Left"
+      },
+      "notes": [{}],
+      "pending": false,
+      "phonenumber": "9004173396",
+      "priorcontact": false,
+      "smsText": [
         {
-            "group_id": "g1",
-            "group_name": "Pending call"
-        },
-        {
-            "group_id": "g2",
-            "group_name": "Pending insurance"
+          "timestamp": { "seconds": 1663604788, "nanoseconds": 763000000 },
+          "message": "I'm testing",
+          "method": "received",
+          "userName": "ryanr1423@yahoo.com",
+          "userId": "eckKB7Fi2pXCVvEP5DbN34wYy5m2"
         }
-    ],
-    "table_th": [
-        {
-            "title": "Name",
-            "field": "name",
-            "element_type": "text"
+      ],
+      "template": "Template One",
+      "uid": "2AYEg60HE5X2"
+    },
+    {
+        "MRN": "62c8d4d990a425b2ec081e8a",
+        "address": "409 Monroe Place, Shindler, Guam, 8012",
+        "balance": 134.62,
+        "dob": "2006-07-14",
+        "emailaddress": "lillyharding@accuprint.com",
+        "fullname": "Lilly Harding",
+        "group": [],
+        "lastContact": {
+          "date": { "seconds": 1659227284, "nanoseconds": 236000000 },
+          "result": "Voice Message Left"
         },
-        {
-            "title": "MRN",
-            "field": "mrn",
-            "element_type": "text"
+        "notes": [{}],
+        "pending": false,
+        "phonenumber": "9004173396",
+        "priorcontact": false,
+        "smsText": [
+          {
+            "timestamp": { "seconds": 1663604788, "nanoseconds": 763000000 },
+            "message": "HELLOOOOOOOOOOO",
+            "method": "received",
+            "userName": "ryanr1423@yahoo.com",
+            "userId": "eckKB7Fi2pXCVvEP5DbN34wYy5m2"
+          }
+        ],
+        "template": "Template One",
+        "uid": "2AYEg60HE5X2"
+      },
+      {
+        "MRN": "62c8d4d990a425b2ec081e8a",
+        "address": "409 Monroe Place, Shindler, Guam, 8012",
+        "balance": 134.62,
+        "dob": "2006-07-14",
+        "emailaddress": "lillyharding@accuprint.com",
+        "fullname": "Lilly Harding",
+        "group": [],
+        "lastContact": {
+          "date": { "seconds": 1659227284, "nanoseconds": 236000000 },
+          "result": "Voice Message Left"
         },
-        {
-            "title": "DOB",
-            "field": "dob",
-            "element_type": "date"
+        "notes": [{}],
+        "pending": false,
+        "phonenumber": "9004173396",
+        "priorcontact": false,
+        "smsText": [
+          {
+            "timestamp": { "seconds": 1663604788, "nanoseconds": 763000000 },
+            "message": "HOW ARE YOU",
+            "method": "received",
+            "userName": "ryanr1423@yahoo.com",
+            "userId": "eckKB7Fi2pXCVvEP5DbN34wYy5m2"
+          }
+        ],
+        "template": "Template One",
+        "uid": "2AYEg60HE5X2"
+      },
+      {
+        "MRN": "62c8d4d990a425b2ec081e8a",
+        "address": "409 Monroe Place, Shindler, Guam, 8012",
+        "balance": 134.62,
+        "dob": "2006-07-14",
+        "emailaddress": "lillyharding@accuprint.com",
+        "fullname": "Lilly Harding",
+        "group": [],
+        "lastContact": {
+          "date": { "seconds": 1659227284, "nanoseconds": 236000000 },
+          "result": "Voice Message Left"
         },
-        {
-            "title": "Tier",
-            "field": "tier",
-            "element_type": "number"
-        },
-        {
-            "title": "Prior Contact",
-            "field": "prior_contact",
-            "element_type": "boolean"
-        },
-        {
-            "title": "Pending",
-            "field": "pending",
-            "element_type": "boolean"
-        }
-    ],
-    "table_td": [
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "qwermaRb20apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 2,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "qwermaRb20apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 2,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "qwermaRb20apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 3,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "89jkmaRb30apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "89jkmaRb30apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "89jkmaRb30apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "89jkmaRb30apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "89jkmaRb30apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9ma-zCCZg",
-            "dob": "2020-11-10",
-            "tier": 1,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9ma-zCCZg",
-            "dob": "2020-11-10",
-            "tier": 1,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9majhgggg",
-            "dob": "2020-11-10",
-            "tier": 1,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9majhgggg",
-            "dob": "2020-11-10",
-            "tier": 1,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9majhgggg",
-            "dob": "2020-11-10",
-            "tier": 1,
-            "prior_contact": true,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9majhgggg",
-            "dob": "1956-04-10",
-            "tier": 1,
-            "prior_contact": false,
-            "pending": false,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9majhgggg",
-            "dob": "1956-04-10",
-            "tier": 1,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Zoo , Tycon",
-            "mrn": "89jkmaRb10apP9majhgggg",
-            "dob": "1956-04-10",
-            "tier": 1,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Andres , Marquez",
-            "mrn": "qwermaRb10apP9ma-zCCZg",
-            "dob": "1956-04-10",
-            "tier": 1,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Andres , Marquez",
-            "mrn": "qwermaRb10apP9ma-zCCZg",
-            "dob": "1956-04-10",
-            "tier": 1,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Andres , Marquez",
-            "mrn": "qwermaRb10apP9ma-zCCZg",
-            "dob": "1956-04-10",
-            "tier": 2,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Andres , Marquez",
-            "mrn": "qwermaRb20apP9ma-zCCZg",
-            "dob": "1956-04-10",
-            "tier": 2,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Andres , Marquez",
-            "mrn": "qwermaRb20apP9ma-zCCZg",
-            "dob": "1956-04-10",
-            "tier": 2,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Andres , Marquez",
-            "mrn": "qwermaRb20apP9ma-zCCZg",
-            "dob": "1956-04-10",
-            "tier": 2,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        },
-        {
-            "name": "Daniel , Moreno",
-            "mrn": "qwermaRb20apP9ma-zCCZg",
-            "dob": "1999-01-22",
-            "tier": 2,
-            "prior_contact": false,
-            "pending": true,
-            "group": []
-        }
-    ],
-    "tableUser_td": [
-        {
-            "name": "Daniel , Moreno",
-            "username": "dmm827",
-            "dept": "Inside Sales",
-            "role": "Lead",
-            "password": "bae1637"
-        },
-        {
-            "name": "Daniel , Moreno",
-            "username": "danoM",
-            "dept": "Inside Sales",
-            "role": "Rep",
-            "password": "bae1637"
-        },
-        {
-            "name": "Daniel , Moreno",
-            "username": "danoM",
-            "dept": "Inside Sales",
-            "role": "Rep",
-            "password": "bae1637"
-        },
-        {
-            "name": "Daniel , Moreno",
-            "username": "danoM",
-            "dept": "Inside Sales",
-            "role": "Rep",
-            "password": "bae1637"
-        },
-        {
-            "name": "Daniel , Moreno",
-            "username": "danoM",
-            "dept": "Inside Sales",
-            "role": "Rep",
-            "password": "bae1637"
-        },
-        {
-            "name": "Daniel , Moreno",
-            "username": "danoM",
-            "dept": "Inside Sales",
-            "role": "Admin",
-            "password": "bae1637"
-        },
-        {
-            "username": "danoM",
-            "name": "Daniel , Moreno",
-            "dept": "Inside Sales",
-            "role": "Rep",
-            "password": "bae1637"
-        }
-    ],
-    "tableUser_th": [
-        {
-            "title": "Name",
-            "field": "name",
-            "element_type": "text"
-        },
-        {
-            "title": "Username",
-            "field": "username",
-            "element_type": "text"
-        },
-        {
-            "title": "Department",
-            "field": "dept",
-            "element_type": "text"
-        },
-        {
-            "title": "Role",
-            "field": "role",
-            "element_type": "text"
-        },
-        {
-            "title": "Password",
-            "field": "password",
-            "element_type": "password"
-        }
-    ],
-    "tableDept_th": [
-        {
-            "title": "Name",
-            "field": "name",
-            "element_type": "text"
-        },
-        {
-            "title": "Lead",
-            "field": "lead",
-            "element_type": "text"
-        }
-    ],
-    "tableDept_td": [
-        {
-            "name": "Inside Sales",
-            "lead": "Daniel , Moreno",
-            "slIndex": 0
-        },
-        {
-            "name": "Outside Sales",
-            "lead": "Aranxa , Fiore",
-            "slIndex": 1
-        },
-        {
-            "name": "Customer Service",
-            "lead": "Nat , Castro",
-            "slIndex": 2
-        }
-    ],
-    "tableRole_th": [
-        {
-            "title": "Name",
-            "field": "name",
-            "element_type": "text"
-        },
-        {
-            "title": "Assigned permissions",
-            "field": "permissions",
-            "element_type": "text"
-        }
-    ],
-    "tableRole_td": [
-        {
-            "name": "Admin",
-            "permissions": ["Toggle autodialer", "Activate template"],
-            "slIndex": 0
-
-        },
-        {
-            "name": "Lead",
-            "permissions": ["Create new template", "Activate template"],
-            "slIndex": 1
-        },
-        {
-            "name": "Trainer",
-            "permissions": ["Activate template"],
-            "slIndex": 2
-        }
-    ],
-    "tableTemplate_th": [
-        {
-            "title": "Name",
-            "field": "name",
-            "element_type": "text"
-        },
-        {
-            "title": "Type",
-            "field": "type",
-            "element_type": "text"
-        },
-        {
-            "title": "Visible",
-            "field": "visible",
-            "element_type": "boolean"
-        }
-    ],
-    "tableTemplateStatutes_th": [
-        {
-            "title": "Name",
-            "field": "label",
-            "element_type": "text",
-            "slIndex": 0,
-            "templateId": 0
-
-        },
-        {
-            "title": "Background color",
-            "field": "background",
-            "element_type": "color",
-            "slIndex": 1,
-            "templateId": 0
-
-        },
-        {
-            "title": "Text color",
-            "field": "color",
-            "element_type": "color",
-            "slIndex": 2,
-            "templateId": 0
-
-        }
-    ],
-    "pending_chats": [
-        {
-            "slIndex": "0",
-            "fullname": "Patricio , Estrella",
-            "MRN": "89jkmaRb30apP9ma-36454554",
-            "dob": "1999-01-07",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "phonenumber": 767876556,
-            "unreadSMS": 1,
-            "timeSMS": "8/23/2022, 7:30:14 AM",
-            "contentSMS": "This is a test.",
-            "group": []
-        },
-        {
-            "slIndex": "1",
-            "fullname": "Gloria , Trevi",
-            "MRN": "kacnlknaclknsdcsd-zCCZg",
-            "dob": "1967-08-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "phonenumber": 576677987,
-            "unreadSMS": 1,
-            "timeSMS": "8/23/2022, 7:30:14 AM",
-            "contentSMS": "This is a test.",
-            "group": []
-        },
-        {
-            "slIndex": "2",
-            "fullname": "Bob , Esponja",
-            "MRN": "qeqwewrwetwtvfd-zCCZg",
-            "dob": "1890-01-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "phonenumber": 342567899,
-            "unreadSMS": 2,
-            "timeSMS": "8/23/2022, 7:30:14 AM",
-            "contentSMS": "This is a test.",
-            "group": []
-        }
-    ],
-    "active_chats": [
-        {
-            "slIndex": "3",
-            "fullname": "Daniel , Moreno",
-            "MRN": "89jkmaRb30apP9ma-zCCZg",
-            "dob": "1999-01-07",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "phonenumber": 767876556,
-            "unreadSMS": 0,
-            "timeSMS": "8/23/2022, 7:30:14 AM",
-            "contentSMS": "This is a test.",
-            "group": []
-        },
-        {
-            "slIndex": "4",
-            "fullname": "Michael , Jackson",
-            "MRN": "qeeqmpeomqpempeomeqp-zCCZg",
-            "dob": "1967-08-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "phonenumber": 576677987,
-            "unreadSMS": 0,
-            "timeSMS": "8/23/2022, 7:30:14 AM",
-            "contentSMS": "This is a test.",
-            "group": []
-        },
-        {
-            "slIndex": "5",
-            "fullname": "Gustavo , Petro",
-            "MRN": "jhabjhabahbja-zCCZg",
-            "dob": "1890-01-22",
-            "tier": 3,
-            "prior_contact": true,
-            "pending": true,
-            "phonenumber": 342567899,
-            "unreadSMS": 0,
-            "timeSMS": "8/23/2022, 7:30:14 AM",
-            "contentSMS": "This is a test.",
-            "group": []
-        }
-    ],
-    "sms_content": [
-        {
-            "customerId": "0",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:30:14 AM",
-            "contentSMS": "This is a test.",
-            "senderTypeSMS": "user",
-            "senderNameSMS": "Karla Cardenas",
-            "statusSMS": true
-        },
-        {
-            "customerId": "0",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:46:14 AM",
-            "contentSMS": "Yes, I know it's a test.",
-            "senderTypeSMS": "customer",
-            "senderNameSMS": "Customer name",
-            "statusSMS": true
-        },
-        {
-            "customerId": "0",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:46:14 AM",
-            "contentSMS": "Did you receive my message about coding?",
-            "senderTypeSMS": "user",
-            "senderNameSMS": "Karla Cardenas",
-            "statusSMS": false
-        },
-        {
-            "customerId": "1",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:53:14 AM",
-            "contentSMS": "Hiii!!",
-            "senderTypeSMS": "customer",
-            "senderNameSMS": "Customer name",
-            "statusSMS": true
-        },
-        {
-            "customerId": "2",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:46:14 AM",
-            "contentSMS": "Hey!",
-            "senderTypeSMS": "customer",
-            "senderNameSMS": "Customer name",
-            "statusSMS": true
-        },
-        {
-            "customerId": "2",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:46:14 AM",
-            "contentSMS": "I'm waiting for an answer",
-            "senderTypeSMS": "customer",
-            "senderNameSMS": "Customer name",
-            "statusSMS": true
-        },
-        {
-            "customerId": "3",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:53:14 AM",
-            "contentSMS": "Hi, customer!",
-            "senderTypeSMS": "user",
-            "senderNameSMS": "Karla Cardenas",
-            "statusSMS": true
-        },
-        {
-            "customerId": "3",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:46:14 AM",
-            "contentSMS": "Hi, rep!",
-            "senderTypeSMS": "customer",
-            "senderNameSMS": "Customer name",
-            "statusSMS": true
-        },
-        {
-            "customerId": "4",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:53:14 AM",
-            "contentSMS": "Hi, customer!",
-            "senderTypeSMS": "user",
-            "senderNameSMS": "Karla Cardenas",
-            "statusSMS": true
-        },
-        {
-            "customerId": "4",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:46:14 AM",
-            "contentSMS": "Somebody there?",
-            "senderTypeSMS": "customer",
-            "senderNameSMS": "Customer name",
-            "statusSMS": true
-        },
-        {
-            "customerId": "5",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:53:14 AM",
-            "contentSMS": "Hi, customer!",
-            "senderTypeSMS": "user",
-            "senderNameSMS": "Karla Cardenas",
-            "statusSMS": true
-        },
-        {
-            "customerId": "5",
-            "dateSMS": "8/23/2022",
-            "timeSMS": "7:46:14 AM",
-            "contentSMS": "Oh, hi!! ",
-            "senderTypeSMS": "customer",
-            "senderNameSMS": "Customer name",
-            "statusSMS": true
-        }
-    ]
+        "notes": [{}],
+        "pending": false,
+        "phonenumber": "9004173396",
+        "priorcontact": false,
+        "smsText": [
+          {
+            "timestamp": { "seconds": 1663604788, "nanoseconds": 763000000 },
+            "message": "You know I'm testing",
+            "method": "received",
+            "userName": "ryanr1423@yahoo.com",
+            "userId": "eckKB7Fi2pXCVvEP5DbN34wYy5m2"
+          }
+        ],
+        "template": "Template One",
+        "uid": "2AYEg60HE5X2"
+      }
+  ]
 }

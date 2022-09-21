@@ -229,16 +229,18 @@ export class SettingsComponent implements OnInit {
     console.log('url', this.url);
   }
 
-  saveVoicemail() {
+  saveVoiceMail() {
     console.log(this.templateName);
-    this.DataService.saveBlob(this.blobData, this.templateName).then((response) => {
+    this.DataService.saveBlob(this.blobData, this.templateName)
+      .then((response) => {
         this.messageService.add({
-            severity: 'success',
-            summary: 'Service Message',
-            detail: response
-        })
+          severity: 'success',
+          summary: 'Service Message',
+          detail: response,
+        });
         this.templateForm.reset();
-    }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
   }
