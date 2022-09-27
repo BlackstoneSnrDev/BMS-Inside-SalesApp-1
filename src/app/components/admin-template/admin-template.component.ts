@@ -259,6 +259,8 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   onRowEditSave(rowTdData: any, indexElm: number, indexTemplate: any) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to edit this status?',
       header: 'Confirm',
@@ -297,6 +299,8 @@ export class AdminTemplateComponent implements OnInit {
     delete this.clonedTdData[index];
   }
   onRowDeleteRow(id: any, indexTemplate: any) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this status?',
       header: 'Confirm',
@@ -460,6 +464,8 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   deleteTemplate(id: any, currentStatus: any, templateName: any) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message:
         'Are you sure you want to <b>delete</b> this template? This will be applied in the <b>whole app.</b>',
@@ -538,6 +544,8 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   saveCreateNewStatus(indexTemplate: any) {
+    this.functionMissing();
+
     this.tglAddStatus = false;
 
     this.tdData[indexTemplate]['statuses'].push(this.createNewStatusForm.value);
@@ -557,6 +565,15 @@ export class AdminTemplateComponent implements OnInit {
     this.tglStatus = !this.tglStatus;
     this.createNewTemplateForm.patchValue({
       statusLabel0: '',
+    });
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
     });
   }
 }

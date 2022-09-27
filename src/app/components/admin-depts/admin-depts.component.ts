@@ -82,6 +82,8 @@ export class AdminDeptsComponent implements OnInit {
   }
 
   onRowEditSave(rowTdData: any, indexElm: number) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to edit this department?',
       header: 'Confirm',
@@ -115,6 +117,8 @@ export class AdminDeptsComponent implements OnInit {
   }
 
   onRowDeleteRow(id: any) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this department?',
       header: 'Confirm',
@@ -148,6 +152,8 @@ export class AdminDeptsComponent implements OnInit {
   }
 
   saveCreateNewDept() {
+    this.functionMissing();
+
     this.tglAddDept = false;
     this.tdData.push(this.createNewDeptForm.value);
     let id = this.tdData.length - 1;
@@ -160,5 +166,14 @@ export class AdminDeptsComponent implements OnInit {
     });
 
     this.createNewDeptForm.reset();
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
+    });
   }
 }

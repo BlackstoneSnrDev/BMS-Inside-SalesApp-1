@@ -260,6 +260,7 @@ export class SettingsComponent implements OnInit {
     this.tglEmail = false;
     this.tglVM = false;
     this.templateForm.reset();
+    this.url = '';
 
     if (type === 'email') {
       this.tglEmail = true;

@@ -76,6 +76,8 @@ export class AdminRolesComponent implements OnInit {
   }
 
   onRowEditSave(rowTdData: any, indexElm: number) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to edit this role?',
       header: 'Confirm',
@@ -109,6 +111,8 @@ export class AdminRolesComponent implements OnInit {
   }
 
   onRowDeleteRow(id: any) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this role?',
       header: 'Confirm',
@@ -137,6 +141,8 @@ export class AdminRolesComponent implements OnInit {
   }
 
   saveCreateNewRole() {
+    this.functionMissing();
+
     this.tglAddRole = false;
 
     this.tdData.push(this.createNewRoleForm.value);
@@ -149,5 +155,14 @@ export class AdminRolesComponent implements OnInit {
       detail: 'Role was created successfully.',
     });
     this.createNewRoleForm.reset();
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
+    });
   }
 }

@@ -1,12 +1,15 @@
 <div class="row main-row">
-  <div class="col-sm-12 ">
-    <h1>Statistics</h1>
-    <hr><br>
+  <div class="col-sm-12">
+    <h1>
+      Statistics <small><i>(SITE UNDER CONSTRUCTION)</i></small>
+    </h1>
+    <hr />
+    <br />
     <div>
       <div>
         <div>
           <div class="form-check form-check-inline width-100 margin-bt">
-            <div class="iconbutton-neumorphism ">
+            <div class="iconbutton-neumorphism">
               <i class="bi bi-sliders"></i>
             </div>
             <button class="button-neumorphism margin-lt" (click)="randomize()">
@@ -17,22 +20,31 @@
             <button class="button-neumorphism margin-lt">Today</button>
           </div>
           <div class="row">
-            <div class="col-sm-8 ">
+            <div class="col-sm-8">
               <div class="chart-col">
                 <div style="display: block">
-                  <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"
-                    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                  <canvas
+                    baseChart
+                    [data]="barChartData"
+                    [options]="barChartOptions"
+                    [type]="barChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"
+                  ></canvas>
                 </div>
               </div>
             </div>
             <div class="col-sm-4">
-              <div class="chart-sum-col ">
+              <div class="chart-sum-col">
                 <!-- <div class="text-center margin-lg-bt">
                 <i class="bi bi-person-fill icon-rep"></i>
               </div> -->
                 <h4 class="text-center margin-lg-bt">Representative's Name</h4>
-                  <div class="d-flex justify-content-center margin-lg-bt" matTooltip="Dials {{ value }}%" matTooltipPosition="above">
-
+                <div
+                  class="d-flex justify-content-center margin-lg-bt"
+                  matTooltip="Dials {{ value }}%"
+                  matTooltipPosition="above"
+                >
                   <p-knob [(ngModel)]="value" [readonly]="true"></p-knob>
                 </div>
                 <h5>Recent activities</h5>
@@ -49,7 +61,7 @@
                   <p class="width-100">Tier three</p>
                   <p>90%</p>
                 </div>
-                <hr>
+                <hr />
                 <div class="form-check form-check-inline width-100">
                   <h6 class="width-100">Total</h6>
                   <p>75%</p>

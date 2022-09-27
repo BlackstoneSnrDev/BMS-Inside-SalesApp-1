@@ -7,6 +7,7 @@
     <h3 *ngIf="currentCall">
       {{ currentCall.fullname }}
       <p-badge
+        matTooltip="NOT CONNECTED TO DB"
         [style]="{ background: status.background, color: status.color }"
         value="{{ status.label }}"
       ></p-badge>
@@ -190,6 +191,7 @@
               #addressForm
               (click)="
                 !tgleditField ||
+                  tglModifyAddressForm ||
                   toggleModifyAddressForm(
                     callDataIndex,
                     callData.element_table_value,
@@ -269,12 +271,13 @@
 </form>
 <p-dialog
   header="Add new address"
-  [(visible)]="tglModifyAddressForm"
+  [(visible)]="tglModifyAddressForm && addressForm"
   [breakpoints]="{ '960px': '75vw' }"
   [style]="{ width: '50vw' }"
   [draggable]="true"
   [resizable]="false"
   class="modifyingAddress"
+  [closable]="false"
 >
   <div *ngIf="tgleditField">
     <form [formGroup]="addressForm" *ngIf="addressForm" novalidate>
@@ -403,4 +406,3 @@
     </form>
   </div>
 </p-dialog>
-<p-toast life="5000" position="top-right"></p-toast>

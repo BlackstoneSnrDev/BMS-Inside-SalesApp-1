@@ -81,6 +81,8 @@ export class AdminUserComponent implements OnInit {
   }
 
   onRowEditSave(rowTdData: any, indexElm: number) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to edit this user?',
       header: 'Confirm',
@@ -114,6 +116,8 @@ export class AdminUserComponent implements OnInit {
   }
 
   onRowDeleteRow(id: any) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this user?',
       header: 'Confirm',
@@ -146,6 +150,8 @@ export class AdminUserComponent implements OnInit {
   }
 
   saveCreateNewUser() {
+    this.functionMissing();
+
     this.tglCreateUser = false;
 
     let value = this.createNewUserForm.value;
@@ -165,6 +171,15 @@ export class AdminUserComponent implements OnInit {
       severity: 'success',
       summary: 'Service Message',
       detail: 'New user was created successfully.',
+    });
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
     });
   }
 }

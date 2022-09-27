@@ -334,7 +334,7 @@
         [ngClass]="filterInput.value ? 'filter-active' : ''"
       >
         <mat-form-field appearance="standard">
-          <mat-label>Search</mat-label>
+          <mat-label>Search record</mat-label>
           <input
             matInput
             type="text"
@@ -435,7 +435,7 @@
                 <p-dropdown
                   [options]="optSMS"
                   class="button-neumorphism width-100"
-                  (onChange)="sendMassiveSMS()"
+                  (onChange)="sendMassiveSMS(groupOpt.group_id)"
                   optionLabel="templateName"
                   optionValue="templateId"
                   placeholder="SMS"
@@ -668,6 +668,7 @@
   [draggable]="true"
   [resizable]="false"
   class="modifyingAddress"
+  [closable]="false"
 >
   <div class="address-form">
     <form

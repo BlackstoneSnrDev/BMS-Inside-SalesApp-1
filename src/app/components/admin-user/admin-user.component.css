@@ -17,7 +17,7 @@
   p-dropdown
   > .p-dropdown {
   border-bottom: none !important;
-  width: auto;
+  width: min-content !important;
 }
 
 .table-users

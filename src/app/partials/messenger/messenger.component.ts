@@ -188,6 +188,8 @@ export class MessengerComponent {
   }
 
   removeChat(index: number) {
+    this.functionMissing();
+
     let msg: any;
     if (this.filterTab === 'pending') {
       msg =
@@ -228,18 +230,26 @@ export class MessengerComponent {
   }
 
   sendMassiveSMS(e: any) {
+    this.functionMissing();
+
     this.confirmationService.confirm({
-      message: 'Are you sure you want to send this message?',
+      message:
+        'Are you sure you want to send this message to <b>' +
+        this.contactSelection.length +
+        '</b> contact(s)?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         let contactsArray = this.contactSelection;
-        console.log(contactsArray);
+        console.log(contactsArray.length);
 
         this.messageService.add({
-          severity: 'error',
+          severity: 'success',
           summary: 'Service Message',
-          detail: 'Function not created yet.',
+          detail:
+            'Massive SMS sent to <b>' +
+            this.contactSelection.length +
+            '</b> contact(s).',
         });
         this.smsMassive.reset();
       },
@@ -338,6 +348,8 @@ export class MessengerComponent {
   }
 
   resendSMS(index: any) {
+    this.functionMissing();
+
     console.log('RESEND');
   }
 
@@ -360,5 +372,14 @@ export class MessengerComponent {
     if (findDuplicate < 1) {
       this.activeChats.push(this.contacts[index]);
     }
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
+    });
   }
 }
