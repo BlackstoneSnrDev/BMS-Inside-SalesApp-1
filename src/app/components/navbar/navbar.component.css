@@ -19,12 +19,13 @@
 
 .my-navbar-header {
   text-align: center;
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
 }
 
 .my-navbar-logo {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 100%;
 }
 
 .ul-my-navbar {
@@ -43,6 +44,10 @@
   border-radius: 50%;
   border: 0.0625rem solid transparent;
   width: 3rem;
+}
+
+.my-navbar-tab-container.default-tab{
+padding: 1rem 0 0 0;
 }
 
 .my-navbar-tab:hover {
@@ -101,8 +106,7 @@
 
 .dropdown-content .my-navbar-tab {
   margin: 0;
-  margin-left: 0.55rem;
-  margin-right: 0.55rem;
+  margin-left: 11%;
 }
 
 .dropdown-content .my-navbar-tab:hover {
