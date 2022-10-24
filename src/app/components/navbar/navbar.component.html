@@ -25,7 +25,7 @@
 
   <div class="partialsContainer">
     <ul class="ul-my-navbar">
-      <li class="my-navbar-tab-container" *ngIf="isLoggedIn">
+      <li class="my-navbar-tab-container default-tab" *ngIf="isLoggedIn">
         <ng-container *ngIf="userInfo.name">
           <div class="dropdown" (click)="onActivate($event)">
             <div

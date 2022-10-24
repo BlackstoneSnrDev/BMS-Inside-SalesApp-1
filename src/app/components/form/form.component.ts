@@ -72,6 +72,32 @@ export class FormComponent implements OnInit {
             function: '',
           },
         ];
+        this.tglModifyAddressForm = false;
+        this.tgleditField = false;
+        this.addressForm = new FormGroup({
+          slcCountry: new FormControl('', [
+            Validators.required,
+            Validators.minLength(1),
+          ]),
+          slcState: new FormControl('', [
+            Validators.required,
+            Validators.minLength(1),
+          ]),
+          txtCity: new FormControl('', [
+            Validators.required,
+            Validators.minLength(1),
+          ]),
+          txtStreet: new FormControl('', [
+            Validators.required,
+            Validators.minLength(1),
+          ]),
+          txtApt: new FormControl(''),
+          txtZip: new FormControl('', [
+            Validators.required,
+            Validators.minLength(1),
+          ]),
+        });
+
         this.customerStatus = this.currentCall['customerStatus'];
         this.filterCXStatus(this.customerStatus);
       }
@@ -164,9 +190,12 @@ export class FormComponent implements OnInit {
   }
 
   removeGroupSelected(groupId: string) {
+    let groupSelected = this.tbGroups.filter(
+      (v: any) => v.group_id === groupId
+    );
+
     let groupName = '';
-    this.tbGroups.forEach((e: any) => {
-      groupId = e.group_id;
+    groupSelected.forEach((e: any) => {
       groupName = e.group_name;
     });
 
@@ -198,12 +227,13 @@ export class FormComponent implements OnInit {
     addressName: any,
     formControlName: any
   ) {
+    this.addressForm.reset();
     let currentAddres = this.callDataForm.get(formControlName)?.value;
     let count = currentAddres.split(',').length - 1;
     let street, apt, city, state, zip, country;
     if (count > 4) {
       street = currentAddres.split(',')[0];
-      apt = currentAddres.split(',')[1];
+      apt = currentAddres.split(',')[1].trim();
       city = currentAddres.split(',')[2];
       state = currentAddres.split(',')[3];
       zip = currentAddres.split(',')[4];
@@ -216,36 +246,30 @@ export class FormComponent implements OnInit {
       country = currentAddres.split(',')[4];
     }
 
-    this.addressForm = new FormGroup({
-      slcCountry: new FormControl(country.replace(/\s/g, ''), [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
-      slcState: new FormControl(state.replace(/\s/g, ''), [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
-      txtCity: new FormControl(city, [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
-      txtStreet: new FormControl(street, [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
-      txtApt: new FormControl(apt),
-      txtZip: new FormControl(zip.replace(/\s/g, ''), [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
-    });
+    if (country == undefined || country == null) {
+      this.addressForm.patchValue({
+        slcCountry: 'US',
+      });
 
-    console.log(this.addressForm, 'heeeeeeeeeeeeeeere');
-
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Service Message',
+        detail: 'Address format is incorrect. Please fill out the form.',
+      });
+    } else {
+      if (this.addressForm) {
+        this.addressForm.patchValue({
+          slcCountry: country.replace(/\s/g, ''),
+          slcState: state.replace(/\s/g, ''),
+          txtCity: city.trim(),
+          txtStreet: street.trim(),
+          txtApt: apt,
+          txtZip: zip.replace(/\s/g, ''),
+        });
+      }
+    }
     this.addressFieldId = addressId;
     this.addressFieldName = addressName;
-
-    this.tglModifyAddressForm = true;
     this.dataService.getFormCountry().subscribe(
       (response) => {
         this.countries = response.data;
@@ -256,26 +280,10 @@ export class FormComponent implements OnInit {
         console.error(error);
       }
     );
+    this.tglModifyAddressForm = true;
   }
 
   getCountryInfo() {
-    // this.dataService.getFormCity().subscribe(
-
-    //     (response) => {
-    // this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
-
-    //         this.cities = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
-    //         for (let a of this.cities) {
-    //             this.cities = a.cities.map((value: any, i: any) => ({ id: i, name: value }))
-    //         }
-
-    //     },
-
-    //     (error) => {
-    //         console.error(error);
-    //     }
-
-    // );
     this.dataService.getFormState().subscribe(
       (response) => {
         this.selectedCountryCode = this.addressForm.get('slcCountry')!.value;
@@ -327,7 +335,6 @@ export class FormComponent implements OnInit {
     this.callDataForm.patchValue({
       [this.addressFieldName]: newAddres,
     });
-    // this.formElement[this.addressFieldId]['element_value'] = newAddres;
 
     this.tglModifyAddressForm = false;
     this.messageService.add({
@@ -376,6 +383,7 @@ export class FormComponent implements OnInit {
   }
 
   changeCustomerStatus(oldStatus: any, customerName: any) {
+    this.functionMissing();
     let value = this.customerNewStatus.value;
     let newStatus = this.optCustomerStatus.filter(
       (a: any, i: any) => a.slStatusId == value
@@ -421,5 +429,14 @@ export class FormComponent implements OnInit {
           '" before.',
       });
     }
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
+    });
   }
 }

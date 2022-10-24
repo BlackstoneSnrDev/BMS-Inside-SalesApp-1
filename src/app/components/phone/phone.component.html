@@ -24,7 +24,7 @@
 
         <div
           class="iconbutton-neumorphism btnCall"
-          (click)="btnAnswerCall(8007425877)"
+          (click)="btnCall(currentCallPhoneNumber)"
           matTooltip="Call"
           matTooltipPosition="above"
           [ngClass]="containerCallStatus ? 'hide' : 'show'"
@@ -54,8 +54,10 @@
     [ngClass]="holdStatus ? 'change-on-hold' : ''"
   >
     <div class="form-check form-check-inline width-100 border-bottom">
-      <small class="margin-rt width-100">Call established</small>
-      <small class="margin-rt" id="onCallTime">00:01:30</small>
+      <small class="margin-rt width-100">{{ callStatusLabel }}</small>
+      <small class="margin-rt" id="onCallTime"><span class="opacity-txt">00:</span
+        ><span *ngIf="timeLeft < 10">0</span
+        >{{ timeLeft }}</small>
     </div>
     <div class="form-check form-check-inline width-100">
       <h6 class="margin-rt width-100">{{ currentCall.fullname }}</h6>
@@ -162,10 +164,10 @@
   </div>
   <div class="form-row">
     <div class="col-6 button-inline">
-      <button class="button-neumorphism width-100">Pending</button>
+      <button class="button-neumorphism width-100" matTooltip="NO ACTION SET YET">Pending</button>
     </div>
     <div class="col-6 button-inline">
-      <button class="button-neumorphism width-100">Payments</button>
+      <button class="button-neumorphism width-100" matTooltip="NO ACTION SET YET">Payments</button>
     </div>
   </div>
   <div class="form-row">
@@ -182,7 +184,7 @@
   <div class="phone-history" *ngIf="dialSessionArray">
     <div class="filter-notes-container">
       <mat-form-field appearance="standard">
-        <mat-label>Search</mat-label>
+        <mat-label>Search contact</mat-label>
         <input
           matInput
           type="text"

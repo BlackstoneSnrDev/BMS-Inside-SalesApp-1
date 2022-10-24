@@ -405,6 +405,8 @@ export class TableComponent {
 
   // Delete selection
   deleteSelection() {
+    this.functionMissing();
+
     if (this.tbSelectedRows.length > 0) {
       this.confirmationService.confirm({
         message:
@@ -499,6 +501,8 @@ export class TableComponent {
   }
 
   saveRenameGroup(groupId: number, event: Event) {
+    this.functionMissing();
+
     let groupName = this.renameGroup.value;
 
     let group = this.tbGroups.findIndex((i: any) => i.group_id === groupId);
@@ -542,17 +546,31 @@ export class TableComponent {
     this.toggleEditGroup(id);
     this.renameGroup.reset();
   }
-  
-  sendMassiveSMS() {
+
+  sendMassiveSMS(groupId: any) {
+    this.functionMissing();
+
+    let groupSelected = this.tbGroups.filter(
+      (v: any) => v.group_id === groupId
+    );
+
+    let groupName = '';
+    groupSelected.forEach((e: any) => {
+      groupName = e.group_name;
+    });
+
     this.confirmationService.confirm({
-      message: 'Are you sure you want to send this message?',
+      message:
+        'Are you sure you want to send this message to <b>ALL</b> records in group <b>"' +
+        groupName +
+        '"</b>?',
       header: 'Warning',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
-          detail: 'SMS Message sent.',
+          detail: 'Massive SMS sent.',
         });
         this.smsMessageSent.reset();
       },
@@ -754,7 +772,7 @@ export class TableComponent {
       let count = currentAddres.split(',').length - 1;
       if (count > 4) {
         street = currentAddres.split(',')[0];
-        apt = currentAddres.split(',')[1];
+        apt = currentAddres.split(',')[1].trim();
         city = currentAddres.split(',')[2];
         state = currentAddres.split(',')[3];
         zip = currentAddres.split(',')[4];
@@ -779,11 +797,11 @@ export class TableComponent {
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtCity: new FormControl(city, [
+      txtCity: new FormControl(city?.trim(), [
         Validators.required,
         Validators.minLength(1),
       ]),
-      txtStreet: new FormControl(street, [
+      txtStreet: new FormControl(street?.trim(), [
         Validators.required,
         Validators.minLength(1),
       ]),
@@ -810,23 +828,6 @@ export class TableComponent {
   }
 
   getCountryInfo() {
-    // this.dataService.getFormCity().subscribe(
-
-    //     (response) => {
-    // this.selectedCountryCode = this.addressForm.get('slcCountry')!.value
-
-    //         this.cities = response.data.filter((i: any) => i.iso2.includes(this.selectedCountryCode))
-    //         for (let a of this.cities) {
-    //             this.cities = a.cities.map((value: any, i: any) => ({ id: i, name: value }))
-    //         }
-
-    //     },
-
-    //     (error) => {
-    //         console.error(error);
-    //     }
-
-    // );
     this.DataService.getFormState().subscribe(
       (response) => {
         this.selectedCountryCode = this.addressForm.get('slcCountry')!.value;
@@ -891,6 +892,15 @@ export class TableComponent {
       severity: 'success',
       summary: 'Service Message',
       detail: 'Address was added successfully. Please save changes.',
+    });
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
     });
   }
 }

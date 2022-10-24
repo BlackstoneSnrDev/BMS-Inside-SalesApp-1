@@ -41,6 +41,7 @@ import { FormatBoolean } from './pipes/formatBoolean.pipe';
 import { ChangeView } from './pipes/changeView.pipe';
 import { FormatPassword } from './pipes/formatPassword.pipe';
 import { FormatLabel } from './pipes/formatLabel.pipe';
+import { FormatArray } from './pipes/formatArray.pipe';
 
 ///// Libraries
 // Angular material
@@ -124,6 +125,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ChangeView,
     FormatPassword,
     FormatLabel,
+    FormatArray,
   ],
 
   imports: [

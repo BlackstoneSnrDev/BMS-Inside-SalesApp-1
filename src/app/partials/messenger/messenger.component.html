@@ -1,4 +1,4 @@
-<div class="row main-row">
+<div class="row main-row messenger-component">
   <div class="col-lg-12">
     <div class="form-check form-check-inline width-100">
       <!-- <i class="bi bi-record2-fill online-icon" [ngClass]="tglState ? 'on' : 'off'"></i> -->
@@ -7,7 +7,7 @@
     <hr />
     <br />
     <div class="row">
-      <div class="col-lg-9 margin-bt">
+      <div class="col-lg-8 margin-bt">
         <div class="chats-col">
           <div class="row chats-view">
             <div
@@ -265,7 +265,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <div class="contacts-main-col">
           <div
             class="form-row gp-list-container"
@@ -323,7 +323,13 @@
                 [listStyle]="{ 'max-height': '100%' }"
               >
                 <ng-template pTemplate="filter" let-options="options">
-                  <mat-form-field appearance="standard">
+                  <small *ngIf="contactSelection" class="margin-rt"
+                    ><b
+                      [ngClass]="contactSelection.length > 0 ? 'show' : 'hide'"
+                      >({{ contactSelection.length }})</b
+                    ></small
+                  >
+                  <mat-form-field appearance="standard" class="margin-rt">
                     <mat-label>Search contact</mat-label>
                     <input
                       matInput
@@ -334,7 +340,8 @@
                     />
                   </mat-form-field>
                   <div
-                    [ngClass]="contactSelection ? 'show' : 'hide'"
+                    *ngIf="contactSelection"
+                    [ngClass]="contactSelection.length > 0 ? 'show' : 'hide'"
                     class="float-rt"
                   >
                     <span
@@ -356,7 +363,7 @@
                 </ng-template>
                 <ng-template let-log pTemplate="item" let-i="index">
                   <div
-                    class="phone-log width-100"
+                    class="phone-log width-100 margin-lt"
                     (click)="startNewChat(i, contacts)"
                     matTooltip="Start chat with {{ log.fullname }}"
                     matTooltipPosition="above"
@@ -380,7 +387,7 @@
       </div>
     </div>
   </div>
+  <p-scrollTop [threshold]="200"></p-scrollTop>
+  <p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
+  <p-toast life="5000" position="top-center"></p-toast>
 </div>
-<p-scrollTop [threshold]="200"></p-scrollTop>
-<p-confirmDialog rejectLabel="Cancel" acceptLabel="Accept"></p-confirmDialog>
-<p-toast life="5000" position="top-center"></p-toast>

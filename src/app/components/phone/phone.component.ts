@@ -42,7 +42,9 @@ export class PhoneComponent implements OnInit {
   public options: any = {
     codecPreferences: ['pcmu', 'opus'],
   };
-
+  public callStatusLabel: any;
+  timeLeft: number = 0;
+  interval: any;
   constructor(
     public DataService: DataService,
     private confirmationService: ConfirmationService,
@@ -156,6 +158,7 @@ export class PhoneComponent implements OnInit {
       });
 
       this._device.on('connect', (conn: any) => {
+        this.callStatusLabel = 'Call established';
         console.log('Successfully established call!');
         this.updateCallStatus('In Call');
         this.containerCallStatus = true;
@@ -163,11 +166,15 @@ export class PhoneComponent implements OnInit {
 
       this._device.on('disconnect', (conn: any) => {
         if (this.tglAutoDialer) {
-          this.nextCall(), this.btnAnswerCall(this.currentCallPhoneNumber);
+          this.nextCall(), this.btnCall(this.currentCallPhoneNumber);
         }
+        this.callStatusLabel = 'Call ended';
         console.log('Call ended');
         this.updateCallStatus('Call Status');
-        this.containerCallStatus = false;
+        this.pauseTimer();
+        setTimeout(() => {
+          this.containerCallStatus = false;
+        }, 400);
       });
 
       this._device.on('incoming', (conn: any) => {
@@ -178,8 +185,12 @@ export class PhoneComponent implements OnInit {
 
       this._device.on('cancel', (conn: any) => {
         console.log('Call canceled');
+        this.callStatusLabel = 'Call canceled';
         this.updateCallStatus('Call Status');
-        this.containerCallStatus = false;
+        this.pauseTimer();
+        setTimeout(() => {
+          this.containerCallStatus = false;
+        }, 400);
       });
     });
   }
@@ -187,7 +198,6 @@ export class PhoneComponent implements OnInit {
   updateCallStatus(status: any) {
     this.callStatus = status;
   }
-
 
   nextCall() {
     let currentCallIndex = this.dialSessionArray.findIndex(
@@ -215,18 +225,20 @@ export class PhoneComponent implements OnInit {
     this.DataService.setActiveCall(uid);
 
     let oldCall = this.currentCall.fullname;
+    let oldCallPhone = this.currentCall.phonenumber;
 
     setTimeout(() => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Service Message',
-        detail:
-          'Current customer has changed from "' +
-          oldCall +
-          '" to "' +
-          this.currentCall.fullname +
-          '".',
-      });
+      if (oldCallPhone !== this.currentCall.phonenumber)
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Service Message',
+          detail:
+            'Current customer has changed from "' +
+            oldCall +
+            '" to "' +
+            this.currentCall.fullname +
+            '".',
+        });
     }, 400);
   }
 
@@ -254,6 +266,8 @@ export class PhoneComponent implements OnInit {
   }
 
   toggleAutoDialer() {
+    this.functionMissing();
+
     this.tglAutoDialer = !this.tglAutoDialer;
     let msg = '';
     if (this.tglAutoDialer) {
@@ -268,21 +282,22 @@ export class PhoneComponent implements OnInit {
     });
   }
 
-  btnAnswerCall(outgoingNumber: any) {
+  btnCall(outgoingNumber: any) {
     console.log(outgoingNumber);
 
     var regExNumber = '+1' + ('' + outgoingNumber).replace(/\D/g, '');
     console.log('Calling ' + regExNumber + '...');
-
+    let callstatus: any = this.callStatusLabel;
     if (this._device) {
       var outgoingConnection = this._device.connect({
         outgoingPhoneNumber: regExNumber,
       });
       outgoingConnection.on('ringing', function () {
-        console.log('Ringing...');
+        callstatus = 'Ringing...';
       });
     }
-
+    this.callStatusLabel = callstatus;
+    this.startTimer();
     this.containerCallStatus = !this.containerCallStatus;
     this.holdStatus = false;
     this.muteStatus = false;
@@ -290,6 +305,8 @@ export class PhoneComponent implements OnInit {
   }
 
   leaveVoiceMail() {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want leave this voice mail?',
       header: 'Warning',
@@ -335,6 +352,8 @@ export class PhoneComponent implements OnInit {
   }
 
   sendEmail() {
+    this.functionMissing();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want send this email?',
       header: 'Warning',
@@ -353,23 +372,47 @@ export class PhoneComponent implements OnInit {
   btnHangUpCall() {
     this._device.disconnectAll();
     this.containerCallStatus = false;
+    this.pauseTimer();
   }
 
   btnHoldCall() {
     this.holdStatus = !this.holdStatus;
+    this.functionMissing();
   }
 
   btnMuteCall() {
     this.muteStatus = !this.muteStatus;
+    this.functionMissing();
   }
 
   btnXferCall() {
     this.xferStatus = !this.xferStatus;
     this.holdStatus = true;
+    this.functionMissing();
   }
 
   log(event: Event) {
     console.log(event);
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      this.timeLeft++;
+    }, 1000);
+  }
+
+  pauseTimer() {
+    this.timeLeft = 0;
+    clearInterval(this.interval);
+  }
+
+  functionMissing() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Service Message',
+      detail: 'Function not connected to DB. Missing back-end intervention.',
+      sticky: true,
+    });
   }
 }
 function updateCallStatus(arg0: string) {
