@@ -51,19 +51,22 @@ DONE!!    populate autoDialer child component with dialSessionArray
 
 DONE!!  Connect Twilio 
 DONE!!  Softphone
-        SMS Text
+DONE!!  SMS Text
 DONE!!  Record and store audio files for voicemails
 DONE!!  Finish CSV upload feature
     Auto create goups based on customer statuses (No Attention Required, Pending, Handled, etc...)
     Add unsubscribe to all components as necessary
     When deleting or editing a template status, check that no customers will be effected.  If so, throw an error.
     Don't allow deletion of template that is active by any user
-    When creating new template, there must be a phonenumber field
+DONE!!  When creating new template, there must be a phonenumber field
     * Fix address to look for element_type, not element_placeholder or name
+
+    in smsText field array, add method "seen" to indicate it's been looked at but not replied to yet.
+    add last contact info for each customer
 
 
     Phone Form
-        In the group dropdown, it seems there is a group always in bold and they can't be selected
+DONE!!  In the group dropdown, it seems there is a group always in bold and they can't be selected
 
     Phone 
 DONE!!  When choosing to send a text or voicemail, no need to change the text of the button
@@ -75,7 +78,7 @@ DONE!!  When entering a note, hide Search input
 
     Queue table 
 DONE!!  When selecting a customer or group of customers (clicking the checkbox), have the group options appear but remove the 'Groups' button. 
-        If a group is selected AND customers are seleced (their checkbox is checked), only then show 'Delete from group' button.
+DONE!!  If a group is selected AND customers are seleced (their checkbox is checked), only then show 'Delete from group' button.
 DONE!!  Delete from group button does not need a dropdown.  The group is already seleced and filtered. 
 DONE!!  Can we create animated transitions? 
 

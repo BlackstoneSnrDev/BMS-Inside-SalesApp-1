@@ -188,7 +188,7 @@
           type="text"
           [formControl]="searchCall"
           (keyup)="filterCall()"
-          placeholder="MRN, Full name, Phone number"
+          placeholder="First Name, Last Name, Phone Number"
         />
       </mat-form-field>
     </div>
@@ -206,7 +206,7 @@
       >
         <div class="width-100" (click)="selectCustomer(log.uid)" id="{{ i }}">
           <div class="form-check form-check-inline width-100" id="{{ i }}">
-            <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
+            <h6 class="width-100" id="{{ i }}">{{ log['First Name'] + ' ' + log['Last Name'] }}</h6>
             <small
               *ngIf="log.lastContact"
               class="width-100 txt-rt"
@@ -216,7 +216,7 @@
           </div>
           <div class="form-check form-check-inline width-100" id="{{ i }}">
             <p class="width-100" id="{{ i }}">
-              {{ this.DataService.formatPhoneNumber(log.phonenumber) }}
+              {{ this.DataService.formatPhoneNumber(log['Phone Number']) }}
             </p>
             <small
               *ngIf="log.lastContact"

@@ -265,6 +265,7 @@ export class DataService {
       .collection('templates')
       .doc(this.activeTemplate).ref;
     return data.get().then((doc: any) => {
+        console.log(doc.data());
         let filteredTemplateData: any[] = [];
         Object.values(doc.data()).forEach((item) => {
             if (typeof item === 'object'){

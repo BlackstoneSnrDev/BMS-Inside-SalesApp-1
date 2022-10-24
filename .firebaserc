@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "insidesalesapi"
+  },
+  "targets": {
+    "insidesalesapi": {
+      "hosting": {
+        "public": [
+          "insidesalesapi"
+        ]
+      }
+    }
   }
 }
