@@ -130,7 +130,7 @@ export class PhoneComponent implements OnInit {
     });
 
     this.DataService.sendText().then((response) => {
-      console.log(response.token);
+      console.log('Send Text: ',response.token);
       // Setup Twilio.Device
       this._device = new Device(response.token, {
         // Set Opus as our preferred codec. Opus generally performs better, requiring less bandwidth and
@@ -248,7 +248,6 @@ export class PhoneComponent implements OnInit {
 
   filterCall() {
     let value = this.searchCall.value.toLowerCase();
-    console.log(value);
     if (value) {
       this.dialSessionArray = this.dupDialSessionArray;
       this.dialSessionArray = this.dialSessionArray.filter(
@@ -283,7 +282,7 @@ export class PhoneComponent implements OnInit {
   }
 
   btnCall(outgoingNumber: any) {
-    console.log(outgoingNumber);
+    console.log('Outgoing Number: ', outgoingNumber);
 
     var regExNumber = '+1' + ('' + outgoingNumber).replace(/\D/g, '');
     console.log('Calling ' + regExNumber + '...');
@@ -335,7 +334,7 @@ export class PhoneComponent implements OnInit {
           this.currentCall.uid,
           '+1' + this.currentCall.phonenumber
         ).then((response) => {
-          console.log(response);
+          console.log('Send SMS message: ', response);
         });
 
         this.messageService.add({

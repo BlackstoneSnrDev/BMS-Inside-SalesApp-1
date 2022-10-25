@@ -41,8 +41,6 @@ export class LogComponent implements OnInit {
   ngOnInit() {
     this.DataService.currentCall.subscribe((currentCall: any) => {
       if (currentCall) {
-        console.log(this.currentCall.uid);
-
         this.currentCall = currentCall;
         this.currentCallNotes = currentCall.notes.sort(
           (a: { date: any }, b: { date: any }) => b.date - a.date

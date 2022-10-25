@@ -50,6 +50,7 @@ export class FormComponent implements OnInit {
   public customerNewStatus = new FormControl('');
   public optCustomerStatus: any;
   public customerStatus: any;
+
   constructor(
     private dataService: DataService,
     private usersService: UsersService,
@@ -66,9 +67,9 @@ export class FormComponent implements OnInit {
         this.currentCall['customerStatus'] = [
           {
             slStatusId: '0',
-            label: 'No attention required',
-            background: '#e6e7ee',
-            color: '#333',
+            label: 'Missing "customerStatus" field in DB.',
+            background: '#a91e2c',
+            color: 'white',
             function: '',
           },
         ];

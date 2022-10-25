@@ -46,7 +46,6 @@ export class AdminRolesComponent implements OnInit {
           ]);
         }
         this.createNewRoleForm = new FormGroup(this.newFormControl);
-
         this.loading = false;
       },
 

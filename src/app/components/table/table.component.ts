@@ -127,7 +127,6 @@ export class TableComponent {
       })
       .then(() => {
         this.DataService.getCustomerGroups().subscribe((data) => {
-          console.log(data);
           (this.tbGroups = data), (this.tbGroupsLength = data.length);
           let modifyById = sessionStorage.getItem('dataTableView');
 
@@ -135,8 +134,6 @@ export class TableComponent {
           if (this.modifyTable === modifyById) {
             showGroupChangeMsg = false;
           }
-          console.log(showGroupChangeMsg);
-
           setTimeout(() => {
             this.modifyTableView(modifyById as string, showGroupChangeMsg);
             this.loading = false;
@@ -218,7 +215,6 @@ export class TableComponent {
                 detail: responce.data,
               });
             }
-            // this.uploadStatus = responce;
           });
         },
       };
@@ -226,52 +222,6 @@ export class TableComponent {
       this.papa.parse(csv, options);
     };
     uploadFile.clear();
-  }
-
-  onFileChange(event: any) {
-    this.fileToUpload = event.target.files[0];
-    console.log(this.fileToUpload);
-
-    //this.DataService.fileUpload(event.target.files[0]);
-
-    // let reader: FileReader = new FileReader();
-    // reader.readAsText(event.target.files[0]);
-    // reader.onload = (e) => {
-    //     let csv: string = reader.result as string;
-
-    //     let options = {
-    //         header: true,
-    //         complete: (results: any) => {
-    //             this.DataService.fileUpload(results).then((responce: any) => {
-    //                 if (responce.status === 'Success') {
-    //                     this.messageService.add({
-    //                         severity: 'success',
-    //                         summary: 'Service Message',
-    //                         detail: responce.data,
-    //                     });
-    //                 } else if (responce.status === 'Error') {
-    //                     this.messageService.add({
-    //                         severity: 'error',
-    //                         summary: 'Service Message',
-    //                         detail: responce.data,
-    //                     });
-    //                 }
-    //                 // this.uploadStatus = responce;
-    //             })
-    //         }
-    //     };
-
-    //     this.papa.parse(csv, options);
-
-    // }
-  }
-
-  onUpload() {
-    console.log('uploaded');
-  }
-
-  cancelUploadList() {
-    console.log('cancled');
   }
 
   @ViewChild('dataTable') table!: Table;
@@ -705,8 +655,6 @@ export class TableComponent {
   // Change normal view to group selected view
   modifyTableView(modifyById: string, showMsg: boolean) {
     this.loading = true;
-
-    console.log(modifyById);
 
     if (!modifyById) {
       modifyById = 'all';
