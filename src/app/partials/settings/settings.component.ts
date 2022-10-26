@@ -124,19 +124,6 @@ export class SettingsComponent implements OnInit {
       )
     );
 
-    this.DataService.getSelectData().subscribe(
-      (response) => {
-        console.log(response);
-        // this.optVoiceMail = response.selectVoiceMail;
-        // this.optSMS = response.selectSMSMessage;
-        // this.optEmail = response.selectEmail;
-      },
-
-      (error) => {
-        console.error(error);
-      }
-    );
-
     this.templateForm = new FormGroup({
       templateName: new FormControl('', [
         Validators.required,
@@ -204,7 +191,6 @@ export class SettingsComponent implements OnInit {
   rRecordVoiceMail() {
     this.pauseTimer();
     this.url = '';
-    console.log(this.url);
     if (this.record) {
       this.record.clearRecordedData();
     }
@@ -225,12 +211,10 @@ export class SettingsComponent implements OnInit {
   processRecording(blob: Blob | MediaSource) {
     this.url = URL.createObjectURL(blob);
     this.blobData = blob;
-    console.log('blob', blob);
-    console.log('url', this.url);
+
   }
 
   saveVoiceMail() {
-    console.log(this.templateName);
     this.DataService.saveBlob(this.blobData, this.templateName)
       .then((response) => {
         this.messageService.add({
@@ -277,8 +261,6 @@ export class SettingsComponent implements OnInit {
   }
 
   saveCreateTemplate() {
-    console.log(this.editUid);
-
     if (this.tglSMS) {
       this.DataService.saveTextMessageTemplate(
         this.templateForm.value,
@@ -374,7 +356,6 @@ export class SettingsComponent implements OnInit {
   }
 
   editTemplate(index: any, uid: any, type: any) {
-    console.log(index);
 
     this.tglSMS = false;
     this.tglVM = false;
@@ -416,7 +397,6 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteTemplate(index: any, type: any, templateName: any, uid: any) {
-    console.log(type);
 
     this.confirmationService.confirm({
       message:

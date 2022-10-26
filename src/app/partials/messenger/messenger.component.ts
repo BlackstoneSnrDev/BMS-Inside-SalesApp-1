@@ -298,7 +298,6 @@ export class MessengerComponent {
     this.dupChats = this.pendingChats;
     this.searchChat.reset();
     this.filterTab = 'pending';
-    console.log(this.chats);
 
     document.getElementById('chat-v-pending')?.classList.add('view-active');
     document.getElementById('chat-v-active')?.classList.remove('view-active');
@@ -314,8 +313,6 @@ export class MessengerComponent {
 
     this.chats = this.activeChats;
     this.dupChats = this.activeChats;
-    console.log(this.chats);
-
     this.searchChat.reset();
     document.getElementById('chat-v-pending')?.classList.remove('view-active');
     document.getElementById('chat-v-active')?.classList.add('view-active');
@@ -349,7 +346,6 @@ export class MessengerComponent {
 
   resendSMS(index: any) {
     this.functionMissing();
-
     console.log('RESEND');
   }
 

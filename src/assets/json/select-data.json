@@ -35,14 +35,14 @@
         },
         {
             "slStatusId": "1",
-            "label": "Pending",
+            "label": "Not receiving active template statuses!",
             "background": "#a91e2c",
             "color": "#ffffff",
             "function": "notify"
         },
         {
             "slStatusId": "2",
-            "label": "Handled",
+            "label": "Not receiving active template statuses!",
             "background": "#296e58",
             "color": "#ffffff",
             "function": "notify"
