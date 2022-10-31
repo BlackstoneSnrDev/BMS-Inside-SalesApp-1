@@ -94,4 +94,11 @@ DONE!!  In User tab, roles should be a dropdown with the roles that are created 
         For the preview of voicemails, the save button needs to appear and be active if there is a template name and audio recording (url)
         
 
-    
+All customers should have status = null
+For currentCall, get THAT customer's status
+For Form component, get all statuses
+
+
+Phone search should be for lastname, firstname or phone number
+Statuses should be a dropdown arrow, like groups
+Statuses, if none, should read "no results found" like the groups

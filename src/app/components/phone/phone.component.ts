@@ -52,6 +52,9 @@ export class PhoneComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    //this.DataService.populateTemplateWithCustomers()
+
     this.DataService.getFormElementsData().subscribe(
       (response) => {
         this.componentPhone = response.componentPhone;
@@ -70,7 +73,7 @@ export class PhoneComponent implements OnInit {
       if (currentCall) {
         this.currentCall = currentCall;
         this.currentCallPhoneNumber = this.DataService.formatPhoneNumber(
-          currentCall.phonenumber
+          currentCall['Phone Number']
         );
       }
     });
@@ -225,10 +228,10 @@ export class PhoneComponent implements OnInit {
     this.DataService.setActiveCall(uid);
 
     let oldCall = this.currentCall.fullname;
-    let oldCallPhone = this.currentCall.phonenumber;
+    let oldCallPhone = this.currentCall['Phone Number'];
 
     setTimeout(() => {
-      if (oldCallPhone !== this.currentCall.phonenumber)
+      if (oldCallPhone !== this.currentCall['Phone Number'])
         this.messageService.add({
           severity: 'success',
           summary: 'Service Message',
@@ -332,7 +335,7 @@ export class PhoneComponent implements OnInit {
           'template',
           e.value,
           this.currentCall.uid,
-          '+1' + this.currentCall.phonenumber
+          '+1' + this.currentCall['Phone Number']
         ).then((response) => {
           console.log('Send SMS message: ', response);
         });

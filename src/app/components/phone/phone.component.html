@@ -218,7 +218,7 @@
             </div>
             <div class="form-check form-check-inline width-100" id="{{ i }}">
               <p class="width-100" id="{{ i }}">
-                {{ this.DataService.formatPhoneNumber(log.phonenumber) }}
+                {{ this.DataService.formatPhoneNumber(log['Phone Number']) }}
               </p>
               <small
                 *ngIf="log.lastContact"
@@ -231,7 +231,7 @@
               <small class="width-100" *ngIf="log.lastContact">{{
                 log.lastContact.result
               }}</small>
-              <small class="width-100 txt-rt hide" id="call{{ i }}">2min</small>
+              <small class="width-100" *ngIf="!log.lastContact">No Prior Contacts</small>
             </div>
           </div>
   
