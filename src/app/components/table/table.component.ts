@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormatPhone } from '../../pipes/formatPhone.pipe';
 
 import { Papa } from 'ngx-papaparse';
 import { doc } from '@angular/fire/firestore';
@@ -75,7 +76,8 @@ export class TableComponent {
     private primengConfig: PrimeNGConfig,
 
     private messageService: MessageService,
-    private papa: Papa
+    private papa: Papa,
+    private formatPhone: FormatPhone
   ) {}
 
   ngOnInit() {
@@ -248,12 +250,11 @@ export class TableComponent {
 
   // Table on row CRUD
   onRowEditInit(tdData: any, index: any) {
+    this.clonedtdData[index] = { ...tdData };
     this.addressInputsForm.addControl(
       'addressTableField' + index,
       new FormControl('', [Validators.required, Validators.minLength(1)])
     );
-
-    this.clonedtdData[index] = { ...tdData };
   }
 
   onRowEditSave(tdData: any, index: number) {
@@ -270,8 +271,14 @@ export class TableComponent {
 
         if (modifyLastElmActive.length > 0) {
           this.onValidationError = '*All fields must be filled out.';
+          this.onRowEditCancel(index);
         } else {
+          tdData['Phone Number'] = this.formatPhone.transform(
+            tdData['Phone Number'],
+            'toNumber'
+          );
           this.DataService.editCustomer(tdData);
+          console.log(tdData);
           this.messageService.add({
             severity: 'success',
             summary: 'Service Message',
@@ -285,9 +292,10 @@ export class TableComponent {
     });
   }
 
-  onRowEditCancel(index: number) {
+  onRowEditCancel(index: any) {
     this.tdData[index] = this.clonedtdData[index];
     delete this.clonedtdData[index];
+
     this.addressInputsForm.removeControl('addressTableField' + index);
   }
 
@@ -324,9 +332,16 @@ export class TableComponent {
     let value = this.addNewRecordForm.value;
     value['group'] = [];
 
-    let filterNewRecord = this.addNewRecordForm.get('phonenumber')?.value;
-    table.filter(filterNewRecord, 'global', 'contains');
-
+    value['Phone Number'] = this.formatPhone.transform(
+      value['Phone Number'],
+      'toNumber'
+    );
+    table.filter(value['Phone Number'], 'global', 'contains');
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
     this.DataService.addNewRecord(value);
 
     this.messageService.add({

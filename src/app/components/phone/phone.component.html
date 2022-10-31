@@ -19,7 +19,7 @@
         <input
           type="{{ element.element_type }}"
           class="input-neumorphism"
-          placeholder="{{ currentCallPhoneNumber }}"
+          placeholder="{{ currentCallPhoneNumber | formatPhone: 'toPhone' }}"
         />
 
         <div
@@ -55,9 +55,10 @@
   >
     <div class="form-check form-check-inline width-100 border-bottom">
       <small class="margin-rt width-100">{{ callStatusLabel }}</small>
-      <small class="margin-rt" id="onCallTime"><span class="opacity-txt">00:</span
-        ><span *ngIf="timeLeft < 10">0</span
-        >{{ timeLeft }}</small>
+      <small class="margin-rt" id="onCallTime"
+        ><span class="opacity-txt">00:</span><span *ngIf="timeLeft < 10">0</span
+        >{{ timeLeft }}</small
+      >
     </div>
     <div class="form-check form-check-inline width-100">
       <h6 class="margin-rt width-100">{{ currentCall.fullname }}</h6>
@@ -164,10 +165,20 @@
   </div>
   <div class="form-row">
     <div class="col-6 button-inline">
-      <button class="button-neumorphism width-100" matTooltip="NO ACTION SET YET">Pending</button>
+      <button
+        class="button-neumorphism width-100"
+        matTooltip="NO ACTION SET YET"
+      >
+        Pending
+      </button>
     </div>
     <div class="col-6 button-inline">
-      <button class="button-neumorphism width-100" matTooltip="NO ACTION SET YET">Payments</button>
+      <button
+        class="button-neumorphism width-100"
+        matTooltip="NO ACTION SET YET"
+      >
+        Payments
+      </button>
     </div>
   </div>
   <div class="form-row">
@@ -218,7 +229,7 @@
           </div>
           <div class="form-check form-check-inline width-100" id="{{ i }}">
             <p class="width-100" id="{{ i }}">
-              {{ this.DataService.formatPhoneNumber(log.phonenumber) }}
+              {{ log["Phone Number"] | formatPhone: "toPhone" }}
             </p>
             <small
               *ngIf="log.lastContact"
@@ -227,10 +238,12 @@
               >{{ log.lastContact.date.toMillis() | date: "h:mm a" }}</small
             >
           </div>
-          <div class="form-check form-check-inline width-100" id="{{ i }}">
-            <small class="width-100" *ngIf="log.lastContact">{{
-              log.lastContact.result
-            }}</small>
+          <div
+            class="form-check form-check-inline width-100"
+            id="{{ i }}"
+            *ngIf="log.lastContact"
+          >
+            <small class="width-100">{{ log.lastContact.result }}</small>
             <small class="width-100 txt-rt hide" id="call{{ i }}">2min</small>
           </div>
         </div>

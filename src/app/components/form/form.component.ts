@@ -4,6 +4,8 @@ import { DataService } from '../../services/services.service';
 import { UsersService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
+import { FormatPhone } from '../../pipes/formatPhone.pipe';
+
 @Component({
   selector: 'form-component',
   templateUrl: './form.component.html',
@@ -55,7 +57,8 @@ export class FormComponent implements OnInit {
     private dataService: DataService,
     private usersService: UsersService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private formatPhone: FormatPhone
   ) {}
 
   ngOnInit() {
@@ -111,7 +114,10 @@ export class FormComponent implements OnInit {
             this.newFormControl[fieldValue.element_table_value] =
               new FormControl(
                 {
-                  value: fieldValue.element_value,
+                  value: this.formatPhone.transform(
+                    fieldValue.element_value,
+                    'toPhone'
+                  ),
                   disabled: this.tgleditField,
                 },
                 [Validators.required, Validators.minLength(1)]
@@ -121,6 +127,7 @@ export class FormComponent implements OnInit {
               Validators.minLength(1),
             ]);
             this.callDataForm = new FormGroup(this.newFormControl);
+            console.log(this.callDataForm);
           }
         }
       }
@@ -357,6 +364,10 @@ export class FormComponent implements OnInit {
   saveEditFields() {
     this.callDataForm.value.uid = this.currentCall.uid;
     this.tgleditField = false;
+    this.callDataForm.value['Phone Number'] = this.formatPhone.transform(
+      this.callDataForm.value['Phone Number'],
+      'toNumber'
+    );
     this.dataService.editCustomer(this.callDataForm.value);
     this.messageService.add({
       severity: 'success',

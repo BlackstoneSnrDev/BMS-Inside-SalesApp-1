@@ -42,6 +42,7 @@ import { ChangeView } from './pipes/changeView.pipe';
 import { FormatPassword } from './pipes/formatPassword.pipe';
 import { FormatLabel } from './pipes/formatLabel.pipe';
 import { FormatArray } from './pipes/formatArray.pipe';
+import { FormatPhone } from './pipes/formatPhone.pipe';
 
 ///// Libraries
 // Angular material
@@ -126,6 +127,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     FormatPassword,
     FormatLabel,
     FormatArray,
+    FormatPhone,
   ],
 
   imports: [
@@ -186,6 +188,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     MessageService,
     AuthGuard,
     DatePipe,
+    FormatPhone,
     // { provide: BUCKET, useValue: 'my-bucket-name' }
     //{ provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 5001] : undefined },
   ],
