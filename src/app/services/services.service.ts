@@ -18,7 +18,7 @@ let len = 12;
 let pattern = 'aA0';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', 
 })
 export class DataService {
   public navbarDataURL: string;
