@@ -10,6 +10,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    "target": "public",
     "public": "dist/inside_sales_app",
     "ignore": [
       "firebase.json",

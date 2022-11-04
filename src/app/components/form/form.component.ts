@@ -67,12 +67,13 @@ export class FormComponent implements OnInit {
     this.dataService.currentCall.subscribe((currentCall) => {
       this.currentCall = currentCall;
       if (this.currentCall) {
-        this.currentCall['customerStatus'] = [
+        this.currentCall['customerStatus'] = this.currentCall.status ? [this.currentCall.status] : [
           {
             slStatusId: '0',
             label: 'Missing "customerStatus" field in DB.',
             background: '#a91e2c',
             color: 'white',
+            uid: '0',
             function: '',
           },
         ];
@@ -101,6 +102,12 @@ export class FormComponent implements OnInit {
             Validators.minLength(1),
           ]),
         });
+
+        this.dataService.getAllStatuses().then(
+            (response) => {
+                this.optCustomerStatus = response;
+            }
+        )
 
         this.customerStatus = this.currentCall['customerStatus'];
         this.filterCXStatus(this.customerStatus);
@@ -158,18 +165,19 @@ export class FormComponent implements OnInit {
   }
 
   filterCXStatus(status: any) {
-    this.dataService.getSelectData().subscribe(
-      (response) => {
-        this.optCustomerStatus = response.selectCXStatus.filter(
-          (a: any) => a.slStatusId !== status[0]['slStatusId']
-        );
-      },
+    // this.dataService.getSelectData().subscribe(
+    //   (response) => {
+    //     this.optCustomerStatus = response.selectCXStatus.filter(
+    //       (a: any) => a.slStatusId !== status[0]['slStatusId']
+    //     );
+    //   },
 
-      (error) => {
-        console.error(error);
-      }
-    );
+    //   (error) => {
+    //     console.error(error);
+    //   }
+    // );
   }
+  
   getGroupSelected() {
     let groupSelected = this.tbGroups.filter(
       (v: any) => v.group_id === this.groupSelected.value
@@ -394,53 +402,54 @@ export class FormComponent implements OnInit {
     document.getElementById('customerStatus')?.classList.toggle('hide');
   }
 
-  changeCustomerStatus(oldStatus: any, customerName: any) {
-    this.functionMissing();
-    let value = this.customerNewStatus.value;
-    let newStatus = this.optCustomerStatus.filter(
-      (a: any, i: any) => a.slStatusId == value
-    );
-    let newStatusName = newStatus[0]['label'];
-    if (oldStatus !== value) {
-      this.confirmationService.confirm({
-        message:
-          'Are you sure you want to set the status of <b>' +
-          customerName +
-          '</b> as "' +
-          newStatusName +
-          '"?',
-        header: 'Warning',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.tglChangeCustomerStatus = false;
-          document
-            .getElementById('btnCustomerStatus')
-            ?.classList.toggle('hide');
-          document.getElementById('customerStatus')?.classList.toggle('hide');
-          document.getElementById('btnCancelStatus')?.classList.toggle('hide');
-          this.customerNewStatus.setValue('');
-          this.currentCall['customerStatus'] = newStatus;
-          this.customerStatus = newStatus;
-          this.filterCXStatus(this.customerStatus);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Service Message',
-            detail:
-              customerName + ' status was set to "' + newStatusName + '".',
-          });
-        },
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Service Message',
-        detail:
-          customerName +
-          ' status was already set to "' +
-          newStatusName +
-          '" before.',
-      });
-    }
+  changeCustomerStatus(oldStatus: any, customerUid: any, newStatus: any) {
+   
+    this.dataService.changeCurrentCallStatus(customerUid, newStatus.value);
+
+    // // let newStatus = this.optCustomerStatus.filter(
+    // //   (a: any, i: any) => a.slStatusId == value
+    // // );
+    // // let newStatusName = newStatus[0]['label'];
+    // if (oldStatus !== value) {
+    //   this.confirmationService.confirm({
+    //     message:
+    //       'Are you sure you want to set the status of <b>' +
+    //       customerName +
+    //       '</b> as "' +
+    //       newStatusName +
+    //       '"?',
+    //     header: 'Warning',
+    //     icon: 'pi pi-exclamation-triangle',
+    //     accept: () => {
+    //       this.tglChangeCustomerStatus = false;
+    //       document
+    //         .getElementById('btnCustomerStatus')
+    //         ?.classList.toggle('hide');
+    //       document.getElementById('customerStatus')?.classList.toggle('hide');
+    //       document.getElementById('btnCancelStatus')?.classList.toggle('hide');
+    //       this.customerNewStatus.setValue('');
+    //       this.currentCall['customerStatus'] = newStatus;
+    //       this.customerStatus = newStatus;
+    //       this.filterCXStatus(this.customerStatus);
+    //       this.messageService.add({
+    //         severity: 'success',
+    //         summary: 'Service Message',
+    //         detail:
+    //           customerName + ' status was set to "' + newStatusName + '".',
+    //       });
+    //     },
+    //   });
+    // } else {
+    //   this.messageService.add({
+    //     severity: 'error',
+    //     summary: 'Service Message',
+    //     detail:
+    //       customerName +
+    //       ' status was already set to "' +
+    //       newStatusName +
+    //       '" before.',
+    //   });
+    // }
   }
 
   functionMissing() {

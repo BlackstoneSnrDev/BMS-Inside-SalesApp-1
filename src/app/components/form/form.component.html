@@ -7,7 +7,7 @@
     <h3 *ngIf="currentCall">
       {{ currentCall.fullname }}
       <p-badge
-        matTooltip="NOT CONNECTED TO DB"
+        *ngIf="currentCall.status"
         [style]="{ background: status.background, color: status.color }"
         value="{{ status.label }}"
       ></p-badge>
@@ -22,13 +22,14 @@
         matTooltipPosition="above"
       >
         <p-dropdown
+        *ngIf="optCustomerStatus"
           [options]="optCustomerStatus"
           [formControl]="customerNewStatus"
-          optionValue="slStatusId"
+          optionValue="uid"
           optionLabel="label"
           placeholder="Change status"
           (onChange)="
-            changeCustomerStatus(status.slStatusId, currentCall.fullname)
+            changeCustomerStatus(status.slStatusId, currentCall.uid, $event)
           "
         ></p-dropdown
       ></span>
@@ -272,7 +273,7 @@
           <div
             class="col-md-auto"
             [ngClass]="{
-              'col-smaller': callData.element_table_value === 'phonenumber'
+              'col-smaller': callData.element_table_value === 'Phone Number'
             }"
           >
             <mat-form-field appearance="standard" class="txtFormComponent">

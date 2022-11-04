@@ -58,9 +58,9 @@ export class CallInfoComponent implements OnInit {
     this.usersService.userInfo.subscribe((userInfo: any) => {
       if (userInfo && userInfo.username) {
         this.userInfo = userInfo;
-        console.log(userInfo);
+        console.log('User Info Loaded');
       } else {
-        console.log('no user info');
+        console.log('No User Info');
       }
     });
   }

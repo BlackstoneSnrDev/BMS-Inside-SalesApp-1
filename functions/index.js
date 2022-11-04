@@ -175,7 +175,6 @@ exports.createNewUser = functions.https.onCall(async (data, context) => {
             displayName: data.displayName,
             disabled: false,
         });
-
         admin.firestore().collection('Tenant').doc(data.dbObjKey).collection('users').doc(user.uid).set({
             activeTemplate: 'Template One',
             admin: false,
@@ -188,7 +187,6 @@ exports.createNewUser = functions.https.onCall(async (data, context) => {
             username: data.displayName,
 
         })
-
         return {
             response: user
         };

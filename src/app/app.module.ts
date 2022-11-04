@@ -159,7 +159,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ListboxModule,
     PaginatorModule,
     CheckboxModule,
-    ToolbarModule,
+    ToolbarModule, 
     ConfirmDialogModule,
     DialogModule,
     TooltipModule,

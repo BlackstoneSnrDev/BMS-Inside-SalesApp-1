@@ -545,6 +545,8 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   saveCreateNewStatus(indexTemplate: any) {
+    console.log(this.createNewStatusForm.value);
+    this.dataService.addStatusToTemplate(this.createNewStatusForm.value);
     this.functionMissing();
 
     this.tglAddStatus = false;
