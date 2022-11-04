@@ -127,12 +127,20 @@
                       [ngSwitch]="
                         newtd.element_type === 'boolean'
                           ? 'checkbox'
-                          : newtd.field === 'address'
+                          : newtd.field === 'address' ||
+                            newtd.field === 'Address' ||
+                            newtd.element_type === 'address'
                           ? 'address'
-                          : newtd.field === 'emailaddress'
+                          : newtd.field === 'emailaddress' ||
+                            newtd.field === 'Email Address' ||
+                            newtd.element_type === 'email'
                           ? 'email'
-                          : newtd.field === 'dob'
+                          : newtd.field === 'dob' ||
+                            newtd.element_type === 'date'
                           ? 'date'
+                          : newtd.field === 'Phone Number' ||
+                            newtd.element_type === 'phone'
+                          ? 'phone'
                           : -1
                       "
                     >
@@ -193,6 +201,22 @@
                             autocomplete="off"
                             id="{{ newtdIndex + newtd.field }}"
                             placeholder="New {{ newtd.title | lowercase }}"
+                            formControlName="{{ newtd.field }}"
+                          />
+                        </mat-form-field>
+                      </ng-container>
+
+                      <ng-container *ngSwitchCase="'phone'">
+                        <mat-form-field appearance="standard">
+                          <mat-label>{{ newtd.title }}</mat-label>
+                          <input
+                            matInput
+                            pattern="(\+\d{1,2}\s?)?1?-?.?\s?\(?\d{3}\)?[\s\.\-]?\d{3}[\s\.\-]?\d{4}"
+                            class="input-neumorphism"
+                            type="text"
+                            placeholder="New {{ newtd.title | lowercase }}"
+                            autocomplete="off"
+                            id="{{ newtdIndex + newtd.field }}"
                             formControlName="{{ newtd.field }}"
                           />
                         </mat-form-field>
@@ -520,12 +544,19 @@
                 [ngSwitch]="
                   col.element_type === 'boolean'
                     ? 'checkbox'
-                    : col.field === 'address'
+                    : col.field === 'address' ||
+                      col.field === 'Address' ||
+                      col.element_type === 'address'
                     ? 'address'
-                    : col.field === 'emailaddress'
+                    : col.field === 'emailaddress' ||
+                      col.field === 'Email Address' ||
+                      col.element_type === 'email'
                     ? 'email'
-                    : col.field === 'dob'
+                    : col.field === 'dob' || col.element_type === 'date'
                     ? 'date'
+                    : col.field === 'Phone Number' ||
+                      col.element_type === 'phone'
+                    ? 'phone'
                     : -1
                 "
               >
@@ -593,6 +624,19 @@
                     />
                   </mat-form-field>
                 </ng-container>
+                <ng-container *ngSwitchCase="'phone'">
+                  <mat-form-field appearance="standard">
+                    <mat-label>{{ col.title }}</mat-label>
+                    <input
+                      matInput
+                      pattern="(\+\d{1,2}\s?)?1?-?.?\s?\(?\d{3}\)?[\s\.\-]?\d{3}[\s\.\-]?\d{4}"
+                      type="text"
+                      placeholder="New {{ col.title | lowercase }}"
+                      [(ngModel)]="rowData[col.field]"
+                      required
+                    />
+                  </mat-form-field>
+                </ng-container>
                 <ng-container *ngSwitchDefault>
                   <mat-form-field appearance="standard">
                     <mat-label>{{ col.title }}</mat-label>
@@ -607,12 +651,17 @@
                 </ng-container>
                 <br />
                 <small *ngIf="onValidationError" class="color-rd">
-                  {{ col.title }} must be filled out correctly.
+                  <small>{{ col.title }} must be filled out correctly.</small>
                 </small>
               </ng-container>
             </ng-template>
             <ng-template pTemplate="output">
-              {{ rowData[col.field] | formatBoolean: col.field }}
+              <ng-container *ngIf="col.field === 'Phone Number'">
+                {{ rowData[col.field] | formatPhone: "toPhone" }}
+              </ng-container>
+              <ng-container *ngIf="col.field !== 'Phone Number'">
+                {{ rowData[col.field] }}
+              </ng-container>
             </ng-template>
           </p-cellEditor>
         </td>

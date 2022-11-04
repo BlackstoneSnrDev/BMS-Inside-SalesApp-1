@@ -151,12 +151,18 @@
         [ngSwitch]="
           callData.element_type === 'boolean'
             ? 'checkbox'
-            : callData.element_table_value === 'address'
+            : callData.element_table_value === 'Address' ||
+              callData.element_type === 'address'
             ? 'address'
-            : callData.element_table_value === 'emailaddress'
+            : callData.element_table_value === 'emailaddress' ||
+              callData.element_table_value === 'Email Address'
             ? 'email'
-            : callData.element_table_value === 'dob'
+            : callData.element_table_value === 'dob' ||
+              callData.element_type === 'date'
             ? 'date'
+            : callData.element_table_value === 'Phone Number' ||
+              callData.element_type === 'phone'
+            ? 'phone'
             : -1
         "
       >
@@ -237,6 +243,27 @@
                 [readonly]="!tgleditField"
                 [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
                 placeholder="New {{ callData.element_placeholder | lowercase }}"
+                formControlName="{{ callData.element_table_value }}"
+              />
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'phone'">
+          <div class="col-md-auto">
+            <mat-form-field appearance="standard" class="txtFormComponent">
+              <mat-label>{{ callData.element_placeholder }}</mat-label>
+              <input
+                matInput
+                class="input-neumorphism"
+                [ngClass]="{ 'input-disabled-neumorphism ': !tgleditField }"
+                pattern="(\+\d{1,2}\s?)?1?-?.?\s?\(?\d{3}\)?[\s\.\-]?\d{3}[\s\.\-]?\d{4}"
+                [readonly]="!tgleditField"
+                type="text"
+                placeholder="New {{ callData.element_placeholder | lowercase }}"
+                autocomplete="off"
+                [value]="callData.element_value | formatPhone: 'toPhone'"
+                id="{{ callDataIndex }}"
                 formControlName="{{ callData.element_table_value }}"
               />
             </mat-form-field>

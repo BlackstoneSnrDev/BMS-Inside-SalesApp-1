@@ -133,7 +133,7 @@ export class PhoneComponent implements OnInit {
     });
 
     this.DataService.sendText().then((response) => {
-      console.log('Send Text: ',response.token);
+      console.log('Send Text: ', response.token);
       // Setup Twilio.Device
       this._device = new Device(response.token, {
         // Set Opus as our preferred codec. Opus generally performs better, requiring less bandwidth and

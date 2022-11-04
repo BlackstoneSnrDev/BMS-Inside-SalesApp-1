@@ -23,6 +23,10 @@
         {
             "typeName": "Email",
             "typeCode": "email"
+        },
+        {
+            "typeName": "Phone Number",
+            "typeCode": "phone"
         }
     ],
     "selectCXStatus": [
