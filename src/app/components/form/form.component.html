@@ -22,14 +22,19 @@
         matTooltipPosition="above"
       >
         <p-dropdown
-        *ngIf="optCustomerStatus"
+          *ngIf="optCustomerStatus"
           [options]="optCustomerStatus"
           [formControl]="customerNewStatus"
           optionValue="uid"
           optionLabel="label"
           placeholder="Change status"
           (onChange)="
-            changeCustomerStatus(status.slStatusId, currentCall.uid, $event)
+            changeCustomerStatus(
+              status.uid,
+              currentCall.fullname,
+              currentCall.uid,
+              $event
+            )
           "
         ></p-dropdown
       ></span>
