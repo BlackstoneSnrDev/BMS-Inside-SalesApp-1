@@ -19,30 +19,30 @@
 }
 
 .log-container-col {
-  background: #e6e7ee;
+  background: var(--bg-color);
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 2rem 0rem 0rem 2rem;
-  border: 0.1rem solid #d1d9e6;
+  border: 0.1rem solid var(--border-color);
   height: 100%;
   padding: 0rem 0rem 1.5rem 0rem;
   min-width: 28rem;
-  color: #333333;
+  color: var(--txt-secondary-color);
 }
 
 .inherit-row {
   margin: 1.5rem 0rem 1.5rem 0rem;
-  color: #333333;
+  color: var(--txt-secondary-color);
   height: 47%;
 }
 
 .phone-col {
-  background: #e6e7ee;
+  background: var(--bg-color);
   overflow-y: hidden;
   border-radius: 2rem 2rem 2rem 2rem;
-  border: 0.1rem solid #d1d9e6;
+  border: 0.1rem solid var(--border-color);
   padding: 24px 0px 24px 0px;
   height: 100%;
   min-width: 28rem;
-  color: #333333;
+  color: var(--txt-secondary-color);
 }

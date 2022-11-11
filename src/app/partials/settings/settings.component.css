@@ -7,14 +7,14 @@
 .settings-component .col-lg-4,
 .col-lg-12 {
   min-width: 26rem;
-  color: #333333;
+  color: var(--txt-secondary-color);
   padding-bottom: 2rem;
 }
 
 .settings-component .col-container {
-  background: #e6e7ee;
+  background: var(--bg-color);
   border-radius: 2rem;
-  border: 0.1rem solid #d1d9e6;
+  border: 0.1rem solid var(--border-color);
 }
 
 h4 {
@@ -23,11 +23,11 @@ h4 {
 
 .option-container {
   padding: 1rem 2rem 1rem 2rem;
-  box-shadow: inset 0px 3px 0px -2px #d1d9e6;
+  box-shadow: inset 0px 3px 0px -2px var(--border-color);
 }
 
 .option-container:hover {
-  background: #e0e1e9;
+  background: var(--bg-hover-color);
 }
 
 .col-container > div:last-child {
@@ -41,36 +41,37 @@ h4 {
 }
 
 ::ng-deep.p-dialog .p-dialog-header {
-  border-bottom: 0.1rem solid #d1d9e6 !important;
-  background-color: transparent !important;
+  border-bottom: 0.1rem solid var(--border-color) !important;
+  background-color: var(--bg-transparent) !important;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }
 
 ::ng-deep.p-editor-container .p-editor-toolbar.ql-snow {
-  border: 0.0625rem solid #d1d9e6;
+  border: 0.0625rem solid var(--border-color);
 }
 
 ::ng-deep.p-editor-container .p-editor-toolbar {
-  background: #e6e7ee;
+  background: var(--bg-color);
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
   position: sticky;
   z-index: 3;
   top: -20px;
-  box-shadow: 0px 8px 9px -8px #b8b9be;
+  box-shadow: 0px 8px 9px -8px var(--box-shadow-inset);
 }
 
 ::ng-deep.p-editor-container .p-editor-content .ql-editor {
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
-  background: #e6e7ee;
+  box-shadow: inset 2px 2px 5px var(--box-shadow-inset),
+    inset -3px -3px 7px var(--box-shadow-inset-secondary) !important;
+  background: var(--bg-color);
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
   height: 17rem;
 }
 
 ::ng-deep.p-editor-container .p-editor-content.ql-snow {
-  border: 0.0625rem solid #d1d9e6;
+  border: 0.0625rem solid var(--border-color);
 }
 
 ::ng-deep.p-editor-container .p-editor-content {
@@ -83,9 +84,9 @@ h4 {
   .p-editor-toolbar.ql-snow
   .ql-picker.ql-expanded
   .ql-picker-options {
-  background: #e6e7ee;
-  border: 0.0625rem solid #d1d9e6;
-  box-shadow: 2px 2px 5px #b8b9be;
+  background: var(--bg-color);
+  border: 0.0625rem solid var(--border-color);
+  box-shadow: 2px 2px 5px var(--box-shadow-inset);
   border-radius: 1rem;
   padding: 1rem;
 }
@@ -112,11 +113,11 @@ h4 {
 }
 
 ::ng-deep.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item:hover {
-  border-color: #d1d9e6;
+  border-color: var(--border-color);
 }
 
 ::ng-deep.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item.ql-selected {
-  border-color: #d1d9e6;
+  border-color: var(--border-color);
 }
 
 ::ng-deep.p-editor-container
@@ -124,41 +125,41 @@ h4 {
   .ql-picker.ql-expanded
   .ql-picker-options
   .ql-picker-item:hover {
-  background: #e0e1e9;
+  background: var(--bg-hover-color);
 }
 
 ::ng-deep.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke {
-  stroke: #44476a !important;
+  stroke: var(--txt-color) !important;
   stroke-width: 3px;
 }
 ::ng-deep.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke {
-  stroke: #44476a;
+  stroke: var(--txt-color);
 }
 
 ::ng-deep.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke {
-  stroke: #44476a !important;
+  stroke: var(--txt-color) !important;
 }
 
 ::ng-deep.p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active {
-  color: #44476a;
-  background: #d2d3db;
+  color: var(--txt-color);
+  background: var(--bg-scrollbar-hover);
   border-radius: 0.7rem;
 }
 
 ::ng-deep.p-editor-container .ql-snow.ql-toolbar button.ql-active {
-  color: #44476a;
-  background: #d2d3db;
+  color: var(--txt-color);
+  background: var(--bg-scrollbar-hover);
   border-radius: 0.7rem;
 }
 
 ::ng-deep.p-editor-container .ql-snow.ql-toolbar button.ql-active .ql-stroke {
-  stroke: #44476a;
+  stroke: var(--txt-color);
 }
 
 ::ng-deep.ql-snow .ql-tooltip {
-  background: #e6e7ee;
-  border: 0.0625rem solid #d1d9e6;
-  box-shadow: 2px 2px 5px #b8b9be;
+  background: var(--bg-color);
+  border: 0.0625rem solid var(--border-color);
+  box-shadow: 2px 2px 5px var(--box-shadow-inset);
   border-radius: 1rem;
   padding: 1rem;
   left: 10rem !important;
@@ -166,13 +167,14 @@ h4 {
 
 ::ng-deep.ql-snow .ql-tooltip input[type="text"] {
   padding: 0.6rem 0.75rem;
-  color: #44476a;
-  background-color: #e6e7ee;
-  border: 0.0625rem solid #d1d9e6;
+  color: var(--txt-color);
+  background-color: var(--bg-color);
+  border: 0.0625rem solid var(--border-color);
   transition: all 0.3s ease-in-out;
   border-top-left-radius: 0.99rem;
   border-bottom-left-radius: 0.99rem;
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+  box-shadow: inset 2px 2px 5px var(--box-shadow-inset),
+    inset -3px -3px 7px var(--box-shadow-inset-secondary);
   font-size: 13px;
   height: 2rem;
 }
@@ -188,10 +190,10 @@ h4 {
 }
 
 ::ng-deep .ql-snow .ql-tooltip a {
-  color: #44476a;
-  border: 0.0625rem solid #d1d9e6;
+  color: var(--txt-color);
+  border: 0.0625rem solid var(--border-color);
   border-left: none;
-  background-color: #e6e7ee;
+  background-color: var(--bg-color);
   padding: 0.4rem 0.75rem;
   border-top-right-radius: 0.99rem;
   border-bottom-right-radius: 0.99rem;
@@ -204,8 +206,8 @@ h4 {
 ::ng-deep.ql-snow.ql-toolbar button:hover,
 ::ng-deep.ql-snow.ql-toolbar button:focus {
   outline: 0;
-  color: #44476a;
-  background: #d2d3db;
+  color: var(--txt-color);
+  background: var(--bg-scrollbar-hover);
   border-radius: 0.7rem;
 }
 
@@ -224,7 +226,8 @@ h4 {
 }
 
 .templateForm .iconbutton-neumorphism {
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+  box-shadow: inset 2px 2px 5px var(--box-shadow-inset),
+    inset -3px -3px 7px var(--box-shadow-inset-secondary);
   font-weight: bold;
   font-family: cursive;
 }
@@ -273,8 +276,8 @@ h4 {
 }
 
 .sms-container {
-  background-color: #e0e1e9;
-  border: 0.0625rem solid #d1d9e6;
+  background-color: var(--bg-hover-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 2rem;
   padding: 1rem;
   text-align: left;
@@ -341,7 +344,7 @@ h4 {
 
 ::ng-deep.mat-progress-spinner circle {
   stroke-width: 14% !important;
-  stroke: #b8b9be;
+  stroke: var(--box-shadow-inset);
 }
 
 ::ng-deep.mat-progress-spinner svg {
@@ -362,7 +365,7 @@ h4 {
 }
 
 .opacity-txt {
-  color: #44476a38;
+  color: var(--toggle-slide-hover-bg-color);
 }
 
 .timer-container {

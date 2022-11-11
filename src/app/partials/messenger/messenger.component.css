@@ -17,22 +17,14 @@
 
 .resend-icon {
   box-shadow: none !important;
-  background-color: transparent !important;
+  background-color: var(--bg-transparent) !important;
   border: none !important;
-}
-
-.on {
-  color: #1bc329;
-}
-
-.off {
-  color: #a91e2c;
 }
 
 .icon-over {
   position: absolute;
   right: 1.05rem;
-  background-color: #e0e1e9;
+  background-color: var(--bg-hover-color);
   display: none;
 }
 
@@ -44,7 +36,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding-left: 0.1rem;
-  border: 0.1rem solid #d1d9e6;
+  border: 0.1rem solid var(--border-color);
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   height: 28rem;
@@ -103,7 +95,7 @@
 }
 
 .gp-list-container .button-neumorphism.default:hover {
-  color: #44476ade !important;
+  color: var(--toggle-slide-hover-bg-color) !important;
 }
 
 .gp-list-container .btn-group-col {
@@ -116,14 +108,14 @@
 }
 
 .gp-list-container .select-group-col {
-  /* box-shadow: -3px 0px 10px 0px #d1d9e6; */
+  /* box-shadow: -3px 0px 10px 0px var(--border-color); */
   border-top-right-radius: 1rem;
   max-width: 10%;
 }
 
 .gp-list-container .group-row {
   padding: 0 !important;
-  border: 0.1rem solid #d1d9e6;
+  border: 0.1rem solid var(--border-color);
   border-bottom: none !important;
 }
 
@@ -134,21 +126,21 @@
   word-break: normal !important;
   display: inline-flex;
   border: none !important;
-  border-right: 0.1rem solid #d1d9e6 !important;
+  border-right: 0.1rem solid var(--border-color) !important;
   transition: background-color 200ms, color 200ms !important;
   align-items: center;
   justify-content: center;
 }
 
 .gp-list-container .button-neumorphism:hover {
-  background-color: #e0e1e9;
-  color: #d2d3db96 !important;
+  background-color: var(--bg-hover-color);
+  color: var(--toggle-slide-bg-color) !important;
 }
 
 .gp-list-container .iconBtn {
   position: absolute;
   visibility: hidden;
-  color: transparent;
+  color: var(--bg-transparent);
   transition: font-size 200ms, color 100ms;
   font-size: 0;
   transition-timing-function: ease-in-out;
@@ -156,7 +148,7 @@
 
 .gp-list-container .button-neumorphism:hover .iconBtn {
   visibility: visible;
-  color: #44476a;
+  color: var(--txt-color);
   font-size: 1.3rem;
 }
 
@@ -175,7 +167,7 @@
 }
 
 .chats-view {
-  border: 0.0625rem solid #d1d9e6;
+  border: 0.0625rem solid var(--border-color);
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }
@@ -184,19 +176,19 @@
 .chats-view .col-lg-6:focus {
   outline: 0;
   animation: pulse 3s infinite;
-  background-color: #e0e1e9;
+  background-color: var(--bg-hover-color);
 }
 
 .chat-tab {
   width: 100%;
   text-align: center;
-  color: #44476a;
+  color: var(--txt-color);
   font-weight: bold;
 }
 
 .sms-container {
-  background-color: #e0e1e9;
-  border: 0.0625rem solid #d1d9e6;
+  background-color: var(--bg-hover-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 1.6rem;
   padding: 1rem 2rem 1rem 2rem;
   text-align: left;
@@ -205,7 +197,8 @@
   max-width: 90%;
   overflow-wrap: anywhere;
   min-height: 4.8rem;
-  box-shadow: 2px 2px 5px #b8b9be, -1px -1px 10px #fff;
+  box-shadow: 2px 2px 5px var(--box-shadow-inset),
+    -1px -1px 10px var(--box-shadow-inset-secondary);
 }
 
 .accordion-chat ::ng-deep .p-accordion .p-accordion-content {
@@ -220,9 +213,9 @@
   .p-accordion-header-link {
   box-shadow: none;
   border: none;
-  border-bottom: 0.0625rem solid #d1d9e6;
-  background: #e6e7ee;
-  color: #44476a;
+  border-bottom: 0.0625rem solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--txt-color);
   flex-flow: wrap;
   border-radius: 0rem;
 }
@@ -241,7 +234,7 @@
   .p-accordion-header:not(.p-disabled)
   .p-accordion-header-link:focus {
   box-shadow: none;
-  background-color: #e6e7ee;
+  background-color: var(--bg-color);
   animation: none;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
@@ -255,7 +248,8 @@
   .p-accordion-header-link {
   animation: none;
   border-radius: 1rem;
-  box-shadow: 2px 2px 5px #b8b9be, 0px 0px 7px #fff;
+  box-shadow: 2px 2px 5px var(--box-shadow-inset),
+    0px 0px 7px var(--box-shadow-inset-secondary);
 }
 
 .accordion-chat
@@ -263,7 +257,7 @@
   .p-accordion
   .p-accordion-header:not(.p-disabled).p-highlight:hover
   .p-accordion-header-link {
-  background-color: #e0e1e9;
+  background-color: var(--bg-hover-color);
 }
 
 .accordion-chat
@@ -272,7 +266,7 @@
   .p-accordion-header:not(.p-disabled).p-highlight
   .p-accordion-header-link {
   box-shadow: none;
-  background-color: #e6e7ee;
+  background-color: var(--bg-color);
   animation: none;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
@@ -287,11 +281,12 @@
   background-size: cover !important;
   background-position: center !important;
   max-height: 24rem;
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+  box-shadow: inset 2px 2px 5px var(--box-shadow-inset),
+    inset -3px -3px 7px var(--box-shadow-inset-secondary) !important;
 }
 
 .form-sms {
-  background-color: #e6e7ee;
+  background-color: var(--bg-color);
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   border-top: none;
@@ -314,7 +309,7 @@
 
 .btn-sms:hover {
   box-shadow: none !important;
-  background-color: #e0e1e9;
+  background-color: var(--bg-hover-color);
 }
 
 .btn-sms i {
@@ -339,13 +334,14 @@
 }
 
 .view-active {
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+  box-shadow: inset 2px 2px 5px var(--box-shadow-inset),
+    inset -3px -3px 7px var(--box-shadow-inset-secondary) !important;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }
 
 .small-sms {
-  color: #a8afbb;
+  color: var(--toggle-bg-color);
 }
 
 .border-bt-lt {
@@ -368,16 +364,16 @@
   padding-top: 0.8rem;
   position: sticky;
   top: 0;
-  background-color: #e6e7ee;
-  box-shadow: 0px 8px 0px -7px #d1d9e6;
+  background-color: var(--bg-color);
+  box-shadow: 0px 8px 0px -7px var(--border-color);
   z-index: 2;
 }
 
 .filter-chat-container {
   position: sticky;
   top: 0;
-  background-color: #e6e7ee;
-  box-shadow: 0px 8px 0px -7px #d1d9e6;
+  background-color: var(--bg-color);
+  box-shadow: 0px 8px 0px -7px var(--border-color);
   z-index: 2;
   margin-bottom: 0.3rem;
 }
@@ -400,26 +396,26 @@
 }
 
 .msg-date {
-  background: #e0e1e9;
+  background: var(--bg-hover-color);
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
   margin-top: 1rem;
   border-radius: 1rem;
-  border: 0.1rem solid #d1d9e6;
+  border: 0.1rem solid var(--border-color);
 }
 
 .btn-close-simple {
   border-radius: 1rem;
   outline: none;
   border: none;
-  background: transparent;
-  border: 0.0625rem solid #d1d9e6;
+  background: var(--bg-transparent);
+  border: 0.0625rem solid var(--border-color);
 }
 
 .btn-close-simple:hover,
 .btn-close-simple:focus {
   border-radius: 1rem;
   outline: none;
-  background: #e0e1e9;
+  background: var(--bg-hover-color);
 }
 
 .messenger-component ::ng-deep .p-dialog {
@@ -440,7 +436,7 @@
 }
 
 .drop-msg-massive ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
-  color: #44476a;
+  color: var(--txt-color);
   display: none;
 }
 
@@ -449,7 +445,7 @@
 }
 
 .drop-msg-massive ::ng-deep.p-dropdown {
-  border-bottom: 0.1rem solid transparent;
+  border-bottom: 0.1rem solid var(--bg-transparent);
 }
 
 .drop-msg-massive ::ng-deep.p-dropdown .p-dropdown-panel {
@@ -469,6 +465,6 @@
   ::ng-deep
   .mat-form-field-appearance-standard
   .mat-form-field-underline {
-  background-color: #296e58;
+  background-color: var(--success-color);
   height: 0.2rem !important;
 }

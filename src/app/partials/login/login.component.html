@@ -52,7 +52,9 @@
       </div>
       <div class="form-row">
         <div class="col">
-          <small [ngClass]="!loginForm.valid ? 'show' : 'hide'"
+          <small
+            class="txt-no-btn"
+            [ngClass]="!loginForm.valid ? 'show' : 'hide'"
             >*All fields must be filled out.</small
           >
         </div>

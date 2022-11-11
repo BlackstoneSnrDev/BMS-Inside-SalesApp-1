@@ -15,9 +15,9 @@
 .template-container {
   padding: 0.55rem 0.55rem 0.55rem 0.55rem;
   border-radius: 0.55em;
-  border: 0.0625rem solid #d1d9e6;
-  background-color: #e6e7ee;
-  box-shadow: 2px 2px 5px #b8b9be;
+  border: 0.0625rem solid var(--border-color);
+  background-color: var(--bg-color);
+  box-shadow: 2px 2px 5px var(--box-shadow-inset);
   margin-left: 1rem;
   margin-bottom: 1rem;
 }
@@ -36,7 +36,7 @@
 }
 
 ::ng-deep .p-paginator-rpp-options p-dropdown p-component .p-inputtext {
-  background-color: transparent !important;
+  background-color: var(--bg-transparent) !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -99,8 +99,8 @@
   .p-datatable-thead
   > tr
   > th:first-child {
-  box-shadow: inset 6px 6px 17px -10px hsl(230, 4%, 73%),
-    inset 0px -3px 0px -2px #d1d9e6 !important;
+  box-shadow: inset 6px 6px 17px -10px var(--box-shadow-inset),
+    inset 0px -3px 0px -2px var(--border-color) !important;
 }
 
 .table-status
@@ -118,8 +118,9 @@
   .p-datatable-tbody
   > tr:first-child
   > td:first-child {
-  box-shadow: inset 10px -3px 7px -9px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
-    inset 0px 3px 0px -2px #d1d9e6 !important;
+  box-shadow: inset 10px -3px 7px -9px var(--box-shadow-inset),
+    inset -4px 0px 0px -2px var(--border-color),
+    inset 0px 3px 0px -2px var(--border-color) !important;
 }
 
 .table-status
@@ -129,17 +130,19 @@
   > tr:last-child
   > td:first-child {
   border-bottom-left-radius: 0 !important;
-  box-shadow: inset 25px 0px 8px -24px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
-    inset 0px 3px 0px -2px #d1d9e6 !important;
+  box-shadow: inset 25px 0px 8px -24px var(--box-shadow-inset),
+    inset -4px 0px 0px -2px var(--border-color),
+    inset 0px 3px 0px -2px var(--border-color) !important;
 }
 
 .table-status ::ng-deep .p-datatable-table .sticky-column-checkboxes {
   position: sticky;
-  background-color: #e6e7ee !important;
+  background-color: var(--bg-color) !important;
   z-index: 1;
   left: 0 !important;
-  box-shadow: inset 10px -3px 7px -9px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
-    inset 0px 3px 0px -2px #d1d9e6;
+  box-shadow: inset 10px -3px 7px -9px var(--box-shadow-inset),
+    inset -4px 0px 0px -2px var(--border-color),
+    inset 0px 3px 0px -2px var(--border-color);
   border-top: none;
 }
 
@@ -147,8 +150,9 @@
   top: 0 !important;
   position: sticky !important;
   z-index: 2 !important;
-  box-shadow: inset 9px 9px 8px -9px #b8b9be, inset -4px 0px 0px -2px #d1d9e6,
-    inset 0px -3px 0px -2px #d1d9e6 !important;
+  box-shadow: inset 9px 9px 8px -9px var(--box-shadow-inset),
+    inset -4px 0px 0px -2px var(--border-color),
+    inset 0px -3px 0px -2px var(--border-color) !important;
   border-top-left-radius: 1rem !important;
 }
 
@@ -198,7 +202,7 @@
   height: 2.4rem;
   max-width: 9rem;
   margin-left: 25%;
-  color: white;
+  color: var(--box-shadow-inset-secondary);
 }
 
 .create-template .badge-status {
@@ -207,7 +211,7 @@
   padding-bottom: 0.4rem;
   margin-top: 1rem;
   height: 2.4rem;
-  color: white;
+  color: var(--box-shadow-inset-secondary);
 }
 
 .circle {
@@ -220,8 +224,8 @@
 
 .badge-status input[type="color"] {
   width: 2rem;
-  color: transparent;
-  background: transparent;
+  color: var(--bg-transparent);
+  background: var(--bg-transparent);
   border: none;
   z-index: 2;
   text-align: center;
@@ -231,7 +235,7 @@
   vertical-align: super;
 }
 .badge-status input[type="color"]::-webkit-color-swatch {
-  border: 0.0625rem solid #d1d9e6;
+  border: 0.0625rem solid var(--border-color);
   border-radius: 1rem;
   vertical-align: middle;
 }
@@ -263,7 +267,7 @@
 }
 .create-template .badge-status {
   width: 100% !important;
-  color: white;
+  color: var(--box-shadow-inset-secondary);
   text-align: center;
 }
 
@@ -279,27 +283,30 @@
 }
 
 ::ng-deep .p-datatable .p-datatable-tfoot > tr > td {
-  background-color: #e6e7ee;
+  background-color: var(--bg-color);
   border-width: 0;
   border: none;
   text-align: center;
   font-weight: normal;
-  box-shadow: inset 0px -13px 9px -12px #fff;
+  box-shadow: inset 0px -13px 9px -12px var(--box-shadow-inset-secondary);
 }
 
 ::ng-deep .p-datatable .p-datatable-tfoot > tr {
   border: none;
-  border-top: 0.0625rem solid #d1d9e6;
-  box-shadow: inset 5px 0 8px -4px #b8b9be, inset -4px 0px 0px -2px #d1d9e6;
+  border-top: 0.0625rem solid var(--border-color);
+  box-shadow: inset 5px 0 8px -4px var(--box-shadow-inset),
+    inset -4px 0px 0px -2px var(--border-color);
 }
 
 ::ng-deep .p-datatable .p-datatable-tfoot > tr > td:last-child {
-  box-shadow: inset -16px -15px 10px -13px #fff;
+  box-shadow: inset -16px -15px 10px -13px var(--box-shadow-inset-secondary);
 }
 
 ::ng-deep .p-datatable .p-datatable-tfoot > tr > td:first-child {
-  box-shadow: inset 0px -13px 9px -12px #fff, inset 24px -17px 8px -24px #b8b9be,
-    inset -4px 0px 0px -2px #d1d9e6, inset 0px -3px 0px -2px #d1d9e6;
+  box-shadow: inset 0px -13px 9px -12px var(--box-shadow-inset-secondary),
+    inset 24px -17px 8px -24px var(--box-shadow-inset),
+    inset -4px 0px 0px -2px var(--border-color),
+    inset 0px -3px 0px -2px var(--border-color);
 }
 
 .create-template-container {
@@ -327,7 +334,7 @@
 
 .badge-btn:hover,
 .badge-btn:focus {
-  box-shadow: inset 2px 2px 5px #b8b9be;
+  box-shadow: inset 2px 2px 5px var(--box-shadow-inset);
   animation: pulse 3s infinite;
   outline: none;
 }
@@ -342,14 +349,14 @@
 }
 
 .status-title {
-  border-top: 2px dotted #cfcfd6;
-  border-bottom: 2px dotted #cfcfd6;
+  border-top: 2px dotted var(--bg-scrollbar-hover);
+  border-bottom: 2px dotted var(--bg-scrollbar-hover);
   width: 100%;
   text-align: center;
   padding: 1rem 0rem 1rem 0rem;
-  color: #44476a;
+  color: var(--txt-color);
   margin-top: 1rem;
-  background-color: #e0e1e9;
+  background-color: var(--bg-hover-color);
   border-radius: 1rem;
 }
 
@@ -360,7 +367,7 @@
 .create-template ::ng-deep .p-dropdown-items-wrapper {
   max-width: 100%;
   max-height: 11rem !important;
-  background: #e6e7ee;
+  background: var(--bg-color);
   font-weight: normal !important;
 }
 

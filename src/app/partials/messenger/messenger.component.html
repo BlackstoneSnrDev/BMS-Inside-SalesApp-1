@@ -1,7 +1,6 @@
 <div class="row main-row messenger-component">
   <div class="col-lg-12">
     <div class="form-check form-check-inline width-100">
-      <!-- <i class="bi bi-record2-fill online-icon" [ngClass]="tglState ? 'on' : 'off'"></i> -->
       <h1>Text Messages</h1>
     </div>
     <hr />
@@ -375,7 +374,9 @@
                       <h6 class="width-100" id="{{ i }}">{{ log.fullname }}</h6>
                     </div>
                     <h6 class="width-100 not-bold" id="{{ i }}">
-                      {{ this.DataService.formatPhoneNumber(log['Phone Number']) }}
+                      {{
+                        this.DataService.formatPhoneNumber(log["Phone Number"])
+                      }}
                     </h6>
                     <hr class="margin-rt" />
                   </div>

@@ -23,7 +23,10 @@
             novalidate
           >
             <h5>Add new template</h5>
-            <div [ngClass]="!createNewTemplateForm.valid ? 'show' : 'hide'">
+            <div
+              [ngClass]="!createNewTemplateForm.valid ? 'show' : 'hide'"
+              class="txt-no-btn"
+            >
               *All fields must be filled out.
             </div>
             <hr />

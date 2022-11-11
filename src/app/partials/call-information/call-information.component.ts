@@ -35,11 +35,12 @@ export class CallInfoComponent implements OnInit {
         template
           ? this.DataService.getDialingSessionTemplate()
               .then(
-                (activeTemplate) =>
+                (activeTemplate) => (
                   (this.activeTemplate = activeTemplate.sort(
                     (a, b) => a.element_order - b.element_order
-                    
-                  ), console.log(activeTemplate))
+                  )),
+                  console.log(activeTemplate)
+                )
               )
               .then(() => {
                 this.DataService.getActiveGroupCustomerArray();

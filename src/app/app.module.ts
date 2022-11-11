@@ -35,6 +35,7 @@ import { MessengerComponent } from './partials/messenger/messenger.component';
 ///// My directives
 import { TextareaAutoresizeDirective } from './directives/resize.directive';
 import { AuthGuard } from './services/auth.guard';
+import { ThemeService } from './components/theme/theme.service';
 
 ///// My pipes
 import { FormatBoolean } from './pipes/formatBoolean.pipe';
@@ -159,7 +160,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ListboxModule,
     PaginatorModule,
     CheckboxModule,
-    ToolbarModule, 
+    ToolbarModule,
     ConfirmDialogModule,
     DialogModule,
     TooltipModule,
