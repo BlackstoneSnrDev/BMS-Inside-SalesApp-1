@@ -3,6 +3,9 @@ const admin = require('firebase-admin');
 
 const csvToJson = require('convert-csv-to-json');
 
+const fs = require('fs');
+const moment = require('moment');
+
 let fileInputName = 'myInputFile.csv'; 
 let fileOutputName = 'myOutputFile.json';
 
@@ -37,6 +40,27 @@ admin.initializeApp({
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.sendText = functions.https.onCall((data, context) => {
+
+    // Set the date range
+const start_date = moment().subtract(16, 'months');
+const end_date = moment();
+
+// Create the list of column headers (weekdays)
+let weekdays = [];
+let current_date = moment(start_date);
+while (current_date <= end_date) {
+    weekdays.push(current_date.format("dddd"));
+    current_date.add(1, 'day');
+}
+
+// Create the data row
+let dataCSV = weekdays.map(() => Math.floor(Math.random() * 12));
+
+// Write the data to a CSV file
+let csvContent = weekdays.join(',') + '\n' + dataCSV.join(',') + '\n';
+fs.writeFileSync("weekday_data.csv", csvContent);
+console.log("File created successfully!");
+
     console.log(data);
     const textMessage = {
         body: data.message, 
@@ -119,21 +143,36 @@ exports.generateToken = functions.https.onCall((req, res) => {
 
 });
 
+exports.twilioCompletedCall = functions.https.onRequest((req, res) => {
+    console.log('completed call');
+    console.log(req.body);
+    console.log(' ==== DialCallDuration ==== ' + req.body.DialCallDuration);
+    console.log(' ==== DialCallStatus ==== ' + req.body.DialCallStatus);
+    res.send('call completed');
+});
+
 exports.twilioCallEndpoint = functions.https.onRequest((req, res) => {
   
     var phoneNumber = req.body.outgoingPhoneNumber;
     var callerId = sendingPhoneNumber;
     var twiml = new VoiceResponse();
   
-    var dial = twiml.dial({callerId : callerId, machineDetection: 'Enable'});
+    var dial = twiml.dial({
+        callerId : callerId, 
+        machineDetection: 'Enable',
+        DialCallDuration: true,
+        action: 'https://ce7a-2603-9000-71f0-8710-2dc8-9d4-1439-118.ngrok.io/insidesalesapi/us-central1/twilioCompletedCall',
+        method: 'POST',
+        DialCallStatus: true,
+    });
     if (phoneNumber) {
-      dial.number({}, phoneNumber);
+      dial.number({}, phoneNumber)
     } else {
       dial.client({}, "support_agent");
     };
-    console.log(twiml.toString());
     res.type('text/xml');
     res.send(twiml.toString());
+
 });
 
 exports.test = functions.https.onCall((req, res) => {
@@ -159,6 +198,7 @@ exports.makePhoneCall = functions.https.onCall((req, res) => {
     } else {
         dial.client({}, "support_agent");
     };
+    console.log(twiml.toString());
     res.type('text/xml');
     res.send(twiml.toString());
 });

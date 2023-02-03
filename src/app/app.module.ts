@@ -62,7 +62,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import { environment } from '../environments/environment';
-//import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
+import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
 
 // Ng2 Charts
 import { NgChartsModule } from 'ng2-charts';
@@ -190,8 +190,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     AuthGuard,
     DatePipe,
     FormatPhone,
-    // { provide: BUCKET, useValue: 'my-bucket-name' }
-    //{ provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 5001] : undefined },
+    //{ provide: BUCKET, useValue: 'my-bucket-name' },
+    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 5001] : undefined },
   ],
   bootstrap: [AppComponent],
 })

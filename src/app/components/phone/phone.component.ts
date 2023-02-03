@@ -162,17 +162,20 @@ export class PhoneComponent implements OnInit {
 
       this._device.on('connect', (conn: any) => {
         this.callStatusLabel = 'Call established';
-        console.log('Successfully established call!');
+        console.log('Successfully established call!', conn);
+        conn.onAnswer = () => {
+            console.log('answered');
+        };
         this.updateCallStatus('In Call');
         this.containerCallStatus = true;
-      });
+      });   
 
       this._device.on('disconnect', (conn: any) => {
         if (this.tglAutoDialer) {
           this.nextCall(), this.btnCall(this.currentCallPhoneNumber);
         }
         this.callStatusLabel = 'Call ended';
-        console.log('Call ended');
+        console.log('Call disconnect', conn);
         this.updateCallStatus('Call Status');
         this.pauseTimer();
         setTimeout(() => {
@@ -189,6 +192,7 @@ export class PhoneComponent implements OnInit {
       this._device.on('cancel', (conn: any) => {
         console.log('Call canceled');
         this.callStatusLabel = 'Call canceled';
+        console.log('Call cancel', conn);
         this.updateCallStatus('Call Status');
         this.pauseTimer();
         setTimeout(() => {
@@ -290,14 +294,16 @@ export class PhoneComponent implements OnInit {
     var regExNumber = '+1' + ('' + outgoingNumber).replace(/\D/g, '');
     console.log('Calling ' + regExNumber + '...');
     let callstatus: any = this.callStatusLabel;
+
     if (this._device) {
-      var outgoingConnection = this._device.connect({
-        outgoingPhoneNumber: regExNumber,
-      });
-      outgoingConnection.on('ringing', function () {
-        callstatus = 'Ringing...';
-      });
-    }
+        var outgoingConnection = this._device.connect({
+          outgoingPhoneNumber: regExNumber,
+        });
+        outgoingConnection.on('ringing', function () {
+          console.log('Ringing...');
+        });
+      }
+
     this.callStatusLabel = callstatus;
     this.startTimer();
     this.containerCallStatus = !this.containerCallStatus;
